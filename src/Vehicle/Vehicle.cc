@@ -12,6 +12,14 @@
 #include <QLocale>
 #include <QQuaternion>
 
+///jaeeun 
+#include <QApplication>
+#include <QCoreApplication>
+#include <QFile>
+#include <QString>
+#include <QTextStream>
+#include "QDir"
+
 #include <Eigen/Eigen>
 
 #include "Vehicle.h"
@@ -49,6 +57,9 @@
 #include "ComponentInformationManager.h"
 #include "InitialConnectStateMachine.h"
 #include "VehicleBatteryFactGroup.h"
+#include "qTh.h"
+#include <qfile.h>
+
 #ifdef QT_DEBUG
 #include "MockLink.h"
 #endif
@@ -245,6 +256,16 @@ Vehicle::Vehicle(LinkInterface*             link,
     // Start csv logger
     connect(&_csvLogTimer, &QTimer::timeout, this, &Vehicle::_writeCsvLine);
     _csvLogTimer.start(1000);
+    
+
+    //jaeeun 
+
+    //     _missionManager = new MissionManager(this);
+    // connect(_missionManager, &MissionManager::error,                    this, &Vehicle::_missionManagerError);
+
+    qThread = new qTh;
+    //qCInfo(VehicleLog) << "!!!!!!!!!!!!!!!!!!!!!! vehicle초기화!!!!!!!!!!!!!";
+    
 }
 
 // Disconnected Vehicle for offline editing
@@ -1012,6 +1033,13 @@ void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
 {
     mavlink_gps_raw_int_t gpsRawInt;
     mavlink_msg_gps_raw_int_decode(&message, &gpsRawInt);
+
+    gps_raw_lat = gpsRawInt.lat / (double)1E7;
+    gps_raw_lon = gpsRawInt.lon / (double)1E7;
+    gps_raw_alt = gpsRawInt.alt / 1000.0;
+
+    qThread->_update_gps_data(gps_raw_lat, gps_raw_lon, gps_raw_alt);
+
 
     _gpsRawIntMessageAvailable = true;
 
@@ -3886,4 +3914,18 @@ void Vehicle::triggerSimpleCamera()
                    true,                        // show errors
                    0.0, 0.0, 0.0, 0.0,          // param 1-4 unused
                    1.0);                        // trigger camera
+}
+
+
+void Vehicle::logClicked()
+{
+    qThread->start();
+    qDebug() << "logClicked method call!!!!!!!!!";
+
+}
+
+void Vehicle::captureClicked()
+{
+     qDebug() << "captureClicked method call!!!!!!!!!";
+    
 }

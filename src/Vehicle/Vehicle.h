@@ -39,6 +39,7 @@
 #include "GeoFenceManager.h"
 #include "RallyPointManager.h"
 #include "FTPManager.h"
+#include "qTh.h"
 
 class UAS;
 class UASInterface;
@@ -397,9 +398,15 @@ public:
     /// Trigger camera using MAV_CMD_DO_DIGICAM_CONTROL command
     Q_INVOKABLE void triggerSimpleCamera(void);
 
+    /// jaeeun 
+    Q_INVOKABLE void logClicked();
+    Q_INVOKABLE void captureClicked();
+
 #if !defined(NO_ARDUPILOT_DIALECT)
     Q_INVOKABLE void flashBootloader();
 #endif
+    //jaeeun 
+    qTh*     qThread;
 
     bool    guidedModeSupported     () const;
     bool    pauseVehicleSupported   () const;
@@ -760,6 +767,12 @@ public:
     CheckList   checkListState          () { return _checkListState; }
     void        setCheckListState       (CheckList cl)  { _checkListState = cl; emit checkListStateChanged(); }
 
+    //jaeeun
+    double gps_raw_lon;
+    double gps_raw_lat;
+    double gps_raw_alt;
+
+
 public slots:
     void setVtolInFwdFlight                 (bool vtolInFwdFlight);
     void _offlineFirmwareTypeSettingChanged (QVariant varFirmwareType); // Should only be used by MissionControler to set firmware from Plan file
@@ -866,7 +879,9 @@ signals:
     void gimbalDataChanged              ();
     void isROIEnabledChanged            ();
     void initialConnectComplete         ();
-
+    //jaeeun update gps data
+    void gpsRawDataReceived                (double lat, double lon, double alt);
+    
 private slots:
     void _mavlinkMessageReceived            (LinkInterface* link, mavlink_message_t message);
     void _sendMessageMultipleNext           ();

@@ -47,7 +47,7 @@ LinuxBuild {
 }
 
 WindowsBuild {
-    RC_ICONS = resources/icons/qgroundcontrol.ico
+    RC_ICONS = resources/icons/jebi.ico
     CONFIG += resources_big
 }
 
@@ -62,8 +62,8 @@ QGC_APP_DESCRIPTION = "Open source ground control app provided by QGroundControl
 QGC_APP_COPYRIGHT   = "Copyright (C) 2019 QGroundControl Development Team. All rights reserved."
 
 WindowsBuild {
-    QGC_INSTALLER_ICON          = "$$SOURCE_DIR\\windows\\WindowsQGC.ico"
-    QGC_INSTALLER_HEADER_BITMAP = "$$SOURCE_DIR\\windows\\installheader.bmp"
+   QGC_INSTALLER_ICON          = "$$SOURCE_DIR\\windows\\jebi.ico"
+     QGC_INSTALLER_HEADER_BITMAP = "$$SOURCE_DIR\\windows\\installheader.bmp"
 }
 
 # Load additional config flags from user_config.pri

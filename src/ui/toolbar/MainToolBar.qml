@@ -67,7 +67,7 @@ Rectangle {
         QGCToolBarButton {
             id:                     currentButton
             Layout.preferredHeight: viewButtonRow.height
-            icon.source:            "/res/QGCLogoFull"
+            icon.source:            "/res/Jebi"
             logo:                   true
             onClicked:              mainWindow.showToolSelectDialog()
         }
@@ -82,6 +82,19 @@ Rectangle {
             text:               qsTr("Disconnect")
             onClicked:          _activeVehicle.closeVehicle()
             visible:            _activeVehicle && _communicationLost && currentToolbar === flyViewToolbar
+        }
+        QGCButton {
+            id:                     logButton
+            text:                   qsTr("Log")
+            onClicked:              _activeVehicle.logClicked()
+            visible:                true
+        }
+
+        QGCButton {
+            id:                     captureButton
+            text:                   qsTr("Capture")
+            onClicked:              _activeVehicle.captureClicked()
+            visible:                true
         }
     }
 
