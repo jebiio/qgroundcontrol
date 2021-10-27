@@ -14,6 +14,8 @@ public:
     double longitude;
     double latitude;
     double altitude;
+    uint64_t time_usec;
+    int point;
 
     char* path = "./test_jaeeun.txt";
     int way = 1;
@@ -22,7 +24,7 @@ public:
 
     void write_droneBotLog();
     void run();
-    void _update_gps_data(double lat, double lon, double alt);
+    void _update_gps_data(double lat, double lon, double alt, uint64_t time);
 
 };
 

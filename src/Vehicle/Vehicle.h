@@ -771,6 +771,7 @@ public:
     double gps_raw_lon;
     double gps_raw_lat;
     double gps_raw_alt;
+    uint64_t gps_time_usec;
 
 
 public slots:

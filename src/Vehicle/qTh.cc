@@ -11,36 +11,59 @@ using std::endl; using std::string;
 
 qTh::qTh(QObject *parent): QThread(parent)
 {
-
     longitude =0.0;
     latitude = 0.0;
     altitude = 0.0;
+    point = 0;
 }
 
-//영상
 
 void qTh::write_droneBotLog()
 {   
-    QDateTime dateTime = QDateTime::currentDateTime();
-    QString time_format = "yyyy.MM.dd.HH:mm:ss";
-
-    qDebug() << dateTime.toString();
-
-    auto file_name = QString("/Log/");
-    file_name.append("dronebot.txt");
+    QString path = "/Log/";
+    QString csv_file_name = "test_log.csv";
+    // .bin 파일 생성
+    QString bin_fine_name = "binary_log.bin";
 
     QDir dir;
-    dir.mkpath("/Log/");
+    dir.mkpath(path);
 
-    QFile file(file_name);
-    file.open(QIODevice::WriteOnly |  QIODevice::Append);
-    QTextStream out(&file);
+    csv_file_name.prepend(path);
+    QFile csvFile(csv_file_name);
 
-    string str = std::to_string(way);
-    QString qstr = QString::fromStdString(str);
+    //file name
+    bin_fine_name.prepend(path);
+    QFile binFile(bin_fine_name);
+    
+    
+    csvFile.open(QIODevice::WriteOnly |  QIODevice::Append);
+    QTextStream out(&csvFile);
 
-    out <<  way << ", "<< dateTime.toString(time_format)<< ", " << latitude << ", " << longitude << ", " << altitude << ", " <<"\n";
-    file.close();
+    //QDataStream
+
+    //read
+    binFile.open(QIODevice::ReadOnly);
+    QByteArray data = binFile.readAll();
+    QString byteArray = QString(data);
+    
+    qDebug() << "read byte: " << data ;
+    qDebug() << "read byte to string : " << byteArray ;
+
+
+    //write
+    // binFile.open(QIODevice::WriteOnly |  QIODevice::Append);
+    // QDataStream outBin(&binFile);
+
+    if(csvFile.pos() == 0){
+        qDebug() << "file empty, header generated";
+        out << "point,\ttime,\tlatitude,\tlongitude,\taltitude\n";
+    }
+   
+    out <<  point << ", "<< time_usec << ", " << latitude << ", " << longitude << ", " << altitude <<"\n";
+    csvFile.close();
+
+    // outBin << point ;
+    binFile.close();   
 
 }
 
@@ -49,16 +72,20 @@ void qTh::run()
 {
     while (true)
     {  
+        point++;
         write_droneBotLog();
         sleep(10);
     }
 }
 
-void qTh::_update_gps_data(double lat_raw, double lon_raw, double alt_raw)
+void qTh::_update_gps_data(double lat_raw, double lon_raw, double alt_raw, uint64_t time_raw)
 {
     latitude = lat_raw;
     longitude = lon_raw;
     altitude = alt_raw;
+    time_usec = time_raw;
+
+    // qDebug() << "gps time : " << time_usec; 
 
 }
 

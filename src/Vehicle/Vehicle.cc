@@ -1037,8 +1037,9 @@ void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
     gps_raw_lat = gpsRawInt.lat / (double)1E7;
     gps_raw_lon = gpsRawInt.lon / (double)1E7;
     gps_raw_alt = gpsRawInt.alt / 1000.0;
+    gps_time_usec = gpsRawInt.time_usec;
 
-    qThread->_update_gps_data(gps_raw_lat, gps_raw_lon, gps_raw_alt);
+    qThread->_update_gps_data(gps_raw_lat, gps_raw_lon, gps_raw_alt, gps_time_usec);
 
 
     _gpsRawIntMessageAvailable = true;
