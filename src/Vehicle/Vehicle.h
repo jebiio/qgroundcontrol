@@ -399,8 +399,13 @@ public:
     Q_INVOKABLE void triggerSimpleCamera(void);
 
     /// jaeeun 
-    Q_INVOKABLE void logClicked();
+    Q_INVOKABLE void loggingStart();
+    Q_INVOKABLE void loggingStop();
     Q_INVOKABLE void captureClicked();
+    int point = 0;
+
+    void _writeDroneBotLog();
+
 
 #if !defined(NO_ARDUPILOT_DIALECT)
     Q_INVOKABLE void flashBootloader();
@@ -986,6 +991,8 @@ private:
 
     QTimer              _csvLogTimer;
     QFile               _csvLogFile;
+
+    QTimer              _botLogTimer;
 
     bool            _joystickEnabled = false;
 

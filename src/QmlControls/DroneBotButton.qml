@@ -28,7 +28,21 @@ Button {
     property int _verticalPadding:      Math.round(ScreenTools.defaultFontPixelHeight * heightFactor)
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
+    property bool flag:  false
 
+    onClicked: {
+        if(!flag){
+            backRect.color =  qgcPal.colorRed
+            text.color = qgcPal.window
+            flag = true
+        }else {
+            backRect.color = qgcPal.button
+            text.color = qgcPal.buttonText
+            flag = false
+        }
+        
+
+    }
 
     background: Rectangle {
         id:             backRect

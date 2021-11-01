@@ -19,6 +19,12 @@
 #include <QString>
 #include <QTextStream>
 #include "QDir"
+#include <QDebug>
+#include <QFile>
+#include <QString>
+#include <QtQml>
+#include <QTextStream>
+#include <iostream>
 
 #include <Eigen/Eigen>
 
@@ -260,10 +266,12 @@ Vehicle::Vehicle(LinkInterface*             link,
 
     //jaeeun 
 
+    connect(&_botLogTimer, &QTimer::timeout, this, &Vehicle::_writeDroneBotLog);
+
     //     _missionManager = new MissionManager(this);
     // connect(_missionManager, &MissionManager::error,                    this, &Vehicle::_missionManagerError);
 
-    qThread = new qTh;
+    // qThread = new qTh;
     //qCInfo(VehicleLog) << "!!!!!!!!!!!!!!!!!!!!!! vehicle초기화!!!!!!!!!!!!!";
     
 }
@@ -1039,7 +1047,7 @@ void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
     gps_raw_alt = gpsRawInt.alt / 1000.0;
     gps_time_usec = gpsRawInt.time_usec;
 
-    qThread->_update_gps_data(gps_raw_lat, gps_raw_lon, gps_raw_alt, gps_time_usec);
+    // qThread->_update_gps_data(gps_raw_lat, gps_raw_lon, gps_raw_alt, gps_time_usec);
 
 
     _gpsRawIntMessageAvailable = true;
@@ -3917,14 +3925,53 @@ void Vehicle::triggerSimpleCamera()
                    1.0);                        // trigger camera
 }
 
+//jaeeun
 
-void Vehicle::logClicked()
-{
-    qThread->start();
-    qDebug() << "logClicked method call!!!!!!!!!";
+void Vehicle::_writeDroneBotLog()
+{   
+
+    qDebug() << "_writeDroneBotLog method using timer call ~~~~~~~~~~ ";
+    
+    QString path = "/Log/";
+    QString csv_file_name = "test_log.csv";
+
+    QDir dir;
+    dir.mkpath(path);
+
+    csv_file_name.prepend(path);
+    QFile csvFile(csv_file_name);
+    
+    csvFile.open(QIODevice::WriteOnly |  QIODevice::Append);
+    QTextStream out(&csvFile);
+ 
+    if(csvFile.pos() == 0){
+        qDebug() << "file empty, header generated";
+        out << "point,\ttime,\tlatitude,\tlongitude,\taltitude\n";
+    }
+   
+    out <<  point << ", "<< gps_time_usec << ", " << gps_raw_lat << ", " << gps_raw_lon << ", " << gps_raw_alt <<"\n";
+    
+    point ++;
+    csvFile.close();
+
 
 }
 
+
+void Vehicle::loggingStart()
+{
+    qDebug() << "logClicked method call!!!!!!!!!";
+    _botLogTimer.start(1000);
+    // qThread->start();
+    
+
+}
+
+void Vehicle::loggingStop()
+{
+    qDebug() << "logging stop method call!!!!!!!!!";
+    _botLogTimer.stop();
+}
 void Vehicle::captureClicked()
 {
      qDebug() << "captureClicked method call!!!!!!!!!";

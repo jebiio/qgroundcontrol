@@ -82,6 +82,7 @@ add_custom_target(QmlControlsQml
 		PreFlightCheckList.qml
 		PreFlightCheckModel.qml
 		QGCButton.qml
+		DroneBotButton.qml
 		QGCCheckBox.qml
 		QGCColoredImage.qml
 		QGCComboBox.qml

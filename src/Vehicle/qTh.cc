@@ -9,6 +9,7 @@
 using std::cout; using std::cin;
 using std::endl; using std::string;
 
+
 qTh::qTh(QObject *parent): QThread(parent)
 {
     longitude =0.0;
@@ -44,10 +45,13 @@ void qTh::write_droneBotLog()
     //read
     binFile.open(QIODevice::ReadOnly);
     QByteArray data = binFile.readAll();
+
+//    int point_from_byte;
+   // auto read = binFile.read(&point_from_byte, sizeof(int));
     QString byteArray = QString(data);
     
     qDebug() << "read byte: " << data ;
-    qDebug() << "read byte to string : " << byteArray ;
+  //  qDebug() << "read byte to string : " << QString::number(point_from_byte);
 
 
     //write
@@ -74,9 +78,10 @@ void qTh::run()
     {  
         point++;
         write_droneBotLog();
-        sleep(10);
+        sleep(1);
     }
 }
+
 
 void qTh::_update_gps_data(double lat_raw, double lon_raw, double alt_raw, uint64_t time_raw)
 {

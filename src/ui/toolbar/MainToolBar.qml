@@ -33,6 +33,8 @@ Rectangle {
     property bool   _communicationLost: _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
     property color  _mainStatusBGColor: qgcPal.brandingPurple
 
+    property bool   logFlag: false
+
     QGCPalette { id: qgcPal }
 
     /// Bottom single pixel divider
@@ -83,10 +85,22 @@ Rectangle {
             onClicked:          _activeVehicle.closeVehicle()
             visible:            _activeVehicle && _communicationLost && currentToolbar === flyViewToolbar
         }
-        QGCButton {
+        DroneBotButton {
             id:                     logButton
             text:                   qsTr("Log")
-            onClicked:              _activeVehicle.logClicked()
+            onClicked:  {
+                if(!logFlag){
+                    logButton.text = qsTr("Logging")
+                    _activeVehicle.loggingStart()
+                    logFlag = true
+                }else {
+                    
+                    logButton.text = qsTr("Log")
+                    _activeVehicle.loggingStop()
+                    logFlag = false
+
+                }
+            }
             visible:                true
         }
 
