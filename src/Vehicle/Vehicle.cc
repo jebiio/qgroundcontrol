@@ -3930,10 +3930,11 @@ void Vehicle::triggerSimpleCamera()
 void Vehicle::_writeDroneBotLog()
 {   
 
-    qDebug() << "_writeDroneBotLog method using timer call ~~~~~~~~~~ ";
+    // qDebug() << "_writeDroneBotLog method using timer call ~~~~~~~~~~ ";
     
     QString path = "/Log/";
     QString csv_file_name = "test_log.csv";
+    QString bin_file_name = "test_log.bin";
 
     QDir dir;
     dir.mkpath(path);
@@ -3955,16 +3956,32 @@ void Vehicle::_writeDroneBotLog()
     csvFile.close();
 
 
+    bin_file_name.prepend(path);
+    QFile binFile(bin_file_name);
+
+
+    binFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QDataStream out_bin(&binFile);
+
+    
+    out_bin.setByteOrder(QDataStream::LittleEndian);
+
+    out_bin<<qint32(point); //way
+    out_bin<<quint32(gps_time_usec); //time
+    out_bin<<qreal(gps_raw_lat); //lat
+    out_bin<<qreal(gps_raw_lon); //lon
+    out_bin<<qreal(gps_raw_alt); //alt
+
+
+    binFile.close();
 }
 
 
 void Vehicle::loggingStart()
 {
-    qDebug() << "logClicked method call!!!!!!!!!";
+    qDebug() << "logging start method call!!!!!!!!!";
     _botLogTimer.start(1000);
     // qThread->start();
-    
-
 }
 
 void Vehicle::loggingStop()
@@ -3972,8 +3989,26 @@ void Vehicle::loggingStop()
     qDebug() << "logging stop method call!!!!!!!!!";
     _botLogTimer.stop();
 }
+
 void Vehicle::captureClicked()
 {
-     qDebug() << "captureClicked method call!!!!!!!!!";
-    
+    qDebug() << "captrue method call!!!!!!!!!";
+
+    QString path = "/Capture/";
+    QDir dir;
+    dir.mkpath(path);
+
+    // QString filename_date = QDate::currentDate().toString("'/Capture/'yyyy_MM_dd'.png'");
+
+    QDateTime now = QDateTime::currentDateTime();
+    QString timestamp = now.toString(QLatin1String("hh_mm_ss"));
+    QString filename = QString::fromLatin1("%1%2.png").arg(path).arg(timestamp);
+
+    QPixmap snapshot;
+    QImageWriter imgWriter(filename, "png");
+    QImage PngImage;
+    QScreen* screen = QGuiApplication::primaryScreen();
+    snapshot = screen->grabWindow(0);
+    PngImage = snapshot.toImage();
+    imgWriter.write(PngImage);
 }

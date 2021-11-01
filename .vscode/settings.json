@@ -3,6 +3,7 @@
         "xlocale": "cpp",
         "vector": "cpp",
         "xstring": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "complex": "cpp"
     }
 }
