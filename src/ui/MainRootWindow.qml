@@ -32,9 +32,11 @@ ApplicationWindow {
         //-- Full screen on mobile or tiny screens
         if (ScreenTools.isMobile || Screen.height / ScreenTools.realPixelDensity < 120) {
             mainWindow.showFullScreen()
+            mainWindow.showJebiDialog()
         } else {
             width   = ScreenTools.isMobile ? Screen.width  : Math.min(250 * Screen.pixelDensity, Screen.width)
             height  = ScreenTools.isMobile ? Screen.height : Math.min(150 * Screen.pixelDensity, Screen.height)
+            mainWindow.showJebiDialog()
         }
 
         // Start the sequence of first run prompt(s)
@@ -340,6 +342,128 @@ ApplicationWindow {
     function showToolSelectDialog() {
         if (!mainWindow.preventViewSwitch()) {
             showPopupDialogFromComponent(toolSelectDialogComponent)
+        }
+    }
+
+    function showJebiDialog() {
+        if (!mainWindow.preventViewSwitch()) {
+            showPopupDialogFromComponent(jebiDialogComponent)
+        }
+    }
+
+    Component {
+        id: jebiDialogComponent
+
+        QGCPopupDialog {
+            id:         toolSelectDialog
+            title:      qsTr("JebiPilot")
+            buttons:    StandardButton.Close
+
+            width:         mainWindow.width*0.5
+            height:         mainWindow.height*0.5
+
+            property real _toolButtonHeight:    ScreenTools.defaultFontPixelHeight * 3
+            property real _margins:             ScreenTools.defaultFontPixelWidth
+
+            ColumnLayout {
+                id: columnlay
+                width:  innerLayout.width + (_margins * 2)
+                height: innerLayout.height + (_margins * 2)
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                ColumnLayout {
+                    id:             innerLayout
+                    Layout.margins: _margins
+                    spacing:        ScreenTools.defaultFontPixelWidth
+                    
+                    // width:  innerLayout.width + (_margins * 2)
+                    // height: innerLayout.height  + (_margins * 2)                    
+
+                    Image {    
+                        id:                 jebiLogo
+                        source:      "/res/JebiLogo"
+                        sourceSize.height:  _toolButtonHeight * 2
+                        Layout.alignment: Qt.AlignCenter
+                    }
+
+                    Text{
+                        text: "JebiPilot"
+                        Layout.alignment: Qt.AlignCenter
+                        font.family:     ScreenTools.normalFontFamily
+                        font.pointSize: 20
+                        color:  "black"
+                    }
+
+                    Text{
+                        text: "JebiPilot version v1.0.1"
+                        //anchors.centerIn: parent
+                        Layout.alignment: Qt.AlignCenter
+                        font.family:     ScreenTools.normalFontFamily
+                        font.pointSize: ScreenTools.smallFontPointSize
+                        color:  	"#808080"
+                    }
+                }
+            }
+
+            GridLayout{       
+                width :parent.width * 0.5
+                anchors.top: columnlay.bottom
+                // anchors.leftMargin:     _margins
+                // anchors.left:           parent.left
+                // anchors.verticalAlignment: parent.verticalAlignment
+                anchors.horizontalCenter: parent.horizontalCenter
+                columnSpacing:          0
+                columns:                1      
+
+                Layout.alignment:       Qt.AlignVCenter | Qt.AlignHCenter
+
+                JebiDialogMenuButton {
+                    id:                 analyzeButton
+                    height:             _toolButtonHeight
+                    Layout.fillWidth:   true
+                    text:               qsTr("Create a Flight Plan ")
+                    imageResource:      "/qmlimages/JebiPlanIcon.svg"
+                    imageColor:         qgcPal.text
+                    visible:            QGroundControl.corePlugin.showAdvancedUI
+                    onClicked: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            toolSelectDialog.hideDialog()
+                            mainWindow.showPlanView()
+                        }
+                    }
+                }
+
+                JebiDialogMenuButton {
+                    id:                 setupButton
+                    height:             _toolButtonHeight
+                    Layout.fillWidth:   true
+                    text:               qsTr("Vehicle Setup")
+                    imageColor:         qgcPal.text
+                    imageResource:      "/qmlimages/JebiSetupIcon.svg"
+                    onClicked: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            toolSelectDialog.hideDialog()
+                            mainWindow.showSetupTool()
+                        }
+                    }
+                }
+
+                JebiDialogMenuButton {
+                    id:                 settingsButton
+                    height:             _toolButtonHeight
+                    Layout.fillWidth:   true
+                    text:               qsTr("Application Settings")
+                    imageResource:      "/qmlimages/JebiSettingIcon.svg"
+                    imageColor:         qgcPal.text
+                    visible:            !QGroundControl.corePlugin.options.combineSettingsAndSetup
+                    onClicked: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            toolSelectDialog.hideDialog()
+                            mainWindow.showSettingsTool()
+                        }
+                    }
+                }
+            }
         }
     }
 
