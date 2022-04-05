@@ -14,23 +14,27 @@
 #include <QColor>
 #include <QMap>
 
-#define DECLARE_QGC_COLOR(name, lightDisabled, lightEnabled, darkDisabled, darkEnabled) \
+#define DECLARE_QGC_COLOR(name, lightDisabled, lightEnabled, darkDisabled, darkEnabled, blueDisabled, blueEnabled) \
     { \
         PaletteColorInfo_t colorInfo = { \
             { QColor(lightDisabled), QColor(lightEnabled) }, \
-            { QColor(darkDisabled), QColor(darkEnabled) } \
+            { QColor(darkDisabled), QColor(darkEnabled) }, \
+            { QColor(blueDisabled), QColor(blueEnabled) } \
         }; \
         qgcApp()->toolbox()->corePlugin()->paletteOverride(#name, colorInfo); \
         _colorInfoMap[Light][ColorGroupEnabled][QStringLiteral(#name)] = colorInfo[Light][ColorGroupEnabled]; \
         _colorInfoMap[Light][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Light][ColorGroupDisabled]; \
         _colorInfoMap[Dark][ColorGroupEnabled][QStringLiteral(#name)] = colorInfo[Dark][ColorGroupEnabled]; \
         _colorInfoMap[Dark][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Dark][ColorGroupDisabled]; \
+        _colorInfoMap[Blue][ColorGroupEnabled][QStringLiteral(#name)] = colorInfo[Blue][ColorGroupEnabled]; \
+        _colorInfoMap[Blue][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Blue][ColorGroupDisabled]; \
         _colors << #name; \
     }
 
 #define DECLARE_QGC_NONTHEMED_COLOR(name, disabledColor, enabledColor) \
     { \
         PaletteColorInfo_t colorInfo = { \
+            { QColor(disabledColor), QColor(enabledColor) }, \
             { QColor(disabledColor), QColor(enabledColor) }, \
             { QColor(disabledColor), QColor(enabledColor) } \
         }; \
@@ -39,12 +43,15 @@
         _colorInfoMap[Light][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Light][ColorGroupDisabled]; \
         _colorInfoMap[Dark][ColorGroupEnabled][QStringLiteral(#name)] = colorInfo[Dark][ColorGroupEnabled]; \
         _colorInfoMap[Dark][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Dark][ColorGroupDisabled]; \
+        _colorInfoMap[Blue][ColorGroupEnabled][QStringLiteral(#name)] = colorInfo[Blue][ColorGroupEnabled]; \
+        _colorInfoMap[Blue][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Blue][ColorGroupDisabled]; \
         _colors << #name; \
     }
 
 #define DECLARE_QGC_SINGLE_COLOR(name, color) \
     { \
         PaletteColorInfo_t colorInfo = { \
+            { QColor(color), QColor(color) }, \
             { QColor(color), QColor(color) }, \
             { QColor(color), QColor(color) } \
         }; \
@@ -53,6 +60,8 @@
         _colorInfoMap[Light][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Light][ColorGroupDisabled]; \
         _colorInfoMap[Dark][ColorGroupEnabled][QStringLiteral(#name)] = colorInfo[Dark][ColorGroupEnabled]; \
         _colorInfoMap[Dark][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Dark][ColorGroupDisabled]; \
+        _colorInfoMap[Blue][ColorGroupEnabled][QStringLiteral(#name)] = colorInfo[Dark][ColorGroupEnabled]; \
+        _colorInfoMap[Blue][ColorGroupDisabled][QStringLiteral(#name)] = colorInfo[Dark][ColorGroupDisabled]; \
         _colors << #name; \
     }
 
@@ -66,6 +75,8 @@
         c << _colorInfoMap[Light][ColorGroupDisabled][QStringLiteral(#NAME)].name(QColor::HexRgb); \
         c << _colorInfoMap[Dark][ColorGroupEnabled][QStringLiteral(#NAME)].name(QColor::HexRgb); \
         c << _colorInfoMap[Dark][ColorGroupDisabled][QStringLiteral(#NAME)].name(QColor::HexRgb); \
+        c << _colorInfoMap[Blue][ColorGroupEnabled][QStringLiteral(#NAME)].name(QColor::HexRgb); \
+        c << _colorInfoMap[Blue][ColorGroupDisabled][QStringLiteral(#NAME)].name(QColor::HexRgb); \
         return c; \
     } \
     void SETNAME(const QColor& color) { _colorInfoMap[_theme][_colorGroupEnabled  ? ColorGroupEnabled : ColorGroupDisabled][QStringLiteral(#NAME)] = color; _signalPaletteChangeToAll(); }
@@ -101,7 +112,8 @@ public:
 
     enum Theme {
         Light = 0,
-        Dark,
+        Dark = 1,
+        Blue = 2,
         cMaxTheme
     };
     Q_ENUM(Theme)
@@ -152,6 +164,8 @@ public:
     DEFINE_QGC_COLOR(toolbarBackground,             setToolbarBackground)
     DEFINE_QGC_COLOR(toolStripFGColor,              setToolStripFGColor)
     DEFINE_QGC_COLOR(toolStripHoverColor,           setToolStripHoverColor)
+    //colorJebiBlue
+    DEFINE_QGC_COLOR(colorJebiBlue,                 setcolorJebiBlue)
 
      QGCPalette(QObject* parent = nullptr);
     ~QGCPalette();
