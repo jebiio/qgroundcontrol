@@ -52,7 +52,18 @@ QList<int> AppSettings::_rgPartialLanguages = {
 DECLARE_SETTINGGROUP(App, "")
 {
     qmlRegisterUncreatableType<AppSettings>("QGroundControl.SettingsManager", 1, 0, "AppSettings", "Reference only");
-    QGCPalette::setGlobalTheme(indoorPalette()->rawValue().toBool() ? QGCPalette::Dark : QGCPalette::Light);
+
+    QString rawValueIndex = indoorPalette()->rawValue().toString();
+
+    if (rawValueIndex == "0"){
+        QGCPalette::setGlobalTheme(QGCPalette::Light);
+    }else if(rawValueIndex == "1"){
+        QGCPalette::setGlobalTheme(QGCPalette::Dark);
+    }else if(rawValueIndex == "2"){
+        QGCPalette::setGlobalTheme(QGCPalette::Blue);
+    }
+
+    // QGCPalette::setGlobalTheme(indoorPalette()->rawValue().toBool() ? QGCPalette::Dark : QGCPalette::Light);
 
     QSettings settings;
 
@@ -221,8 +232,18 @@ void AppSettings::_checkSavePathDirectories(void)
 }
 
 void AppSettings::_indoorPaletteChanged(void)
-{
-    QGCPalette::setGlobalTheme(indoorPalette()->rawValue().toBool() ? QGCPalette::Dark : QGCPalette::Light);
+{  
+    QString rawValueIndex = indoorPalette()->rawValue().toString();
+
+    if (rawValueIndex == "0"){
+        QGCPalette::setGlobalTheme(QGCPalette::Light);
+    }else if(rawValueIndex == "1"){
+        QGCPalette::setGlobalTheme(QGCPalette::Dark);
+    }else if(rawValueIndex == "2"){
+        QGCPalette::setGlobalTheme(QGCPalette::Blue);
+    }
+
+    //QGCPalette::setGlobalTheme(indoorPalette()->rawValue().toBool() ? QGCPalette::Dark : QGCPalette::Light);
 }
 
 QString AppSettings::missionSavePath(void)
