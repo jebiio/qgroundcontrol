@@ -391,7 +391,7 @@ ApplicationWindow {
                         Layout.alignment: Qt.AlignCenter
                         font.family:     ScreenTools.normalFontFamily
                         font.pointSize: 20
-                        color:  "black"
+                        color:  qgcPal.text
                     }
 
                     Text{
@@ -428,7 +428,8 @@ ApplicationWindow {
                     onClicked: {
                         if (!mainWindow.preventViewSwitch()) {
                             toolSelectDialog.hideDialog()
-                            mainWindow.showPlanView()
+                            //mainWindow.showPlanView()
+                            mainWindow.showAnalyzeTool()
                         }
                     }
                 }
