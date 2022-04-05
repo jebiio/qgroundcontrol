@@ -51,8 +51,8 @@ Rectangle {
 
         gradient: Gradient {
             orientation: Gradient.Horizontal
-            GradientStop { position: 0;                                     color: _mainStatusBGColor }
-            GradientStop { position: currentButton.x + currentButton.width; color: _mainStatusBGColor }
+            GradientStop { position: 0;                                     color: qgcPal.colorJebiBlue  } // origin : _mainStatusBGColor
+            GradientStop { position: currentButton.x + currentButton.width; color: qgcPal.colorJebiBlue} // origin : _mainStatusBGColor
             GradientStop { position: 1;                                     color: _root.color }
         }
     }
