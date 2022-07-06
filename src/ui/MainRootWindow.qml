@@ -356,7 +356,7 @@ ApplicationWindow {
 
         QGCPopupDialog {
             id:         toolSelectDialog
-            title:      qsTr("JebiPilot")
+            title:      qsTr("KrisoGCS")
             buttons:    StandardButton.Close
 
             width:         mainWindow.width*0.5
@@ -380,14 +380,14 @@ ApplicationWindow {
                     // height: innerLayout.height  + (_margins * 2)                    
 
                     Image {    
-                        id:                 jebiLogo
-                        source:      "/res/JebiLogo"
+                        id:                 krisoLogo
+                        source:      "/res/KrisoLogo"
                         sourceSize.height:  _toolButtonHeight * 2
                         Layout.alignment: Qt.AlignCenter
                     }
 
                     Text{
-                        text: "JebiPilot"
+                        text: "KrisoGCS"
                         Layout.alignment: Qt.AlignCenter
                         font.family:     ScreenTools.normalFontFamily
                         font.pointSize: 20
@@ -395,7 +395,7 @@ ApplicationWindow {
                     }
 
                     Text{
-                        text: "JebiPilot version v1.0.1"
+                        text: "KrisoGCS version v1.0.1"
                         //anchors.centerIn: parent
                         Layout.alignment: Qt.AlignCenter
                         font.family:     ScreenTools.normalFontFamily

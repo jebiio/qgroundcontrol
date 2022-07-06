@@ -67,7 +67,7 @@ Rectangle {
     QGCToolBarButton {
             id:                     currentButton
             Layout.preferredHeight: viewButtonRow.height
-            icon.source:            "/res/JebiLogo"
+            icon.source:            "/res/KrisoLogo"
             logo:                   true
             onClicked:              mainWindow.showJebiDialog()
         }
