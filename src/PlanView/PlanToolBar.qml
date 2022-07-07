@@ -31,7 +31,7 @@ Rectangle {
         QGCToolBarButton {
             id:                 settingsButton
             Layout.fillHeight:  true
-            icon.source:        "/qmlimages/PaperPlane.svg"
+            icon.source:        "/qmlimages/PaperShip.svg"
             checked:            false
             onClicked: {
                 checked = false
