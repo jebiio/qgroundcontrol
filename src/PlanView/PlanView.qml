@@ -634,7 +634,7 @@ Item {
                 id: toolStripActionList
                 model: [
                     ToolStripAction {
-                        text:           qsTr("Fly")
+                        text:           qsTr("Voyage")
                         iconSource:     "/qmlimages/PaperShip.svg"
                         onTriggered:    mainWindow.showFlyView()
                     },
@@ -648,7 +648,7 @@ Item {
                         dropPanelComponent:     syncDropPanel
                     },
                     ToolStripAction {
-                        text:       qsTr("Takeoff")
+                        text:       qsTr("Departure")
                         iconSource: "/res/takeoff.svg"
                         enabled:    _missionController.isInsertTakeoffValid
                         visible:    toolStrip._isMissionLayer && !_planMasterController.controllerVehicle.rover

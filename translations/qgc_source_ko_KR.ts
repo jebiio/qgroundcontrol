@@ -7019,8 +7019,8 @@ Click Ok to start the auto-tuning process.
     <name>FlyViewToolStrip</name>
     <message>
       <location filename="../src/FlightDisplay/FlyViewToolStrip.qml" line="18"/>
-      <source>Fly</source>
-      <translation>비행</translation>
+      <source>Voyage</source>
+      <translation>항해</translation>
     </message>
   </context>
   <context>
@@ -7880,8 +7880,8 @@ Click Ok to start the auto-tuning process.
     </message>
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="41"/>
-      <source>Takeoff</source>
-      <translation>이륙</translation>
+      <source>Departure</source>
+      <translation>출항</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="42"/>
@@ -9481,8 +9481,8 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/ui/MainRootWindow.qml" line="160"/>
       <location filename="../src/ui/MainRootWindow.qml" line="370"/>
-      <source>Vehicle Setup</source>
-      <translation>기체 설정</translation>
+      <source>Watercraft Setup</source>
+      <translation>선체 설정</translation>
     </message>
     <message>
       <location filename="../src/ui/MainRootWindow.qml" line="164"/>
@@ -9499,6 +9499,11 @@ Click Ok to start the auto-tuning process.
       <location filename="../src/ui/MainRootWindow.qml" line="351"/>
       <source>Select Tool</source>
       <translation>도구 선택하기</translation>
+    </message>
+    <message>
+      <location filename="../src/ui/MainRootWindow.qml" line="424"/>
+      <source>Create a voyage plan</source>
+      <translation>해양 경로 계획 생성</translation>
     </message>
     <message>
       <location filename="../src/ui/MainRootWindow.qml" line="419"/>
@@ -12974,13 +12979,13 @@ Click &apos;Ok&apos; to upload the Plan anyway.</source>
     </message>
     <message>
       <location filename="../src/PlanView/PlanView.qml" line="637"/>
-      <source>Fly</source>
-      <translation>비행</translation>
+      <source>Voyage</source>
+      <translation>항해</translation>
     </message>
     <message>
       <location filename="../src/PlanView/PlanView.qml" line="651"/>
-      <source>Takeoff</source>
-      <translation>이륙</translation>
+      <source>Departure</source>
+      <translation>출항</translation>
     </message>
     <message>
       <location filename="../src/PlanView/PlanView.qml" line="662"/>
