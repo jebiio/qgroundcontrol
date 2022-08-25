@@ -709,6 +709,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_GPS_RAW_INT:
         _handleGpsRawInt(message);
         break;
+    case MAVLINK_MSG_ID_KRISO_STATUS:
+        _handleKRISOStatus(message);
+        break;
     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
         _handleGlobalPositionInt(message);
         break;
@@ -1112,6 +1115,23 @@ void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
         }
     }
 }
+
+void Vehicle::_handleKRISOStatus(mavlink_message_t& message)
+{
+    mavlink_kriso_status_t krisoStatus;
+    mavlink_msg_gps_raw_int_decode(&message, &krisoStatus);
+
+    _gpsRawIntMessageAvailable = true;
+
+    if (!_globalPositionIntMessageAvailable) {
+        QGeoCoordinate newPosition(krisoStatus.nav_latitude  / (double)1E7, krisoStatus.nav_longitude / (double)1E7, 1.0);
+        if (newPosition != _coordinate) {
+            _coordinate = newPosition;
+            emit coordinateChanged(_coordinate);
+        }
+    }  
+}
+
 
 void Vehicle::_handleGlobalPositionInt(mavlink_message_t& message)
 {
