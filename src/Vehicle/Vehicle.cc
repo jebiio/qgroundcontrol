@@ -1118,8 +1118,9 @@ void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
 
 void Vehicle::_handleKRISOStatus(mavlink_message_t& message)
 {
+    qCDebug(krisoStatus) << "read kriso!!!!!!!!!!!!!!!!!!!!!!!!!11";
     mavlink_kriso_status_t krisoStatus;
-    mavlink_msg_gps_raw_int_decode(&message, &krisoStatus);
+    mavlink_msg_kriso_status_decode(&message, &krisoStatus);
 
     _gpsRawIntMessageAvailable = true;
 
