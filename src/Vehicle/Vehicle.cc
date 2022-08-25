@@ -706,9 +706,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_LOGGING_DATA_ACKED:
         _handleMavlinkLoggingDataAcked(message);
         break;
-    case MAVLINK_MSG_ID_GPS_RAW_INT:
-        _handleGpsRawInt(message);
-        break;
+    // case MAVLINK_MSG_ID_GPS_RAW_INT:
+    //     _handleGpsRawInt(message);
+    //     break;
     case MAVLINK_MSG_ID_KRISO_STATUS:
         _handleKRISOStatus(message);
         break;
@@ -1118,7 +1118,7 @@ void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
 
 void Vehicle::_handleKRISOStatus(mavlink_message_t& message)
 {
-    qCDebug(krisoStatus) << "read kriso!!!!!!!!!!!!!!!!!!!!!!!!!11";
+    qDebug() << "-----------------kris status -------------------------";
     mavlink_kriso_status_t krisoStatus;
     mavlink_msg_kriso_status_decode(&message, &krisoStatus);
 
