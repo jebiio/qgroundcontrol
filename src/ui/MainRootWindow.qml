@@ -147,7 +147,7 @@ ApplicationWindow {
     }
 
     function showTool(toolTitle, toolSource, toolIcon) {
-        toolDrawer.backIcon     = flightView.visible ? "/qmlimages/PaperPlane.svg" : "/qmlimages/Plan.svg"
+        toolDrawer.backIcon     = flightView.visible ? "/qmlimages/PaperShip.svg" : "/qmlimages/Plan.svg"
         toolDrawer.toolTitle    = toolTitle
         toolDrawer.toolSource   = toolSource
         toolDrawer.toolIcon     = toolIcon
@@ -159,7 +159,7 @@ ApplicationWindow {
     }
 
     function showSetupTool() {
-        showTool(qsTr("Vehicle Setup"), "SetupView.qml", "/qmlimages/Gears.svg")
+        showTool(qsTr("Watercraft Setup"), "SetupView.qml", "/qmlimages/Gears.svg")
     }
 
     function showSettingsTool() {
@@ -356,7 +356,7 @@ ApplicationWindow {
 
         QGCPopupDialog {
             id:         toolSelectDialog
-            title:      qsTr("KrisoGCS")
+            title:      qsTr("KRISOGCS")
             buttons:    StandardButton.Close
 
             width:         mainWindow.width*0.5
@@ -387,7 +387,7 @@ ApplicationWindow {
                     }
 
                     Text{
-                        text: "KrisoGCS"
+                        text: "KRISO GCS"
                         Layout.alignment: Qt.AlignCenter
                         font.family:     ScreenTools.normalFontFamily
                         font.pointSize: 20
@@ -395,7 +395,7 @@ ApplicationWindow {
                     }
 
                     Text{
-                        text: "KrisoGCS version v1.0.1"
+                        text: "KRISO GCS Version v1.0.1"
                         //anchors.centerIn: parent
                         Layout.alignment: Qt.AlignCenter
                         font.family:     ScreenTools.normalFontFamily
@@ -421,7 +421,7 @@ ApplicationWindow {
                     id:                 analyzeButton
                     height:             _toolButtonHeight
                     Layout.fillWidth:   true
-                    text:               qsTr("Create a Flight Plan ")
+                    text:               qsTr("Create a voyage plan")
                     imageResource:      "/qmlimages/JebiPlanIcon.svg"
                     imageColor:         qgcPal.text
                     visible:            QGroundControl.corePlugin.showAdvancedUI
@@ -438,7 +438,7 @@ ApplicationWindow {
                     id:                 setupButton
                     height:             _toolButtonHeight
                     Layout.fillWidth:   true
-                    text:               qsTr("Vehicle Setup")
+                    text:               qsTr("Watercraft Setup")
                     imageColor:         qgcPal.text
                     imageResource:      "/qmlimages/JebiSetupIcon.svg"
                     onClicked: {
@@ -492,7 +492,7 @@ ApplicationWindow {
                         id:                 setupButton
                         height:             _toolButtonHeight
                         Layout.fillWidth:   true
-                        text:               qsTr("Vehicle Setup")
+                        text:               qsTr("Watercraft Setup")
                         imageColor:         qgcPal.text
                         imageResource:      "/qmlimages/Gears.svg"
                         onClicked: {
