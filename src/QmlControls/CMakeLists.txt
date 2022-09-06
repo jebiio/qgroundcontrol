@@ -129,6 +129,7 @@ add_custom_target(QmlControlsQml
 		VehicleRotationCal.qml
 		VehicleSummaryRow.qml
 		JebiDialogMenuButton.qml
+		PageView.qml
 )
 
 target_link_libraries(QmlControls
