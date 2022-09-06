@@ -45,8 +45,8 @@ Rectangle {
             sourceSize.height:      height
             color:                  qgcPal.text
             fillMode:               Image.PreserveAspectFit
-            visible:                true
-            // visible:                pageWidgetLoader.item ? (pageWidgetLoader.item.showSettingsIcon ? pageWidgetLoader.item.showSettingsIcon : false) : false
+            // visible:                true
+            visible:                pageWidgetLoader.item ? (pageWidgetLoader.item.showSettingsIcon ? pageWidgetLoader.item.showSettingsIcon : false) : false
 
             QGCMouseArea {
                 fillItem:   parent
@@ -70,7 +70,7 @@ Rectangle {
 
         Loader {
             id:     pageWidgetLoader
-            // source: _instrumentPages[pageCombo.currentIndex].url
+            source: _instrumentPages[pageCombo.currentIndex].url
             property real pageWidth:  parent.width
         }
     }

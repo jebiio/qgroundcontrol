@@ -96,9 +96,12 @@ public:
     QmlComponentInfo* pQmlTest                  = nullptr;
 #endif
 
+    QmlComponentInfo*   valuesPageWidgetInfo    = nullptr;
+
     QGCOptions*         defaultOptions          = nullptr;
     QVariantList        settingsList;
     QVariantList        analyzeList;
+    QVariantList        instrumentPageWidgetList;
 
     QmlObjectListModel _emptyCustomMapItems;
 };
@@ -186,6 +189,16 @@ QVariantList &QGCCorePlugin::settingsPages()
     }
     return _p->settingsList;
 }
+
+QVariantList& QGCCorePlugin::instrumentPages()
+{
+    if (!_p->valuesPageWidgetInfo) {
+        _p->valuesPageWidgetInfo    = new QmlComponentInfo(tr("Values"),    QUrl::fromUserInput("qrc:/qml/ValuePageWidget.qml"));
+        _p->instrumentPageWidgetList.append(QVariant::fromValue(_p->valuesPageWidgetInfo));
+    }
+    return _p->instrumentPageWidgetList;
+}
+
 
 QVariantList& QGCCorePlugin::analyzePages()
 {
@@ -288,6 +301,13 @@ QString QGCCorePlugin::showAdvancedUIMessage() const
               "You should do so only if instructed by customer support. "
               "Are you sure you want to enable Advanced Mode?");
 }
+
+void QGCCorePlugin::valuesWidgetDefaultSettings(QStringList& largeValues, QStringList& smallValues)
+{
+    Q_UNUSED(smallValues);
+    largeValues << "Vehicle.altitudeRelative" << "Vehicle.groundSpeed" << "Vehicle.flightTime";
+}
+
 
 void QGCCorePlugin::factValueGridCreateDefaultSettings(const QString& defaultSettingsGroup)
 {
