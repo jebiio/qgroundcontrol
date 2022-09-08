@@ -710,6 +710,7 @@ HEADERS += \
     src/Vehicle/HealthAndArmingChecks.h \
     src/Vehicle/ImageProtocolManager.h \
     src/Vehicle/InitialConnectStateMachine.h \
+    src/Vehicle/KrisoFactGroup.h \
     src/Vehicle/MAVLinkLogManager.h \
     src/Vehicle/MAVLinkStreamConfig.h \
     src/Vehicle/MultiVehicleManager.h \
@@ -962,6 +963,7 @@ SOURCES += \
     src/Vehicle/HealthAndArmingChecks.cc \
     src/Vehicle/ImageProtocolManager.cc \
     src/Vehicle/InitialConnectStateMachine.cc \
+    src/Vehicle/KrisoFactGroup.cc \
     src/Vehicle/MAVLinkLogManager.cc \
     src/Vehicle/MAVLinkStreamConfig.cc \
     src/Vehicle/MultiVehicleManager.cc \

@@ -46,6 +46,7 @@ add_library(Vehicle
 	ImageProtocolManager.h
 	InitialConnectStateMachine.cc
 	InitialConnectStateMachine.h
+	KrisoFactGroup.h
 	MAVLinkLogManager.cc
 	MAVLinkLogManager.h
 	MAVLinkStreamConfig.cc

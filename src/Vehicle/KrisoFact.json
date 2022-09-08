@@ -4,174 +4,22 @@
     "QGC.MetaData.Facts":
 [
 {
-    "name":             "T1_RPS",
-    "shortDesc": "T1_RPS",
+    "name":             "lat",
+    "shortDesc": "Latitude",
+    "type":             "double",
+    "decimalPlaces":    7
+},
+{
+    "name":             "lon",
+    "shortDesc": "Longitude",
+    "type":             "double",
+    "decimalPlaces":    7
+},
+{
+    "name":             "t1rps",
+    "shortDesc": "T1RPS",
     "type":             "float",
-    "decimalPlaces":    1,
-    "units":            "deg"
-},
-{
-    "name":             "T2_RPS",
-    "shortDesc": "T2_RPS",
-    "type":             "float",
-    "decimalPlaces":    1,
-    "units":            "deg"
-},
-{
-    "name":             "T3_RPS",
-    "shortDesc": "T3_RPS",
-    "type":             "float",
-    "decimalPlaces":    0,
-    "units":            "deg"
-},
-{
-    "name":             "T3_Angle",
-    "shortDesc": "T3_Angle",
-    "type":             "float",
-    "decimalPlaces":    1,
-    "units":            "deg/s"
-},
-{
-    "name":             "T4_RPS",
-    "shortDesc": "T4_RPS",
-    "type":             "float",
-    "decimalPlaces":    1,
-    "units":            "deg/s"
-},
-{
-    "name":             "T4_Angle",
-    "shortDesc": "T4_Angle",
-    "type":             "float",
-    "decimalPlaces":    1,
-    "units":            "deg/s"
-},
-{
-    "name":             "nav_mode",
-    "shortDesc": "Nav_mode",
-    "type":             "double",
-    "decimalPlaces":    1,
-    "units":            "m/s"
-},
-{
-    "name":             "nav_roll",
-    "shortDesc": "Nav_roll",
-    "type":             "double",
-    "decimalPlaces":    1,
-    "units":            "m/s"
-},
-{
-    "name":             "nav_pitch",
-    "shortDesc": "Nav_pitch",
-    "type":             "double",
-    "decimalPlaces":    1,
-    "units":            "m/s"
-},
-{
-    "name":             "nav_yaw",
-    "shortDesc": "Nav_yaw",
-    "type":             "double",
-    "decimalPlaces":    1,
-    "units":            "m"
-},
-{
-    "name":             "nav_cog",
-    "shortDesc": "nav_cog",
-    "type":             "double",
-    "decimalPlaces":    1,
-    "units":            "m"
-},
-{
-    "name":             "nav_sog",
-    "shortDesc": "Nav_sog",
-    "type":             "double",
-    "decimalPlaces":    1,
-    "units":            "m"
-},
-{
-    "name":             "nav_uspd",
-    "shortDesc": "Nav_uspd",
-    "type":             "double",
-    "decimalPlaces":    1,
-    "units":            "m"
-},
-{
-    "name":             "nav_vspd",
-    "shortDesc": "Nav_vspd",
-    "type":             "double",
-    "decimalPlaces":    0,
-    "units":            "deg"
-},
-{
-    "name":             "nav_longitude",
-    "shortDesc": "Nav_longitude",
-    "type":             "double",
-    "decimalPlaces":    1,
-    "units":            "m"
-},
-{
-    "name":             "nav_latitude",
-    "shortDesc": "Nav_latitude",
-    "type":             "uint16"
-},
-{
-    "name":             "nav_gpstime",
-    "shortDesc": "Nav_gpstime",
-    "type":             "double",
-    "decimalPlaces":    0,
-    "units":            "deg"
-},
-{
-    "name":             "wea_airtem",
-    "shortDesc": "Wea_airtem",
-    "type":             "elapsedSeconds",
     "decimalPlaces":    1
-},
-{
-    "name":             "wea_wattem",
-    "shortDesc": "Wea_wattem",
-    "type":             "string"
-},
-{
-    "name":             "wea_press",
-    "shortDesc": "Wea_press",
-    "type":             "uint16",
-    "units":            "%"
-},
-{
-    "name":             "wea_relhum",
-    "shortDesc": "Wea_relhum",
-    "type":             "uint16",
-    "units":            "%"
-},
-{
-    "name":             "wea_windirt",
-    "shortDesc": "Wea_windirt",
-    "type":             "uint16",
-    "units":            "%"
-},
-{
-    "name":             "wea_winspdt",
-    "shortDesc": "Wea_winspdt",
-    "type":             "uint16",
-    "units":            "%"
-},
-{
-    "name":             "wea_watdir",
-    "shortDesc": "Wea_watdir",
-    "type":             "uint16",
-    "units":            "%"
-},
-{
-    "name":             "wea_watspd",
-    "shortDesc": "Wea_watspd",
-    "type":             "uint16",
-    "units":            "%"
-},
-{
-    "name":             "wea_visibiran",
-    "shortDesc": "Wea_visibiran",
-    "type":             "uint16",
-    "units":            "%"
 }
 ]
 }
