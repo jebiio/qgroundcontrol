@@ -128,7 +128,7 @@ KrisoFactGroup::KrisoFactGroup(QObject* parent)
 void KrisoFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t& message)
 {
     switch (message.msgid) {
-    case MAVLINK_MSG_ID_GPS_RAW_INT:
+    case MAVLINK_MSG_ID_KRISO_STATUS:
         _handleKRISOStatus(message);
         break;
     case MAVLINK_MSG_ID_HIGH_LATENCY:
