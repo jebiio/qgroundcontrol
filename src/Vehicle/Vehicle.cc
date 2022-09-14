@@ -1131,7 +1131,8 @@ void Vehicle::_handleKRISOStatus(mavlink_message_t& message)
     _gpsRawIntMessageAvailable = true;
 
     if (!_globalPositionIntMessageAvailable) {
-        QGeoCoordinate newPosition(krisoStatus.nav_latitude  / (double)1E7, krisoStatus.nav_longitude / (double)1E7, 1.0);
+        QGeoCoordinate newPosition(krisoStatus.nav_latitude, krisoStatus.nav_longitude, 1.0);
+        // QGeoCoordinate newPosition(krisoStatus.nav_latitude  / (double)1E7, krisoStatus.nav_longitude / (double)1E7, 1.0);
         if (newPosition != _coordinate) {
             _coordinate = newPosition;
             emit coordinateChanged(_coordinate);

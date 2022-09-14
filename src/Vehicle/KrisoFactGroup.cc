@@ -128,7 +128,7 @@ KrisoFactGroup::KrisoFactGroup(QObject* parent)
 void KrisoFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t& message)
 {
     switch (message.msgid) {
-    case MAVLINK_MSG_ID_GPS_RAW_INT:
+    case MAVLINK_MSG_ID_KRISO_STATUS:
         _handleKRISOStatus(message);
         break;
     case MAVLINK_MSG_ID_HIGH_LATENCY:
@@ -144,9 +144,37 @@ void KrisoFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t& me
 
 void KrisoFactGroup::_handleKRISOStatus(mavlink_message_t& message)
 {
-    mavlink_gps_raw_int_t gpsRawInt;
-    mavlink_msg_gps_raw_int_decode(&message, &gpsRawInt);
+    mavlink_kriso_status_t krisoStatus;
+    mavlink_msg_kriso_status_decode(&message, &krisoStatus);
 
-    nav_latitude()->setRawValue              (gpsRawInt.lat * 1e-7);
-    nav_longitude()->setRawValue              (gpsRawInt.lon * 1e-7);
+    // mavlink_gps_raw_int_t gpsRawInt;
+    // mavlink_msg_gps_raw_int_decode(&message, &gpsRawInt);
+
+    nav_latitude()->setRawValue              (krisoStatus.nav_latitude);
+    nav_longitude()->setRawValue             (krisoStatus.nav_longitude);
+    
+    // t1_rps()->setRawValue   
+    // t2_rps()->setRawValue       
+    // t3_rps()->setRawValue       
+    // t3_angle()->setRawValue     
+    // t4_rps()->setRawValue       
+    // t4_angle()->setRawValue     
+    nav_mode()->setRawValue             (krisoStatus.nav_mode);
+    nav_roll()->setRawValue             (krisoStatus.nav_roll);
+    nav_pitch()->setRawValue            (krisoStatus.nav_pitch);
+    nav_yaw()->setRawValue              (krisoStatus.nav_yaw);
+    nav_cog()->setRawValue              (krisoStatus.nav_cog);
+    nav_sog()->setRawValue              (krisoStatus.nav_sog);
+    nav_uspd()->setRawValue             (krisoStatus.nav_uspd);
+    nav_vspd()->setRawValue             (krisoStatus.nav_vspd);
+    nav_gpstime()->setRawValue          (krisoStatus.nav_gpstime);
+    wea_airtem()->setRawValue           (krisoStatus.wea_airtem);
+    wea_wattem()->setRawValue           (krisoStatus.wea_wattem);
+    wea_press()->setRawValue            (krisoStatus.wea_press);
+    wea_relhum()->setRawValue           (krisoStatus.wea_relhum);
+    wea_windirt()->setRawValue          (krisoStatus.wea_windirt);
+    wea_winspdt()->setRawValue          (krisoStatus.wea_winspdt);
+    wea_watdir()->setRawValue           (krisoStatus.wea_watdir);
+    wea_watspd()->setRawValue           (krisoStatus.wea_watspd);
+    wea_visibiran()->setRawValue        (krisoStatus.wea_visibiran);
 }
