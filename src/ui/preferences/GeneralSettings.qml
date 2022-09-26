@@ -175,7 +175,8 @@ Rectangle {
 
                             FactCheckBox {
                                 text:       qsTr("Show simple camera controls (DIGICAM_CONTROL)")
-                                visible:    _showDumbCameraControl.visible
+                                visible:    false
+                                // visible:    _showDumbCameraControl.visible
                                 fact:       _showDumbCameraControl
 
                                 property Fact _showDumbCameraControl: QGroundControl.settingsManager.flyViewSettings.showSimpleCameraControl
