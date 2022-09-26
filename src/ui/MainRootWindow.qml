@@ -428,8 +428,8 @@ ApplicationWindow {
                     onClicked: {
                         if (!mainWindow.preventViewSwitch()) {
                             toolSelectDialog.hideDialog()
-                            //mainWindow.showPlanView()
-                            mainWindow.showAnalyzeTool()
+                            mainWindow.showPlanView()
+                            // mainWindow.showAnalyzeTool()
                         }
                     }
                 }
