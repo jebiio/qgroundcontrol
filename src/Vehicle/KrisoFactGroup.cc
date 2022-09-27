@@ -26,18 +26,13 @@ const char* KrisoFactGroup::_nav_uspdFactName =     "nav_uspd";
 const char* KrisoFactGroup::_nav_vspdFactName =     "nav_vspd"; 
 const char* KrisoFactGroup::_nav_longitudeFactName ="nav_longitude";   
 const char* KrisoFactGroup::_nav_latitudeFactName = "nav_latitude";  
-const char* KrisoFactGroup::_nav_wspdFactName = "nav_wspd"; 
-const char* KrisoFactGroup::_nav_heaveFactName = "nav_heave"; 
 const char* KrisoFactGroup::_nav_gpstimeFactName =  "nav_gpstime";  
 const char* KrisoFactGroup::_wea_airtemFactName =   "wea_airtem";  
 const char* KrisoFactGroup::_wea_wattemFactName =   "wea_wattem";  
 const char* KrisoFactGroup::_wea_pressFactName =    "wea_press";  
 const char* KrisoFactGroup::_wea_relhumFactName =   "wea_relhum"; 
-const char* KrisoFactGroup::_wea_dewptFactName =   "wea_dewpt"; 
 const char* KrisoFactGroup::_wea_windirtFactName =  "wea_windirt";  
 const char* KrisoFactGroup::_wea_winspdtFactName =  "wea_winspdt";
-const char* KrisoFactGroup::_wea_windirrFactName =  "wea_windirr";
-const char* KrisoFactGroup::_wea_watspdrFactName =  "wea_watspdr";
 const char* KrisoFactGroup::_wea_watdirFactName =   "wea_watdir";  
 const char* KrisoFactGroup::_wea_watspdFactName =   "wea_watspd";   
 const char* KrisoFactGroup::_wea_visibiranFactName ="wea_visibiran";  
@@ -60,18 +55,13 @@ KrisoFactGroup::KrisoFactGroup(QObject* parent)
     , _nav_vspd             (0, _nav_vspdFactName,          FactMetaData::valueTypeFloat)
     , _nav_longitude        (0, _nav_longitudeFactName,     FactMetaData::valueTypeFloat)
     , _nav_latitude         (0, _nav_latitudeFactName,      FactMetaData::valueTypeFloat)
-    , _nav_wspd             (0, _nav_wspdFactName,          FactMetaData::valueTypeFloat)
-    , _nav_heave            (0, _nav_heaveFactName,         FactMetaData::valueTypeFloat)
     , _nav_gpstime          (0, _nav_gpstimeFactName,       FactMetaData::valueTypeFloat)
     , _wea_airtem           (0, _wea_airtemFactName,        FactMetaData::valueTypeFloat)
     , _wea_wattem           (0, _wea_wattemFactName,        FactMetaData::valueTypeFloat)
     , _wea_press            (0, _wea_pressFactName,         FactMetaData::valueTypeFloat)
     , _wea_relhum           (0, _wea_relhumFactName,        FactMetaData::valueTypeFloat)
-    , _wea_dewpt            (0, _wea_dewptFactName,         FactMetaData::valueTypeFloat)
     , _wea_windirt          (0, _wea_windirtFactName,       FactMetaData::valueTypeFloat)
     , _wea_winspdt          (0, _wea_winspdtFactName,       FactMetaData::valueTypeFloat)
-    , _wea_windirr          (0, _wea_windirrFactName,       FactMetaData::valueTypeFloat)
-    , _wea_watspdr          (0, _wea_watspdrFactName,       FactMetaData::valueTypeFloat)
     , _wea_watdir           (0, _wea_watdirFactName,        FactMetaData::valueTypeFloat)
     , _wea_watspd           (0, _wea_watspdFactName,        FactMetaData::valueTypeFloat)
     , _wea_visibiran        (0, _wea_visibiranFactName,         FactMetaData::valueTypeFloat)
@@ -95,18 +85,13 @@ KrisoFactGroup::KrisoFactGroup(QObject* parent)
     _addFact(&_nav_vspd,            _nav_vspdFactName);
     _addFact(&_nav_longitude,           _nav_longitudeFactName);
     _addFact(&_nav_latitude,            _nav_latitudeFactName);
-    _addFact(&_nav_wspd,            _nav_wspdFactName);
-    _addFact(&_nav_heave,           _nav_heaveFactName);
     _addFact(&_nav_gpstime,         _nav_gpstimeFactName);
     _addFact(&_wea_airtem,          _wea_airtemFactName);
     _addFact(&_wea_wattem,          _wea_wattemFactName);
     _addFact(&_wea_press,           _wea_pressFactName);
     _addFact(&_wea_relhum,          _wea_relhumFactName);
-    _addFact(&_wea_dewpt,           _wea_dewptFactName);
     _addFact(&_wea_windirt,         _wea_windirtFactName);
     _addFact(&_wea_winspdt,         _wea_winspdtFactName);
-    _addFact(&_wea_windirr,         _wea_windirrFactName);
-    _addFact(&_wea_watspdr,         _wea_watspdrFactName);
     _addFact(&_wea_watdir,          _wea_watdirFactName);
     _addFact(&_wea_watspd,          _wea_watspdFactName);
     _addFact(&_wea_visibiran,           _wea_visibiranFactName);
@@ -127,18 +112,13 @@ KrisoFactGroup::KrisoFactGroup(QObject* parent)
     _nav_vspd.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _nav_longitude.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _nav_latitude.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _nav_wspd.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _nav_heave.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _nav_gpstime.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_airtem.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_wattem.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_press.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_relhum.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _wea_dewpt.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_windirt.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_winspdt.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _wea_windirr.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _wea_watspdr.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_watdir.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_watspd.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_visibiran.setRawValue(std::numeric_limits<float>::quiet_NaN());
@@ -186,21 +166,17 @@ void KrisoFactGroup::_handleKRISOStatus(mavlink_message_t& message)
     nav_vspd()->setRawValue                 (krisoStatus.nav_vspd);
     nav_longitude()->setRawValue            (krisoStatus.nav_longitude);
     nav_latitude()->setRawValue             (krisoStatus.nav_latitude);
-    nav_wspd()->setRawValue                 (krisoStatus.nav_wspd);
-    nav_heave()->setRawValue                (krisoStatus.nav_heave);
     nav_gpstime()->setRawValue              (krisoStatus.nav_gpstime);
     wea_airtem()->setRawValue               (krisoStatus.wea_airtem);
     wea_wattem()->setRawValue               (krisoStatus.wea_wattem);
     wea_press()->setRawValue                (krisoStatus.wea_press);
     wea_relhum()->setRawValue               (krisoStatus.wea_relhum);
-    wea_dewpt()->setRawValue                (krisoStatus.wea_dewpt);
     wea_windirt()->setRawValue              (krisoStatus.wea_windirt);
     wea_winspdt()->setRawValue              (krisoStatus.wea_winspdt);
-    wea_windirr()->setRawValue              (krisoStatus.wea_windirr);
-    wea_watspdr()->setRawValue              (krisoStatus.wea_watspdr);
     wea_watdir()->setRawValue               (krisoStatus.wea_watdir);
     wea_watspd()->setRawValue               (krisoStatus.wea_watspd);
     wea_visibiran()->setRawValue            (krisoStatus.wea_visibiran);
     nav_mode()->setRawValue                 (krisoStatus.nav_mode);
+
     
 }
