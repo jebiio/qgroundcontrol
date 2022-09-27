@@ -106,18 +106,6 @@
     "decimalPlaces":    7
 },
 {
-    "name":             "nav_wspd",
-    "shortDesc":        "NAV_WSPD",
-    "type":             "double",
-    "decimalPlaces":    7
-},
-{
-    "name":             "nav_heave",
-    "shortDesc":        "NAV_HEAVE",
-    "type":             "double",
-    "decimalPlaces":    7
-},
-{
     "name":             "nav_gpstime",
     "shortDesc":        "NAV_GPSTIME",
     "type":             "float",
@@ -153,13 +141,6 @@
     "default":              null
 },
 {
-    "name":             "wea_dewpt",
-    "shortDesc":        "WEA_DEWPT",
-    "type":             "float",
-    "decimalPlaces":        2,
-    "default":              null
-},
-{
     "name":             "wea_windirt",
     "shortDesc":        "WEA_WINDIRT",
     "type":             "float",
@@ -174,22 +155,8 @@
     "default":              null
 },
 {
-    "name":             "wea_windirr",
-    "shortDesc":        "WEA_WINDIRR",
-    "type":             "float",
-    "decimalPlaces":        2,
-    "default":              null
-},
-{
-    "name":             "wea_watspdr",
-    "shortDesc":        "WEA_WATSPDR",
-    "type":             "float",
-    "decimalPlaces":        2,
-    "default":              null
-},
-{
     "name":             "wea_watdir",
-    "shortDesc":        "WEA_WATDIR",
+    "shortDesc":        "WEA_WATRDIR",
     "type":             "float",
     "decimalPlaces":        2,
     "default":              null
@@ -212,7 +179,8 @@
     "name":             "nav_mode",
     "shortDesc":        "NAV_MODE",
     "type":             "uint8",
-    "decimalPlaces":    1
+    "decimalPlaces":    1,
+    "default":              null
 }
 ]
 }

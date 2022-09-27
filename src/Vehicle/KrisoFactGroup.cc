@@ -65,7 +65,7 @@ KrisoFactGroup::KrisoFactGroup(QObject* parent)
     , _wea_watdir           (0, _wea_watdirFactName,        FactMetaData::valueTypeFloat)
     , _wea_watspd           (0, _wea_watspdFactName,        FactMetaData::valueTypeFloat)
     , _wea_visibiran        (0, _wea_visibiranFactName,         FactMetaData::valueTypeFloat)
-    , _nav_mode             (0, _nav_modeFactName,          FactMetaData::valueTypeFloat)
+    , _nav_mode             (0, _nav_modeFactName,          FactMetaData::valueTypeUint8)
 
     
 
@@ -122,7 +122,7 @@ KrisoFactGroup::KrisoFactGroup(QObject* parent)
     _wea_watdir.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_watspd.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _wea_visibiran.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _nav_mode.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    _nav_mode.setRawValue(std::numeric_limits<uint8_t>::quiet_NaN());
 
 }
 
@@ -147,9 +147,6 @@ void KrisoFactGroup::_handleKRISOStatus(mavlink_message_t& message)
 {
     mavlink_kriso_status_t krisoStatus;
     mavlink_msg_kriso_status_decode(&message, &krisoStatus);
-
-    // mavlink_gps_raw_int_t gpsRawInt;
-    // mavlink_msg_gps_raw_int_decode(&message, &gpsRawInt);
 
     t1_rpm()->setRawValue                   (krisoStatus.t1_rpm);
     t2_rpm()->setRawValue                   (krisoStatus.t2_rpm);

@@ -35,7 +35,6 @@ public:
     Q_PROPERTY(Fact* nav_longitude          READ nav_longitude      CONSTANT)
     Q_PROPERTY(Fact* nav_latitude           READ nav_latitude       CONSTANT)
     Q_PROPERTY(Fact* nav_wspd               READ nav_wspd           CONSTANT)
-    Q_PROPERTY(Fact* nav_heave              READ nav_heave          CONSTANT)
     Q_PROPERTY(Fact* nav_gpstime            READ nav_gpstime        CONSTANT)
     Q_PROPERTY(Fact* wea_airtem             READ wea_airtem         CONSTANT)
     Q_PROPERTY(Fact* wea_wattem             READ wea_wattem         CONSTANT)
@@ -44,8 +43,6 @@ public:
     Q_PROPERTY(Fact* wea_dewpt              READ wea_dewpt          CONSTANT)
     Q_PROPERTY(Fact* wea_windirt            READ wea_windirt        CONSTANT)
     Q_PROPERTY(Fact* wea_winspdt            READ wea_winspdt        CONSTANT)
-    Q_PROPERTY(Fact* wea_windirr            READ wea_windirr        CONSTANT)
-    Q_PROPERTY(Fact* wea_watspdr            READ wea_watspdr        CONSTANT)
     Q_PROPERTY(Fact* wea_watdir             READ wea_watdir         CONSTANT)
     Q_PROPERTY(Fact* wea_watspd             READ wea_watspd         CONSTANT)
     Q_PROPERTY(Fact* wea_visibiran          READ wea_visibiran      CONSTANT)
@@ -68,7 +65,6 @@ public:
     Fact*       nav_longitude               (){return &_nav_longitude;}
     Fact*       nav_latitude                (){return &_nav_latitude;}
     Fact*       nav_wspd                    (){return &_nav_wspd;}
-    Fact*       nav_heave                   (){return &_nav_heave;}
     Fact*       nav_gpstime                 (){return &_nav_gpstime;}
     Fact*       wea_airtem                  (){return &_wea_airtem;}
     Fact*       wea_wattem                  (){return &_wea_wattem;}
@@ -77,8 +73,6 @@ public:
     Fact*       wea_dewpt                   (){return &_wea_dewpt;}
     Fact*       wea_windirt                 (){return &_wea_windirt;}
     Fact*       wea_winspdt                 (){return &_wea_winspdt;}
-    Fact*       wea_windirr                 (){return &_wea_windirr;}
-    Fact*       wea_watspdr                 (){return &_wea_watspdr;}
     Fact*       wea_watdir                  (){return &_wea_watdir;}
     Fact*       wea_watspd                  (){return &_wea_watspd;}
     Fact*       wea_visibiran               (){return &_wea_visibiran;}
@@ -103,7 +97,6 @@ public:
     static const char* _nav_longitudeFactName;
     static const char* _nav_latitudeFactName;
     static const char* _nav_wspdFactName;
-    static const char* _nav_heaveFactName;
     static const char* _nav_gpstimeFactName;
     static const char* _wea_airtemFactName;
     static const char* _wea_wattemFactName;
@@ -112,8 +105,6 @@ public:
     static const char* _wea_dewptFactName;
     static const char* _wea_windirtFactName;
     static const char* _wea_winspdtFactName;
-    static const char* _wea_windirrFactName;
-    static const char* _wea_watspdrFactName;
     static const char* _wea_watdirFactName;
     static const char* _wea_watspdFactName;
     static const char* _wea_visibiranFactName;
@@ -138,7 +129,6 @@ protected:
     Fact        _nav_longitude;
     Fact        _nav_latitude;
     Fact        _nav_wspd;
-    Fact        _nav_heave;
     Fact        _nav_gpstime;
     Fact        _wea_airtem;
     Fact        _wea_wattem;
@@ -147,8 +137,6 @@ protected:
     Fact        _wea_dewpt;
     Fact        _wea_windirt;
     Fact        _wea_winspdt;
-    Fact        _wea_windirr;
-    Fact        _wea_watspdr;
     Fact        _wea_watdir;
     Fact        _wea_watspd;
     Fact        _wea_visibiran;
