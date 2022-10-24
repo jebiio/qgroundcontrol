@@ -743,10 +743,10 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
         _handleHighLatency2(message);
         break;
     case MAVLINK_MSG_ID_ATTITUDE:
-        _handleAttitude(message);
+        // _handleAttitude(message);
         break;
     case MAVLINK_MSG_ID_ATTITUDE_QUATERNION:
-        _handleAttitudeQuaternion(message);
+        // _handleAttitudeQuaternion(message);
         break;
     case MAVLINK_MSG_ID_STATUSTEXT:
         _handleStatusText(message);
@@ -1128,6 +1128,11 @@ void Vehicle::_handleKRISOStatus(mavlink_message_t& message)
     mavlink_kriso_status_t krisoStatus;
     mavlink_msg_kriso_status_decode(&message, &krisoStatus);
 
+    const double roll = static_cast<double>(krisoStatus.nav_roll);
+    const double pitch = static_cast<double>(krisoStatus.nav_pitch);
+    const double yaw = static_cast<double>(krisoStatus.nav_yaw);
+
+    _handleAttitudeWorker(roll, pitch, yaw);
     _gpsRawIntMessageAvailable = true;
 
     if (!_globalPositionIntMessageAvailable) {
