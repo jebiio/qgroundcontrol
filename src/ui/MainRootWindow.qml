@@ -360,7 +360,7 @@ ApplicationWindow {
             buttons:    StandardButton.Close
 
             width:         mainWindow.width*0.5
-            height:         mainWindow.height*0.5
+            height:         mainWindow.height*0.55
 
             property real _toolButtonHeight:    ScreenTools.defaultFontPixelHeight * 3
             property real _margins:             ScreenTools.defaultFontPixelWidth
@@ -418,7 +418,7 @@ ApplicationWindow {
                 Layout.alignment:       Qt.AlignVCenter | Qt.AlignHCenter
 
                 JebiDialogMenuButton {
-                    id:                 analyzeButton
+                    id:                 planButton
                     height:             _toolButtonHeight
                     Layout.fillWidth:   true
                     text:               qsTr("Create a voyage plan")
@@ -464,6 +464,24 @@ ApplicationWindow {
                         }
                     }
                 }
+
+
+                JebiDialogMenuButton {
+                    id:                 analyzeButton
+                    height:             _toolButtonHeight
+                    Layout.fillWidth:   true
+                    text:               qsTr("Analyze Tools")
+                    imageResource:      "/qmlimages/Analyze.svg"
+                    imageColor:         qgcPal.text
+                    visible:            !QGroundControl.corePlugin.options.combineSettingsAndSetup
+                    onClicked: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            toolSelectDialog.hideDialog()
+                            mainWindow.showAnalyzeTool()
+                        }
+                    }
+                }
+
             }
         }
     }
