@@ -201,6 +201,7 @@
         <file alias="ZoomPlus.svg">src/FlightMap/Images/ZoomPlus.svg</file>
         <file alias="PaperShip.svg">src/ui/toolbar/Images/PaperShip.svg</file>
         <file alias="shipArrow.svg">src/FlightMap/Images/shipArrow.svg</file>
+        <file alias="krisoVessel.svg">src/FlightMap/Images/krisoVessel.svg</file>
         <file alias="WatercraftSummaryIcon.png">src/VehicleSetup/WatercraftSummaryIcon.png</file>
         <file alias="WaterTelemRSSI.svg">src/ui/toolbar/Images/WaterTelemRSSI.svg</file>
     </qresource>
