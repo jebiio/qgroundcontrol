@@ -66,7 +66,7 @@ QGC_APP_COPYRIGHT   = "Copyright (C) 2019 QGroundControl Development Team. All r
 WindowsBuild {
     QGC_INSTALLER_SCRIPT        = "$$SOURCE_DIR\\deploy\\windows\\nullsoft_installer.nsi"
     QGC_INSTALLER_ICON          = "$$SOURCE_DIR\\deploy\\windows\\kriso.ico"
-    QGC_INSTALLER_HEADER_BITMAP = "$$SOURCE_DIR\\deploy\\windows\\kriso-installheader.bmp"
+    QGC_INSTALLER_HEADER_BITMAP = "$$SOURCE_DIR\\deploy\\windows\\kriso-installerheader.bmp"
     QGC_INSTALLER_DRIVER_MSI    = "$$SOURCE_DIR\\deploy\\windows\\driver.msi"
 }
 
