@@ -147,73 +147,73 @@ Item {
         property bool _verticalCenter: !QGroundControl.settingsManager.flyViewSettings.alternateInstrumentPanel.rawValue
     }
 
-    TelemetryValuesBar {
-        id:                 telemetryPanel
-        x:                  recalcXPosition()
-        anchors.margins:    _toolsMargin
+    // TelemetryValuesBar {
+    //     id:                 telemetryPanel
+    //     x:                  recalcXPosition()
+    //     anchors.margins:    _toolsMargin
 
-        // States for custom layout support
-        states: [
-            State {
-                name: "bottom"
-                when: telemetryPanel.bottomMode
+    //     // States for custom layout support
+    //     states: [
+    //         State {
+    //             name: "bottom"
+    //             when: telemetryPanel.bottomMode
 
-                AnchorChanges {
-                    target: telemetryPanel
-                    anchors.top: undefined
-                    anchors.bottom: parent.bottom
-                    anchors.right: undefined
-                    anchors.verticalCenter: undefined
-                }
+    //             AnchorChanges {
+    //                 target: telemetryPanel
+    //                 anchors.top: undefined
+    //                 anchors.bottom: parent.bottom
+    //                 anchors.right: undefined
+    //                 anchors.verticalCenter: undefined
+    //             }
 
-                PropertyChanges {
-                    target: telemetryPanel
-                    x: recalcXPosition()
-                }
-            },
+    //             PropertyChanges {
+    //                 target: telemetryPanel
+    //                 x: recalcXPosition()
+    //             }
+    //         },
 
-            State {
-                name: "right-video"
-                when: !telemetryPanel.bottomMode && photoVideoControl.visible
+    //         State {
+    //             name: "right-video"
+    //             when: !telemetryPanel.bottomMode && photoVideoControl.visible
 
-                AnchorChanges {
-                    target: telemetryPanel
-                    anchors.top: photoVideoControl.bottom
-                    anchors.bottom: undefined
-                    anchors.right: parent.right
-                    anchors.verticalCenter: undefined
-                }
-            },
+    //             AnchorChanges {
+    //                 target: telemetryPanel
+    //                 anchors.top: photoVideoControl.bottom
+    //                 anchors.bottom: undefined
+    //                 anchors.right: parent.right
+    //                 anchors.verticalCenter: undefined
+    //             }
+    //         },
 
-            State {
-                name: "right-novideo"
-                when: !telemetryPanel.bottomMode && !photoVideoControl.visible
+    //         State {
+    //             name: "right-novideo"
+    //             when: !telemetryPanel.bottomMode && !photoVideoControl.visible
 
-                AnchorChanges {
-                    target: telemetryPanel
-                    anchors.top: undefined
-                    anchors.bottom: undefined
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-        ]
+    //             AnchorChanges {
+    //                 target: telemetryPanel
+    //                 anchors.top: undefined
+    //                 anchors.bottom: undefined
+    //                 anchors.right: parent.right
+    //                 anchors.verticalCenter: parent.verticalCenter
+    //             }
+    //         }
+    //     ]
 
-        function recalcXPosition() {
-            // First try centered
-            var halfRootWidth   = _root.width / 2
-            var halfPanelWidth  = telemetryPanel.width / 2
-            var leftX           = (halfRootWidth - halfPanelWidth) - _toolsMargin
-            var rightX          = (halfRootWidth + halfPanelWidth) + _toolsMargin
-            if (leftX >= parentToolInsets.leftEdgeBottomInset || rightX <= parentToolInsets.rightEdgeBottomInset ) {
-                // It will fit in the horizontalCenter
-                return halfRootWidth - halfPanelWidth
-            } else {
-                // Anchor to left edge
-                return parentToolInsets.leftEdgeBottomInset + _toolsMargin
-            }
-        }
-    }
+    //     function recalcXPosition() {
+    //         // First try centered
+    //         var halfRootWidth   = _root.width / 2
+    //         var halfPanelWidth  = telemetryPanel.width / 2
+    //         var leftX           = (halfRootWidth - halfPanelWidth) - _toolsMargin
+    //         var rightX          = (halfRootWidth + halfPanelWidth) + _toolsMargin
+    //         if (leftX >= parentToolInsets.leftEdgeBottomInset || rightX <= parentToolInsets.rightEdgeBottomInset ) {
+    //             // It will fit in the horizontalCenter
+    //             return halfRootWidth - halfPanelWidth
+    //         } else {
+    //             // Anchor to left edge
+    //             return parentToolInsets.leftEdgeBottomInset + _toolsMargin
+    //         }
+    //     }
+    // }
 
     //-- Virtual Joystick
     Loader {
