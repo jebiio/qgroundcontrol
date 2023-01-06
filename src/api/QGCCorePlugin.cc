@@ -369,9 +369,10 @@ void QGCCorePlugin::factValueGridCreateDefaultSettings(const QString& defaultSet
 
 QQmlApplicationEngine* QGCCorePlugin::createQmlApplicationEngine(QObject* parent)
 {
-    QQmlApplicationEngine* qmlEngine = new QQmlApplicationEngine(parent);
-    qmlEngine->addImportPath("qrc:/qml");
-    qmlEngine->rootContext()->setContextProperty("joystickManager", qgcApp()->toolbox()->joystickManager());
+    QQmlApplicationEngine* qmlEngine = new QQmlApplicationEngine(parent); // qmlengine qml file load 하는 역할, context로 등록한 객체 접근 가능
+    qmlEngine->addImportPath("qrc:/qml"); // QGC에 필요한 모든 qml 파일을 등록 (.qrc 파일에 입력한)
+    //setContextProperty를 통해 Qboject를 상속받아 구현한 c++클래스를 qml object형태로 등록가능
+    qmlEngine->rootContext()->setContextProperty("joystickManager", qgcApp()->toolbox()->joystickManager()); 
     qmlEngine->rootContext()->setContextProperty("debugMessageModel", AppMessages::getModel());
     return qmlEngine;
 }
@@ -458,7 +459,7 @@ const QVariantList& QGCCorePlugin::toolBarIndicators(void)
 
 QList<int> QGCCorePlugin::firstRunPromptStdIds(void)
 {
-    QList<int> rgStdIds = { unitsFirstRunPromptId, offlineVehicleFirstRunPromptId };
+    QList<int> rgStdIds = { unitsFirstRunPromptId, offlineVehicleFirstRunPromptId }; // 단위설정, 오프라인시
     return rgStdIds;
 }
 

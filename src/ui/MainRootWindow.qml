@@ -28,10 +28,10 @@ ApplicationWindow {
     minimumHeight:  ScreenTools.isMobile ? Screen.height : Math.min(ScreenTools.defaultFontPixelWidth * 50, Screen.height)
     visible:        true
 
-    Component.onCompleted: {
+    Component.onCompleted: {  //window 생성시 signal 발생 즉, qml 인스턴스화 되고 호출 되는 첫번째 설정
         //-- Full screen on mobile or tiny screens
         if (ScreenTools.isMobile || Screen.height / ScreenTools.realPixelDensity < 120) {
-            mainWindow.showFullScreen()
+            mainWindow.showFullScreen() //qt 기본 함수로 qt window를 전체 화면 
         } else {
             width   = ScreenTools.isMobile ? Screen.width  : Math.min(250 * Screen.pixelDensity, Screen.width)
             height  = ScreenTools.isMobile ? Screen.height : Math.min(150 * Screen.pixelDensity, Screen.height)
@@ -45,7 +45,7 @@ ApplicationWindow {
         id: firstRunPromptManager
 
         property var currentDialog:     null
-        property var rgPromptIds:       QGroundControl.corePlugin.firstRunPromptsToShow()
+        property var rgPromptIds:       QGroundControl.corePlugin.firstRunPromptsToShow()  // 설정해야 하는 프롬프트 아이디 
         property int nextPromptIdIndex: 0
 
         onRgPromptIdsChanged: console.log(QGroundControl.corePlugin, QGroundControl.corePlugin.firstRunPromptsToShow())
@@ -468,6 +468,7 @@ ApplicationWindow {
     FlyView {
         id:             flightView
         anchors.fill:   parent
+        //flyview만 visible 설정이 없어서 default로 qml window 실행시 flyview가 default
     }
 
     PlanView {

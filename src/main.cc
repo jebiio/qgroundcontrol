@@ -93,6 +93,8 @@ int WindowsCrtReportHook(int reportType, char* message, int* returnValue)
 static jobject _class_loader = nullptr;
 static jobject _context = nullptr;
 
+// Android version인 경우 java native library 사용하기 위해서 jni 사용함 
+
 //-----------------------------------------------------------------------------
 extern "C" {
     void gst_amc_jni_set_java_vm(JavaVM *java_vm);
@@ -199,6 +201,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
 #endif
 
 //-----------------------------------------------------------------------------
+// android device 실행시 권한 설정 
 #ifdef __android__
 #include <QtAndroid>
 bool checkAndroidWritePermission() {
@@ -386,7 +389,7 @@ int main(int argc, char *argv[])
 
     app->_initCommon();
     //-- Initialize Cache System
-    getQGCMapEngine()->init();
+    getQGCMapEngine()->init();  // 지도 엔진 초기화 (tile map 관련 task 생성후 workqueue에 enqueue)
 
     int exitCode = 0;
 
@@ -413,10 +416,9 @@ int main(int argc, char *argv[])
     {
 
 #ifdef __android__
-        checkAndroidWritePermission();
+        checkAndroidWritePermission(); // 권한 설정 
 #endif
-        if (!app->_initForNormalAppBoot()) {
-            return -1;
+        if (!app->_initForNormalAppBoot()) { //QGC 실행 
         }
         exitCode = app->exec();
     }
