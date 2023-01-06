@@ -165,7 +165,7 @@ QGCMapEngine::init()
     } else {
         qCritical() << "Could not find suitable map cache directory.";
     }
-    QGCMapTask* task = new QGCMapTask(QGCMapTask::taskInit); // time map 관련 담당 (tile create, save, fetch, download..)
+    QGCMapTask* task = new QGCMapTask(QGCMapTask::taskInit); // tile map 관련 담당 (tile create, save, fetch, download..)
     _worker.enqueueTask(task);
 }
 
