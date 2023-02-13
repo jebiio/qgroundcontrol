@@ -285,7 +285,7 @@ Item {
 
     Rectangle {
         id:                 rightPanel
-        height:             parent.height * 0.5
+        height:             parent.height * 0.18
         width:              _rightPanelWidth
         color:              qgcPal.window
         opacity:             0.80
@@ -294,38 +294,6 @@ Item {
         anchors.right:      parent.right
         anchors.rightMargin: _toolsMargin
         radius:     _radius
-
-
-        Row{
-            id : topRowLayout
-            anchors.margins: _margin
-            anchors.left:   parent.left
-            anchors.top:    parent.top
-            spacing: _margin
-
-            QGCColoredImage {
-            height:                 _hamburgerSize
-            width:      height
-            source:     "/res/TrashDelete.svg"
-            color:       qgcPal.text
-        }
-
-            // QGCColoredImage {
-            //     id: deleteButton
-            //     anchors.verticalCenter: parent.verticalCenter
-            //     height: _hamburgerSize
-            //     width: height
-            //     sourceSize.height: height
-            //     fillMode: Image.PreserveAspectFit
-            //     mipmap: true
-            //     smooth: true
-            //     color:  qgcPal.text
-            //     // visible:    true
-            //     source: "/res/TrashDelete.svg"
-
-            // }
-        }
-
 
         
         ColumnLayout {
@@ -390,6 +358,48 @@ Item {
                     onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
                 }
             }
+        }
+
+        Row {
+            id:                 indicatorRow
+            anchors.top:        valuesColumn.bottom
+            anchors.bottom:     parent.bottom
+            anchors.margins:    _toolIndicatorMargins
+            spacing:            ScreenTools.defaultFontPixelWidth * 1.5
+
+            property var  _activeVehicle:           QGroundControl.multiVehicleManager.activeVehicle
+            property real _toolIndicatorMargins:    ScreenTools.defaultFontPixelHeight * 0.66
+
+            // Repeater {
+            //     id:     appRepeater
+            //     model:  QGroundControl.corePlugin.toolBarIndicators
+            //     Loader {
+            //         anchors.top:        parent.top
+            //         anchors.bottom:     parent.bottom
+            //         source:             modelData
+            //         visible:            item.showIndicator
+            //     }
+            // }
+
+            Repeater {
+                model: _activeVehicle ? _activeVehicle.toolIndicators : []
+                Loader {
+                    anchors.top:        parent.top
+                    anchors.bottom:     parent.bottom
+                    source:             modelData
+                    visible:            item.showIndicator
+                }
+            }
+
+            // Repeater {
+            //     model: _activeVehicle ? _activeVehicle.modeIndicators : []
+            //     Loader {
+            //         anchors.top:        parent.top
+            //         anchors.bottom:     parent.bottom
+            //         source:             modelData
+            //         visible:            item.showIndicator
+            //     }
+            // }
         }
     }
 }
