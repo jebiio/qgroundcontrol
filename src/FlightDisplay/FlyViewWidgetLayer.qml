@@ -38,6 +38,10 @@ Item {
     property var    totalToolInsets:        _totalToolInsets
     property var    mapControl
 
+    readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
+    readonly property real  _hamburgerSize:     commandPicker.height * 0.75
+    readonly property real  _trashSize:         commandPicker.height * 0.75
+
     property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     property var    _planMasterController:  globals.planMasterControllerFlyView
     property var    _missionController:     _planMasterController.missionController
@@ -276,6 +280,116 @@ Item {
     Component {
         id: preFlightChecklistPopup
         FlyViewPreFlightChecklistPopup {
+        }
+    }
+
+    Rectangle {
+        id:                 rightPanel
+        height:             parent.height * 0.5
+        width:              _rightPanelWidth
+        color:              qgcPal.window
+        opacity:             0.80
+        anchors.top:        instrumentPanel.bottom
+        anchors.topMargin:        _toolsMargin
+        anchors.right:      parent.right
+        anchors.rightMargin: _toolsMargin
+        radius:     _radius
+
+
+        Row{
+            id : topRowLayout
+            anchors.margins: _margin
+            anchors.left:   parent.left
+            anchors.top:    parent.top
+            spacing: _margin
+
+            QGCColoredImage {
+            height:                 _hamburgerSize
+            width:      height
+            source:     "/res/TrashDelete.svg"
+            color:       qgcPal.text
+        }
+
+            // QGCColoredImage {
+            //     id: deleteButton
+            //     anchors.verticalCenter: parent.verticalCenter
+            //     height: _hamburgerSize
+            //     width: height
+            //     sourceSize.height: height
+            //     fillMode: Image.PreserveAspectFit
+            //     mipmap: true
+            //     smooth: true
+            //     color:  qgcPal.text
+            //     // visible:    true
+            //     source: "/res/TrashDelete.svg"
+
+            // }
+        }
+
+
+        
+        ColumnLayout {
+            id:                 valuesColumn
+            anchors.margins:    _margin
+            anchors.left:       parent.left
+            anchors.right:      parent.right
+            anchors.top:        parent.top
+            spacing:            _margin
+        
+            QGCLabel {
+                text:           qsTr("All Altitudes")
+                font.pointSize: ScreenTools.smallFontPointSize
+            }
+            MouseArea {
+                Layout.preferredWidth:  childrenRect.width
+                Layout.preferredHeight: childrenRect.height
+                enabled:                _noMissionItemsAdded
+
+                onClicked: {
+                    var removeModes = []
+                    var updateFunction = function(altMode){ _missionController.globalAltitudeMode = altMode }
+                    if (!_controllerVehicle.supportsTerrainFrame) {
+                        removeModes.push(QGroundControl.AltitudeModeTerrainFrame)
+                    }
+                    mainWindow.showPopupDialogFromComponent(altModeDialogComponent, { rgRemoveModes: removeModes, updateAltModeFn: updateFunction })
+                }
+
+                RowLayout {
+                    spacing: ScreenTools.defaultFontPixelWidth
+                    enabled: _noMissionItemsAdded
+
+                    QGCLabel {
+                        id:     altModeLabel
+                        text:   QGroundControl.altitudeModeShortDescription(_missionController.globalAltitudeMode)
+                    }
+                    QGCColoredImage {
+                        height:     ScreenTools.defaultFontPixelHeight / 2
+                        width:      height
+                        source:     "/res/DropArrow.svg"
+                        color:      altModeLabel.color
+                    }
+                }
+            }
+
+            QGCLabel {
+                text:           qsTr("Initial Waypoint Alt")
+                font.pointSize: ScreenTools.smallFontPointSize
+            }
+
+            GridLayout {
+                Layout.fillWidth:   true
+                columnSpacing:      ScreenTools.defaultFontPixelWidth
+                rowSpacing:         columnSpacing
+                columns:            2
+
+                QGCCheckBox {
+                    id:         flightSpeedCheckBox
+                    text:       qsTr("Flight speed")
+                    visible:    _showFlightSpeed
+                    checked:    missionItem.speedSection.specifyFlightSpeed
+                    onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
+                }
+            }
         }
     }
 }
