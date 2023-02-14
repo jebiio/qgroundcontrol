@@ -45,6 +45,29 @@ qreal groundTimeSeconds()
     return static_cast<qreal>(groundTimeMilliseconds()) / 1000.0f;
 }
 
+float limitAngleToPMPIfDegree(double angle)
+{
+     if (angle > -20*180 && angle < 20*180)
+    {
+        while (angle > ((float)180+FLT_EPSILON))
+        {
+            angle -= 2.0f * (float)180;
+        }
+
+        while (angle <= -((float)180+FLT_EPSILON))
+        {
+            angle += 2.0f * (float)180;
+        }
+    }
+    else
+    {
+        // Approximate
+        angle = fmodf(angle, (float)180);
+    }
+
+    return angle;
+}
+
 float limitAngleToPMPIf(double angle)
 {
     if (angle > -20*M_PI && angle < 20*M_PI)

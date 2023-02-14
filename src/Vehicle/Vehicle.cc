@@ -1032,13 +1032,17 @@ void Vehicle::_handleAttitudeWorker(double rollRadians, double pitchRadians, dou
 {
     double roll, pitch, yaw;
 
-    roll = QGC::limitAngleToPMPIf(rollRadians);
-    pitch = QGC::limitAngleToPMPIf(pitchRadians);
-    yaw = QGC::limitAngleToPMPIf(yawRadians);
+    // roll = QGC::limitAngleToPMPIf(rollRadians);
+    // pitch = QGC::limitAngleToPMPIf(pitchRadians);
+    // yaw = QGC::limitAngleToPMPIf(yawRadians);
 
-    roll = qRadiansToDegrees(roll);
-    pitch = qRadiansToDegrees(pitch);
-    yaw = qRadiansToDegrees(yaw);
+    roll = QGC::limitAngleToPMPIfDegree(rollRadians);
+    pitch = QGC::limitAngleToPMPIfDegree(pitchRadians);
+    yaw = QGC::limitAngleToPMPIfDegree(yawRadians);
+
+    // roll = qRadiansToDegrees(roll);
+    // pitch = qRadiansToDegrees(pitch);
+    // yaw = qRadiansToDegrees(yaw);
 
     if (yaw < 0.0) {
         yaw += 360.0;
