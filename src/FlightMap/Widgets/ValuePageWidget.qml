@@ -131,7 +131,7 @@ Column {
         }
     }
     
-    // Selection pop-up Page (PageView.qml --> showSettings()호출시 실행되는 qml)
+    // Selection pop-up Page (PageView.qml --> showSettings()호출시 실행되는 qml) (outer box)
     Component {
         id: propertyPicker
 
@@ -201,7 +201,7 @@ Column {
         }
     }
 
-    // Selection pop-up Page의 데이터가 채워지는 하위 컴포넌트(box역할)  
+    // Selection pop-up Page의 데이터가 채워지는 하위 컴포넌트(inner data box역할)  
     Component {
         id: factGroupList
 

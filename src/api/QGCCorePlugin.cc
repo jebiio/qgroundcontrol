@@ -306,16 +306,13 @@ void QGCCorePlugin::valuesWidgetDefaultSettings(QStringList& largeValues, QStrin
 {
     Q_UNUSED(smallValues);
     // largeValues << "Vehicle.altitudeRelative" << "Vehicle.groundSpeed" << "Vehicle.flightTime";
-    // largeValues  << "kriso.nav_roll" << "kriso.nav_pitch" << "Kriso.nav_cog" ;
 
     KrisoFactGroup* krisoFactGroup = new KrisoFactGroup(this);
     QStringList valueNames = krisoFactGroup->factNames();
-    // QString value = valueNames[0];
-    // largeValues << "kriso."+ value;
 
     QString factGroupName = "kriso";
 
-    for (QString& name : valueNames )
+    for (QString& name : valueNames)
     {
         smallValues << factGroupName + "." + name;    
     }
