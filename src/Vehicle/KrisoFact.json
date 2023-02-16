@@ -178,7 +178,7 @@
 {
     "name":             "nav_mode",
     "shortDesc":        "NAV_MODE",
-    "type":             "uint8",
+    "type":             "float",
     "decimalPlaces":    1,
     "default":              null
 }

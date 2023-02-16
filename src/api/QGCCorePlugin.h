@@ -13,6 +13,8 @@
 #include "QGCPalette.h"
 #include "QGCMAVLink.h"
 #include "QmlObjectListModel.h"
+#include "FactSystem.h"
+#include "KrisoFactGroup.h"
 
 #include <QObject>
 #include <QVariantList>

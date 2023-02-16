@@ -49,6 +49,7 @@ Column {
         return false
     }
 
+    // value panel의 Large값 표시 repeater --> 아래의 (flow, component)component 형태로 qml 구성(호출)
     Repeater {
         model: _activeVehicle ? controller.largeValues : 0
         Loader {
@@ -57,6 +58,8 @@ Column {
         }
     } // Repeater - Large
 
+    // value panel의 Small값 표시 
+    // flow : 정해진 크기의 박스안에서 텍스트와 같이 나란히 자동 배치 되는 
     Flow {
         id:                 _smallFlow
         width:              parent.width
@@ -72,6 +75,7 @@ Column {
         } // Repeater - Small
     } // Flow
 
+    // value panel의 Large값 표시 component 
     Component {
         id: largeValue
 
@@ -95,7 +99,8 @@ Column {
             }
         }
     }
-
+    
+    // value panel의 Small값 표시 component 
     Component {
         id: smallValue
 
@@ -125,7 +130,8 @@ Column {
             }
         }
     }
-
+    
+    // Selection pop-up Page (PageView.qml --> showSettings()호출시 실행되는 qml)
     Component {
         id: propertyPicker
 
@@ -195,6 +201,7 @@ Column {
         }
     }
 
+    // Selection pop-up Page의 데이터가 채워지는 하위 컴포넌트(box역할)  
     Component {
         id: factGroupList
 

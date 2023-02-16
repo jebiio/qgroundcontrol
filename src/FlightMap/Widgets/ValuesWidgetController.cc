@@ -23,6 +23,7 @@ ValuesWidgetController::ValuesWidgetController(void)
     QSettings settings;
 
     settings.beginGroup(_groupKey);
+    // settings.clear(); // test
 
     QStringList largeDefaults, smallDefaults;
     qgcApp()->toolbox()->corePlugin()->valuesWidgetDefaultSettings(largeDefaults, smallDefaults);

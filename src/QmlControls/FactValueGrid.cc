@@ -302,6 +302,7 @@ void FactValueGrid::_loadSettings(void)
     QSettings   settings;
     QString     groupNameFormat("%1-%2");
 
+
     if (!settings.childGroups().contains(groupNameFormat.arg(_userSettingsGroup).arg(_vehicleClass))) {
         qgcApp()->toolbox()->corePlugin()->factValueGridCreateDefaultSettings(_defaultSettingsGroup);
     }
