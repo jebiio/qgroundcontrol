@@ -144,9 +144,9 @@ Item {
         mapName:                "FlightDisplayView"
     }
 
-    // FlyViewVideo {
-    //     id: videoControl
-    // }
+    FlyViewVideo {
+        id: videoControl
+    }
 
     QGCPipOverlay {
         id:                     _pipOverlay
