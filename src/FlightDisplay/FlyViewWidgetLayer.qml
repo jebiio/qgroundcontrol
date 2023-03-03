@@ -310,85 +310,85 @@ Item {
             anchors.bottomMargin:   ScreenTools.defaultFontPixelHeight * 0.25
             visible:                true
        
-        ListView {
-            id: view
+            ListView {
+                id: view
 
-            property var collapsed: ({})
+                property var collapsed: ({})
 
-            width: _rightPanelWidth
-            height: 250
-            focus: true
-            clip: true
-            spacing: 10
+                width: _rightPanelWidth
+                height: 500
+                focus: true
+                clip: true
+                spacing: 10
 
-            model: NameModel { }
+                model: NameModel { }
 
-            delegate: NameDelegate {
-                readonly property ListView __lv: ListView.view
+                delegate: NameDelegate {
+                    readonly property ListView __lv: ListView.view
 
-                anchors {
-                    left: parent.left
-                    leftMargin: 2
+                    anchors {
+                        left: parent.left
+                        leftMargin: 2
 
-                    right: parent.right
-                    rightMargin: 2
+                        right: parent.right
+                        rightMargin: 2
+                    }
+
+                    expanded: view.isSectionExpanded( model.team )
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: __lv.currentIndex = index
+                    }
                 }
 
-                expanded: view.isSectionExpanded( model.team )
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: __lv.currentIndex = index
-                }
-            }
-
-            highlight: HighlightDelegate {
-                width: parent.width
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-            }
-
-            section {
-                property: "team"
-                criteria: ViewSection.FullString
-
-                delegate: SectionDelegate {
+                highlight: HighlightDelegate {
+                    width: parent.width
                     anchors {
                         left: parent.left
                         right: parent.right
                     }
+                }
 
-                    text: section
+                section {
+                    property: "team"
+                    criteria: ViewSection.FullString
 
-                    onClicked: view.toggleSection( section )
+                    delegate: SectionDelegate {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+
+                        text: section
+
+                        onClicked: view.toggleSection( section )
+                    }
+                }
+
+                function isSectionExpanded( section ) {
+                    return !(section in collapsed);
+                }
+
+                function showSection( section ) {
+                    delete collapsed[section]
+                    /*emit*/ collapsedChanged();
+                }
+
+                function hideSection( section ) {
+                    collapsed[section] = true
+                    /*emit*/ collapsedChanged();
+                }
+
+                function toggleSection( section ) {
+                    if ( isSectionExpanded( section ) ) {
+                        hideSection( section )
+                    } else {
+                        showSection( section )
+                    }
+                }
                 }
             }
-
-            function isSectionExpanded( section ) {
-                return !(section in collapsed);
-            }
-
-            function showSection( section ) {
-                delete collapsed[section]
-                /*emit*/ collapsedChanged();
-            }
-
-            function hideSection( section ) {
-                collapsed[section] = true
-                /*emit*/ collapsedChanged();
-            }
-
-            function toggleSection( section ) {
-                if ( isSectionExpanded( section ) ) {
-                    hideSection( section )
-                } else {
-                    showSection( section )
-                }
-            }
-            }
-        }
     }
 
 
@@ -460,7 +460,6 @@ Item {
         //         rowSpacing:         columnSpacing
         //         columns:            2
 
-<<<<<<< HEAD
         //         QGCCheckBox {
         //             id:         flightSpeedCheckBox
         //             text:       qsTr("Flight speed")
@@ -470,58 +469,5 @@ Item {
         //         }
         //     }
         // }
-=======
-                QGCCheckBox {
-                    id:         flightSpeedCheckBox
-                    text:       qsTr("Flight speed")
-                    visible:    _showFlightSpeed
-                    checked:    missionItem.speedSection.specifyFlightSpeed
-                    onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
-                }
-            }
-        }
-
-        Row {
-            id:                 indicatorRow
-            anchors.top:        valuesColumn.bottom
-            anchors.bottom:     parent.bottom
-            anchors.margins:    _toolIndicatorMargins
-            spacing:            ScreenTools.defaultFontPixelWidth * 1.5
-
-            property var  _activeVehicle:           QGroundControl.multiVehicleManager.activeVehicle
-            property real _toolIndicatorMargins:    ScreenTools.defaultFontPixelHeight * 0.66
-
-            // Repeater {
-            //     id:     appRepeater
-            //     model:  QGroundControl.corePlugin.toolBarIndicators
-            //     Loader {
-            //         anchors.top:        parent.top
-            //         anchors.bottom:     parent.bottom
-            //         source:             modelData
-            //         visible:            item.showIndicator
-            //     }
-            // }
-
-            Repeater {
-                model: _activeVehicle ? _activeVehicle.toolIndicators : []
-                Loader {
-                    anchors.top:        parent.top
-                    anchors.bottom:     parent.bottom
-                    source:             modelData
-                    visible:            item.showIndicator
-                }
-            }
-
-            // Repeater {
-            //     model: _activeVehicle ? _activeVehicle.modeIndicators : []
-            //     Loader {
-            //         anchors.top:        parent.top
-            //         anchors.bottom:     parent.bottom
-            //         source:             modelData
-            //         visible:            item.showIndicator
-            //     }
-            // }
-        }
->>>>>>> 623d09577b179b0fa30c17730a237dff5507dd6e
     }
 }
