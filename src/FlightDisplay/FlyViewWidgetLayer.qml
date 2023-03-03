@@ -394,7 +394,7 @@ Item {
 
     Rectangle {
         id:                 rightPanel
-        height:             parent.height * 0.5
+        height:             parent.height * 0.18
         width:              _rightPanelWidth
         opacity:             0.01
         anchors.top:        instrumentPanel.bottom
@@ -460,6 +460,7 @@ Item {
         //         rowSpacing:         columnSpacing
         //         columns:            2
 
+<<<<<<< HEAD
         //         QGCCheckBox {
         //             id:         flightSpeedCheckBox
         //             text:       qsTr("Flight speed")
@@ -469,5 +470,58 @@ Item {
         //         }
         //     }
         // }
+=======
+                QGCCheckBox {
+                    id:         flightSpeedCheckBox
+                    text:       qsTr("Flight speed")
+                    visible:    _showFlightSpeed
+                    checked:    missionItem.speedSection.specifyFlightSpeed
+                    onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
+                }
+            }
+        }
+
+        Row {
+            id:                 indicatorRow
+            anchors.top:        valuesColumn.bottom
+            anchors.bottom:     parent.bottom
+            anchors.margins:    _toolIndicatorMargins
+            spacing:            ScreenTools.defaultFontPixelWidth * 1.5
+
+            property var  _activeVehicle:           QGroundControl.multiVehicleManager.activeVehicle
+            property real _toolIndicatorMargins:    ScreenTools.defaultFontPixelHeight * 0.66
+
+            // Repeater {
+            //     id:     appRepeater
+            //     model:  QGroundControl.corePlugin.toolBarIndicators
+            //     Loader {
+            //         anchors.top:        parent.top
+            //         anchors.bottom:     parent.bottom
+            //         source:             modelData
+            //         visible:            item.showIndicator
+            //     }
+            // }
+
+            Repeater {
+                model: _activeVehicle ? _activeVehicle.toolIndicators : []
+                Loader {
+                    anchors.top:        parent.top
+                    anchors.bottom:     parent.bottom
+                    source:             modelData
+                    visible:            item.showIndicator
+                }
+            }
+
+            // Repeater {
+            //     model: _activeVehicle ? _activeVehicle.modeIndicators : []
+            //     Loader {
+            //         anchors.top:        parent.top
+            //         anchors.bottom:     parent.bottom
+            //         source:             modelData
+            //         visible:            item.showIndicator
+            //     }
+            // }
+        }
+>>>>>>> 623d09577b179b0fa30c17730a237dff5507dd6e
     }
 }
