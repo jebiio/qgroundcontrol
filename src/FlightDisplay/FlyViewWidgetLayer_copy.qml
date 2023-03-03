@@ -297,6 +297,11 @@ Item {
             anchors.left:       parent.left
             anchors.right:      parent.right
             anchors.top:        parent.top
+            //-------------------------------------------------------
+            // Airmap Airspace Control
+            //-------------------------------------------------------
+            // Mission Controls (Colapsed)
+            //-------------------------------------------------------
         }
         //-------------------------------------------------------
         // Mission Item Editor
@@ -308,85 +313,35 @@ Item {
             anchors.topMargin:      ScreenTools.defaultFontPixelHeight * 0.25
             anchors.bottom:         parent.bottom
             anchors.bottomMargin:   ScreenTools.defaultFontPixelHeight * 0.25
-            visible:                true
-       
-        ListView {
-            id: view
-
-            property var collapsed: ({})
-
-            width: _rightPanelWidth
-            height: 250
-            focus: true
-            clip: true
-            spacing: 10
-
-            model: NameModel { }
-
-            delegate: NameDelegate {
-                readonly property ListView __lv: ListView.view
-
-                anchors {
-                    left: parent.left
-                    leftMargin: 2
-
-                    right: parent.right
-                    rightMargin: 2
-                }
-
-                expanded: view.isSectionExpanded( model.team )
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: __lv.currentIndex = index
-                }
-            }
-
-            highlight: HighlightDelegate {
-                width: parent.width
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-            }
-
-            section {
-                property: "team"
-                criteria: ViewSection.FullString
-
-                delegate: SectionDelegate {
-                    anchors {
-                        left: parent.left
-                        right: parent.right
+            visible:                _editingLayer == _layerMission && !planControlColapsed
+            QGCListView {
+                id:                 missionItemEditorListView
+                anchors.fill:       parent
+                spacing:            ScreenTools.defaultFontPixelHeight / 4
+                orientation:        ListView.Vertical
+                model:              _missionController.visualItems
+                cacheBuffer:        Math.max(height * 2, 0)
+                clip:               true
+                currentIndex:       _missionController.currentPlanViewSeqNum
+                highlightMoveDuration: 250
+                visible:            _editingLayer == _layerMission && !planControlColapsed
+                //-- List Elements
+                delegate: MissionItemEditor {
+                    map:            editorMap
+                    masterController:  _planMasterController
+                    missionItem:    object
+                    width:          parent.width
+                    readOnly:       false
+                    onClicked:      _missionController.setCurrentPlanViewSeqNum(object.sequenceNumber, false)
+                    onRemove: {
+                        var removeVIIndex = index
+                        _missionController.removeVisualItem(removeVIIndex)
+                        if (removeVIIndex >= _missionController.visualItems.count) {
+                            removeVIIndex--
+                        }
                     }
-
-                    text: section
-
-                    onClicked: view.toggleSection( section )
+                    onSelectNextNotReadyItem:   selectNextNotReady()
                 }
-            }
-
-            function isSectionExpanded( section ) {
-                return !(section in collapsed);
-            }
-
-            function showSection( section ) {
-                delete collapsed[section]
-                /*emit*/ collapsedChanged();
-            }
-
-            function hideSection( section ) {
-                collapsed[section] = true
-                /*emit*/ collapsedChanged();
-            }
-
-            function toggleSection( section ) {
-                if ( isSectionExpanded( section ) ) {
-                    hideSection( section )
-                } else {
-                    showSection( section )
-                }
-            }
             }
         }
     }

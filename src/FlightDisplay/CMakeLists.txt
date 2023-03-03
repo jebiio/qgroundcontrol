@@ -50,5 +50,9 @@ add_custom_target(FligthDisplayQml
 		ObstacleDistanceOverlayMap.qml
 		ObstacleDistanceOverlayVideo.qml
 		RallyPointEditorHeader.qml
+		NameModel.qml
+		SectionDelegate.qml
+		NameDelegate.qml
+		HighlightDelegate.qml
 )
 
