@@ -40,6 +40,7 @@ NameModel                       1.0 NameModel.qml
 SectionDelegate                 1.0 SectionDelegate.qml
 NameDelegate                    1.0 NameDelegate.qml
 HighlightDelegate               1.0 HighlightDelegate.qml
+VesselStatusDelegate            1.0 VesselStatusDelegate.qml
 
 
 

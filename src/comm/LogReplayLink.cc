@@ -88,7 +88,7 @@ LogReplayLink::LogReplayLink(SharedLinkConfigurationPtr& config)
     QObject::connect(this, &LogReplayLink::_playOnThread,               this, &LogReplayLink::_play);
     QObject::connect(this, &LogReplayLink::_pauseOnThread,              this, &LogReplayLink::_pause);
     QObject::connect(this, &LogReplayLink::_setPlaybackSpeedOnThread,   this, &LogReplayLink::_setPlaybackSpeed);
-    
+
     moveToThread(this);
 }
 

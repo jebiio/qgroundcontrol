@@ -51,7 +51,7 @@ Item {
     property real   _margins:               ScreenTools.defaultFontPixelWidth / 2
     property real   _toolsMargin:           ScreenTools.defaultFontPixelWidth * 0.75
     property rect   _centerViewport:        Qt.rect(0, 0, width, height)
-    property real   _rightPanelWidth:       ScreenTools.defaultFontPixelWidth * 30
+    property real   _rightPanelWidth:       ScreenTools.defaultFontPixelWidth * 45
 
     QGCToolInsets {
         id:                     _totalToolInsets
@@ -323,7 +323,7 @@ Item {
 
                 model: NameModel { }
 
-                delegate: NameDelegate {
+                delegate: VesselStatusDelegate {
                     readonly property ListView __lv: ListView.view
 
                     anchors {
@@ -342,14 +342,15 @@ Item {
                     }
                 }
 
-                highlight: HighlightDelegate {
-                    width: parent.width
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                }
+                // highlight: HighlightDelegate {
+                //     width: parent.width
+                //     anchors {
+                //         left: parent.left
+                //         right: parent.right
+                //     }
+                // }
 
+                // team name (head)
                 section {
                     property: "team"
                     criteria: ViewSection.FullString

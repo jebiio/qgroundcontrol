@@ -54,5 +54,6 @@ add_custom_target(FligthDisplayQml
 		SectionDelegate.qml
 		NameDelegate.qml
 		HighlightDelegate.qml
+		VesselStatusDelegate.qml
 )
 

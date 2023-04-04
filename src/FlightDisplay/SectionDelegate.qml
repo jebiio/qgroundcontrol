@@ -14,7 +14,7 @@ import QtQuick.Layouts              1.11
 
 Rectangle {
     radius:     _radius
-    color: "#595959"
+    color: "#383636"
     implicitHeight: txt.implicitHeight + 10
     width : parent.width
 
@@ -47,7 +47,7 @@ Rectangle {
 
         QGCLabel { 
             id : txt
-            font.pixelSize: 16
+            font.pixelSize: 15
             color: "white" 
         }
 
