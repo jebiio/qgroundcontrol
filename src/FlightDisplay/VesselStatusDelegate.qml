@@ -22,7 +22,7 @@ Rectangle{
     clip: true
     color : "#383636"
     property bool expanded: false
-    height: expanded ? 80 : 0
+    height: expanded ? 100 : 0
     radius:  0.5   
 
 
@@ -30,7 +30,7 @@ Rectangle{
         NumberAnimation { duration:  200 }
     }
 
-    RowLayout {
+    Column {
         id : status
         // anchors.fill: parent
         anchors.left: parent.left
@@ -46,7 +46,7 @@ Rectangle{
             Layout.alignment:   Qt.AlignHCenter
         }
 
-        Row{
+        Column{
             // anchors.left:           parent.left
             // anchors.leftMargin:     ScreenTools.defaultFontPixelWidth
             anchors.margins:   ScreenTools.defaultFontPixelWidth * 2
@@ -56,12 +56,18 @@ Rectangle{
             spacing:                ScreenTools.defaultFontPixelWidth 
 
             QGCButton {
-                text: "Button"
+                id: setupbtn
+                text: "Setup Control Values"
+                backRadius:     4
+                heightFactor:   0.3333
                 Layout.alignment:   Qt.AlignHCenter
             }
 
             QGCButton {
-                text: "Button"
+                text: "Logging Start"
+                backRadius:     4
+                heightFactor:   0.3333
+                width: setupbtn.width
                 Layout.alignment:   Qt.AlignHCenter
             }
         }

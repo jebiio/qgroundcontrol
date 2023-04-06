@@ -323,7 +323,7 @@ Item {
 
                 model: NameModel { }
 
-                delegate: VesselStatusDelegate {
+                delegate: PowerMonitoringDelegate {
                     readonly property ListView __lv: ListView.view
 
                     anchors {

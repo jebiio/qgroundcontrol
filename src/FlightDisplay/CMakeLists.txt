@@ -55,5 +55,6 @@ add_custom_target(FligthDisplayQml
 		NameDelegate.qml
 		HighlightDelegate.qml
 		VesselStatusDelegate.qml
+		PowerMonitoringDelegate.qml
 )
 
