@@ -1,0 +1,186 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "t1_rpm",
+    "shortDesc": "T1_RPM",
+    "type":             "float",
+    "decimalPlaces":    1
+},
+{
+    "name":             "t2_rpm",
+    "shortDesc":        "T2_RPM",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t3_rpm",
+    "shortDesc":        "T3_RPM",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t3_angle",
+    "shortDesc":        "T3_Angle",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t4_rpm",
+    "shortDesc":        "T4_RPM",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t4_angle",
+    "shortDesc":        "T4_Angle",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_roll",
+    "shortDesc":        "NAV_ROLL",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_pitch",
+    "shortDesc":        "NAV_PITCH",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_yaw",
+    "shortDesc":        "NAV_YAW",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_cog",
+    "shortDesc":        "NAV_COG",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_sog",
+    "shortDesc":        "NAV_SOG",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_uspd",
+    "shortDesc":        "NAV_USPD",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_vspd",
+    "shortDesc":        "NAV_VSPD",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_longitude",
+    "shortDesc":        "NAV_LONGITUDE",
+    "type":             "double",
+    "decimalPlaces":    7
+},
+{
+    "name":             "nav_latitude",
+    "shortDesc":        "NAV_LATITUDE",
+    "type":             "double",
+    "decimalPlaces":    7
+},
+{
+    "name":             "nav_gpstime",
+    "shortDesc":        "NAV_GPSTIME",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_airtem",
+    "shortDesc":        "WEA_AIRTEM",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_wattem",
+    "shortDesc":        "WEA_WATTEM",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_press",
+    "shortDesc":        "WEA_PRESS",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_relhum",
+    "shortDesc":        "WEA_RELHUM",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_windirt",
+    "shortDesc":        "WEA_WINDIRT",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_winspdt",
+    "shortDesc":        "WEA_WINSPDT",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_watdir",
+    "shortDesc":        "WEA_WATRDIR",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_watspd",
+    "shortDesc":        "WEA_WATSPD",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_visibiran",
+    "shortDesc":        "WEA_VISIBIRAN",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_mode",
+    "shortDesc":        "NAV_MODE",
+    "type":             "float",
+    "decimalPlaces":    1,
+    "default":              null
+}
+]
+}

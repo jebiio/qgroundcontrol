@@ -46,6 +46,8 @@
 #include "RallyPointManager.h"
 #include "FTPManager.h"
 #include "ImageProtocolManager.h"
+#include "KrisoFactGroup.h"
+
 
 class Actuators;
 class EventHandler;
@@ -303,6 +305,7 @@ public:
     Q_PROPERTY(Fact* hobbs              READ hobbs              CONSTANT)
     Q_PROPERTY(Fact* throttlePct        READ throttlePct        CONSTANT)
 
+    Q_PROPERTY(FactGroup*           kriso           READ krisoFactGroup             CONSTANT)
     Q_PROPERTY(FactGroup*           gps             READ gpsFactGroup               CONSTANT)
     Q_PROPERTY(FactGroup*           gps2            READ gps2FactGroup              CONSTANT)
     Q_PROPERTY(FactGroup*           wind            READ windFactGroup              CONSTANT)
@@ -648,6 +651,7 @@ public:
     Fact* hobbs                             () { return &_hobbsFact; }
     Fact* throttlePct                       () { return &_throttlePctFact; }
 
+    FactGroup* krisoFactGroup               () { return &_krisoFactGroup; }
     FactGroup* gpsFactGroup                 () { return &_gpsFactGroup; }
     FactGroup* gps2FactGroup                () { return &_gps2FactGroup; }
     FactGroup* windFactGroup                () { return &_windFactGroup; }
@@ -989,6 +993,7 @@ private:
     void _handleExtendedSysState        (mavlink_message_t& message);
     void _handleCommandAck              (mavlink_message_t& message);
     void _handleGpsRawInt               (mavlink_message_t& message);
+    void _handleKRISOStatus             (mavlink_message_t& message);
     void _handleGlobalPositionInt       (mavlink_message_t& message);
     void _handleAltitude                (mavlink_message_t& message);
     void _handleVfrHud                  (mavlink_message_t& message);
@@ -1323,6 +1328,8 @@ private:
 
     TerrainProtocolHandler* _terrainProtocolHandler = nullptr;
 
+    KrisoFactGroup                  _krisoFactGroup;
+
     MissionManager*                 _missionManager             = nullptr;
     GeoFenceManager*                _geoFenceManager            = nullptr;
     RallyPointManager*              _rallyPointManager          = nullptr;
@@ -1357,6 +1364,7 @@ private:
     static const char* _hobbsFactName;
     static const char* _throttlePctFactName;
 
+    static const char* _krisoFactGroupName;
     static const char* _gpsFactGroupName;
     static const char* _gps2FactGroupName;
     static const char* _windFactGroupName;

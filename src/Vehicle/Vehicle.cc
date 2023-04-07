@@ -96,6 +96,7 @@ const char* Vehicle::_distanceToGCSFactName =       "distanceToGCS";
 const char* Vehicle::_hobbsFactName =               "hobbs";
 const char* Vehicle::_throttlePctFactName =         "throttlePct";
 
+const char* Vehicle::_krisoFactGroupName =              "kriso";
 const char* Vehicle::_gpsFactGroupName =                "gps";
 const char* Vehicle::_gps2FactGroupName =               "gps2";
 const char* Vehicle::_windFactGroupName =               "wind";
@@ -171,6 +172,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _hygrometerFactGroup          (this)
     , _terrainFactGroup             (this)
     , _terrainProtocolHandler       (new TerrainProtocolHandler(this, &_terrainFactGroup, this))
+    , _krisoFactGroup               (this)
 {
     _linkManager = _toolbox->linkManager();
 
@@ -318,6 +320,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _distanceSensorFactGroup          (this)
     , _localPositionFactGroup           (this)
     , _localPositionSetpointFactGroup   (this)
+    , _krisoFactGroup                   (this)
 {
     _linkManager = _toolbox->linkManager();
 
@@ -435,6 +438,7 @@ void Vehicle::_commonInit()
     _hobbsFact.setRawValue(QVariant(QString("0000:00:00")));
     _addFact(&_hobbsFact,               _hobbsFactName);
 
+    _addFactGroup(&_krisoFactGroup,             _krisoFactGroupName);
     _addFactGroup(&_gpsFactGroup,               _gpsFactGroupName);
     _addFactGroup(&_gps2FactGroup,              _gps2FactGroupName);
     _addFactGroup(&_windFactGroup,              _windFactGroupName);
@@ -709,6 +713,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_GPS_RAW_INT:
         _handleGpsRawInt(message);
         break;
+    // case MAVLINK_MSG_ID_KRISO_STATUS:
+    //     _handleKRISOStatus(message);
+    //     break;
     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
         _handleGlobalPositionInt(message);
         break;
@@ -1111,6 +1118,29 @@ void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
             }
         }
     }
+}
+
+void Vehicle::_handleKRISOStatus(mavlink_message_t& message)
+{
+    qDebug() << "-----------------kris status -------------------------";
+    mavlink_kriso_status_t krisoStatus;
+    mavlink_msg_kriso_status_decode(&message, &krisoStatus);
+
+    const double roll = static_cast<double>(krisoStatus.nav_roll);
+    const double pitch = static_cast<double>(krisoStatus.nav_pitch);
+    const double yaw = static_cast<double>(krisoStatus.nav_yaw);
+
+    _handleAttitudeWorker(roll, pitch, yaw);
+    _gpsRawIntMessageAvailable = true;
+
+    if (!_globalPositionIntMessageAvailable) {
+        QGeoCoordinate newPosition(krisoStatus.nav_latitude, krisoStatus.nav_longitude, 1.0);
+        // QGeoCoordinate newPosition(krisoStatus.nav_latitude  / (double)1E7, krisoStatus.nav_longitude / (double)1E7, 1.0);
+        if (newPosition != _coordinate) {
+            _coordinate = newPosition;
+            emit coordinateChanged(_coordinate);
+        }
+    }  
 }
 
 void Vehicle::_handleGlobalPositionInt(mavlink_message_t& message)
