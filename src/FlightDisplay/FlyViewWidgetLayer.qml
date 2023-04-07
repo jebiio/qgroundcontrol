@@ -303,7 +303,7 @@ Item {
         Item {
             id:                     missionItemEditor
             anchors.left:           parent.left
-            anchors.right:          parent.right
+            anchors.right:          parent.right 
             anchors.top:            rightControls.bottom
             anchors.topMargin:      ScreenTools.defaultFontPixelHeight * 0.25
             anchors.bottom:         parent.bottom
@@ -315,7 +315,7 @@ Item {
 
                 property var collapsed: ({})
 
-                width: _rightPanelWidth
+                width: _rightPanelWidth * 0.9
                 height: 500
                 focus: true
                 clip: true
@@ -323,7 +323,7 @@ Item {
 
                 model: NameModel { }
 
-                delegate: PowerMonitoringDelegate {
+                delegate: KrisoDelegate {
                     readonly property ListView __lv: ListView.view
 
                     anchors {
@@ -334,7 +334,7 @@ Item {
                         rightMargin: 2
                     }
 
-                    expanded: view.isSectionExpanded( model.team )
+                    expanded: view.isSectionExpanded(model.team)
 
                     MouseArea {
                         anchors.fill: parent
