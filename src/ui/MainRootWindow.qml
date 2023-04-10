@@ -510,7 +510,7 @@ ApplicationWindow {
                         id:                 setupButton
                         height:             _toolButtonHeight
                         Layout.fillWidth:   true
-                        text:               qsTr("Vehicle Setup")
+                        text:               qsTr("Watercraft Setup")
                         imageColor:         qgcPal.text
                         imageResource:      "/qmlimages/Gears.svg"
                         onClicked: {

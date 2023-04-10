@@ -110,7 +110,7 @@
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMAutoPilotPlugin.cc" line="226"/>
       <source>WARNING: The flight board you are using has a critical service bulletin against it which advises against flying. For details see: https://discuss.cubepilot.org/t/sb-0000002-critical-service-bulletin-for-cubes-purchased-between-january-2019-to-present-do-not-fly/406</source>
-      <translation>경고 : 사용중인 비행 보드에는 비행에 대한 조언을 제공하는 중요한 서비스 공지가 있습니다.
+      <translation>경고 : 사용중인 항해 보드에는 항해에 대한 조언을 제공하는 중요한 서비스 공지가 있습니다.
 자세한 내용은 다음을 참조하십시오: https://discuss.cubepilot.org/t/sb-0000002-critical-service-bulletin-for-cubes-purchased-between-january-2019-to-present-do-not-fly/406</translation>
     </message>
   </context>
@@ -202,7 +202,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMCameraComponent.qml" line="445"/>
       <location filename="../src/AutoPilotPlugins/APM/APMCameraComponent.qml" line="445"/>
       <source>Gimbal Type changes takes affect next reboot of autopilot</source>
-      <translation>짐벌 유형의 변경은 비행 컨트롤러가 재부팅된 후에 적용됩니다.</translation>
+      <translation>짐벌 유형의 변경은 항해 컨트롤러가 재부팅된 후에 적용됩니다.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMCameraComponent.qml" line="453"/>
@@ -403,7 +403,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMCameraSubComponent.qml" line="484"/>
       <location filename="../src/AutoPilotPlugins/APM/APMCameraSubComponent.qml" line="484"/>
       <source>Gimbal Type changes takes affect next reboot of autopilot</source>
-      <translation>짐벌 유형의 변경은 비행 컨트롤러가 재부팅된 후에 적용됩니다.</translation>
+      <translation>짐벌 유형의 변경은 항해 컨트롤러가 재부팅된 후에 적용됩니다.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMCameraSubComponent.qml" line="492"/>
@@ -500,7 +500,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="58"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="58"/>
       <source>Flight Mode Settings</source>
-      <translation>비행 모드 설정</translation>
+      <translation>항해 모드 설정</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="58"/>
@@ -512,7 +512,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="82"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="82"/>
       <source>Flight mode channel:</source>
-      <translation>비행 모드 채널:</translation>
+      <translation>항해 모드 채널:</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="88"/>
@@ -572,7 +572,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="106"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="106"/>
       <source>Flight Mode </source>
-      <translation>비행 모드 </translation>
+      <translation>항해 모드 </translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.qml" line="127"/>
@@ -607,12 +607,12 @@
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.cc" line="18"/>
       <source>Flight Modes</source>
-      <translation>비행 모드</translation>
+      <translation>항해 모드</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponent.cc" line="29"/>
       <source>Flight Modes Setup is used to configure the transmitter switches associated with Flight Modes.</source>
-      <translation>비행 모드 설정은 조종기의 스위치에 비행 모드를 할당합니다.</translation>
+      <translation>항해 모드 설정은 조종기의 스위치에 항해 모드를 할당합니다.</translation>
     </message>
   </context>
   <context>
@@ -644,37 +644,37 @@
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="28"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="28"/>
       <source>Flight Mode 1</source>
-      <translation>비행 모드 1</translation>
+      <translation>항해 모드 1</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="33"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="33"/>
       <source>Flight Mode 2</source>
-      <translation>비행 모드 2</translation>
+      <translation>항해 모드 2</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="38"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="38"/>
       <source>Flight Mode 3</source>
-      <translation>비행 모드 3</translation>
+      <translation>항해 모드 3</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="43"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="43"/>
       <source>Flight Mode 4</source>
-      <translation>비행 모드 4</translation>
+      <translation>항해 모드 4</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="48"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="48"/>
       <source>Flight Mode 5</source>
-      <translation>비행 모드 5</translation>
+      <translation>항해 모드 5</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="53"/>
       <location filename="../src/AutoPilotPlugins/APM/APMFlightModesComponentSummary.qml" line="53"/>
       <source>Flight Mode 6</source>
-      <translation>비행 모드 6</translation>
+      <translation>항해 모드 6</translation>
     </message>
   </context>
   <context>
@@ -1218,7 +1218,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMPowerComponent.qml" line="268"/>
       <location filename="../src/AutoPilotPlugins/APM/APMPowerComponent.qml" line="268"/>
       <source>- Disconnect USB and battery so flight controller powers down</source>
-      <translation>- 비행 컨트롤러의 전원이 꺼지도록 USB와 배터리를 분리하십시오.</translation>
+      <translation>- 항해 컨트롤러의 전원이 꺼지도록 USB와 배터리를 분리하십시오.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMPowerComponent.qml" line="269"/>
@@ -1236,7 +1236,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMPowerComponent.qml" line="271"/>
       <location filename="../src/AutoPilotPlugins/APM/APMPowerComponent.qml" line="271"/>
       <source>- If using a flight controller with a safety button press it until it displays solid red</source>
-      <translation>- 안전 버튼이 있는 비행 컨트롤러를 사용중이라면, 빨간 불빛이 나올 때 까지 누르십시오</translation>
+      <translation>- 안전 버튼이 있는 항해 컨트롤러를 사용중이라면, 빨간 불빛이 나올 때 까지 누르십시오</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMPowerComponent.qml" line="272"/>
@@ -1480,7 +1480,7 @@
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMRadioComponent.cc" line="37"/>
       <source>The Radio Component is used to setup which channels on your RC Transmitter you will use for each vehicle control such as Roll, Pitch, Yaw and Throttle. It also allows you to assign switches and dials to the various flight modes. Prior to flight you must also calibrate the extents for all of your channels.</source>
-      <translation>라디오 구성 요소는 RC 조종기의 채널을 기체의 롤, 피치, 스로틀을 조종할 수 있도록 설정하는데 사용됩니다. 다른 스위치와 다이얼을 다양한 비행모드로 변경하기 위해서도 사용할 수 있습니다. 비행 전 모든 채널에 대해 캘리브레이션을 해야합니다.</translation>
+      <translation>라디오 구성 요소는 RC 조종기의 채널을 기체의 롤, 피치, 스로틀을 조종할 수 있도록 설정하는데 사용됩니다. 다른 스위치와 다이얼을 다양한 항해모드로 변경하기 위해서도 사용할 수 있습니다. 항해 전 모든 채널에 대해 캘리브레이션을 해야합니다.</translation>
     </message>
   </context>
   <context>
@@ -1680,7 +1680,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponent.qml" line="414"/>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponent.qml" line="414"/>
       <source>GeoFence</source>
-      <translation>비행제한구역(GeoFence)</translation>
+      <translation>항해제한구역(GeoFence)</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponent.qml" line="429"/>
@@ -1746,7 +1746,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponent.qml" line="617"/>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponent.qml" line="617"/>
       <source>Loiter above Home for:</source>
-      <translation>홈 위에서 정지비행:</translation>
+      <translation>홈 위에서 정지항해:</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponent.qml" line="635"/>
@@ -1867,7 +1867,7 @@
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentCopter.qml" line="278"/>
       <source>GeoFence</source>
-      <translation>비행제한구역(GeoFence)</translation>
+      <translation>항해제한구역(GeoFence)</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentCopter.qml" line="293"/>
@@ -1917,7 +1917,7 @@
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentCopter.qml" line="472"/>
       <source>Loiter above Home for:</source>
-      <translation>홈 위에서 정지비행:</translation>
+      <translation>홈 위에서 정지항해:</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentCopter.qml" line="491"/>
@@ -1927,7 +1927,7 @@
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentCopter.qml" line="512"/>
       <source>Final loiter altitude:</source>
-      <translation>최종 정지비행 고도:</translation>
+      <translation>최종 정지항해 고도:</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentCopter.qml" line="534"/>
@@ -2534,7 +2534,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="40"/>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="40"/>
       <source>If mounted in the direction of flight, select None.</source>
-      <translation>비행방향과 같은 방향으로 장착되어 있다면, '해당사항 없음'을 선택하여 주십시오.</translation>
+      <translation>항해방향과 같은 방향으로 장착되어 있다면, '해당사항 없음'을 선택하여 주십시오.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="41"/>
@@ -2546,7 +2546,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="42"/>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="42"/>
       <source>If the compass or GPS module is mounted in flight direction, leave the default value (None)</source>
-      <translation>지자기 센서와 GPS모듈이 비행방향과 일치하게 장착되어있다면, 기본값(None) 을 사용합니다.</translation>
+      <translation>지자기 센서와 GPS모듈이 항해방향과 일치하게 장착되어있다면, 기본값(None) 을 사용합니다.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="44"/>
@@ -2770,7 +2770,7 @@
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="436"/>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="436"/>
       <source>Autopilot Rotation:</source>
-      <translation>비행 컨트롤러 회전:</translation>
+      <translation>항해 컨트롤러 회전:</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="454"/>
@@ -3028,7 +3028,7 @@ Click Ok to start calibration.</source>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponentController.cc" line="358"/>
       <source>Hold the vehicle in its level flight position.</source>
-      <translation>수평 비행 위치에서 기체를 멈춤</translation>
+      <translation>수평 항해 위치에서 기체를 멈춤</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponentController.cc" line="367"/>
@@ -3083,7 +3083,7 @@ Click Ok to start calibration.</source>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponentController.cc" line="584"/>
       <source>YOU MUST REBOOT YOUR VEHICLE NOW AND RETRY COMPASS CALIBRATION PRIOR TO FLIGHT</source>
-      <translation>반드시 비행전 기체를 재부팅하고 지자기 센서를 다시 캘리브레이션해야 합니다.</translation>
+      <translation>반드시 항해전 기체를 재부팅하고 지자기 센서를 다시 캘리브레이션해야 합니다.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponentController.cc" line="588"/>
@@ -3260,7 +3260,7 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMTuningComponent.cc" line="29"/>
       <source>Tuning Setup is used to tune the flight characteristics of the Vehicle.</source>
-      <translation>세부 설정은 기체의 비행특성을 설정하기 위해 사용합니다</translation>
+      <translation>세부 설정은 기체의 항해특성을 설정하기 위해 사용합니다</translation>
     </message>
   </context>
   <context>
@@ -3401,7 +3401,7 @@ Please place your vehicle in water, click the button, and wait. Note that the th
       <location filename="../src/AutoPilotPlugins/APM/APMTuningComponentCopter.qml" line="380"/>
       <location filename="../src/AutoPilotPlugins/APM/APMTuningComponentCopter.qml" line="380"/>
       <source>In Flight Tuning</source>
-      <translation>비행중 세부설정</translation>
+      <translation>항해중 세부설정</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/APM/APMTuningComponentCopter.qml" line="404"/>
@@ -3549,7 +3549,7 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/AirframeComponent.cc" line="31"/>
       <source>Airframe Setup is used to select the airframe that matches your vehicle. This will in turn set up the various tuning values for flight parameters.</source>
-      <translation>기체 프레임 설정에서 기체와 일치하는 프레임을 선택합니다. 이 과정은 순차적으로  비행 파라미터에 대한 다양한 튜닝 값들이 조정합니다.</translation>
+      <translation>기체 프레임 설정에서 기체와 일치하는 프레임을 선택합니다. 이 과정은 순차적으로  항해 파라미터에 대한 다양한 튜닝 값들이 조정합니다.</translation>
     </message>
   </context>
   <context>
@@ -3765,12 +3765,12 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="355"/>
       <source>Flight List Management</source>
-      <translation>비행 리스트 관리</translation>
+      <translation>항해 리스트 관리</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="367"/>
       <source>Show Flight List</source>
-      <translation>비행 리스트 보기</translation>
+      <translation>항해 리스트 보기</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="421"/>
@@ -3785,12 +3785,12 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="448"/>
       <source>Flight Start</source>
-      <translation>비행 시작</translation>
+      <translation>항해 시작</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="463"/>
       <source>Flight End</source>
-      <translation>비행 종료</translation>
+      <translation>항해 종료</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="478"/>
@@ -3815,12 +3815,12 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="499"/>
       <source>Loading Flight List</source>
-      <translation>비행 리스트 불러오기</translation>
+      <translation>항해 리스트 불러오기</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="531"/>
       <source>Flight List</source>
-      <translation>비행 리스트</translation>
+      <translation>항해 리스트</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="546"/>
@@ -3850,12 +3850,12 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="627"/>
       <source>End Flight</source>
-      <translation>비행 완료</translation>
+      <translation>항해 완료</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="628"/>
       <source>Confirm ending active flight?</source>
-      <translation>활성된 비행 종료를 승인하시겠습니까?</translation>
+      <translation>활성된 항해 종료를 승인하시겠습니까?</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="642"/>
@@ -3880,7 +3880,7 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/Airmap/AirmapSettings.qml" line="665"/>
       <source>Flight Area </source>
-      <translation>비행영역</translation>
+      <translation>항해영역</translation>
     </message>
   </context>
   <context>
@@ -3999,12 +3999,12 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/Airmap/AirspaceControl.qml" line="372"/>
       <source>File Flight Plan</source>
-      <translation>비행계획 파일</translation>
+      <translation>항해계획 파일</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirspaceControl.qml" line="372"/>
       <source>Flight Brief</source>
-      <translation>비행 개요</translation>
+      <translation>항해 개요</translation>
     </message>
     <message>
       <location filename="../src/Airmap/AirspaceControl.qml" line="384"/>
@@ -4250,7 +4250,7 @@ Please place your vehicle in water, click the button, and wait. Note that the th
     <message>
       <location filename="../src/AutoPilotPlugins/AutoPilotPlugin.cc" line="74"/>
       <source>One or more vehicle components require setup prior to flight.</source>
-      <translation>하나이상의 기체 구성요소가 비행전 설정이 필요합니다</translation>
+      <translation>하나이상의 기체 구성요소가 항해전 설정이 필요합니다</translation>
     </message>
   </context>
   <context>
@@ -5264,12 +5264,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/DefaultChecklist.qml" line="86"/>
       <source>Flight area</source>
-      <translation>비행영역</translation>
+      <translation>항해영역</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/DefaultChecklist.qml" line="87"/>
       <source>Launch area and path free of obstacles/people?</source>
-      <translation>비행 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
+      <translation>항해 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
     </message>
   </context>
   <context>
@@ -5626,7 +5626,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/PlanView/FWLandingPatternEditor.qml" line="248"/>
       <source>* Actual flight path will vary.</source>
-      <translation>* 실제 비행 경로는 다를 수 있습니다.</translation>
+      <translation>* 실제 항해 경로는 다를 수 있습니다.</translation>
     </message>
     <message>
       <location filename="../src/PlanView/FWLandingPatternEditor.qml" line="257"/>
@@ -6301,7 +6301,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="48"/>
       <source>Update the autopilot firmware to the latest version</source>
-      <translation>비행 컨트롤러의 펌웨어를 최신 버전으로 업데이트하십시오.</translation>
+      <translation>항해 컨트롤러의 펌웨어를 최신 버전으로 업데이트하십시오.</translation>
     </message>
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="52"/>
@@ -6391,7 +6391,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="313"/>
       <source>Detected PX4 Flow board. The firmware you use on the PX4 Flow must match the AutoPilot firmware type you are using on the vehicle:</source>
-      <translation>PX4 Flow 보드를 감지했습니다. PX4 Flow에서 사용하는 펌웨어는 기체에서 사용중인 비행제어보드의 펌웨어 유형과 일치해야합니다:</translation>
+      <translation>PX4 Flow 보드를 감지했습니다. PX4 Flow에서 사용하는 펌웨어는 기체에서 사용중인 항해제어보드의 펌웨어 유형과 일치해야합니다:</translation>
     </message>
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="314"/>
@@ -6436,7 +6436,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="446"/>
       <source>Select which version of the above flight stack you would like to install:</source>
-      <translation>다음 중 설치할 비행 소프트웨어 버전을 지정해주십시오:</translation>
+      <translation>다음 중 설치할 항해 소프트웨어 버전을 지정해주십시오:</translation>
     </message>
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="461"/>
@@ -6451,7 +6451,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="463"/>
       <source>Although it has received FLIGHT TESTING, it represents actively changed code. </source>
-      <translation>비행 테스트중인 펌웨어를 받았지만, 비행 테스트 중인 펌웨어는 코드가 자주 변경됩니다. </translation>
+      <translation>항해 테스트중인 펌웨어를 받았지만, 항해 테스트 중인 펌웨어는 코드가 자주 변경됩니다. </translation>
     </message>
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="464"/>
@@ -6466,7 +6466,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="468"/>
       <source>This firmware has NOT BEEN FLIGHT TESTED. </source>
-      <translation>이 펌웨어는 비행 테스트를 한 적이 없습니다. </translation>
+      <translation>이 펌웨어는 항해 테스트를 한 적이 없습니다. </translation>
     </message>
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="469"/>
@@ -6481,7 +6481,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="471"/>
       <source>Do NOT fly this without additional safety precautions. </source>
-      <translation>추가적인 안전장치 없이 비행을 삼가해주십시오. </translation>
+      <translation>추가적인 안전장치 없이 항해을 삼가해주십시오. </translation>
     </message>
     <message>
       <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="472"/>
@@ -6662,12 +6662,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/FixedWingChecklist.qml" line="86"/>
       <source>Flight area</source>
-      <translation>비행영역</translation>
+      <translation>항해영역</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/FixedWingChecklist.qml" line="87"/>
       <source>Launch area and path free of obstacles/people?</source>
-      <translation>비행 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
+      <translation>항해 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
     </message>
   </context>
   <context>
@@ -6688,7 +6688,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/Airmap/FlightBrief.qml" line="32"/>
       <source>Flight Brief</source>
-      <translation>비행 개요</translation>
+      <translation>항해 개요</translation>
     </message>
     <message>
       <location filename="../src/Airmap/FlightBrief.qml" line="51"/>
@@ -6770,12 +6770,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/Airmap/FlightDetails.qml" line="32"/>
       <source>Flight Details</source>
-      <translation>비행 세부 정보</translation>
+      <translation>항해 세부 정보</translation>
     </message>
     <message>
       <location filename="../src/Airmap/FlightDetails.qml" line="51"/>
       <source>Flight Date &amp; Time</source>
-      <translation>비행 날짜 &amp; 시간</translation>
+      <translation>항해 날짜 &amp; 시간</translation>
     </message>
     <message>
       <location filename="../src/Airmap/FlightDetails.qml" line="71"/>
@@ -6791,7 +6791,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/Airmap/FlightDetails.qml" line="96"/>
       <source>Flight Start Time</source>
-      <translation>비행 시작</translation>
+      <translation>항해 시작</translation>
     </message>
     <message>
       <location filename="../src/Airmap/FlightDetails.qml" line="146"/>
@@ -6801,7 +6801,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/Airmap/FlightDetails.qml" line="186"/>
       <source>Flight Context</source>
-      <translation>비행 상황</translation>
+      <translation>항해 상황</translation>
     </message>
   </context>
   <context>
@@ -6848,12 +6848,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/FlightModesComponent.cc" line="24"/>
       <source>Flight Modes</source>
-      <translation>비행 모드</translation>
+      <translation>항해 모드</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/FlightModesComponent.cc" line="35"/>
       <source>Flight Modes Setup is used to configure the transmitter switches associated with Flight Modes.</source>
-      <translation>비행 모드 설정은 조종기의 스위치에 비행 모드를 할당합니다.</translation>
+      <translation>항해 모드 설정은 조종기의 스위치에 항해 모드를 할당합니다.</translation>
     </message>
   </context>
   <context>
@@ -6878,7 +6878,7 @@ Click Ok to start the auto-tuning process.
       <location filename="../src/AutoPilotPlugins/PX4/FlightModesComponentSummary.qml" line="35"/>
       <location filename="../src/AutoPilotPlugins/PX4/FlightModesComponentSummary.qml" line="35"/>
       <source>Flight Mode %1 </source>
-      <translation>비행 모드 %1 </translation>
+      <translation>항해 모드 %1 </translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/FlightModesComponentSummary.qml" line="53"/>
@@ -6900,7 +6900,7 @@ Click Ok to start the auto-tuning process.
       <location filename="../src/AutoPilotPlugins/PX4/FlightModesComponentSummary.qml" line="57"/>
       <location filename="../src/AutoPilotPlugins/PX4/FlightModesComponentSummary.qml" line="57"/>
       <source>Loiter switch</source>
-      <translation>정지비행 스위치</translation>
+      <translation>정지항해 스위치</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/FlightModesComponentSummary.qml" line="61"/>
@@ -6919,12 +6919,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/FlyViewAirspaceIndicator.qml" line="48"/>
       <source>Flight Approved</source>
-      <translation>비행 승인됨</translation>
+      <translation>항해 승인됨</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/FlyViewAirspaceIndicator.qml" line="50"/>
       <source>Flight Rejected</source>
-      <translation>비행 거절됨</translation>
+      <translation>항해 거절됨</translation>
     </message>
   </context>
   <context>
@@ -6974,7 +6974,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/FlyViewMissionCompleteDialog.qml" line="44"/>
       <source>Flight Plan complete</source>
-      <translation>비행 계획 완료</translation>
+      <translation>항해 계획 완료</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/FlyViewMissionCompleteDialog.qml" line="80"/>
@@ -6984,12 +6984,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/FlyViewMissionCompleteDialog.qml" line="87"/>
       <source>Remove plan from vehicle</source>
-      <translation>비행 경로 기체에서 삭제</translation>
+      <translation>항해 경로 기체에서 삭제</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/FlyViewMissionCompleteDialog.qml" line="98"/>
       <source>Leave plan on vehicle</source>
-      <translation>비행 경로 기체에 저장</translation>
+      <translation>항해 경로 기체에 저장</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/FlyViewMissionCompleteDialog.qml" line="116"/>
@@ -6999,7 +6999,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/FlyViewMissionCompleteDialog.qml" line="127"/>
       <source>Resume Mission will rebuild the current mission from the last flown waypoint and upload it to the vehicle for the next flight.</source>
-      <translation>미션 다시시작은 마지막 비행 경로지점에서 현재 미션을 다시 구축하여, 다음 비행에 사용하기 위해 기체에 미션을 업로드합니다.</translation>
+      <translation>미션 다시시작은 마지막 항해 경로지점에서 현재 미션을 다시 구축하여, 다음 항해에 사용하기 위해 기체에 미션을 업로드합니다.</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/FlyViewMissionCompleteDialog.qml" line="135"/>
@@ -7012,7 +7012,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/FlyViewPreFlightChecklistPopup.qml" line="21"/>
       <source>Pre-Flight Checklist</source>
-      <translation>비행 전 점검 리스트</translation>
+      <translation>항해 전 점검 리스트</translation>
     </message>
   </context>
   <context>
@@ -7020,7 +7020,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/FlyViewToolStrip.qml" line="18"/>
       <source>Fly</source>
-      <translation>비행</translation>
+      <translation>항해</translation>
     </message>
   </context>
   <context>
@@ -7240,7 +7240,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/ui/preferences/GeneralSettings.qml" line="703"/>
       <source>Save log after each flight</source>
-      <translation>비행 완료 후마다 로그 저장하기</translation>
+      <translation>항해 완료 후마다 로그 저장하기</translation>
     </message>
     <message>
       <location filename="../src/ui/preferences/GeneralSettings.qml" line="711"/>
@@ -7250,7 +7250,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/ui/preferences/GeneralSettings.qml" line="84"/>
       <source>Fly View</source>
-      <translation>비행 화면</translation>
+      <translation>항해 화면</translation>
     </message>
     <message>
       <location filename="../src/ui/preferences/GeneralSettings.qml" line="145"/>
@@ -7300,12 +7300,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/ui/preferences/GeneralSettings.qml" line="103"/>
       <source>Use Preflight Checklist</source>
-      <translation>비행 전 체크 리스트 사용</translation>
+      <translation>항해 전 체크 리스트 사용</translation>
     </message>
     <message>
       <location filename="../src/ui/preferences/GeneralSettings.qml" line="111"/>
       <source>Enforce Preflight Checklist</source>
-      <translation>비행 전 체크 리스트 강제 사용</translation>
+      <translation>항해 전 체크 리스트 강제 사용</translation>
     </message>
     <message>
       <location filename="../src/ui/preferences/GeneralSettings.qml" line="120"/>
@@ -7573,12 +7573,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/PlanView/GeoFenceEditor.qml" line="37"/>
       <source>GeoFence</source>
-      <translation>비행제한구역(GeoFence)</translation>
+      <translation>항해제한구역(GeoFence)</translation>
     </message>
     <message>
       <location filename="../src/PlanView/GeoFenceEditor.qml" line="65"/>
       <source>GeoFencing allows you to set a virtual fence around the area you want to fly in.</source>
-      <translation>GeoFencing은 비행을 제한하고 싶은 가상의 경계를 지정할 수 있도록 합니다.</translation>
+      <translation>GeoFencing은 항해을 제한하고 싶은 가상의 경계를 지정할 수 있도록 합니다.</translation>
     </message>
     <message>
       <location filename="../src/PlanView/GeoFenceEditor.qml" line="66"/>
@@ -7986,7 +7986,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="61"/>
       <source>WARNING: THIS WILL STOP ALL MOTORS. IF VEHICLE IS CURRENTLY IN THE AIR IT WILL CRASH.</source>
-      <translation>경고: 이 명령은 모든 모터를 멈추게 합니다. 비행중이라면 추락할것입니다.</translation>
+      <translation>경고: 이 명령은 모든 모터를 멈추게 합니다. 항해중이라면 추락할것입니다.</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="62"/>
@@ -8031,7 +8031,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="71"/>
       <source>Orbit the vehicle around the specified location.</source>
-      <translation>지정된 위치를 중심으로 기체를 원주비행합니다.</translation>
+      <translation>지정된 위치를 중심으로 기체를 원주항해합니다.</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="72"/>
@@ -8051,12 +8051,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="75"/>
       <source>Transition VTOL to fixed wing flight.</source>
-      <translation>VTOL를 고정익 비행으로 전환하기.</translation>
+      <translation>VTOL를 고정익 항해으로 전환하기.</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="76"/>
       <source>Transition VTOL to multi-rotor flight.</source>
-      <translation>VTOL를 고정익 비행으로 전환하기.</translation>
+      <translation>VTOL를 고정익 항해으로 전환하기.</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/GuidedActionsController.qml" line="77"/>
@@ -8454,7 +8454,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/VehicleSetup/JoystickConfigAdvanced.qml" line="180"/>
       <source>Deadband can be set during the first </source>
-      <translation>첫 비행동안 데드밴드를 설정할 수 있습니다 </translation>
+      <translation>첫 항해동안 데드밴드를 설정할 수 있습니다 </translation>
     </message>
     <message>
       <location filename="../src/VehicleSetup/JoystickConfigAdvanced.qml" line="181"/>
@@ -8702,7 +8702,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/MissionManager/LandingComplexItem.cc" line="655"/>
       <source>Fixed Wing Landing Pattern: Setting the loiter and landing altitudes with different settings for altitude relative is no longer supported. Both have been set to relative altitude. Be sure to adjust/check your plan prior to flight.</source>
-      <translation>고정익 착륙 패턴 : 정지 비행 고도와 착륙 고도를 다르게 설정하는 것은 더 이상 지원되지 않습니다. 두 항목 모두 상대 고도로 설정 되어야 합니다. 비행 전 비행 계획을 다시 한번 확인하여 주시기 바랍니다</translation>
+      <translation>고정익 착륙 패턴 : 정지 항해 고도와 착륙 고도를 다르게 설정하는 것은 더 이상 지원되지 않습니다. 두 항목 모두 상대 고도로 설정 되어야 합니다. 항해 전 항해 계획을 다시 한번 확인하여 주시기 바랍니다</translation>
     </message>
   </context>
   <context>
@@ -9526,7 +9526,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/ui/toolbar/MainStatusIndicator.qml" line="36"/>
       <source>Ready To Fly</source>
-      <translation>비행 준비 완료</translation>
+      <translation>항해 준비 완료</translation>
     </message>
     <message>
       <location filename="../src/ui/toolbar/MainStatusIndicator.qml" line="37"/>
@@ -9546,7 +9546,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/ui/toolbar/MainStatusIndicator.qml" line="40"/>
       <source>Flying</source>
-      <translation>비행중</translation>
+      <translation>항해중</translation>
     </message>
     <message>
       <location filename="../src/ui/toolbar/MainStatusIndicator.qml" line="41"/>
@@ -9861,7 +9861,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/ui/preferences/MavlinkSettings.qml" line="578"/>
       <source>Flight Rating:</source>
-      <translation>비행 점수:</translation>
+      <translation>항해 점수:</translation>
     </message>
     <message>
       <location filename="../src/ui/preferences/MavlinkSettings.qml" line="616"/>
@@ -10000,7 +10000,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/Microhard/MicrohardSettings.qml" line="137"/>
       <source>Air Unit:</source>
-      <translation>비행 유닛:</translation>
+      <translation>항해 유닛:</translation>
     </message>
     <message>
       <location filename="../src/Microhard/MicrohardSettings.qml" line="152"/>
@@ -10212,7 +10212,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/PlanView/MissionSettingsEditor.qml" line="119"/>
       <source>Flight speed</source>
-      <translation>비행속도</translation>
+      <translation>항해속도</translation>
     </message>
     <message>
       <location filename="../src/PlanView/MissionSettingsEditor.qml" line="146"/>
@@ -10257,7 +10257,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/PlanView/MissionSettingsEditor.qml" line="224"/>
       <source>Hover speed</source>
-      <translation>정지비행 속도</translation>
+      <translation>정지항해 속도</translation>
     </message>
     <message>
       <location filename="../src/PlanView/MissionSettingsEditor.qml" line="258"/>
@@ -10267,7 +10267,7 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/PlanView/MissionSettingsEditor.qml" line="270"/>
       <source>Actual position set by vehicle at flight time.</source>
-      <translation>비행 중 설정된 기체의 실제 위치</translation>
+      <translation>항해 중 설정된 기체의 실제 위치</translation>
     </message>
   </context>
   <context>
@@ -10526,12 +10526,12 @@ Click Ok to start the auto-tuning process.
     <message>
       <location filename="../src/FlightDisplay/MultiRotorChecklist.qml" line="81"/>
       <source>Flight area</source>
-      <translation>비행영역</translation>
+      <translation>항해영역</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/MultiRotorChecklist.qml" line="82"/>
       <source>Launch area and path free of obstacles/people?</source>
-      <translation>비행 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
+      <translation>항해 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
     </message>
   </context>
   <context>
@@ -10962,7 +10962,7 @@ Is this really what you want?</source>
     <message>
       <location filename="../src/QmlControls/PIDTuning.qml" line="371"/>
       <source>Automatic Flight Mode Switching</source>
-      <translation>자동 비행 모드 스위칭</translation>
+      <translation>자동 항해 모드 스위칭</translation>
     </message>
     <message>
       <location filename="../src/QmlControls/PIDTuning.qml" line="381"/>
@@ -10981,25 +10981,25 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="32"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="32"/>
       <source>FLIGHT MODES</source>
-      <translation>비행모드</translation>
+      <translation>항해모드</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="35"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="35"/>
       <source>Assign Flight Modes to radio control channels and adjust the thresholds for triggering them.</source>
-      <translation>비행모드를 라디오 채널에 지정하고 모드 설정을 위한 임계값을 지정해주십시오.</translation>
+      <translation>항해모드를 라디오 채널에 지정하고 모드 설정을 위한 임계값을 지정해주십시오.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="36"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="36"/>
       <source>Assign Flight Modes to radio control channels and adjust the thresholds for triggering them. </source>
-      <translation>비행모드를 라디오 채널에 지정하고 모드 설정을 위한 임계값을 지정해주십시오. </translation>
+      <translation>항해모드를 라디오 채널에 지정하고 모드 설정을 위한 임계값을 지정해주십시오. </translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="37"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="37"/>
       <source>You can assign multiple flight modes to a single channel. </source>
-      <translation>하나의 채널에 여러개의 비행모드를 설정할 수 있습니다 </translation>
+      <translation>하나의 채널에 여러개의 항해모드를 설정할 수 있습니다 </translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="38"/>
@@ -11017,7 +11017,7 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="40"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="40"/>
       <source> are not available for Flight Modes since they are already in use for other functions.</source>
-      <translation> 다른 기능에 사용중이므로 비행모드에 사용할 수 없습니다</translation>
+      <translation> 다른 기능에 사용중이므로 항해모드에 사용할 수 없습니다</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="42"/>
@@ -11043,7 +11043,7 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="45"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="47"/>
       <source>The Main mode switch must always be assigned to a channel in order to fly</source>
-      <translation>비행을 위해서는 주 모드 스위치에 채널이 할당되어야합니다</translation>
+      <translation>항해을 위해서는 주 모드 스위치에 채널이 할당되어야합니다</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="46"/>
@@ -11133,7 +11133,7 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="65"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="65"/>
       <source>With no stick inputs the plane holds heading, but drifts off in wind. </source>
-      <translation>스틱 인풋이 없으면 비행기는 방향을 유지하지만, 바람에 의해 흐를 수 있습니다 </translation>
+      <translation>스틱 인풋이 없으면 항해기는 방향을 유지하지만, 바람에 의해 흐를 수 있습니다 </translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="66"/>
@@ -11163,7 +11163,7 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="71"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="71"/>
       <source>With no stick inputs the plane flies a straight line, even in wind. </source>
-      <translation>스틱인풋이 없어도 기체가 바람의 영향하에도 직선으로 비행합니다. </translation>
+      <translation>스틱인풋이 없어도 기체가 바람의 영향하에도 직선으로 항해합니다. </translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="72"/>
@@ -11199,7 +11199,7 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="79"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="79"/>
       <source>The aircraft flies in a circle around the current position at the current altitude. </source>
-      <translation>현재 고도와 위치에서 비행체가 원을 그리며 비행합니다 </translation>
+      <translation>현재 고도와 위치에서 항해체가 원을 그리며 항해합니다 </translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="80"/>
@@ -11217,7 +11217,7 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="83"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="83"/>
       <source>The vehicle returns to the launch position, loiters and then lands. </source>
-      <translation>기체가 홈 위치로 귀환하여, 정지비행후 착륙합니다 </translation>
+      <translation>기체가 홈 위치로 귀환하여, 정지항해후 착륙합니다 </translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="85"/>
@@ -11229,13 +11229,13 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="86"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="86"/>
       <source>All flight control aspects are controlled by an offboard system.</source>
-      <translation>모든 비행제어 요소가 외부 시스템(offboard)에 의해 관리됩니다.</translation>
+      <translation>모든 항해제어 요소가 외부 시스템(offboard)에 의해 관리됩니다.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="159"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="159"/>
       <source>Flight Mode Config is disabled since you have a Joystick enabled.</source>
-      <translation>조이스틱이 활성화되어 비행모드 설정이 비활성화되었습니다</translation>
+      <translation>조이스틱이 활성화되어 항해모드 설정이 비활성화되었습니다</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4AdvancedFlightModes.qml" line="194"/>
@@ -11642,7 +11642,7 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4SimpleFlightModes.qml" line="67"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4SimpleFlightModes.qml" line="67"/>
       <source>Flight Mode Settings</source>
-      <translation>비행 모드 설정</translation>
+      <translation>항해 모드 설정</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4SimpleFlightModes.qml" line="89"/>
@@ -11654,7 +11654,7 @@ Is this really what you want?</source>
       <location filename="../src/AutoPilotPlugins/PX4/PX4SimpleFlightModes.qml" line="97"/>
       <location filename="../src/AutoPilotPlugins/PX4/PX4SimpleFlightModes.qml" line="97"/>
       <source>Flight Mode %1</source>
-      <translation>비행 모드 %1</translation>
+      <translation>항해 모드 %1</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/PX4SimpleFlightModes.qml" line="128"/>
@@ -12316,7 +12316,7 @@ Note that this will also completely reset everything, including UAVCAN nodes, al
     <message>
       <location filename="../src/QmlControls/ParameterEditorDialog.qml" line="242"/>
       <source>Warning: Modifying values while vehicle is in flight can lead to vehicle instability and possible vehicle loss. </source>
-      <translation>경고: 비행 중 값을 수정하는 것은 불안정 또는 기체의 손상으로 이어질 수 있습니다. </translation>
+      <translation>경고: 항해 중 값을 수정하는 것은 불안정 또는 기체의 손상으로 이어질 수 있습니다. </translation>
     </message>
     <message>
       <location filename="../src/QmlControls/ParameterEditorDialog.qml" line="243"/>
@@ -12845,7 +12845,7 @@ Note that this will also completely reset everything, including UAVCAN nodes, al
     <message>
       <location filename="../src/PlanView/PlanView.qml" line="237"/>
       <source>Plan is waiting on terrain data from server for correct altitude values.</source>
-      <translation>비행계획의 정확한 고도정보를 위해 서버로부터 지형데이터를 다운로드하고 있습니다</translation>
+      <translation>항해계획의 정확한 고도정보를 위해 서버로부터 지형데이터를 다운로드하고 있습니다</translation>
     </message>
     <message>
       <location filename="../src/PlanView/PlanView.qml" line="263"/>
@@ -12974,13 +12974,13 @@ Click &apos;Ok&apos; to upload the Plan anyway.</source>
     </message>
     <message>
       <location filename="../src/PlanView/PlanView.qml" line="637"/>
-      <source>Fly</source>
-      <translation>비행</translation>
+      <source>Voyage</source>
+      <translation>항해</translation>
     </message>
     <message>
       <location filename="../src/PlanView/PlanView.qml" line="651"/>
-      <source>Takeoff</source>
-      <translation>이륙</translation>
+      <source>Departure</source>
+      <translation>출항</translation>
     </message>
     <message>
       <location filename="../src/PlanView/PlanView.qml" line="662"/>
@@ -13577,7 +13577,7 @@ Click &apos;Ok&apos; to upload the Plan anyway.</source>
     <message>
       <location filename="../src/QmlControls/PreFlightCheckList.qml" line="81"/>
       <source>Pre-Flight Checklist %1</source>
-      <translation>비행 전 점검 리스트: %1</translation>
+      <translation>항해 전 점검 리스트: %1</translation>
     </message>
     <message>
       <location filename="../src/QmlControls/PreFlightCheckList.qml" line="81"/>
@@ -13646,7 +13646,7 @@ Click &apos;Ok&apos; to upload the Plan anyway.</source>
     <message>
       <location filename="../src/FlightDisplay/PreFlightRCCheck.qml" line="19"/>
       <source>No signal or invalid autopilot-RC config. Check RC and console.</source>
-      <translation>신호가 없거나 올바르지 않은 비행 컨트롤러-RC 설정입니다. RC와 콘솔을 확인하십시오.</translation>
+      <translation>신호가 없거나 올바르지 않은 항해 컨트롤러-RC 설정입니다. RC와 콘솔을 확인하십시오.</translation>
     </message>
   </context>
   <context>
@@ -14731,7 +14731,7 @@ sudo apt-get remove modemmanager</translation>
     <message>
       <location filename="../src/AutoPilotPlugins/Common/RadioComponent.qml" line="84"/>
       <source>%1 channels or more are needed to fly.</source>
-      <translation>비행을 하기 위해서는 %1 채널 이상이 필요합니다.</translation>
+      <translation>항해을 하기 위해서는 %1 채널 이상이 필요합니다.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/Common/RadioComponent.qml" line="110"/>
@@ -15058,7 +15058,7 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
     <message>
       <location filename="../src/FlightDisplay/RoverChecklist.qml" line="77"/>
       <source>Mission area and path free of obstacles/people?</source>
-      <translation>비행 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
+      <translation>항해 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
     </message>
   </context>
   <context>
@@ -15287,25 +15287,25 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="481"/>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="481"/>
       <source>Loiter and do not land</source>
-      <translation>정지비행 후 착륙하지 않기</translation>
+      <translation>정지항해 후 착륙하지 않기</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="491"/>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="491"/>
       <source>Loiter and land after specified time</source>
-      <translation>정지비행 후 정의된 시간 후 착륙</translation>
+      <translation>정지항해 후 정의된 시간 후 착륙</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="497"/>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="497"/>
       <source>Loiter Time</source>
-      <translation>정지비행 시간</translation>
+      <translation>정지항해 시간</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="507"/>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="507"/>
       <source>Loiter Altitude</source>
-      <translation>정지비행 고도</translation>
+      <translation>정지항해 고도</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponent.qml" line="520"/>
@@ -15397,19 +15397,19 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponentSummary.qml" line="57"/>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponentSummary.qml" line="57"/>
       <source>Loiter and do not land</source>
-      <translation>정지비행 후 착륙하지 않기</translation>
+      <translation>정지항해 후 착륙하지 않기</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponentSummary.qml" line="58"/>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponentSummary.qml" line="58"/>
       <source>Loiter and land after specified time</source>
-      <translation>정지비행 후 정의된 시간 후 착륙</translation>
+      <translation>정지항해 후 정의된 시간 후 착륙</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponentSummary.qml" line="63"/>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponentSummary.qml" line="63"/>
       <source>Loiter Alt</source>
-      <translation>정지비행 고도</translation>
+      <translation>정지항해 고도</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SafetyComponentSummary.qml" line="69"/>
@@ -15600,7 +15600,7 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="41"/>
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="42"/>
       <source>If the orientation is in the direction of flight, select ROTATION_NONE.</source>
-      <translation>만일 보드의 방향이 기체의 비행 방향이면 ROTATION_NONE을 선택해주십시오.</translation>
+      <translation>만일 보드의 방향이 기체의 항해 방향이면 ROTATION_NONE을 선택해주십시오.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="48"/>
@@ -15648,7 +15648,7 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="272"/>
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="272"/>
       <source>Set autopilot orientation before calibrating.</source>
-      <translation>캘리브레이션을 시작하기 전에 비행 컨트롤러의 방향을 설정해주십시오.</translation>
+      <translation>캘리브레이션을 시작하기 전에 항해 컨트롤러의 방향을 설정해주십시오.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="332"/>
@@ -15686,7 +15686,7 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="278"/>
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="353"/>
       <source>Autopilot Orientation</source>
-      <translation>비행 컨트롤러 방향</translation>
+      <translation>항해 컨트롤러 방향</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="289"/>
@@ -15704,7 +15704,7 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="327"/>
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="327"/>
       <source>Reboot the vehicle prior to flight.</source>
-      <translation>비행 전 기체를 다시 시작해 주십시오.</translation>
+      <translation>항해 전 기체를 다시 시작해 주십시오.</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/PX4/SensorsSetup.qml" line="343"/>
@@ -15945,7 +15945,7 @@ ROTATION_NONE indicates component points in direction of flight.</translation>
     <message>
       <location filename="../src/AutoPilotPlugins/Common/SetupPage.qml" line="42"/>
       <source>flying</source>
-      <translation>비행중</translation>
+      <translation>항해중</translation>
     </message>
     <message>
       <location filename="../src/AutoPilotPlugins/Common/SetupPage.qml" line="44"/>
@@ -16139,7 +16139,7 @@ ROTATION_NONE indicates component points in direction of flight.</translation>
     <message>
       <location filename="../src/PlanView/SimpleItemEditor.qml" line="243"/>
       <source>Flight Speed</source>
-      <translation>비행속도</translation>
+      <translation>항해속도</translation>
     </message>
   </context>
   <context>
@@ -16225,7 +16225,7 @@ ROTATION_NONE indicates component points in direction of flight.</translation>
     <message>
       <location filename="../src/PlanView/StructureScanEditor.qml" line="113"/>
       <source>Note: Polygon respresents structure surface not vehicle flight path.</source>
-      <translation>참고: 다각형은 비행 경로이 아닌 구조의 표면을 나타냅니다.</translation>
+      <translation>참고: 다각형은 항해 경로이 아닌 구조의 표면을 나타냅니다.</translation>
     </message>
     <message>
       <location filename="../src/PlanView/StructureScanEditor.qml" line="121"/>
@@ -16454,7 +16454,7 @@ ROTATION_NONE indicates component points in direction of flight.</translation>
     <message>
       <location filename="../src/PlanView/SurveyItemEditor.qml" line="83"/>
       <source>Refly at 90 deg offset</source>
-      <translation>90도 오프셋하여 다시 비행</translation>
+      <translation>90도 오프셋하여 다시 항해</translation>
     </message>
     <message>
       <location filename="../src/PlanView/SurveyItemEditor.qml" line="89"/>
@@ -16464,7 +16464,7 @@ ROTATION_NONE indicates component points in direction of flight.</translation>
     <message>
       <location filename="../src/PlanView/SurveyItemEditor.qml" line="95"/>
       <source>Fly alternate transects</source>
-      <translation>다른 교차점 비행하기</translation>
+      <translation>다른 교차점 항해하기</translation>
     </message>
     <message>
       <location filename="../src/PlanView/SurveyItemEditor.qml" line="107"/>
@@ -16635,7 +16635,7 @@ ROTATION_NONE indicates component points in direction of flight.</translation>
     <message>
       <location filename="../src/Taisync/TaisyncSettings.qml" line="143"/>
       <source>Air Unit:</source>
-      <translation>비행 유닛:</translation>
+      <translation>항해 유닛:</translation>
     </message>
     <message>
       <location filename="../src/Taisync/TaisyncSettings.qml" line="150"/>
@@ -17367,12 +17367,12 @@ Confirm change?</source>
     <message>
       <location filename="../src/FlightDisplay/VTOLChecklist.qml" line="86"/>
       <source>Flight area</source>
-      <translation>비행영역</translation>
+      <translation>항해영역</translation>
     </message>
     <message>
       <location filename="../src/FlightDisplay/VTOLChecklist.qml" line="87"/>
       <source>Launch area and path free of obstacles/people?</source>
-      <translation>비행 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
+      <translation>항해 경로와 이륙 위치상에 장애물 또는 사람이 없습니까?</translation>
     </message>
   </context>
   <context>
@@ -17659,7 +17659,7 @@ Confirm change?</source>
     <message>
       <location filename="../src/Vehicle/Vehicle.cc" line="2398"/>
       <source>Airship, controlled</source>
-      <translation>비행선, 제어가능</translation>
+      <translation>항해선, 제어가능</translation>
     </message>
     <message>
       <location filename="../src/Vehicle/Vehicle.cc" line="2399"/>
@@ -17701,7 +17701,7 @@ Confirm change?</source>
       <location filename="../src/Vehicle/Vehicle.cc" line="2407"/>
       <location filename="../src/Vehicle/Vehicle.cc" line="2408"/>
       <source>Flapping wing</source>
-      <translation>날개짓 비행체</translation>
+      <translation>날개짓 항해체</translation>
     </message>
     <message>
       <location filename="../src/Vehicle/Vehicle.cc" line="2409"/>
@@ -17766,7 +17766,7 @@ Confirm change?</source>
     <message>
       <location filename="../src/Vehicle/Vehicle.cc" line="2435"/>
       <source>%1 %2 flight mode</source>
-      <translation>%1 %2 비행모드</translation>
+      <translation>%1 %2 항해모드</translation>
     </message>
     <message>
       <location filename="../src/Vehicle/Vehicle.cc" line="2441"/>
@@ -17953,7 +17953,7 @@ Confirm change?</source>
     <message>
       <location filename="../src/VehicleSetup/VehicleSummary.qml" line="88"/>
       <source>WARNING: Your vehicle requires setup prior to flight. Please resolve the items marked in red using the menu on the left.</source>
-      <translation>경고: 비행 전 기체설정이 필요합니다. 빨간색으로 표시되어있는 항목을 확인해주십시오.</translation>
+      <translation>경고: 항해 전 기체설정이 필요합니다. 빨간색으로 표시되어있는 항목을 확인해주십시오.</translation>
     </message>
   </context>
   <context>
