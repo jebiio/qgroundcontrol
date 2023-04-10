@@ -71,6 +71,7 @@
 #endif
 #include "HorizontalFactValueGrid.h"
 #include "InstrumentValueData.h"
+#include "ValuesWidgetController.h"
 #include "AppMessages.h"
 #include "SimulatedPosition.h"
 #include "PositionManager.h"
@@ -265,8 +266,9 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
         // This gives daily builds their own separate settings space. Allowing you to use daily and stable builds
         // side by side without daily screwing up your stable settings.
         applicationName = QStringLiteral("%1 Daily").arg(QGC_APPLICATION_NAME);
+        applicationName = "KRISOGroundStation";
 #else
-        applicationName = QGC_APPLICATION_NAME;
+        pplicationName = "KRISOGroundStation";
 #endif
     }
     setApplicationName(applicationName);
@@ -504,6 +506,7 @@ void QGCApplication::_initCommon()
     qmlRegisterType<ESP8266ComponentController>     (kQGCControllers,                       1, 0, "ESP8266ComponentController");
     qmlRegisterType<ScreenToolsController>          (kQGCControllers,                       1, 0, "ScreenToolsController");
     qmlRegisterType<PlanMasterController>           (kQGCControllers,                       1, 0, "PlanMasterController");
+    qmlRegisterType<ValuesWidgetController>         (kQGCControllers,                       1, 0, "ValuesWidgetController");
     qmlRegisterType<QGCFileDialogController>        (kQGCControllers,                       1, 0, "QGCFileDialogController");
     qmlRegisterType<RCChannelMonitorController>     (kQGCControllers,                       1, 0, "RCChannelMonitorController");
     qmlRegisterType<JoystickConfigController>       (kQGCControllers,                       1, 0, "JoystickConfigController");

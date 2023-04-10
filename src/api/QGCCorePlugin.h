@@ -13,6 +13,8 @@
 #include "QGCPalette.h"
 #include "QGCMAVLink.h"
 #include "QmlObjectListModel.h"
+#include "FactSystem.h"
+#include "KrisoFactGroup.h"
 
 #include <QObject>
 #include <QVariantList>
@@ -48,6 +50,7 @@ public:
 
     Q_PROPERTY(QVariantList         settingsPages                   READ settingsPages                                  NOTIFY settingsPagesChanged)
     Q_PROPERTY(QVariantList         analyzePages                    READ analyzePages                                   NOTIFY analyzePagesChanged)
+    Q_PROPERTY(QVariantList         instrumentPages                 READ instrumentPages                                CONSTANT)
     Q_PROPERTY(int                  defaultSettings                 READ defaultSettings                                CONSTANT)
     Q_PROPERTY(QGCOptions*          options                         READ options                                        CONSTANT)
     Q_PROPERTY(bool                 showTouchAreas                  READ showTouchAreas         WRITE setShowTouchAreas NOTIFY showTouchAreasChanged)
@@ -69,6 +72,8 @@ public:
     /// The list of pages/buttons under the Analyze Menu
     /// @return A list of QmlPageInfo
     virtual QVariantList& analyzePages();
+
+    virtual QVariantList& instrumentPages();    
 
     /// The default settings panel to show
     /// @return The settings index
@@ -103,6 +108,9 @@ public:
 
     /// Allows a plugin to override the specified color name from the palette
     virtual void paletteOverride(QString colorName, QGCPalette::PaletteColorInfo_t& colorInfo);
+
+        /// Allows the plugin to override the default settings for the Values Widget large and small values
+    virtual void valuesWidgetDefaultSettings(QStringList& largeValues, QStringList& smallValues);
 
     virtual void factValueGridCreateDefaultSettings(const QString& defaultSettingsGroup);
 

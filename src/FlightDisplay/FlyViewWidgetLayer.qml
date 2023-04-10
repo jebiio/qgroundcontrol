@@ -388,8 +388,8 @@ Item {
                         showSection( section )
                     }
                 }
-                }
             }
+        }
     }
 
 
@@ -403,72 +403,5 @@ Item {
         anchors.right:      parent.right
         anchors.rightMargin: _toolsMargin
         radius:     _radius
-
-        
-        
-        // ColumnLayout {
-        //     id:                 valuesColumn
-        //     anchors.margins:    _margin
-        //     anchors.left:       parent.left
-        //     anchors.right:      parent.right
-        //     anchors.top:        parent.top
-        //     spacing:            _margin
-            
-        
-        //     QGCLabel {
-        //         text:           qsTr("All Altitudes")
-        //         font.pointSize: ScreenTools.smallFontPointSize
-        //     }
-        //     MouseArea {
-        //         Layout.preferredWidth:  childrenRect.width
-        //         Layout.preferredHeight: childrenRect.height
-        //         enabled:                _noMissionItemsAdded
-
-        //         onClicked: {
-        //             var removeModes = []
-        //             var updateFunction = function(altMode){ _missionController.globalAltitudeMode = altMode }
-        //             if (!_controllerVehicle.supportsTerrainFrame) {
-        //                 removeModes.push(QGroundControl.AltitudeModeTerrainFrame)
-        //             }
-        //             mainWindow.showPopupDialogFromComponent(altModeDialogComponent, { rgRemoveModes: removeModes, updateAltModeFn: updateFunction })
-        //         }
-
-        //         RowLayout {
-        //             spacing: ScreenTools.defaultFontPixelWidth
-        //             enabled: _noMissionItemsAdded
-
-        //             QGCLabel {
-        //                 id:     altModeLabel
-        //                 text:   QGroundControl.altitudeModeShortDescription(_missionController.globalAltitudeMode)
-        //             }
-        //             QGCColoredImage {
-        //                 height:     ScreenTools.defaultFontPixelHeight / 2
-        //                 width:      height
-        //                 source:     "/res/DropArrow.svg"
-        //                 color:      altModeLabel.color
-        //             }
-        //         }
-        //     }
-
-        //     QGCLabel {
-        //         text:           qsTr("Initial Waypoint Alt")
-        //         font.pointSize: ScreenTools.smallFontPointSize
-        //     }
-
-        //     GridLayout {
-        //         Layout.fillWidth:   true
-        //         columnSpacing:      ScreenTools.defaultFontPixelWidth
-        //         rowSpacing:         columnSpacing
-        //         columns:            2
-
-        //         QGCCheckBox {
-        //             id:         flightSpeedCheckBox
-        //             text:       qsTr("Flight speed")
-        //             visible:    _showFlightSpeed
-        //             checked:    missionItem.speedSection.specifyFlightSpeed
-        //             onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
-        //         }
-        //     }
-        // }
     }
 }

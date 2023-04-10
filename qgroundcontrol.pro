@@ -582,6 +582,7 @@ HEADERS += \
     src/Compression/QGCLZMA.h \
     src/Compression/QGCZlib.h \
     src/FirmwarePlugin/PX4/px4_custom_mode.h \
+    src/FlightMap/Widgets/ValuesWidgetController.h \
     src/FollowMe/FollowMe.h \
     src/Joystick/Joystick.h \
     src/Joystick/JoystickManager.h \
@@ -836,6 +837,7 @@ SOURCES += \
     src/CmdLineOptParser.cc \
     src/Compression/QGCLZMA.cc \
     src/Compression/QGCZlib.cc \
+    src/FlightMap/Widgets/ValuesWidgetController.cc \
     src/FollowMe/FollowMe.cc \
     src/Joystick/Joystick.cc \
     src/Joystick/JoystickManager.cc \
