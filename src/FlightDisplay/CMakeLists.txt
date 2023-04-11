@@ -57,5 +57,7 @@ add_custom_target(FligthDisplayQml
 		VesselStatusDelegate.qml
 		PowerMonitoringDelegate.qml
 		KrisoDelegate.qml
+		PageView.qml
+		ValuePageWidget.qml
 )
 

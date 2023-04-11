@@ -130,6 +130,7 @@ add_custom_target(QmlControlsQml
 		VehicleSummaryRow.qml
 		JebiDialogMenuButton.qml
 		PageView.qml
+		ValuePageWidget.qml
 )
 
 target_link_libraries(QmlControls

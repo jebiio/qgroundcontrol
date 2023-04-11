@@ -28,7 +28,7 @@ Column {
     property bool showSettingsIcon: true
 
     property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle : QGroundControl.multiVehicleManager.offlineEditingVehicle
-    property real   _margins:       ScreenTools.defaultFontPixelWidth / 2
+    property real   _margins:       ScreenTools.defaultFontPixelWidth / 4
 
     QGCPalette { id:qgcPal; colorGroupEnabled: true }
 
@@ -179,12 +179,12 @@ Column {
                         anchors.right:      parent.right
                         sourceComponent:    factGroupList
 
-                        property var    factGroup:     _activeVehicle.getFactGroup("kriso")
-                        property string factGroupName: "Kriso"
+                        property var    factGroup:     _activeVehicle
+                        property string factGroupName: "Vehicle"
                     }
 
                     Repeater {
-                        model: "kriso"
+                        model: activeVehicle.factGroupNames
                         Loader {
                             anchors.left:       parent.left
                             anchors.right:      parent.right

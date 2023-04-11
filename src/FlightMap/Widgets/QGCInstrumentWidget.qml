@@ -56,32 +56,32 @@ ColumnLayout {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        Item {
-            id:                 _valuesItem
-            anchors.topMargin:  ScreenTools.defaultFontPixelHeight / 4
-            anchors.top:        parent.bottom
-            width:              parent.width
-            height:             _valuesWidget.height
-            visible:            true
+        // Item {
+        //     id:                 _valuesItem
+        //     anchors.topMargin:  ScreenTools.defaultFontPixelHeight / 4
+        //     anchors.top:        parent.bottom
+        //     width:              parent.width
+        //     height:             _valuesWidget.height
+        //     visible:            true
 
-            // Prevent all clicks from going through to lower layers
-            DeadMouseArea {
-                anchors.fill: parent
-            }
+        //     // Prevent all clicks from going through to lower layers
+        //     DeadMouseArea {
+        //         anchors.fill: parent
+        //     }
 
-            Rectangle {
-                anchors.fill:   _valuesWidget
-                color:          qgcPal.window
-            }
+        //     Rectangle {
+        //         anchors.fill:   _valuesWidget
+        //         color:          qgcPal.window
+        //     }
 
-            PageView {
-                id:                 _valuesWidget
-                anchors.margins:    1
-                anchors.left:       parent.left
-                anchors.right:      parent.right
-                maxHeight:          500
-            }
-        }
+        //     PageView {
+        //         id:                 _valuesWidget
+        //         anchors.margins:    1
+        //         anchors.left:       parent.left
+        //         anchors.right:      parent.right
+        //         maxHeight:          500
+        //     }
+        // }
 
     }
 

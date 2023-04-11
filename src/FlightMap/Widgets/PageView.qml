@@ -45,7 +45,7 @@ Rectangle {
             sourceSize.height:      height
             color:                  qgcPal.text
             fillMode:               Image.PreserveAspectFit
-            visible:                true
+            // visible:                true
             visible:                pageWidgetLoader.item ? (pageWidgetLoader.item.showSettingsIcon ? pageWidgetLoader.item.showSettingsIcon : false) : false
 
             QGCMouseArea {

@@ -26,7 +26,7 @@ import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
 
 Rectangle{
-    id: _root
+id: _root
     clip: true
     color : "#383636"
     property bool expanded: true
@@ -50,6 +50,7 @@ Rectangle{
         switch(teamName) {
             case "  Vessel Status" :    return "qrc:/qml/VesselStatusDelegate.qml"; break;
             case "  Power Monitoring" : return  "qrc:/qml/PowerMonitoringDelegate.qml"; break;
+            case "  KRISO Status Values" : return  "qrc:/qml/PageView.qml"; break;
             default     : return "qrc:/qml/NameDelegate.qml"; break;
         }
     }       
