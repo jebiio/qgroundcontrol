@@ -710,12 +710,12 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_LOGGING_DATA_ACKED:
         _handleMavlinkLoggingDataAcked(message);
         break;
-    case MAVLINK_MSG_ID_GPS_RAW_INT:
-        _handleGpsRawInt(message);
-        break;
-    // case MAVLINK_MSG_ID_KRISO_STATUS:
-    //     _handleKRISOStatus(message);
+    // case MAVLINK_MSG_ID_GPS_RAW_INT:
+    //     _handleGpsRawInt(message);
     //     break;
+    case MAVLINK_MSG_ID_KRISO_STATUS:
+        _handleKRISOStatus(message);
+        break;
     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
         _handleGlobalPositionInt(message);
         break;
@@ -1030,13 +1030,10 @@ void Vehicle::_handleAttitudeWorker(double rollRadians, double pitchRadians, dou
 {
     double roll, pitch, yaw;
 
-    roll = QGC::limitAngleToPMPIf(rollRadians);
-    pitch = QGC::limitAngleToPMPIf(pitchRadians);
-    yaw = QGC::limitAngleToPMPIf(yawRadians);
+    roll = QGC::limitAngleToPMPIfDegree(rollRadians);
+    pitch = QGC::limitAngleToPMPIfDegree(pitchRadians);
+    yaw = QGC::limitAngleToPMPIfDegree(yawRadians);
 
-    roll = qRadiansToDegrees(roll);
-    pitch = qRadiansToDegrees(pitch);
-    yaw = qRadiansToDegrees(yaw);
 
     if (yaw < 0.0) {
         yaw += 360.0;
