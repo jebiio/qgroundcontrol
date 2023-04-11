@@ -200,5 +200,6 @@
         <file alias="ZoomMinus.svg">src/FlightMap/Images/ZoomMinus.svg</file>
         <file alias="ZoomPlus.svg">src/FlightMap/Images/ZoomPlus.svg</file>
         <file alias="WatercraftSummaryIcon.png">src/VehicleSetup/WatercraftSummaryIcon.png</file>
+        <file alias="krisoVessel.svg">src/FlightMap/Images/krisoVessel.svg</file>
     </qresource>
 </RCC>
