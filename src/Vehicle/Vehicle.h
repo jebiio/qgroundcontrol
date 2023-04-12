@@ -47,6 +47,7 @@
 #include "FTPManager.h"
 #include "ImageProtocolManager.h"
 #include "KrisoStatusFactGroup.h"
+#include "KrisoVoltageStatusFactGroup.h"
 
 
 class Actuators;
@@ -306,6 +307,7 @@ public:
     Q_PROPERTY(Fact* throttlePct        READ throttlePct        CONSTANT)
 
     Q_PROPERTY(FactGroup*           kriso           READ krisoStatusFactGroup       CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoVoltage    READ krisoVoltageStatusFactGroup    CONSTANT)
     Q_PROPERTY(FactGroup*           gps             READ gpsFactGroup               CONSTANT)
     Q_PROPERTY(FactGroup*           gps2            READ gps2FactGroup              CONSTANT)
     Q_PROPERTY(FactGroup*           wind            READ windFactGroup              CONSTANT)
@@ -652,6 +654,7 @@ public:
     Fact* throttlePct                       () { return &_throttlePctFact; }
 
     FactGroup* krisoStatusFactGroup         () { return &_krisoStatusFactGroup; }
+    FactGroup* krisoVoltageStatusFactGroup  () { return &_krisoVoltageStatusFactGroup; }
     FactGroup* gpsFactGroup                 () { return &_gpsFactGroup; }
     FactGroup* gps2FactGroup                () { return &_gps2FactGroup; }
     FactGroup* windFactGroup                () { return &_windFactGroup; }
@@ -1329,6 +1332,7 @@ private:
     TerrainProtocolHandler* _terrainProtocolHandler = nullptr;
 
     KrisoStatusFactGroup                  _krisoStatusFactGroup;
+    KrisoVoltageStatusFactGroup           _krisoVoltageStatusFactGroup;
 
     MissionManager*                 _missionManager             = nullptr;
     GeoFenceManager*                _geoFenceManager            = nullptr;
@@ -1365,6 +1369,7 @@ private:
     static const char* _throttlePctFactName;
 
     static const char* _krisoStatusFactGroupName;
+    static const char* _krisoVoltageStatusFactGroupName;
     static const char* _gpsFactGroupName;
     static const char* _gps2FactGroupName;
     static const char* _windFactGroupName;
