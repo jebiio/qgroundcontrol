@@ -14,7 +14,7 @@
 #include "QGCMAVLink.h"
 #include "QmlObjectListModel.h"
 #include "FactSystem.h"
-#include "KrisoFactGroup.h"
+#include "KrisoStatusFactGroup.h"
 
 #include <QObject>
 #include <QVariantList>

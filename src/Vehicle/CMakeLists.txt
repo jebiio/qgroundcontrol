@@ -93,7 +93,7 @@ add_library(Vehicle
 	VehicleVibrationFactGroup.cc
 	VehicleVibrationFactGroup.h
 	VehicleWindFactGroup.cc
-	KrisoFactGroup.h
+	KrisoStatusFactGroup.h
 	VehicleWindFactGroup.h
         VehicleHygrometerFactGroup.cc
         VehicleHygrometerFactGroup.h

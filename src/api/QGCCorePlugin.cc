@@ -307,8 +307,8 @@ void QGCCorePlugin::valuesWidgetDefaultSettings(QStringList& largeValues, QStrin
     Q_UNUSED(smallValues);
     // largeValues << "Vehicle.altitudeRelative" << "Vehicle.groundSpeed" << "Vehicle.flightTime";
 
-    KrisoFactGroup* krisoFactGroup = new KrisoFactGroup(this);
-    QStringList valueNames = krisoFactGroup->factNames();
+    KrisoStatusFactGroup* krisoStatusFactGroup = new KrisoStatusFactGroup(this);
+    QStringList valueNames = krisoStatusFactGroup->factNames();
 
     QString factGroupName = "kriso";
 

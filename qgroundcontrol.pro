@@ -504,7 +504,7 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory { APMFirmwarePlugin { 
         src/Vehicle/SendMavCommandWithHandlerTest.h \
         src/Vehicle/SendMavCommandWithSignallingTest.h \
         src/Vehicle/VehicleLinkManagerTest.h \
-        src/Vehicle/KrisoFactGroup.h \
+        src/Vehicle/KrisoStatusFactGroup.h \
         #src/qgcunittest/RadioConfigTest.h \
         #src/AnalyzeView/LogDownloadTest.h \
         #src/qgcunittest/FileDialogTest.h \
@@ -554,7 +554,7 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory { APMFirmwarePlugin { 
         src/Vehicle/SendMavCommandWithHandlerTest.cc \
         src/Vehicle/SendMavCommandWithSignallingTest.cc \
         src/Vehicle/VehicleLinkManagerTest.cc \
-        src/Vehicle/KrisoFactGroup.cc \
+        src/Vehicle/KrisoStatusFactGroup.cc \
         #src/qgcunittest/RadioConfigTest.cc \
         #src/AnalyzeView/LogDownloadTest.cc \
         #src/qgcunittest/FileDialogTest.cc \

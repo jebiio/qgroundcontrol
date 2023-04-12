@@ -7,39 +7,39 @@
  *
  ****************************************************************************/
 
-#include "KrisoFactGroup.h"
+#include "KrisoStatusFactGroup.h"
 #include "Vehicle.h"
 #include "QGCGeo.h"
 
-const char* KrisoFactGroup::_t1_rpmFactName =       "t1_rpm";
-const char* KrisoFactGroup::_t2_rpmFactName =       "t2_rpm"; 
-const char* KrisoFactGroup::_t3_rpmFactName =       "t3_rpm";
-const char* KrisoFactGroup::_t3_angleFactName =     "t3_angle";  
-const char* KrisoFactGroup::_t4_rpmFactName =       "t4_rpm";
-const char* KrisoFactGroup::_t4_angleFactName =     "t4_angle"; 
-const char* KrisoFactGroup::_nav_rollFactName =     "nav_roll"; 
-const char* KrisoFactGroup::_nav_pitchFactName =    "nav_pitch"; 
-const char* KrisoFactGroup::_nav_yawFactName =      "nav_yaw"; 
-const char* KrisoFactGroup::_nav_cogFactName =      "nav_cog"; 
-const char* KrisoFactGroup::_nav_sogFactName =      "nav_sog"; 
-const char* KrisoFactGroup::_nav_uspdFactName =     "nav_uspd"; 
-const char* KrisoFactGroup::_nav_vspdFactName =     "nav_vspd"; 
-const char* KrisoFactGroup::_nav_longitudeFactName ="nav_longitude";   
-const char* KrisoFactGroup::_nav_latitudeFactName = "nav_latitude";  
-const char* KrisoFactGroup::_nav_gpstimeFactName =  "nav_gpstime";  
-const char* KrisoFactGroup::_wea_airtemFactName =   "wea_airtem";  
-const char* KrisoFactGroup::_wea_wattemFactName =   "wea_wattem";  
-const char* KrisoFactGroup::_wea_pressFactName =    "wea_press";  
-const char* KrisoFactGroup::_wea_relhumFactName =   "wea_relhum"; 
-const char* KrisoFactGroup::_wea_windirtFactName =  "wea_windirt";  
-const char* KrisoFactGroup::_wea_winspdtFactName =  "wea_winspdt";
-const char* KrisoFactGroup::_wea_watdirFactName =   "wea_watdir";  
-const char* KrisoFactGroup::_wea_watspdFactName =   "wea_watspd";   
-const char* KrisoFactGroup::_wea_visibiranFactName ="wea_visibiran";  
-const char* KrisoFactGroup::_nav_modeFactName =     "nav_mode"; 
+const char* KrisoStatusFactGroup::_t1_rpmFactName =       "t1_rpm";
+const char* KrisoStatusFactGroup::_t2_rpmFactName =       "t2_rpm"; 
+const char* KrisoStatusFactGroup::_t3_rpmFactName =       "t3_rpm";
+const char* KrisoStatusFactGroup::_t3_angleFactName =     "t3_angle";  
+const char* KrisoStatusFactGroup::_t4_rpmFactName =       "t4_rpm";
+const char* KrisoStatusFactGroup::_t4_angleFactName =     "t4_angle"; 
+const char* KrisoStatusFactGroup::_nav_rollFactName =     "nav_roll"; 
+const char* KrisoStatusFactGroup::_nav_pitchFactName =    "nav_pitch"; 
+const char* KrisoStatusFactGroup::_nav_yawFactName =      "nav_yaw"; 
+const char* KrisoStatusFactGroup::_nav_cogFactName =      "nav_cog"; 
+const char* KrisoStatusFactGroup::_nav_sogFactName =      "nav_sog"; 
+const char* KrisoStatusFactGroup::_nav_uspdFactName =     "nav_uspd"; 
+const char* KrisoStatusFactGroup::_nav_vspdFactName =     "nav_vspd"; 
+const char* KrisoStatusFactGroup::_nav_longitudeFactName ="nav_longitude";   
+const char* KrisoStatusFactGroup::_nav_latitudeFactName = "nav_latitude";  
+const char* KrisoStatusFactGroup::_nav_gpstimeFactName =  "nav_gpstime";  
+const char* KrisoStatusFactGroup::_wea_airtemFactName =   "wea_airtem";  
+const char* KrisoStatusFactGroup::_wea_wattemFactName =   "wea_wattem";  
+const char* KrisoStatusFactGroup::_wea_pressFactName =    "wea_press";  
+const char* KrisoStatusFactGroup::_wea_relhumFactName =   "wea_relhum"; 
+const char* KrisoStatusFactGroup::_wea_windirtFactName =  "wea_windirt";  
+const char* KrisoStatusFactGroup::_wea_winspdtFactName =  "wea_winspdt";
+const char* KrisoStatusFactGroup::_wea_watdirFactName =   "wea_watdir";  
+const char* KrisoStatusFactGroup::_wea_watspdFactName =   "wea_watspd";   
+const char* KrisoStatusFactGroup::_wea_visibiranFactName ="wea_visibiran";  
+const char* KrisoStatusFactGroup::_nav_modeFactName =     "nav_mode"; 
 
-KrisoFactGroup::KrisoFactGroup(QObject* parent)
-    : FactGroup(1000, ":/json/Vehicle/KrisoFact.json", parent)
+KrisoStatusFactGroup::KrisoStatusFactGroup(QObject* parent)
+    : FactGroup(1000, ":/json/Vehicle/KrisoStatusFact.json", parent)
     , _t1_rpm               (0, _t1_rpmFactName,            FactMetaData::valueTypeFloat)
     , _t2_rpm               (0, _t2_rpmFactName,            FactMetaData::valueTypeFloat)
     , _t3_rpm               (0, _t3_rpmFactName,            FactMetaData::valueTypeFloat)
@@ -126,7 +126,7 @@ KrisoFactGroup::KrisoFactGroup(QObject* parent)
 
 }
 
-void KrisoFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t& message)
+void KrisoStatusFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t& message)
 {
     switch (message.msgid) {
     case MAVLINK_MSG_ID_KRISO_STATUS:
@@ -143,7 +143,7 @@ void KrisoFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t& me
     }
 }
 
-void KrisoFactGroup::_handleKRISOStatus(mavlink_message_t& message)
+void KrisoStatusFactGroup::_handleKRISOStatus(mavlink_message_t& message)
 {
     mavlink_kriso_status_t krisoStatus;
     mavlink_msg_kriso_status_decode(&message, &krisoStatus);

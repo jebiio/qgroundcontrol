@@ -12,12 +12,12 @@
 #include "FactGroup.h"
 #include "QGCMAVLink.h"
 
-class KrisoFactGroup : public FactGroup
+class KrisoStatusFactGroup : public FactGroup
 {
     Q_OBJECT
 
 public:
-    KrisoFactGroup(QObject* parent = nullptr);
+    KrisoStatusFactGroup(QObject* parent = nullptr);
 
     Q_PROPERTY(Fact* t1_rpm                 READ t1_rpm             CONSTANT)
     Q_PROPERTY(Fact* t2_rpm                 READ t2_rpm             CONSTANT)
