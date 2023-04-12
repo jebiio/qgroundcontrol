@@ -1,0 +1,31 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "ch1_volt",
+    "shortDesc": "CH1_VOLT",
+    "type":             "float",
+    "decimalPlaces":    1
+},
+{
+    "name":             "ch2_volt",
+    "shortDesc": "CH2_VOLT",
+    "type":             "float",
+    "decimalPlaces":    1
+},
+{
+    "name":             "ch3_volt",
+    "shortDesc": "CH3_VOLT",
+    "type":             "float",
+    "decimalPlaces":    1
+},
+{
+    "name":             "ch4_volt",
+    "shortDesc": "CH4_VOLT",
+    "type":             "float",
+    "decimalPlaces":    1
+}
+]
+}

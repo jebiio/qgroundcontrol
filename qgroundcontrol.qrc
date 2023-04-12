@@ -356,6 +356,7 @@
         <file alias="Video.SettingsGroup.json">src/Settings/Video.SettingsGroup.json</file>
         <file alias="VTOLLandingPattern.FactMetaData.json">src/MissionManager/VTOLLandingPattern.FactMetaData.json</file>
         <file alias="Vehicle/KrisoStatusFact.json">src/Vehicle/KrisoStatusFact.json</file>
+        <file alias="Vehicle/KrisoVoltageStatusFact.json">src/Vehicle/KrisoVoltageStatusFact.json</file>
     </qresource>
     <qresource prefix="/MockLink">
         <file alias="APMArduSubMockLink.params">src/comm/APMArduSubMockLink.params</file>
