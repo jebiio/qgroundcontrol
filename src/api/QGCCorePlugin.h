@@ -15,6 +15,7 @@
 #include "QmlObjectListModel.h"
 #include "FactSystem.h"
 #include "KrisoStatusFactGroup.h"
+#include "KrisoVoltageStatusFactGroup.h"
 
 #include <QObject>
 #include <QVariantList>

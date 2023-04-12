@@ -97,6 +97,7 @@ const char* Vehicle::_hobbsFactName =               "hobbs";
 const char* Vehicle::_throttlePctFactName =         "throttlePct";
 
 const char* Vehicle::_krisoStatusFactGroupName =        "kriso";
+const char* Vehicle::_krisoVoltageStatusFactGroupName = "krisoVoltage";
 const char* Vehicle::_gpsFactGroupName =                "gps";
 const char* Vehicle::_gps2FactGroupName =               "gps2";
 const char* Vehicle::_windFactGroupName =               "wind";
@@ -172,7 +173,8 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _hygrometerFactGroup          (this)
     , _terrainFactGroup             (this)
     , _terrainProtocolHandler       (new TerrainProtocolHandler(this, &_terrainFactGroup, this))
-    , _krisoStatusFactGroup               (this)
+    , _krisoStatusFactGroup         (this)
+    , _krisoVoltageStatusFactGroup  (this)
 {
     _linkManager = _toolbox->linkManager();
 
@@ -320,7 +322,8 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _distanceSensorFactGroup          (this)
     , _localPositionFactGroup           (this)
     , _localPositionSetpointFactGroup   (this)
-    , _krisoStatusFactGroup                   (this)
+    , _krisoStatusFactGroup             (this)
+    , _krisoVoltageStatusFactGroup      (this)
 {
     _linkManager = _toolbox->linkManager();
 
@@ -439,6 +442,7 @@ void Vehicle::_commonInit()
     _addFact(&_hobbsFact,               _hobbsFactName);
 
     _addFactGroup(&_krisoStatusFactGroup,       _krisoStatusFactGroupName);
+    _addFactGroup(&_krisoVoltageStatusFactGroup,_krisoVoltageStatusFactGroupName);
     _addFactGroup(&_gpsFactGroup,               _gpsFactGroupName);
     _addFactGroup(&_gps2FactGroup,              _gps2FactGroupName);
     _addFactGroup(&_windFactGroup,              _windFactGroupName);
