@@ -9518,8 +9518,8 @@ Click Ok to start the auto-tuning process.
     </message>
     <message>
       <location filename="../src/ui/toolbar/MainStatusIndicator.qml" line="36"/>
-      <source>Ready To Fly</source>
-      <translation type="unfinished">Ready To Fly</translation>
+      <source>Ready To Voyage</source>
+      <translation type="unfinished">Ready To Voyage</translation>
     </message>
     <message>
       <location filename="../src/ui/toolbar/MainStatusIndicator.qml" line="37"/>

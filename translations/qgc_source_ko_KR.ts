@@ -9525,7 +9525,7 @@ Click Ok to start the auto-tuning process.
     </message>
     <message>
       <location filename="../src/ui/toolbar/MainStatusIndicator.qml" line="36"/>
-      <source>Ready To Fly</source>
+      <source>Ready To Voyage</source>
       <translation>항해 준비 완료</translation>
     </message>
     <message>
@@ -9545,7 +9545,7 @@ Click Ok to start the auto-tuning process.
     </message>
     <message>
       <location filename="../src/ui/toolbar/MainStatusIndicator.qml" line="40"/>
-      <source>Flying</source>
+      <source>Sailing</source>
       <translation>항해중</translation>
     </message>
     <message>
