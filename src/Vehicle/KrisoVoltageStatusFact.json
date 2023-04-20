@@ -7,25 +7,29 @@
     "name":             "ch1_volt",
     "shortDesc": "CH1_VOLT",
     "type":             "float",
-    "decimalPlaces":    1
+    "decimalPlaces":        2,
+    "default":              null
 },
 {
     "name":             "ch2_volt",
     "shortDesc": "CH2_VOLT",
     "type":             "float",
-    "decimalPlaces":    1
+    "decimalPlaces":        2,
+    "default":              null
 },
 {
     "name":             "ch3_volt",
     "shortDesc": "CH3_VOLT",
     "type":             "float",
-    "decimalPlaces":    1
+    "decimalPlaces":        2,
+    "default":              null
 },
 {
     "name":             "ch4_volt",
     "shortDesc": "CH4_VOLT",
     "type":             "float",
-    "decimalPlaces":    1
+    "decimalPlaces":        2,
+    "default":              null
 }
 ]
 }
