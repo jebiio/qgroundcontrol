@@ -11,4 +11,5 @@ add_custom_target(FligthMapItemsQml
 		ProximityRadarMapView.qml
 		SplitIndicator.qml
 		VehicleMapItem.qml
+		SosMapItem.qml
 )

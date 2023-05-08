@@ -254,7 +254,7 @@ FlightMap {
     // Add the vehicles to the map
     MapItemView {
         model: QGroundControl.multiVehicleManager.vehicles
-        delegate: VehicleMapItem {
+        delegate: SosMapItem {
             vehicle:        object
             coordinate:     object.coordinate
             map:            _root

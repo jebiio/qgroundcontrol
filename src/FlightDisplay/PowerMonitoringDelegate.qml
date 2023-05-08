@@ -50,20 +50,14 @@ Column{
             columns:            3
             columnSpacing:      ScreenTools.defaultFontPixelWidth * 2
             rowSpacing:         ScreenTools.defaultFontPixelHeight * 0.25
-            // property var        factGroup:     _activeVehicle.getFactGroup("krisoStatus")
-            // property string     factGroupName: "KrisoVoltage"
-            
 
             Repeater {
-                // model : _activeVehicle.factGroupNames
-                model   :       _activeVehicle.getFactGroup("kriso").factNames
-                // property var factGroup:     _activeVehicle.getFactGroup(modelData)
-                // property string factGroupName: modelData
-                property Fact fact : _activeVehicle.getFactGroup("kriso").getFact(modelData)
+                model   :       _activeVehicle.getFactGroup("krisoVoltate").factNames
+                property Fact fact : _activeVehicle.getFactGroup("krisoVoltage").getFact(modelData)
 
-                Text{text: modelData }
-                // Text{text: fact.value.enumOrValueString }
-                // FactLabel { fact:fact }
+                // Text{text: modelData }
+                Text{text: fact.value.enumOrValueString }
+                FactLabel { fact:fact }
             }
 
 
