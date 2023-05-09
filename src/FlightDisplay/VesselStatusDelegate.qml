@@ -46,6 +46,7 @@ Column {
 
         QGCButton {
             id: setupbtn
+            // text: "Go to the Location"
             text: "Setup Control Values"
             backRadius:     4
             heightFactor:   0.3333

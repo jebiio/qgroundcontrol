@@ -48,7 +48,7 @@ id: _root
 
     function getDelegate(teamName){
         switch(teamName) {
-            case "  Vessel Status" :    return "qrc:/qml/VesselStatusDelegate.qml"; break;
+            case "  Vessel Status" :    return "qrc:/qml/VesselStatusDelegate.qml"; break; // 조난자 감지
             case "  Power Monitoring" : return  "qrc:/qml/PowerMonitoringDelegate.qml"; break;
             case "  KRISO Status Values" : return  "qrc:/qml/PageView.qml"; break;
             default     : return "qrc:/qml/NameDelegate.qml"; break;

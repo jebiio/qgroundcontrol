@@ -29,7 +29,7 @@ MapQuickItem {
 
     anchorPoint.x:  vehicleItem.width  / 2
     anchorPoint.y:  vehicleItem.height / 2
-    visible:        coordinate.isValid
+    visible:        true
 
     property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
     property bool   _adsbVehicle:   vehicle ? false : true

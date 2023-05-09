@@ -251,10 +251,22 @@ FlightMap {
         }
     }
 
-    // Add the vehicles to the map
+    // SOS Custom Map item
     MapItemView {
         model: QGroundControl.multiVehicleManager.vehicles
         delegate: SosMapItem {
+            vehicle:        object
+            coordinate:     QtPositioning.coordinate(37.6608614, 127.0005897)
+            map:            _root
+            size:           pipMode ? ScreenTools.defaultFontPixelHeight : ScreenTools.defaultFontPixelHeight * 3
+            z:              QGroundControl.zOrderVehicles
+        }
+    }
+
+    // Add the vehicles to the map
+    MapItemView {
+        model: QGroundControl.multiVehicleManager.vehicles
+        delegate: VehicleMapItem {
             vehicle:        object
             coordinate:     object.coordinate
             map:            _root
