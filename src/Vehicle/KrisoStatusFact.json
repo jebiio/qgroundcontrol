@@ -14,7 +14,7 @@
     "shortDesc":        "T2_RPM",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              2
 },
 {
     "name":             "t3_rpm",
@@ -179,7 +179,7 @@
     "name":             "nav_mode",
     "shortDesc":        "NAV_MODE",
     "type":             "float",
-    "decimalPlaces":    1,
+    "decimalPlaces":    2,
     "default":              null
 }
 ]

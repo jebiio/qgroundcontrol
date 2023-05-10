@@ -8,7 +8,7 @@
     "shortDesc": "CH1_VOLT",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              123.12
 },
 {
     "name":             "ch2_volt",

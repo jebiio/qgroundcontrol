@@ -44,22 +44,30 @@ Column{
         }     
     }
 
-    GridLayout{
+    ColumnLayout {
             anchors.margins:   ScreenTools.defaultFontPixelWidth * 2
             anchors.left:       parent.left
-            columns:            3
-            columnSpacing:      ScreenTools.defaultFontPixelWidth * 2
-            rowSpacing:         ScreenTools.defaultFontPixelHeight * 0.25
+            // columns:            3
+            // columnSpacing:      ScreenTools.defaultFontPixelWidth * 2
+            // rowSpacing:         ScreenTools.defaultFontPixelHeight * 0.25
+            
 
             Repeater {
-                model   :       _activeVehicle.getFactGroup("krisoVoltate").factNames
+                model   :       _activeVehicle.getFactGroup("krisoVoltage").factNames
                 property Fact fact : _activeVehicle.getFactGroup("krisoVoltage").getFact(modelData)
-
-                // Text{text: modelData }
-                Text{text: fact.value.enumOrValueString }
-                FactLabel { fact:fact }
+                
+                Text{
+                    text: modelData 
+                    color: "white"
+                    font.pixelSize: 13
+                    }
+                Text{text: fact.rawValueString() }
+                // FactLabel { fact: fact }
             }
 
+            // Text{text: "Ch1 : "
+            // font.pixelSize : 13
+            // color: "white" }
 
             // Text{text: "16.2" +"v"
             // font.pixelSize : 13
