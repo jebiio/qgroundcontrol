@@ -46,6 +46,7 @@ Rectangle {
     }
 
     Rectangle {
+        id : viewButtonRectangle
         anchors.fill:   viewButtonRow
         visible:        currentToolbar === flyViewToolbar
 
@@ -83,6 +84,7 @@ Rectangle {
             onClicked:          _activeVehicle.closeVehicle()
             visible:            _activeVehicle && _communicationLost && currentToolbar === flyViewToolbar
         }
+
     }
 
     QGCFlickable {
@@ -105,11 +107,31 @@ Rectangle {
                                     "qrc:/toolbar/MainToolBarIndicators.qml" :
                                     (currentToolbar == planViewToolbar ? "qrc:/qml/PlanToolBarIndicators.qml" : "")
         }
+
     }
+
+    RowLayout {
+        id:                     viewButtonRow2
+        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * 5
+        anchors.right:          parent.right
+        anchors.bottomMargin:   1
+        anchors.top:            parent.top
+        anchors.bottom:         parent.bottom
+        spacing:                ScreenTools.defaultFontPixelWidth / 2
+
+        QGCButtonRed {
+            id:                 emergencyStop
+            text:               "Emergency Stop"
+            onClicked:          _activeVehicle.closeVehicle()
+            visible:            _activeVehicle && currentToolbar === flyViewToolbar
+        }
+
+    }    
 
     //-------------------------------------------------------------------------
     //-- Branding Logo
     Image {
+        id : brandingLogo
         anchors.right:          parent.right
         anchors.top:            parent.top
         anchors.bottom:         parent.bottom
