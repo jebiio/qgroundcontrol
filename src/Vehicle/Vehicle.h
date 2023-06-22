@@ -256,7 +256,8 @@ public:
     Q_PROPERTY(bool                 requiresGpsFix              READ requiresGpsFix                                                 NOTIFY requiresGpsFixChanged)
     Q_PROPERTY(double               loadProgress                READ loadProgress                                                   NOTIFY loadProgressChanged)
     Q_PROPERTY(bool                 initialConnectComplete      READ isInitialConnectComplete                                       NOTIFY initialConnectComplete)
-
+    Q_PROPERTY(bool                 trajectoryVisible           READ trajectoryVisible            WRITE setTrajectoryVisible        NOTIFY trajectoryVisibleChanged)
+    
     // The following properties relate to Orbit status
     Q_PROPERTY(bool             orbitActive     READ orbitActive        NOTIFY orbitActiveChanged)
     Q_PROPERTY(QGCMapCircle*    orbitMapCircle  READ orbitMapCircle     CONSTANT)
@@ -597,6 +598,7 @@ public:
     bool            requiresGpsFix              () const { return static_cast<bool>(_onboardControlSensorsPresent & SysStatusSensorGPS); }
     bool            hilMode                     () const { return _base_mode & MAV_MODE_FLAG_HIL_ENABLED; }
     Actuators*      actuators                   () const { return _actuators; }
+    bool            trajectoryVisible           () const{ return _trajectoryVisible; }
 
     /// Get the maximum MAVLink protocol version supported
     /// @return the maximum version
@@ -836,6 +838,7 @@ public slots:
     void setVtolInFwdFlight                 (bool vtolInFwdFlight);
     void _offlineFirmwareTypeSettingChanged (QVariant varFirmwareType); // Should only be used by MissionControler to set firmware from Plan file
     void _offlineVehicleTypeSettingChanged  (QVariant varVehicleType);  // Should only be used by MissionController to set vehicle type from Plan file
+    void setTrajectoryVisible               (bool trajectoryVisible);
 
 signals:
     void coordinateChanged              (QGeoCoordinate coordinate);
@@ -942,6 +945,7 @@ signals:
     void initialConnectComplete         ();
 
     void sensorsParametersResetAck      (bool success);
+    void trajectoryVisibleChanged       (bool trajectoryVisible);
 
 private slots:
     void _mavlinkMessageReceived            (LinkInterface* link, mavlink_message_t message);
@@ -1099,6 +1103,7 @@ private:
     bool            _readyToFlyAvailable                    = false;
     bool            _readyToFly                             = false;
     bool            _allSensorsHealthy                      = true;
+    bool            _trajectoryVisible                      = true;
 
     SysStatusSensorInfo _sysStatusSensorInfo;
 

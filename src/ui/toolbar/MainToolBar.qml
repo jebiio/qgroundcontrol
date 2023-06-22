@@ -107,6 +107,23 @@ Rectangle {
         }
     }
 
+    RowLayout {
+        id:                     viewButtonRow2
+        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * 5
+        anchors.right:          parent.right
+        anchors.bottomMargin:   1
+        anchors.top:            parent.top
+        anchors.bottom:         parent.bottom
+        spacing:                ScreenTools.defaultFontPixelWidth / 2
+
+        QGCButton {
+            text:               "Tajectory Dismiss"
+            onClicked:          _activeVehicle.trajectoryVisible = !_activeVehicle.trajectoryVisible
+            visible:            _activeVehicle && currentToolbar === flyViewToolbar
+        }
+
+    }      
+
     //-------------------------------------------------------------------------
     //-- Branding Logo
     Image {
