@@ -126,6 +126,12 @@ Rectangle {
             visible:            _activeVehicle && currentToolbar === flyViewToolbar
         }
 
+        QGCButtonRed {
+            text:               "Show Trajectory Line"
+            onClicked:          _activeVehicle.trajectoryVisible = !_activeVehicle.trajectoryVisible
+            visible:            _activeVehicle && currentToolbar === flyViewToolbar
+        }    
+
     }    
 
     //-------------------------------------------------------------------------

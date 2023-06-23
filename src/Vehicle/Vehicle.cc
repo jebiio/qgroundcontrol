@@ -3443,6 +3443,13 @@ void Vehicle::setVtolInFwdFlight(bool vtolInFwdFlight)
     }
 }
 
+void Vehicle::setTrajectoryVisible(bool trajectoryVisible)
+{
+    _trajectoryVisible = trajectoryVisible;
+    emit trajectoryVisibleChanged(trajectoryVisible);
+}
+
+
 void Vehicle::startMavlinkLog()
 {
     sendMavCommand(_defaultComponentId, MAV_CMD_LOGGING_START, false /* showError */);
