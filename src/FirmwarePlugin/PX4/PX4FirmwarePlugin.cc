@@ -34,24 +34,9 @@ PX4FirmwarePluginInstanceData::PX4FirmwarePluginInstanceData(QObject* parent)
 }
 
 PX4FirmwarePlugin::PX4FirmwarePlugin()
-    : _manualFlightMode     (tr("Manual"))
-    , _acroFlightMode       (tr("Acro"))
-    , _stabilizedFlightMode (tr("Stabilized"))
-    , _rattitudeFlightMode  (tr("Rattitude"))
-    , _altCtlFlightMode     (tr("Altitude"))
-    , _posCtlFlightMode     (tr("Position"))
-    , _offboardFlightMode   (tr("Offboard"))
-    , _readyFlightMode      (tr("Ready"))
-    , _takeoffFlightMode    (tr("Takeoff"))
-    , _holdFlightMode       (tr("Hold"))
-    , _missionFlightMode    (tr("Mission"))
-    , _rtlFlightMode        (tr("Return"))
-    , _landingFlightMode    (tr("Land"))
-    , _preclandFlightMode   (tr("Precision Land"))
-    , _rtgsFlightMode       (tr("Return to Groundstation"))
-    , _followMeFlightMode   (tr("Follow Me"))
-    , _simpleFlightMode     (tr("Simple"))
-    , _orbitFlightMode      (tr("Orbit"))
+    : _manualFlightMode     (tr("HDG"))
+    , _acroFlightMode       (tr("WP"))
+    , _stabilizedFlightMode (tr("DP"))
 {
     qmlRegisterType<PX4AdvancedFlightModesController>   ("QGroundControl.Controllers", 1, 0, "PX4AdvancedFlightModesController");
     qmlRegisterType<PX4SimpleFlightModesController>     ("QGroundControl.Controllers", 1, 0, "PX4SimpleFlightModesController");
