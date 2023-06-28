@@ -34,9 +34,28 @@ PX4FirmwarePluginInstanceData::PX4FirmwarePluginInstanceData(QObject* parent)
 }
 
 PX4FirmwarePlugin::PX4FirmwarePlugin()
-    : _manualFlightMode     (tr("HDG"))
-    , _acroFlightMode       (tr("WP"))
-    , _stabilizedFlightMode (tr("DP"))
+    : _manualFlightMode     (tr("Manual"))
+    , _acroFlightMode       (tr("Acro"))
+    , _stabilizedFlightMode (tr("Stabilized"))
+    , _rattitudeFlightMode  (tr("Rattitude"))
+    , _altCtlFlightMode     (tr("Altitude"))
+    , _posCtlFlightMode     (tr("Position"))
+    , _offboardFlightMode   (tr("Offboard"))
+    , _readyFlightMode      (tr("Ready"))
+    , _takeoffFlightMode    (tr("Takeoff"))
+    , _holdFlightMode       (tr("Hold"))
+    , _missionFlightMode    (tr("Mission"))
+    , _rtlFlightMode        (tr("Return"))
+    , _landingFlightMode    (tr("Land"))
+    , _preclandFlightMode   (tr("Precision Land"))
+    , _rtgsFlightMode       (tr("Return to Groundstation"))
+    , _followMeFlightMode   (tr("Follow Me"))
+    , _simpleFlightMode     (tr("Simple"))
+    , _orbitFlightMode      (tr("Orbit"))
+    , _hdgFlightMode        (tr("HDG"))
+    , _krisoWPMode          (tr("WP"))
+    , _krisoDPGMode         (tr("DP"))
+
 {
     qmlRegisterType<PX4AdvancedFlightModesController>   ("QGroundControl.Controllers", 1, 0, "PX4AdvancedFlightModesController");
     qmlRegisterType<PX4SimpleFlightModesController>     ("QGroundControl.Controllers", 1, 0, "PX4SimpleFlightModesController");
@@ -72,6 +91,9 @@ PX4FirmwarePlugin::PX4FirmwarePlugin()
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,         false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,          false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,       false,  true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,         false,  true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,          false,  true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,       false,  true,   true },
     };
 
     // Must be in same order as above structure
@@ -94,6 +116,9 @@ PX4FirmwarePlugin::PX4FirmwarePlugin()
         &_readyFlightMode,
         &_rtgsFlightMode,
         &_takeoffFlightMode,
+        &_hdgFlightMode,
+        &_krisoWPMode,
+        &_krisoDPGMode,
     };
 
     // Convert static information to dynamic list. This allows for plugin override class to manipulate list.

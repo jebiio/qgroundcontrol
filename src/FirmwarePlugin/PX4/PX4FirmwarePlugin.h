@@ -101,6 +101,10 @@ protected:
     QString _simpleFlightMode;
     QString _orbitFlightMode;
 
+    QString _hdgFlightMode;
+    QString _krisoWPMode;
+    QString _krisoDPGMode;
+
 private slots:
     void _mavCommandResult(int vehicleId, int component, int command, int result, bool noReponseFromVehicle);
 
