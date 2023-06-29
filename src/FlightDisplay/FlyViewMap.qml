@@ -232,7 +232,17 @@ FlightMap {
     MapPolyline {
         id:         trajectoryPolyline
         line.width: 3
-        line.color: "orange"
+        line.color: {
+            if (_activeVehicle) {
+                switch (_activeVehicle.kriso.nav_mode.value) {
+                    case 1.0: return "red";
+                    case 2.0: return "orange";
+                    case 3.0: return "blue";
+                    default: return "yellow";
+                }
+            }
+            return "yellow";
+        }
         z:          QGroundControl.zOrderTrajectoryLines
         visible:    _activeVehicle.trajectoryVisible
 
