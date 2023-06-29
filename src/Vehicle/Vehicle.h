@@ -260,6 +260,8 @@ public:
     Q_PROPERTY(double               loadProgress                READ loadProgress                                                   NOTIFY loadProgressChanged)
     Q_PROPERTY(bool                 initialConnectComplete      READ isInitialConnectComplete                                       NOTIFY initialConnectComplete)
     Q_PROPERTY(bool                 trajectoryVisible           READ trajectoryVisible            WRITE setTrajectoryVisible        NOTIFY trajectoryVisibleChanged)
+    // Q_PROPERTY(bool                 krisoEmergencyStop          READ krisoEmergencyStop           WRITE setKrisoEmergencyStop       NOTIFY krisoEmergencyStopChanged) jaeeun
+
 
 
     // The following properties relate to Orbit status
@@ -422,11 +424,12 @@ public:
 
     Q_INVOKABLE void setPIDTuningTelemetryMode(PIDTuningTelemetryMode mode);
 
-    Q_INVOKABLE void gimbalControlValue (double pitch, double yaw);
-    Q_INVOKABLE void gimbalPitchStep    (int direction);
-    Q_INVOKABLE void gimbalYawStep      (int direction);
-    Q_INVOKABLE void centerGimbal       ();
-    Q_INVOKABLE void forceArm           ();
+    Q_INVOKABLE void gimbalControlValue     (double pitch, double yaw);
+    Q_INVOKABLE void gimbalPitchStep        (int direction);
+    Q_INVOKABLE void gimbalYawStep          (int direction);
+    Q_INVOKABLE void centerGimbal           ();
+    Q_INVOKABLE void forceArm               ();
+    Q_INVOKABLE void sendEmergencyCommand   ();
 
     /// Sends PARAM_MAP_RC message to vehicle
     Q_INVOKABLE void sendParamMapRC(const QString& paramName, double scale, double centerValue, int tuningID, double minValue, double maxValue);
@@ -493,6 +496,11 @@ public:
     bool armed              () const{ return _armed; }
     void setArmed           (bool armed, bool showError);
     void setArmedShowError  (bool armed) { setArmed(armed, true); }
+
+
+    // bool krisoEmergencyStop() const { return _krisoEmergencyStop; }
+    // Q_INVOKABLE void setKrisoEmergencyStop(bool stop); jaeeun
+
 
     bool flightModeSetAvailable             ();
     QStringList flightModes                 ();
@@ -956,7 +964,7 @@ signals:
 
     void sensorsParametersResetAck      (bool success);
     void trajectoryVisibleChanged       (bool trajectoryVisible);
-
+    // void krisoEmergencyStopChanged      (); jaeeun
 private slots:
     void _mavlinkMessageReceived            (LinkInterface* link, mavlink_message_t message);
     void _sendMessageMultipleNext           ();
@@ -989,6 +997,7 @@ private slots:
     void _gotProgressUpdate                 (float progressValue);
 
 private:
+    // void _sendEmergencyCommand          (); jaeeun
     void _joystickChanged               (Joystick* joystick);
     void _loadSettings                  ();
     void _saveSettings                  ();
@@ -1140,6 +1149,8 @@ private:
     bool    _armed = false;         ///< true: vehicle is armed
     uint8_t _base_mode = 0;     ///< base_mode from HEARTBEAT
     uint32_t _custom_mode = 0;  ///< custom_mode from HEARTBEAT
+
+    // bool _krisoEmergencyStop = false; jaeeun
 
     /// Used to store a message being sent by sendMessageMultiple
     typedef struct {

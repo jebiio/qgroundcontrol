@@ -190,6 +190,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     connect(this, &Vehicle::flightModeChanged,          this, &Vehicle::_handleFlightModeChanged);
     connect(this, &Vehicle::armedChanged,               this, &Vehicle::_announceArmedChanged);
 
+
     connect(_toolbox->multiVehicleManager(), &MultiVehicleManager::parameterReadyVehicleAvailableChanged, this, &Vehicle::_vehicleParamLoaded);
 
     _uas = new UAS(_mavlink, this, _firmwarePluginManager);
@@ -2074,6 +2075,51 @@ void Vehicle::setArmed(bool armed, bool showError)
                    armed ? 1.0f : 0.0f);
 }
 
+// void Vehicle::setKrisoEmergencyStop(bool stop)
+// {
+//     if (_krisoEmergencyStop != stop) {
+//         _krisoEmergencyStop = stop;
+//         emit krisoEmergencyStopChanged();
+
+//         if (_krisoEmergencyStop) {
+//             _sendEmergencyCommand();
+//         }
+//     }
+// }
+
+void Vehicle::sendEmergencyCommand(void)
+{
+    // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
+    // Also, suppose 1.0f is the parameter to send an emergency command.
+    // You may need to modify the details based on your own specifications.
+    
+    LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
+    QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+
+    // Send a heartbeat out on each link
+    for (int i=0; i<sharedLinks.count(); i++) {
+        LinkInterface* link = sharedLinks[i].get();
+        auto linkConfiguration = link->linkConfiguration();
+        if (link->isConnected() && linkConfiguration) {
+            mavlink_message_t message;
+            mavlink_msg_kriso_emergency_command_pack_chan(_mavlink->getSystemId(),
+                                            _mavlink->getComponentId(),
+                                            link->mavlinkChannel(),
+                                            &message,
+                                            0,            // time
+                                            1             // emergency : 1
+                                            );
+
+            uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+            int len = mavlink_msg_to_send_buffer(buffer, &message);
+            link->writeBytesThreadSafe((const char*)buffer, len);
+        }
+    }
+
+
+}
+
+
 void Vehicle::forceArm(void)
 {
     sendMavCommand(_defaultComponentId,
@@ -2484,6 +2530,7 @@ void Vehicle::_handleFlightModeChanged(const QString& flightMode)
     _say(tr("%1 %2 flight mode").arg(_vehicleIdSpeech()).arg(flightMode));
     emit guidedModeChanged(_firmwarePlugin->isGuidedMode(this));
 }
+
 
 void Vehicle::_announceArmedChanged(bool armed)
 {
