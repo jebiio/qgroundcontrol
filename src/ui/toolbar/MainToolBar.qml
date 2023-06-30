@@ -73,7 +73,7 @@ Rectangle {
             onClicked:              mainWindow.showJebiDialog()
         }
 
-        MainStatusIndicator {
+        KrisoStatusIndicator {
             Layout.preferredHeight: viewButtonRow.height
             visible:                currentToolbar === flyViewToolbar
         }

@@ -7,6 +7,7 @@ add_custom_target(UiToolbarQml
 		JoystickIndicator.qml
 		LinkIndicator.qml
 		MainStatusIndicator.qml
+		KrisoStatusIndicator.qml
 		MainToolBarIndicators.qml
 		MainToolBar.qml
 		MessageIndicator.qml
