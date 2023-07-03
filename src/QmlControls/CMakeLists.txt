@@ -82,6 +82,7 @@ add_custom_target(QmlControlsQml
 		PreFlightCheckList.qml
 		PreFlightCheckModel.qml
 		QGCButton.qml
+		KrisoRadioButton.qml
 		QGCButtonRed.qml
 		QGCCheckBox.qml
 		QGCColoredImage.qml

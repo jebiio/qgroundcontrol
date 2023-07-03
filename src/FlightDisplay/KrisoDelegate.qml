@@ -25,8 +25,8 @@ import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
 
-Rectangle{
-id: _root
+Rectangle {
+    id: _root
     clip: true
     color : "#383636"
     property bool expanded: true
@@ -37,24 +37,24 @@ id: _root
         NumberAnimation { duration:  200 }
     }
 
-
-    Loader{
-        id :                krisoLoader
-        // anchors.left:       parent.left
-        visible:            true
-        source:             getDelegate(model.team)      
-        // visible:            true 
+    Loader {
+        id: krisoLoader
+        visible: _root.expanded
+        source: getDelegate(model.team)
     }
 
-    function getDelegate(teamName){
+    function getDelegate(teamName) {
         switch(teamName) {
-            case "  Vessel Status" :    return "qrc:/qml/VesselStatusDelegate.qml"; break;
-            // case "  Vessel Status" :    return "qrc:/qml/VesselStatusDelegate.qml"; break; // 조난자 감지
-            case "  Power Monitoring" : return  "qrc:/qml/PowerMonitoringDelegate.qml"; break;
-            case "  KRISO Status Values" : return  "qrc:/qml/PageView.qml"; break;
-            default     : return "qrc:/qml/NameDelegate.qml"; break;
+            case "  Vessel Status" : return "qrc:/qml/VesselStatusDelegate.qml";
+            case "  Power Monitoring" : return  "qrc:/qml/PowerMonitoringDelegate.qml";
+            case "  KRISO Status Values" : return  "qrc:/qml/PageView.qml";
+            default : return "qrc:/qml/NameDelegate.qml";
         }
-    }       
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        onClicked: _root.expanded = !_root.expanded
+    }
 }
-
-

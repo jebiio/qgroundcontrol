@@ -39,8 +39,8 @@ Item {
     property var    mapControl
 
     readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
-    readonly property real  _hamburgerSize:     commandPicker.height * 0.75
-    readonly property real  _trashSize:         commandPicker.height * 0.75
+    // readonly property real  _hamburgerSize:     commandPicker.height * 0.75
+    // readonly property real  _trashSize:         commandPicker.height * 0.75
 
     property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     property var    _planMasterController:  globals.planMasterControllerFlyView
@@ -390,36 +390,6 @@ Item {
                 }
             }
         }
-
-
-
-        // value page
-        // Item {
-        //     id:                 _valuesItem
-        //     anchors.topMargin:  ScreenTools.defaultFontPixelHeight / 4
-        //     anchors.top:        parent.bottom
-        //     width:              parent.width
-        //     height:             _valuesWidget.height
-        //     visible:            true
-
-        //     // Prevent all clicks from going through to lower layers
-        //     DeadMouseArea {
-        //         anchors.fill: parent
-        //     }
-
-        //     Rectangle {
-        //         anchors.fill:   _valuesWidget
-        //         color:          qgcPal.window
-        //     }
-
-        //     PageView {
-        //         id:                 _valuesWidget
-        //         anchors.margins:    1
-        //         anchors.left:       parent.left
-        //         anchors.right:      parent.right
-        //         maxHeight:          500
-        //     }
-        // }
     
     }
 
@@ -434,5 +404,212 @@ Item {
         anchors.right:      parent.right
         anchors.rightMargin: _toolsMargin
         radius:     _radius
+    }
+
+
+    Rectangle {
+        id: container
+        color: "white"
+        radius: 10
+        anchors.top : toolStrip.bottom
+        anchors.left: parent.left
+        anchors.margins: 10
+
+        implicitWidth: rightPanel.width + padding * 2
+        implicitHeight: commandColumn.height + padding * 2
+
+        property real padding: 10
+
+        Column {
+            id: commandColumn
+            anchors.centerIn: parent
+            spacing: 10
+
+            Text {
+                id: operationModeLabel
+                text: "< 명령 >\n운용모드"
+                color: "black"
+            }
+
+            Row {
+                id: operationModeRow
+                spacing: 10
+                KrisoRadioButton {
+                    id: manualMode
+                    text: "수동"
+                }
+                KrisoRadioButton {
+                    id: autoMode
+                    text: "자동"
+                }
+                KrisoRadioButton {
+                    id: simulationMode
+                    text: "시뮬레이션"
+                }
+            }
+
+            Text {
+                id: missionModeLabel
+                text: "임무모드 - 운용시작"
+                color: "black"
+            }
+
+            Row {
+                id: missionModeRow
+                spacing: 10
+
+                KrisoRadioButton {
+                    id: wpMode
+                    text: "WP"
+                }
+                KrisoRadioButton {
+                    id: hdgMode
+                    text: "HDG"
+                    onIsPressedChanged: {
+                        if(isPressed) {
+                            hdgcontainer.visible = true;
+                            dpMode.isPressed = false;
+                        } else {
+                            hdgcontainer.visible = false;
+                        }
+                    }
+                }
+                KrisoRadioButton {
+                    id: dpMode
+                    text: "DP"
+                    onIsPressedChanged: {
+                        if(isPressed) {
+                            dpmodeContainer.visible = true;
+                            hdgMode.isPressed = false;
+                        } else {
+                            dpmodeContainer.visible = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+    Rectangle {
+        id: hdgcontainer
+        color: "white"
+        radius: 10
+        anchors.top : container.bottom
+        anchors.left: parent.left
+        anchors.margins: 10
+        visible: false
+
+        implicitWidth: rightPanel.width + padding * 2
+        implicitHeight: hdgColumn.height + padding * 2
+
+        property real padding: 10
+
+        Column {
+            id: hdgColumn
+            anchors.centerIn: parent
+            spacing: 10
+            
+            Text {
+                text: "< HDG >\n제어명령"
+                color: "black"
+            }
+
+
+            Row {
+                spacing: 10
+
+                Text {
+                    text: "속도 명령  "
+                    color: "black"
+                }
+                QGCTextField {
+                    placeholderText: "속도 입력"
+                }
+            }
+
+            Row {
+                spacing: 10
+
+                Text {
+                    text: "선수각 명령"
+                    color: "black"
+                }
+                QGCTextField {
+                    placeholderText: "선수각 입력"
+                }
+            }
+
+            Button {
+                text: "명령전송"
+            }
+        }
+    }
+
+    Rectangle {
+        id: dpmodeContainer
+        color: "white"
+        radius: 10
+        anchors.top : container.bottom
+        anchors.left: parent.left
+        anchors.margins: 10
+        visible: false
+
+        implicitWidth: rightPanel.width + padding * 2
+        implicitHeight: dpModeColumn.height + padding * 2
+
+        property real padding: 10
+
+        Column {
+            id: dpModeColumn
+            anchors.centerIn: parent
+            spacing: 10
+            
+            Text {
+                text: "< DP >\n입력값"
+                color: "black"
+            }
+
+
+            Row {
+                spacing: 10
+
+                Text {
+                    text: "위도"
+                    color: "black"
+                }
+                QGCTextField {
+                    placeholderText: "위도 입력"
+                }
+            }
+
+            Row {
+                spacing: 10
+
+                Text {
+                    text: "경도"
+                    color: "black"
+                }
+                QGCTextField {
+                    placeholderText: "경도 입력"
+                }
+            }
+
+            Row {
+                spacing: 10
+
+                Text {
+                    text: "각도"
+                    color: "black"
+                }
+                QGCTextField {
+                    placeholderText: "각도 입력"
+                }
+            }
+
+            Button {
+                text: "명령전송"
+            }
+        }
     }
 }
