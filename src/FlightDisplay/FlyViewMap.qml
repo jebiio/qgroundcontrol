@@ -244,7 +244,7 @@ FlightMap {
             return "yellow";
         }
         z:          QGroundControl.zOrderTrajectoryLines
-        visible:    _activeVehicle.trajectoryVisible
+        visible:    _activeVehicle? _activeVehicle.trajectoryVisible : false
 
         Connections {
             target:                 QGroundControl.multiVehicleManager

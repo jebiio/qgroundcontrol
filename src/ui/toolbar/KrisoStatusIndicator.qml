@@ -35,11 +35,15 @@ RowLayout {
         property string _simulationModeText:    qsTr("Simulation Mode")
 
         text: {
-            switch (_activeVehicle.kriso.nav_mode) {
-                case 1: return mainStatusLabel._manualModeText;
-                case 2: return mainStatusLabel._autoModeText;
-                case 3: return mainStatusLabel._simulationModeText;
-                default: return "Test Mode";
+            if (_activeVehicle) {
+                switch (_activeVehicle.kriso.nav_mode) {
+                    case 1: return mainStatusLabel._manualModeText;
+                    case 2: return mainStatusLabel._autoModeText;
+                    case 3: return mainStatusLabel._simulationModeText;
+                    default: return "Test Mode";
+                }
+            } else {
+                return "";
             }
         }
     }
@@ -68,11 +72,15 @@ RowLayout {
         property string _wpModeText:            qsTr("WP Mode")
 
         text: {
-            switch (_activeVehicle.kriso.nav_mode) {
-                case 'dp': return modeLabel._dpModeText;
-                case 'wp': return modeLabel._wpModeText;
-                case 'hdg': return modeLabel._hdgModeText;
-                default: return "HDG Mode";
+            if (_activeVehicle) {
+                switch (_activeVehicle.kriso.nav_mode) {
+                    case 'dp': return modeLabel._dpModeText;
+                    case 'wp': return modeLabel._wpModeText;
+                    case 'hdg': return modeLabel._hdgModeText;
+                    default: return "HDG Mode";
+                }
+            } else {
+                return "";
             }
         }
     }

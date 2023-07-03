@@ -67,7 +67,6 @@ Button {
             anchors.centerIn:       parent
             antialiasing:           true
             text:                   control.text
-            font.bold:              control.textBold
             font.pointSize:         pointSize
             font.family:            ScreenTools.normalFontFamily
             color:                  _showHighlight ?

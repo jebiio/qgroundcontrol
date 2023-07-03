@@ -61,57 +61,9 @@ Column{
                     color: "white"
                     font.pixelSize: 13
                     }
-                Text{text: fact.rawValueString() }
-                // FactLabel { fact: fact }
-            }
-
-            // Text{text: "Ch1 : "
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "16.2" +"v"
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "90" +"%"
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "Ch2 : "
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "16.2" +"v"
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "90" +"%"
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "Ch3 : "
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "16.2" +"v"
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "90" +"%"
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "Ch4 : "
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "16.2" +"v"
-            // font.pixelSize : 13
-            // color: "white" }
-
-            // Text{text: "90" +"%"
-            // font.pixelSize : 13
-            // color: "white" }            
+                // Text{text: fact.rawValueString() }
+                FactLabel { fact: fact }
+            } 
     }
 }
 

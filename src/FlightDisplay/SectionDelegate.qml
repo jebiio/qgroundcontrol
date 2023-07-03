@@ -11,6 +11,15 @@ import QtQuick 2.0
 import QGroundControl 1.0
 import QGroundControl.Controls      1.0
 import QtQuick.Layouts              1.11
+import QGroundControl.ScreenTools   1.0
+
+
+import QtQuick                  2.4
+import QtPositioning            5.2
+import QtQuick.Layouts          1.2
+import QtQuick.Controls         1.4
+import QtQuick.Dialogs          1.2
+import QtGraphicalEffects       1.0
 
 Rectangle {
     radius:     _radius
@@ -58,7 +67,6 @@ Rectangle {
             height:             parent.height * 0.8
             width:              parent.height * 0.8
             fillMode:           Image.PreserveAspectFit
-            smooth:             true
             antialiasing:       true
             color:              qgcPal.text
             source:             "/res/expand.svg"
