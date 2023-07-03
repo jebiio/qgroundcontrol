@@ -2106,7 +2106,6 @@ void Vehicle::sendEmergencyCommand(void)
                                             _mavlink->getComponentId(),
                                             link->mavlinkChannel(),
                                             &message,
-                                            0,            // time
                                             1             // emergency : 1
                                             );
 
