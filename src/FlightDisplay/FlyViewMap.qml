@@ -317,53 +317,53 @@ FlightMap {
     //     z:              QGroundControl.zOrderMapItems
     // }
 
-    MapRectangle {
-        color: 'green'
-        border.width: 2
-        topLeft {
-            latitude: 37.4854173
-            longitude: 126.9683638
-        }
-        bottomRight {
-            latitude: 37.4840061
-            longitude: 126.9704662
-        }
-    }
+    // MapRectangle {
+    //     color: 'green'
+    //     border.width: 2
+    //     topLeft {
+    //         latitude: 37.4854173
+    //         longitude: 126.9683638
+    //     }
+    //     bottomRight {
+    //         latitude: 37.4840061
+    //         longitude: 126.9704662
+    //     }
+    // }
     
-    Canvas {
-        id: canvas
-        anchors.fill: parent
-        onPaint: {
-            var ctx = getContext("2d");
-            ctx.reset();
+    // Canvas {
+    //     id: canvas
+    //     anchors.fill: parent
+    //     onPaint: {
+    //         var ctx = getContext("2d");
+    //         ctx.reset();
 
-            var centerCoordinate = QtPositioning.coordinate(37.4854173, 126.9683638);
-            var radiusPointCoordinate = QtPositioning.coordinate(37.4863173, 126.9683638);/* Some code to calculate the coordinate 10m away from centerCoordinate */
+    //         var centerCoordinate = QtPositioning.coordinate(37.4854173, 126.9683638);
+    //         var radiusPointCoordinate = QtPositioning.coordinate(37.4863173, 126.9683638);/* Some code to calculate the coordinate 10m away from centerCoordinate */
 
-            var center = _root.fromCoordinate(centerCoordinate);
-            var radiusPoint = _root.fromCoordinate(radiusPointCoordinate);
+    //         var center = _root.fromCoordinate(centerCoordinate);
+    //         var radiusPoint = _root.fromCoordinate(radiusPointCoordinate);
             
-            var dx = center.x - radiusPoint.x;
-            var dy = center.y - radiusPoint.y;
-            var radius = Math.sqrt(dx * dx + dy * dy); // calculate Euclidean distance
+    //         var dx = center.x - radiusPoint.x;
+    //         var dy = center.y - radiusPoint.y;
+    //         var radius = Math.sqrt(dx * dx + dy * dy); // calculate Euclidean distance
 
-            ctx.beginPath();
+    //         ctx.beginPath();
 
-            var startAngle = Math.PI * 1.5;
-            var endAngle = Math.PI * 5/4;
+    //         var startAngle = Math.PI * 1.5;
+    //         var endAngle = Math.PI * 5/4;
 
-            ctx.arc(center.x, center.y, radius, startAngle, endAngle, true);
-            ctx.lineTo(center.x, center.y); 
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-            ctx.fill();
-        }
+    //         ctx.arc(center.x, center.y, radius, startAngle, endAngle, true);
+    //         ctx.lineTo(center.x, center.y); 
+    //         ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+    //         ctx.fill();
+    //     }
 
-        Connections {
-            target: _root
-            onCenterChanged: canvas.requestPaint();
-            onZoomLevelChanged: canvas.requestPaint();
-        }
-    }
+    //     Connections {
+    //         target: _root
+    //         onCenterChanged: canvas.requestPaint();
+    //         onZoomLevelChanged: canvas.requestPaint();
+    //     }
+    // }
 
     // Add the items associated with each vehicles flight plan to the map
     Repeater {
