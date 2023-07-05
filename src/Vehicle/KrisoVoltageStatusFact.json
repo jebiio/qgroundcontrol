@@ -30,6 +30,13 @@
     "type":             "float",
     "decimalPlaces":        2,
     "default":              null
+},
+{
+    "name":             "invertor_volt",
+    "shortDesc": "INVERTOR_VOLT",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
 }
 ]
 }

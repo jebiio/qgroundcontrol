@@ -56,13 +56,9 @@ Column{
                 model   :       _activeVehicle.getFactGroup("krisoVoltage").factNames
                 property Fact fact : _activeVehicle.getFactGroup("krisoVoltage").getFact(modelData)
                 
-                Text{
-                    text: modelData 
-                    color: "white"
-                    font.pixelSize: 13
-                    }
-                // Text{text: fact.rawValueString() }
-                FactLabel { fact: fact }
+                // modelData ==> name 
+                Text{text: _activeVehicle.getFactGroup("krisoVoltage").getFact(modelData).rawValue.toFixed(2) } 
+                              
             } 
     }
 }
