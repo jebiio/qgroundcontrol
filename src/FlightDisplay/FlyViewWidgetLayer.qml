@@ -414,6 +414,7 @@ Item {
         anchors.top : toolStrip.bottom
         anchors.left: parent.left
         anchors.margins: 10
+        visible : _activeVehicle ? true : false
 
         implicitWidth: rightPanel.width + padding * 2
         implicitHeight: commandColumn.height + padding * 2
@@ -437,14 +438,35 @@ Item {
                 KrisoRadioButton {
                     id: manualMode
                     text: "수동"
+                    onIsPressedChanged: {
+                        missionModeRow.enabled = !isPressed;
+                        if(isPressed) {
+                            hdgcontainer.visible = false;
+                            dpmodeContainer.visible = false;
+                            autoMode.isPressed = false;
+                            simulationMode.isPressed = false;
+                        }
+                    }
                 }
                 KrisoRadioButton {
                     id: autoMode
                     text: "자동"
+                    onIsPressedChanged: {
+                        if(isPressed) {
+                            manualMode.isPressed = false;
+                            missionModeRow.enabled = true;
+                        }
+                    }
                 }
                 KrisoRadioButton {
                     id: simulationMode
                     text: "시뮬레이션"
+                    onIsPressedChanged: {
+                        if(isPressed) {
+                            manualMode.isPressed = false;
+                            missionModeRow.enabled = true;
+                        }
+                    }
                 }
             }
 
