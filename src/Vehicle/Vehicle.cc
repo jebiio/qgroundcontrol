@@ -2087,7 +2087,7 @@ void Vehicle::setArmed(bool armed, bool showError)
 //     }
 // }
 
-void Vehicle::sendEmergencyCommand(void)
+void Vehicle::kriso_sendEmergencyCommand(void)
 {
     // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
     // Also, suppose 1.0f is the parameter to send an emergency command.
@@ -2118,6 +2118,111 @@ void Vehicle::sendEmergencyCommand(void)
 
 }
 
+void Vehicle::kriso_sendHDGCommand(float speed, float degree)
+{
+    // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
+    // Also, suppose 1.0f is the parameter to send an emergency command.
+    // You may need to modify the details based on your own specifications.
+    
+    LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
+    QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+
+    // Send a heartbeat out on each link
+    for (int i=0; i<sharedLinks.count(); i++) {
+        LinkInterface* link = sharedLinks[i].get();
+        auto linkConfiguration = link->linkConfiguration();
+        if (link->isConnected() && linkConfiguration) {
+            mavlink_message_t message;
+            mavlink_msg_kriso_ck_command_pack_chan(_mavlink->getSystemId(),
+                                            _mavlink->getComponentId(),
+                                            link->mavlinkChannel(),
+                                            &message,
+                                            speed,           // speed command
+                                            degree,          // HDG command (degree)
+                                            1.2,            // surge p gain
+                                            1.3,            // surge d gain
+                                            1.4,            // yaw p gain
+                                            1.5             // yaw d gain
+                                            );
+
+            uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+            int len = mavlink_msg_to_send_buffer(buffer, &message);
+            link->writeBytesThreadSafe((const char*)buffer, len);
+        }
+    }
+
+
+}
+
+void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
+{
+    // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
+    // Also, suppose 1.0f is the parameter to send an emergency command.
+    // You may need to modify the details based on your own specifications.
+    
+    LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
+    QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+
+    // Send a heartbeat out on each link
+    for (int i=0; i<sharedLinks.count(); i++) {
+        LinkInterface* link = sharedLinks[i].get();
+        auto linkConfiguration = link->linkConfiguration();
+        if (link->isConnected() && linkConfiguration) {
+            mavlink_message_t message;
+            mavlink_msg_kriso_dp_command_pack_chan(_mavlink->getSystemId(),
+                                            _mavlink->getComponentId(),
+                                            link->mavlinkChannel(),
+                                            &message,
+                                            lat,        // target lat 
+                                            lon,        // target lon
+                                            yaw,        // target position yaw
+                                            1.3,        // surge P for dp
+                                            1.4,        // surge D for dp
+                                            1.5,        // Sway P for dp
+                                            1.6,        // Sway D for dp
+                                            1.7,        // yaw pgain for dp
+                                            1.8         // yaw dgain for dp
+                                            );
+
+            uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+            int len = mavlink_msg_to_send_buffer(buffer, &message);
+            link->writeBytesThreadSafe((const char*)buffer, len);
+        }
+    }
+
+
+}
+
+void Vehicle::kriso_sendLogCommand(void)
+{
+    // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
+    // Also, suppose 1.0f is the parameter to send an emergency command.
+    // You may need to modify the details based on your own specifications.
+    
+    LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
+    QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+
+    // Send a heartbeat out on each link
+    for (int i=0; i<sharedLinks.count(); i++) {
+        LinkInterface* link = sharedLinks[i].get();
+        auto linkConfiguration = link->linkConfiguration();
+        if (link->isConnected() && linkConfiguration) {
+            mavlink_message_t message;
+            mavlink_msg_kriso_ros_log_command_pack_chan(_mavlink->getSystemId(),
+                                            _mavlink->getComponentId(),
+                                            link->mavlinkChannel(),
+                                            &message,
+                                            1             // ros log command : 1
+                                            );
+
+            uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+            int len = mavlink_msg_to_send_buffer(buffer, &message);
+            link->writeBytesThreadSafe((const char*)buffer, len);
+        }
+    }
+
+
+}
 
 void Vehicle::forceArm(void)
 {
