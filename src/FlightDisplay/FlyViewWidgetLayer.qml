@@ -598,9 +598,20 @@ Item {
             anchors.centerIn: parent
             spacing: 10
             
-            Text {
-                text: "< DP >\n입력값"
-                color: "black"
+            RowLayout {
+                width : parent.width
+                Text {
+                    text: "< DP >\n입력값"
+                    color: "black"
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                QGCButton {
+                    id: setupIcon
+                    text: "Gain"
+                    onClicked: dpGainEditorContainer.visible = !dpGainEditorContainer.visible
+                }
             }
 
 
@@ -650,6 +661,218 @@ Item {
                     dpLatInput.text = "";
                     dpLonInput.text = "";
                     dpYawInput.text = "";
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: dpGainEditorContainer
+        color: "white"
+        radius: 10
+        anchors.top: toolStrip.bottom
+        anchors.left: dpmodeContainer.right
+        anchors.margins: 10
+        width: 320
+        height: mainColumn.height + 2*padding
+        visible: false
+
+
+        property real padding: 10 
+
+        Column {
+            id: mainColumn
+            width: dpGainEditorContainer.width - 2*padding
+            spacing: 5
+            padding: 10
+
+            RowLayout {
+                width: mainColumn.width
+                Text {
+                    text: "Gain Editor"
+                    font.pointSize: 12
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                QGCButton {
+                    text: "Cancel"
+                    onClicked: dpGainEditorContainer.visible = false
+                    font.pointSize: 10
+                }
+                QGCButton {
+                    text: "Save"
+                    onClicked: {
+                        // Save logic goes here
+                        dpGainEditorContainer.visible = false
+                    }
+                    font.pointSize: 10
+                }
+            }
+
+            Rectangle {
+                color: "gray"
+                height: 1
+                width: mainColumn.width
+            }
+
+            RowLayout {
+                visible: dpMode.isPresse
+                Text {
+                    id: dpSurgePGainText
+                    text: "dp_surge_pgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    id: dpSurgePGainInput
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+                }
+            }
+            RowLayout {
+                visible: dpMode.isPresse
+                Text {
+                    text: "dp_surge_dgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+                }
+            }
+            RowLayout {
+                visible: dpMode.isPresse
+                Text {
+                    text: "dp_sway_pgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+                }
+            }
+            RowLayout {
+                visible: dpMode.isPresse
+                Text {
+                    text: "dp_sway_dgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+                }
+            }
+            RowLayout {
+                visible: dpMode.isPresse
+                Text {
+                    text: "dp_yaw_pgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+
+                }
+            }
+            RowLayout {
+                visible: dpMode.isPressed 
+                Text {
+                    text: "dp_yaw_pgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+
+                }
+            }
+            // ========================== dp command ======================
+            RowLayout {
+                visible: hdgMode.isPressed 
+                Text {
+                    text: "nav_surge_pgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+
+                }
+            }
+            RowLayout {
+                visible: hdgMode.isPressed 
+                Text {
+                    text: "nav_surge_dgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+
+                }
+            }
+            RowLayout {
+                visible: hdgMode.isPressed 
+                Text {
+                    text: "nav_yaw_pgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+
+                }
+            }
+            RowLayout {
+                visible: hdgMode.isPressed 
+                Text {
+                    text: "nav_yaw_dgain"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    placeholderText: "Enter value"
+                    font.pointSize: 10
+                    width: parent.width * 0.5
+
                 }
             }
         }
