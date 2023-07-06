@@ -484,6 +484,7 @@ Item {
                     id: wpMode
                     text: "WP"
                     enabled: !manualMode.isPressed
+                    onIsPressedChanged: mainWindow.showPlanView()
                 }
                 KrisoRadioButton {
                     id: hdgMode
@@ -545,10 +546,11 @@ Item {
                 spacing: 10
 
                 Text {
-                    text: "속도 명령  "
+                    text: "속도 값  "
                     color: "black"
                 }
                 QGCTextField {
+                    id : hdgSpeedInput
                     placeholderText: "속도 입력"
                 }
             }
@@ -557,16 +559,22 @@ Item {
                 spacing: 10
 
                 Text {
-                    text: "선수각 명령"
+                    text: "선수각 값"
                     color: "black"
                 }
                 QGCTextField {
+                    id : hdgDegreeInput
                     placeholderText: "선수각 입력"
                 }
             }
 
             Button {
                 text: "명령전송"
+                onClicked: {
+                    _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
+                    hdgSpeedInput.text = "";
+                    hdgDegreeInput.text = "";
+                }
             }
         }
     }
@@ -604,6 +612,7 @@ Item {
                     color: "black"
                 }
                 QGCTextField {
+                    id: dpLatInput
                     placeholderText: "위도 입력"
                 }
             }
@@ -616,6 +625,7 @@ Item {
                     color: "black"
                 }
                 QGCTextField {
+                    id: dpLonInput
                     placeholderText: "경도 입력"
                 }
             }
@@ -624,16 +634,23 @@ Item {
                 spacing: 10
 
                 Text {
-                    text: "각도"
+                    text: "선수각"
                     color: "black"
                 }
                 QGCTextField {
+                    id: dpYawInput
                     placeholderText: "각도 입력"
                 }
             }
 
             Button {
                 text: "명령전송"
+                onClicked: {
+                    _activeVehicle.kriso_sendDPCommand(parseFloat(dpLatInput.text), parseFloat(dpLonInput.text), parseFloat(dpYawInput.text))
+                    dpLatInput.text = "";
+                    dpLonInput.text = "";
+                    dpYawInput.text = "";
+                }
             }
         }
     }
