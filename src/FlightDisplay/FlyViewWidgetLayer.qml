@@ -535,12 +535,22 @@ Item {
             id: hdgColumn
             anchors.centerIn: parent
             spacing: 10
-            
-            Text {
-                text: "< HDG >\n제어명령"
-                color: "black"
-            }
 
+            RowLayout {
+                width : parent.width
+                Text {
+                    text: "< HDG >\n제어명령"
+                    color: "black"
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                QGCButton {
+                    id: setupIcon
+                    text: "Gain"
+                    onClicked: dpGainEditorContainer.visible = !dpGainEditorContainer.visible
+                }
+            }
 
             Row {
                 spacing: 10
