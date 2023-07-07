@@ -568,12 +568,23 @@ Item {
                 }
             }
 
-            Button {
-                text: "명령전송"
-                onClicked: {
-                    _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
-                    hdgSpeedInput.text = "";
-                    hdgDegreeInput.text = "";
+            RowLayout {
+                width : parent.width
+                Button {
+                    text: "명령전송"
+                    onClicked: {
+                        _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
+                        hdgSpeedInput.text = "";
+                        hdgDegreeInput.text = "";
+                    }
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                QGCButton {
+                    id: setupIcon
+                    text: "Gain"
+                    onClicked: dpGainEditorContainer.visible = !dpGainEditorContainer.visible
                 }
             }
         }
@@ -608,7 +619,6 @@ Item {
                     Layout.fillWidth: true
                 }
                 QGCButton {
-                    id: setupIcon
                     text: "Gain"
                     onClicked: dpGainEditorContainer.visible = !dpGainEditorContainer.visible
                 }
@@ -717,7 +727,7 @@ Item {
             }
 
             RowLayout {
-                visible: dpMode.isPresse
+                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     id: dpSurgePGainText
                     text: "dp_surge_pgain"
@@ -734,7 +744,7 @@ Item {
                 }
             }
             RowLayout {
-                visible: dpMode.isPresse
+                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     text: "dp_surge_dgain"
                     font.pointSize: 10
@@ -749,7 +759,7 @@ Item {
                 }
             }
             RowLayout {
-                visible: dpMode.isPresse
+                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     text: "dp_sway_pgain"
                     font.pointSize: 10
@@ -764,9 +774,9 @@ Item {
                 }
             }
             RowLayout {
-                visible: dpMode.isPresse
+                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
-                    text: "dp_sway_dgain"
+                    text: "dp_sway_dgain" 
                     font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
@@ -779,7 +789,7 @@ Item {
                 }
             }
             RowLayout {
-                visible: dpMode.isPresse
+                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     text: "dp_yaw_pgain"
                     font.pointSize: 10
@@ -795,7 +805,7 @@ Item {
                 }
             }
             RowLayout {
-                visible: dpMode.isPressed 
+                visible: dpMode.isPressed && !dpMode.isPresse
                 Text {
                     text: "dp_yaw_pgain"
                     font.pointSize: 10
