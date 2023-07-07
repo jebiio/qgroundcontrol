@@ -23,6 +23,7 @@ public:
     TrajectoryPoints(Vehicle* vehicle, QObject* parent = nullptr);
 
     Q_INVOKABLE QVariantList list(void) const { return _points; }
+    Q_INVOKABLE void clearWaypoints(void);
 
     void start  (void);
     void stop   (void);
