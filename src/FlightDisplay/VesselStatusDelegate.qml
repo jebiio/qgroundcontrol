@@ -25,6 +25,8 @@ Column {
     anchors.margins: ScreenTools.defaultFontPixelWidth
     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
+    property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle : QGroundControl.multiVehicleManager.offlineEditingVehicle
+
     Text {
         id: sailing_mode
         color : "white"
@@ -52,6 +54,7 @@ Column {
             heightFactor:   0.3333
             width: setupbtn.width
             Layout.alignment:   Qt.AlignHCenter
+            onClicked:  _activeVehicle.kriso_sendLogCommand()
         }
     }
 }

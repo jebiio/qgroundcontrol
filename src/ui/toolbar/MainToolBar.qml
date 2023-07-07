@@ -122,7 +122,7 @@ Rectangle {
         QGCButtonRed {
             id:                 emergencyStop
             text:               "Emergency Stop"
-            onClicked:          _activeVehicle.sendEmergencyCommand()
+            onClicked:          _activeVehicle.kriso_sendEmergencyCommand()
             visible:            _activeVehicle && currentToolbar === flyViewToolbar
         }
 
