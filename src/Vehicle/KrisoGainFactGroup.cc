@@ -24,7 +24,7 @@ const char* KrisoGainFactGroup::_nav_yaw_dgainFactName   = "nav_yaw_dgain";
 
 
 KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
-    : FactGroup(1000, ":/json/Vehicle/KrisoGainFactGroup.json", parent)
+    : FactGroup(1000, ":/json/Vehicle/KrisoGainFact.json", parent)
     , _dp_surge_pgain                 (0, _dp_surge_pgainFactName,                FactMetaData::valueTypeFloat)
     , _dp_surge_dgain                 (0, _dp_surge_dgainFactName,                FactMetaData::valueTypeFloat)
     , _dp_sway_pgain                  (0, _dp_sway_pgainFactName,                FactMetaData::valueTypeFloat)
