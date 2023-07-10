@@ -98,6 +98,7 @@ const char* Vehicle::_throttlePctFactName =         "throttlePct";
 
 const char* Vehicle::_krisoStatusFactGroupName =        "kriso";
 const char* Vehicle::_krisoVoltageStatusFactGroupName = "krisoVoltage";
+const char* Vehicle::_krisoGainFactGroupName = "krisoGain";
 const char* Vehicle::_gpsFactGroupName =                "gps";
 const char* Vehicle::_gps2FactGroupName =               "gps2";
 const char* Vehicle::_windFactGroupName =               "wind";
@@ -175,6 +176,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _terrainProtocolHandler       (new TerrainProtocolHandler(this, &_terrainFactGroup, this))
     , _krisoStatusFactGroup         (this)
     , _krisoVoltageStatusFactGroup  (this)
+    , _krisoGainFactGroup           (this)
 {
     _linkManager = _toolbox->linkManager();
 
@@ -325,6 +327,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _localPositionSetpointFactGroup   (this)
     , _krisoStatusFactGroup             (this)
     , _krisoVoltageStatusFactGroup      (this)
+    , _krisoGainFactGroup           (this)
 {
     _linkManager = _toolbox->linkManager();
 
@@ -442,6 +445,7 @@ void Vehicle::_commonInit()
     _hobbsFact.setRawValue(QVariant(QString("0000:00:00")));
     _addFact(&_hobbsFact,               _hobbsFactName);
 
+    _addFactGroup(&_krisoGainFactGroup,         _krisoGainFactGroupName);
     _addFactGroup(&_krisoStatusFactGroup,       _krisoStatusFactGroupName);
     _addFactGroup(&_krisoVoltageStatusFactGroup,_krisoVoltageStatusFactGroupName);
     _addFactGroup(&_gpsFactGroup,               _gpsFactGroupName);
@@ -2139,10 +2143,10 @@ void Vehicle::kriso_sendHDGCommand(float speed, float degree)
                                             &message,
                                             speed,           // speed command
                                             degree,          // HDG command (degree)
-                                            1.2,            // surge p gain
-                                            1.3,            // surge d gain
-                                            1.4,            // yaw p gain
-                                            1.5             // yaw d gain
+                                            _krisoGainFactGroup.getFact("nav_surge_pgain")->rawValue().toFloat(),            // surge p gain
+                                            _krisoGainFactGroup.getFact("nav_surge_dgain")->rawValue().toFloat(),            // surge d gain
+                                            _krisoGainFactGroup.getFact("nav_yaw_pgain")->rawValue().toFloat(),            // yaw p gain
+                                            _krisoGainFactGroup.getFact("nav_yaw_dgain")->rawValue().toFloat()             // yaw d gain
                                             );
 
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
@@ -2191,6 +2195,11 @@ void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
     }
 
 
+}
+
+void Vehicle::kriso_hdgGainSave(float surgeP, float surgeD, float yawP, float yawD)
+{
+    _krisoGainFactGroup.updateHDGFact(surgeP, surgeD, yawP, yawD);
 }
 
 void Vehicle::kriso_sendLogCommand(void)

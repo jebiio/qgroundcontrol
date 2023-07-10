@@ -48,6 +48,7 @@
 #include "ImageProtocolManager.h"
 #include "KrisoStatusFactGroup.h"
 #include "KrisoVoltageStatusFactGroup.h"
+#include "KrisoGainFactGroup.h"
 
 
 class Actuators;
@@ -310,8 +311,9 @@ public:
     Q_PROPERTY(Fact* hobbs              READ hobbs              CONSTANT)
     Q_PROPERTY(Fact* throttlePct        READ throttlePct        CONSTANT)
 
-    Q_PROPERTY(FactGroup*           kriso           READ krisoStatusFactGroup       CONSTANT)
+    Q_PROPERTY(FactGroup*           kriso           READ krisoStatusFactGroup           CONSTANT)
     Q_PROPERTY(FactGroup*           krisoVoltage    READ krisoVoltageStatusFactGroup    CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoGain       READ krisoGainFactGroup         CONSTANT)
     Q_PROPERTY(FactGroup*           gps             READ gpsFactGroup               CONSTANT)
     Q_PROPERTY(FactGroup*           gps2            READ gps2FactGroup              CONSTANT)
     Q_PROPERTY(FactGroup*           wind            READ windFactGroup              CONSTANT)
@@ -433,6 +435,7 @@ public:
     Q_INVOKABLE void kriso_sendHDGCommand           (float speed, float degree);
     Q_INVOKABLE void kriso_sendDPCommand            (double lat, double lon, float yaw);
     Q_INVOKABLE void kriso_sendLogCommand           ();
+    Q_INVOKABLE void kriso_hdgGainSave              (float surgeP, float surgeD, float yawP, float yawD);
 
     /// Sends PARAM_MAP_RC message to vehicle
     Q_INVOKABLE void sendParamMapRC(const QString& paramName, double scale, double centerValue, int tuningID, double minValue, double maxValue);
@@ -670,6 +673,7 @@ public:
 
     FactGroup* krisoStatusFactGroup         () { return &_krisoStatusFactGroup; }
     FactGroup* krisoVoltageStatusFactGroup  () { return &_krisoVoltageStatusFactGroup; }
+    FactGroup* krisoGainFactGroup           () { return &_krisoGainFactGroup; }
     FactGroup* gpsFactGroup                 () { return &_gpsFactGroup; }
     FactGroup* gps2FactGroup                () { return &_gps2FactGroup; }
     FactGroup* windFactGroup                () { return &_windFactGroup; }
@@ -1355,6 +1359,7 @@ private:
 
     KrisoStatusFactGroup                  _krisoStatusFactGroup;
     KrisoVoltageStatusFactGroup           _krisoVoltageStatusFactGroup;
+    KrisoGainFactGroup                    _krisoGainFactGroup;
 
     MissionManager*                 _missionManager             = nullptr;
     GeoFenceManager*                _geoFenceManager            = nullptr;
@@ -1392,6 +1397,7 @@ private:
 
     static const char* _krisoStatusFactGroupName;
     static const char* _krisoVoltageStatusFactGroupName;
+    static const char* _krisoGainFactGroupName;
     static const char* _gpsFactGroupName;
     static const char* _gps2FactGroupName;
     static const char* _windFactGroupName;

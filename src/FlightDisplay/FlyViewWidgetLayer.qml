@@ -713,6 +713,12 @@ Item {
                 QGCButton {
                     text: "Save"
                     onClicked: {
+                        _activeVehicle.kriso_hdgGainSave(
+                            parseFloat(navSurgePGainInput.text), 
+                            parseFloat(navSurgeDGainInput.text), 
+                            parseFloat(navYawPGainInput.text), 
+                            parseFloat(navYawDGainInput.text)
+                        );
                         // Save logic goes here
                         dpGainEditorContainer.visible = false
                     }
@@ -726,6 +732,7 @@ Item {
                 width: mainColumn.width
             }
 
+            // ===============================  hdg mode ====================================
             RowLayout {
                 visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
@@ -753,6 +760,7 @@ Item {
                     
                 }
                 TextField {
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -768,6 +776,7 @@ Item {
                     
                 }
                 TextField {
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -783,6 +792,7 @@ Item {
                     
                 }
                 TextField {
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -798,6 +808,7 @@ Item {
                     
                 }
                 TextField {
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -831,6 +842,7 @@ Item {
                     
                 }
                 TextField {
+                    id: navSurgePGainInput
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -847,6 +859,7 @@ Item {
                     
                 }
                 TextField {
+                    id: navSurgeDGainInput
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -863,6 +876,7 @@ Item {
                     
                 }
                 TextField {
+                    id: navYawPGainInput
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -879,6 +893,7 @@ Item {
                     
                 }
                 TextField {
+                    id: navYawDGainInput
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
