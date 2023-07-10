@@ -582,9 +582,11 @@ Item {
                     Layout.fillWidth: true
                 }
                 QGCButton {
-                    id: setupIcon
+                    id: hdgGainButton
                     text: "Gain"
-                    onClicked: dpGainEditorContainer.visible = !dpGainEditorContainer.visible
+                    onClicked: {            
+                        hdgGainEditorContainer.visible = !hdgGainEditorContainer.visible;
+                        dpGainEditorContainer.visible = false;}
                 }
             }
         }
@@ -619,8 +621,12 @@ Item {
                     Layout.fillWidth: true
                 }
                 QGCButton {
+                    id : dpGainButton
                     text: "Gain"
-                    onClicked: dpGainEditorContainer.visible = !dpGainEditorContainer.visible
+                    onClicked: {
+                        dpGainEditorContainer.visible = !dpGainEditorContainer.visible;
+                        hdgGainEditorContainer.visible = false;
+                    }
                 }
             }
 
@@ -684,20 +690,20 @@ Item {
         anchors.left: dpmodeContainer.right
         anchors.margins: 10
         width: 320
-        height: mainColumn.height + 2*padding
+        height: dpMainColumn.height + 2*padding
         visible: false
 
 
         property real padding: 10 
 
         Column {
-            id: mainColumn
+            id: dpMainColumn
             width: dpGainEditorContainer.width - 2*padding
             spacing: 5
             padding: 10
 
             RowLayout {
-                width: mainColumn.width
+                width: dpMainColumn.width
                 Text {
                     text: "Gain Editor"
                     font.pointSize: 12
@@ -714,8 +720,10 @@ Item {
                     text: "Save"
                     onClicked: {
                         _activeVehicle.kriso_hdgGainSave(
-                            parseFloat(navSurgePGainInput.text), 
+                            parseFloat(dpSurgePGainInput.text), 
                             parseFloat(navSurgeDGainInput.text), 
+                            parseFloat(navYawPGainInput.text), 
+                            parseFloat(navYawDGainInput.text),
                             parseFloat(navYawPGainInput.text), 
                             parseFloat(navYawDGainInput.text)
                         );
@@ -729,10 +737,10 @@ Item {
             Rectangle {
                 color: "gray"
                 height: 1
-                width: mainColumn.width
+                width: dpMainColumn.width
             }
 
-            // ===============================  hdg mode ====================================
+            // ===============================  dp mode ====================================
             RowLayout {
                 visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
@@ -746,6 +754,7 @@ Item {
                 TextField {
                     id: dpSurgePGainInput
                     placeholderText: "Enter value"
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
                     font.pointSize: 10
                     width: parent.width * 0.5
                 }
@@ -760,7 +769,8 @@ Item {
                     
                 }
                 TextField {
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_pgain").rawValue.toFixed(2)
+                    id: dpSurgeDGainInput
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -776,7 +786,8 @@ Item {
                     
                 }
                 TextField {
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_dgain").rawValue.toFixed(2)
+                    id: dpSwayPGainInput
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -792,7 +803,8 @@ Item {
                     
                 }
                 TextField {
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_pgain").rawValue.toFixed(2)
+                    id: dpSwayDGainInput
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -808,7 +820,8 @@ Item {
                     
                 }
                 TextField {
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_dgain").rawValue.toFixed(2)
+                    id: dpYawPGainInput
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -818,20 +831,80 @@ Item {
             RowLayout {
                 visible: dpMode.isPressed && !dpMode.isPresse
                 Text {
-                    text: "dp_yaw_pgain"
+                    text: "dp_yaw_dgain"
                     font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
                 }
                 TextField {
+                    id: dpYawDGainInput
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
 
                 }
             }
-            // ========================== dp command ======================
+        }
+    }
+
+    Rectangle {
+        id: hdgGainEditorContainer
+        color: "white"
+        radius: 10
+        anchors.top: toolStrip.bottom
+        anchors.left: dpmodeContainer.right
+        anchors.margins: 10
+        width: 320
+        height: hdgMainColumn.height + 2*padding
+        visible: false
+
+
+        property real padding: 10 
+
+        Column {
+            id: hdgMainColumn
+            width: hdgGainEditorContainer.width - 2*padding
+            spacing: 5
+            padding: 10
+
+            RowLayout {
+                width: hdgMainColumn.width
+                Text {
+                    text: "Gain Editor"
+                    font.pointSize: 12
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                QGCButton {
+                    text: "Cancel"
+                    onClicked: hdgGainEditorContainer.visible = false
+                    font.pointSize: 10
+                }
+                QGCButton {
+                    text: "Save"
+                    onClicked: {
+                        _activeVehicle.kriso_hdgGainSave(
+                            parseFloat(navSurgePGainInput.text), 
+                            parseFloat(navSurgeDGainInput.text), 
+                            parseFloat(navYawPGainInput.text), 
+                            parseFloat(navYawDGainInput.text)
+                        );
+                        // Save logic goes here
+                        hdgGainEditorContainer.visible = false
+                    }
+                    font.pointSize: 10
+                }
+            }
+
+            Rectangle {
+                color: "gray"
+                height: 1
+                width: hdgMainColumn.width
+            }
+
             RowLayout {
                 visible: hdgMode.isPressed 
                 Text {
@@ -902,4 +975,5 @@ Item {
             }
         }
     }
+
 }
