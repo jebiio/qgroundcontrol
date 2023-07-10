@@ -494,8 +494,10 @@ Item {
                         if(isPressed) {
                             hdgcontainer.visible = true;
                             dpMode.isPressed = false;
+                            dpGainEditorContainer.visible = false;
                         } else {
                             hdgcontainer.visible = false;
+                            hdgGainEditorContainer.visible = false;
                         }
                     }
                 }
@@ -507,8 +509,10 @@ Item {
                         if(isPressed) {
                             dpmodeContainer.visible = true;
                             hdgMode.isPressed = false;
+                            hdgGainEditorContainer.visible = false;
                         } else {
                             dpmodeContainer.visible = false;
+                            dpGainEditorContainer.visible = false;
                         }
                     }
                 }
@@ -584,9 +588,11 @@ Item {
                 QGCButton {
                     id: hdgGainButton
                     text: "Gain"
-                    onClicked: {            
+                    onClicked: {
+                        if (hdgMode.isPressed) {            
                         hdgGainEditorContainer.visible = !hdgGainEditorContainer.visible;
                         dpGainEditorContainer.visible = false;}
+                    }
                 }
             }
         }
@@ -624,8 +630,10 @@ Item {
                     id : dpGainButton
                     text: "Gain"
                     onClicked: {
-                        dpGainEditorContainer.visible = !dpGainEditorContainer.visible;
-                        hdgGainEditorContainer.visible = false;
+                        if (dpMode.isPressed){
+                            dpGainEditorContainer.visible = !dpGainEditorContainer.visible;
+                            hdgGainEditorContainer.visible = false;
+                        }
                     }
                 }
             }
@@ -674,9 +682,6 @@ Item {
                 text: "명령전송"
                 onClicked: {
                     _activeVehicle.kriso_sendDPCommand(parseFloat(dpLatInput.text), parseFloat(dpLonInput.text), parseFloat(dpYawInput.text))
-                    dpLatInput.text = "";
-                    dpLonInput.text = "";
-                    dpYawInput.text = "";
                 }
             }
         }
@@ -692,6 +697,7 @@ Item {
         width: 320
         height: dpMainColumn.height + 2*padding
         visible: false
+        // visible: dpMode.isPressed && !hdgMode.isPressed
 
 
         property real padding: 10 
@@ -742,7 +748,6 @@ Item {
 
             // ===============================  dp mode ====================================
             RowLayout {
-                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     id: dpSurgePGainText
                     text: "dp_surge_pgain"
@@ -754,13 +759,12 @@ Item {
                 TextField {
                     id: dpSurgePGainInput
                     placeholderText: "Enter value"
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
+                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
                     font.pointSize: 10
                     width: parent.width * 0.5
                 }
             }
             RowLayout {
-                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     text: "dp_surge_dgain"
                     font.pointSize: 10
@@ -770,14 +774,13 @@ Item {
                 }
                 TextField {
                     id: dpSurgeDGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_dgain").rawValue.toFixed(2)
+                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
                 }
             }
             RowLayout {
-                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     text: "dp_sway_pgain"
                     font.pointSize: 10
@@ -787,14 +790,13 @@ Item {
                 }
                 TextField {
                     id: dpSwayPGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_pgain").rawValue.toFixed(2)
+                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
                 }
             }
             RowLayout {
-                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     text: "dp_sway_dgain" 
                     font.pointSize: 10
@@ -804,14 +806,13 @@ Item {
                 }
                 TextField {
                     id: dpSwayDGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_dgain").rawValue.toFixed(2)
+                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
                 }
             }
             RowLayout {
-                visible: dpMode.isPressed && !hdgMode.isPressed
                 Text {
                     text: "dp_yaw_pgain"
                     font.pointSize: 10
@@ -821,7 +822,7 @@ Item {
                 }
                 TextField {
                     id: dpYawPGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_pgain").rawValue.toFixed(2)
+                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -829,7 +830,6 @@ Item {
                 }
             }
             RowLayout {
-                visible: dpMode.isPressed && !dpMode.isPresse
                 Text {
                     text: "dp_yaw_dgain"
                     font.pointSize: 10
@@ -839,7 +839,7 @@ Item {
                 }
                 TextField {
                     id: dpYawDGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_dgain").rawValue.toFixed(2)
+                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -859,6 +859,7 @@ Item {
         width: 320
         height: hdgMainColumn.height + 2*padding
         visible: false
+        // visible: !dpMode.isPressed && hdgMode.isPressed
 
 
         property real padding: 10 
@@ -906,7 +907,6 @@ Item {
             }
 
             RowLayout {
-                visible: hdgMode.isPressed 
                 Text {
                     text: "nav_surge_pgain"
                     font.pointSize: 10
@@ -923,7 +923,6 @@ Item {
                 }
             }
             RowLayout {
-                visible: hdgMode.isPressed 
                 Text {
                     text: "nav_surge_dgain"
                     font.pointSize: 10
@@ -940,7 +939,6 @@ Item {
                 }
             }
             RowLayout {
-                visible: hdgMode.isPressed 
                 Text {
                     text: "nav_yaw_pgain"
                     font.pointSize: 10
@@ -957,7 +955,6 @@ Item {
                 }
             }
             RowLayout {
-                visible: hdgMode.isPressed 
                 Text {
                     text: "nav_yaw_dgain"
                     font.pointSize: 10
