@@ -725,13 +725,13 @@ Item {
                 QGCButton {
                     text: "Save"
                     onClicked: {
-                        _activeVehicle.kriso_hdgGainSave(
+                        _activeVehicle.kriso_dpGainSave(
                             parseFloat(dpSurgePGainInput.text), 
-                            parseFloat(navSurgeDGainInput.text), 
-                            parseFloat(navYawPGainInput.text), 
-                            parseFloat(navYawDGainInput.text),
-                            parseFloat(navYawPGainInput.text), 
-                            parseFloat(navYawDGainInput.text)
+                            parseFloat(dpSurgeDGainInput.text), 
+                            parseFloat(dpSwayPGainInput.text), 
+                            parseFloat(dpSwayDGainInput.text),
+                            parseFloat(dpYawPGainInput.text), 
+                            parseFloat(dpYawDGainInput.text)
                         );
                         // Save logic goes here
                         dpGainEditorContainer.visible = false

@@ -2180,12 +2180,12 @@ void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
                                             lat,        // target lat 
                                             lon,        // target lon
                                             yaw,        // target position yaw
-                                            1.3,        // surge P for dp
-                                            1.4,        // surge D for dp
-                                            1.5,        // Sway P for dp
-                                            1.6,        // Sway D for dp
-                                            1.7,        // yaw pgain for dp
-                                            1.8         // yaw dgain for dp
+                                            _krisoGainFactGroup.getFact("dp_surge_pgain")->rawValue().toFloat(),        // surge P for dp
+                                            _krisoGainFactGroup.getFact("dp_surge_dgain")->rawValue().toFloat(),        // surge D for dp
+                                            _krisoGainFactGroup.getFact("dp_sway_pgain")->rawValue().toFloat(),        // Sway P for dp
+                                            _krisoGainFactGroup.getFact("dp_sway_dgain")->rawValue().toFloat(),         // Sway D for dp
+                                            _krisoGainFactGroup.getFact("dp_yaw_pgain")->rawValue().toFloat(),         // yaw pgain for dp
+                                            _krisoGainFactGroup.getFact("dp_yaw_dgain")->rawValue().toFloat()          // yaw dgain for dp
                                             );
 
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
