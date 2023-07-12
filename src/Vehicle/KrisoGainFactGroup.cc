@@ -6,7 +6,7 @@
  * COPYING.md in the root of the source code directory.
  *
  ****************************************************************************/
-
+#include <QGeoCoordinate>
 #include "KrisoGainFactGroup.h"
 #include "Vehicle.h"
 #include "QGCGeo.h"
@@ -21,6 +21,8 @@ const char* KrisoGainFactGroup::_nav_surge_pgainFactName = "nav_surge_pgain";
 const char* KrisoGainFactGroup::_nav_surge_dgainFactName = "nav_surge_dgain";
 const char* KrisoGainFactGroup::_nav_yaw_pgainFactName   = "nav_yaw_pgain";  
 const char* KrisoGainFactGroup::_nav_yaw_dgainFactName   = "nav_yaw_dgain";  
+const char* KrisoGainFactGroup::_latFactName =                 "lat";  
+const char* KrisoGainFactGroup::_lonFactName =                 "lon";  
 
 
 KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
@@ -35,6 +37,8 @@ KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
     , _nav_surge_dgain                (0, _nav_surge_dgainFactName,                FactMetaData::valueTypeFloat)
     , _nav_yaw_pgain                  (0, _nav_yaw_pgainFactName,                FactMetaData::valueTypeFloat)
     , _nav_yaw_dgain                  (0, _nav_yaw_dgainFactName,           FactMetaData::valueTypeFloat)
+    , _lat                            (0, _latFactName,               FactMetaData::valueTypeDouble)
+    , _lon                            (0, _lonFactName,               FactMetaData::valueTypeDouble)
     
 
 {
@@ -48,6 +52,8 @@ KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
     _addFact(&_nav_surge_dgain,     _nav_surge_dgainFactName);
     _addFact(&_nav_yaw_pgain,       _nav_yaw_pgainFactName);
     _addFact(&_nav_yaw_dgain,       _nav_yaw_dgainFactName);
+    _addFact(&_lat,                 _latFactName);
+    _addFact(&_lon,                 _lonFactName);
 
     _dp_surge_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _dp_surge_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
@@ -59,7 +65,17 @@ KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
     _nav_surge_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _nav_yaw_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
     _nav_yaw_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    _lat.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    _lon.setRawValue(std::numeric_limits<float>::quiet_NaN());
 
+}
+
+void KrisoGainFactGroup::updateDPCoordinateFact(QGeoCoordinate clickedCoordindate)
+{
+    double dp_lat = clickedCoordindate.latitude();
+    double dp_lon = clickedCoordindate.longitude();
+    lat()->setRawValue              (dp_lat);
+    lon()->setRawValue              (dp_lon);
 }
 
 

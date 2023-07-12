@@ -72,6 +72,20 @@
     "type":             "float",
     "decimalPlaces":        2,
     "default":              null
+},
+{
+    "name":             "lat",
+    "shortDesc":        "lat",
+    "type":             "double",
+    "decimalPlaces":        7,
+    "default":              null
+},
+{
+    "name":             "lon",
+    "shortDesc": "lon",
+    "type":             "double",
+    "decimalPlaces":        7,
+    "default":              null
 }
 
 ]

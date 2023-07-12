@@ -2197,6 +2197,11 @@ void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
 
 }
 
+void Vehicle::kriso_dpClickedLocation(QGeoCoordinate clickedLocation)
+{
+    _krisoGainFactGroup.updateDPCoordinateFact(clickedLocation);
+}
+
 void Vehicle::kriso_dpGainSave(float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD)
 {
     _krisoGainFactGroup.updateDPFact(surgeP, surgeD, swayP, swayD, yawP, yawD);

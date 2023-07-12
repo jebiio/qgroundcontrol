@@ -648,6 +648,7 @@ Item {
                 }
                 QGCTextField {
                     id: dpLatInput
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("lat").rawValue.toFixed(7)
                     placeholderText: "위도 입력"
                 }
             }
@@ -661,6 +662,7 @@ Item {
                 }
                 QGCTextField {
                     id: dpLonInput
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("lon").rawValue.toFixed(7)
                     placeholderText: "경도 입력"
                 }
             }

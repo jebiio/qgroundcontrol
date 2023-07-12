@@ -599,11 +599,12 @@ FlightMap {
             property var coord
             QGCMenuItem {
                 text:           qsTr("Go to location")
-                visible:        globals.guidedControllerFlyView.showGotoLocation
+                visible:        globals.guidedControllerFlyView.showGotoLocation 
 
                 onTriggered: {
                     gotoLocationItem.show(clickMenu.coord)
                     globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionGoto, clickMenu.coord, gotoLocationItem)
+                    _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
                 }
             }
             QGCMenuItem {
@@ -633,6 +634,7 @@ FlightMap {
                 var clickCoord = _root.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
                 clickMenu.coord = clickCoord
                 clickMenu.popup()
+                // _activeVehicle.updateDPCoordinateFact(coord.latitude(), coord.longitude());
             }
         }
     }
