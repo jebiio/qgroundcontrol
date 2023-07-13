@@ -447,7 +447,7 @@ FlightMap {
         sourceItem: MissionItemIndexLabel {
             checked:    true
             index:      -1
-            label:      qsTr("Go here", "Go to location waypoint")
+            label:      qsTr("DP here", "Go to location waypoint")
         }
 
         property bool inGotoFlightMode: _activeVehicle ? _activeVehicle.flightMode === _activeVehicle.gotoFlightMode : false
@@ -604,7 +604,7 @@ FlightMap {
                 onTriggered: {
                     gotoLocationItem.show(clickMenu.coord)
                     globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionGoto, clickMenu.coord, gotoLocationItem)
-                    _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
+                    // _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
                 }
             }
             QGCMenuItem {
@@ -628,12 +628,14 @@ FlightMap {
         }
 
         onClicked: {
-            if (!globals.guidedControllerFlyView.guidedUIVisible && (globals.guidedControllerFlyView.showGotoLocation || globals.guidedControllerFlyView.showOrbit || globals.guidedControllerFlyView.showROI)) {
+            if (!globals.guidedControllerFlyView.guidedUIVisible && _activeVehicle.dpButton) {
                 orbitMapCircle.hide()
                 gotoLocationItem.hide()
                 var clickCoord = _root.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
                 clickMenu.coord = clickCoord
-                clickMenu.popup()
+                // clickMenu.popup()
+                gotoLocationItem.show(clickMenu.coord)
+                _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
                 // _activeVehicle.updateDPCoordinateFact(coord.latitude(), coord.longitude());
             }
         }
