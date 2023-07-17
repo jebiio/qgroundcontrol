@@ -484,7 +484,16 @@ Item {
                     id: wpMode
                     text: "WP"
                     enabled: !manualMode.isPressed
-                    onIsPressedChanged: mainWindow.showPlanView()
+                    onIsPressedChanged: {
+                        if(isPressed){
+                            wpcontainer.visible = true;
+                            dpMode.isPressed = false;
+                            dpGainEditorContainer.visible = false;
+                            hdgcontainer.visible = false
+                        }else {
+                            wpcontainer.visible = false;
+                        }
+                    }
                 }
                 KrisoRadioButton {
                     id: hdgMode
@@ -520,7 +529,38 @@ Item {
         }
     }
 
-    
+    Rectangle {
+        id: wpcontainer
+        color: "white"
+        radius: 10
+        anchors.top : container.bottom
+        anchors.left: parent.left
+        anchors.margins: 10
+        visible: false
+
+        implicitWidth: rightPanel.width + padding * 2
+        implicitHeight: wpColumn.height + padding * 2
+
+        property real padding: 10
+
+        Row {
+            id: wpColumn
+            anchors.centerIn: parent
+            spacing: 10
+
+            QGCButton {
+                text: "계획생성"
+                onClicked: mainWindow.showPlanView()
+            }
+
+            QGCButton {
+                text: "운행시작"
+            }
+        }
+
+
+    } 
+
     Rectangle {
         id: hdgcontainer
         color: "white"
