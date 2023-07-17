@@ -17,6 +17,12 @@ TrajectoryPoints::TrajectoryPoints(Vehicle* vehicle, QObject* parent)
 {
 }
 
+void TrajectoryPoints::clearWaypoints(void)
+{
+    // vehicle의 모든 waypoints를 지운다.
+    _points.clear();
+}
+
 void TrajectoryPoints::_vehicleCoordinateChanged(QGeoCoordinate coordinate)
 {
     // The goal of this algorithm is to limit the number of trajectory points whic represent the vehicle path.
@@ -69,3 +75,4 @@ void TrajectoryPoints::clear(void)
     _lastAzimuth = qQNaN();
     emit pointsCleared();
 }
+

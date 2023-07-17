@@ -1,0 +1,92 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "dp_surge_pgain",
+    "shortDesc": "dp_surge_pgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "dp_surge_dgain",
+    "shortDesc": "dp_surge_dgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "dp_sway_pgain",
+    "shortDesc": "dp_sway_pgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "dp_sway_dgain",
+    "shortDesc": "dp_sway_dgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "dp_yaw_pgain",
+    "shortDesc": "dp_yaw_pgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "dp_yaw_dgain",
+    "shortDesc": "dp_yaw_dgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_surge_pgain",
+    "shortDesc": "nav_surge_pgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_surge_dgain",
+    "shortDesc": "nav_surge_dgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_yaw_pgain",
+    "shortDesc": "nav_yaw_pgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_yaw_dgain",
+    "shortDesc": "nav_yaw_dgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "lat",
+    "shortDesc":        "lat",
+    "type":             "double",
+    "decimalPlaces":        7,
+    "default":              null
+},
+{
+    "name":             "lon",
+    "shortDesc": "lon",
+    "type":             "double",
+    "decimalPlaces":        7,
+    "default":              null
+}
+
+]
+}

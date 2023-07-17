@@ -54,7 +54,7 @@ Column{
 
             Repeater {
                 model   :       _activeVehicle.getFactGroup("krisoVoltage").factNames
-                property Fact fact : _activeVehicle.getFactGroup("krisoVoltage").getFact(modelData)
+                // property Fact fact : _activeVehicle.getFactGroup("krisoVoltage").getFact(modelData)
                 
                 // modelData ==> name 
                 Text{text: _activeVehicle.getFactGroup("krisoVoltage").getFact(modelData).rawValue.toFixed(2) } 
