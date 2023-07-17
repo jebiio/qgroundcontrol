@@ -262,7 +262,7 @@ public:
     Q_PROPERTY(bool                 initialConnectComplete      READ isInitialConnectComplete                                       NOTIFY initialConnectComplete)
     Q_PROPERTY(bool                 trajectoryVisible           READ trajectoryVisible            WRITE setTrajectoryVisible        NOTIFY trajectoryVisibleChanged)
     // Q_PROPERTY(bool                 krisoEmergencyStop          READ krisoEmergencyStop           WRITE setKrisoEmergencyStop       NOTIFY krisoEmergencyStopChanged) jaeeun
-    Q_PROPERTY(bool                 dpButton                    READ dpButton                     WRITE setDpButton                 NOTIFY dpButtonChanged)
+    Q_PROPERTY(bool                 isKrisoDPClickableLayer     READ isKrisoDPClickableLayer    WRITE setIsKrisoDPClickableLayer    NOTIFY isKrisoDPClickableLayerChanged)
 
 
 
@@ -622,7 +622,7 @@ public:
     bool            hilMode                     () const { return _base_mode & MAV_MODE_FLAG_HIL_ENABLED; }
     Actuators*      actuators                   () const { return _actuators; }
     bool            trajectoryVisible           () const{ return _trajectoryVisible; }
-    bool            dpButton                    () const { return _dpButton; }
+    bool            isKrisoDPClickableLayer                    () const { return _isKrisoDPClickableLayer; }
 
 
     /// Get the maximum MAVLink protocol version supported
@@ -867,7 +867,7 @@ public slots:
     void _offlineFirmwareTypeSettingChanged (QVariant varFirmwareType); // Should only be used by MissionControler to set firmware from Plan file
     void _offlineVehicleTypeSettingChanged  (QVariant varVehicleType);  // Should only be used by MissionController to set vehicle type from Plan file
     void setTrajectoryVisible               (bool trajectoryVisible);
-    void setDpButton                        (bool dpButton);
+    void setIsKrisoDPClickableLayer         (bool isKrisoDPClickableLayer);
 
 
 signals:
@@ -976,7 +976,7 @@ signals:
 
     void sensorsParametersResetAck      (bool success);
     void trajectoryVisibleChanged       (bool trajectoryVisible);
-    void dpButtonChanged                (bool dpButton);
+    void isKrisoDPClickableLayerChanged                (bool isKrisoDPClickableLayer);
     // void krisoEmergencyStopChanged      (); jaeeun
 private slots:
     void _mavlinkMessageReceived            (LinkInterface* link, mavlink_message_t message);
@@ -1137,7 +1137,7 @@ private:
     bool            _readyToFly                             = false;
     bool            _allSensorsHealthy                      = true;
     bool            _trajectoryVisible                      = true;
-    bool            _dpButton                               = false;
+    bool            _isKrisoDPClickableLayer                = false;
 
     SysStatusSensorInfo _sysStatusSensorInfo;
 

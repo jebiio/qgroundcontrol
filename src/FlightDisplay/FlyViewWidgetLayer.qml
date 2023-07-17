@@ -690,7 +690,7 @@ Item {
                     id : coordinateButton
                     text: "좌표선택"
                     onClicked: {
-                        _activeVehicle.dpButton = !_activeVehicle.dpButton
+                        _activeVehicle.isKrisoDPClickableLayer = !_activeVehicle.isKrisoDPClickableLayer
                     }
                 }
             }

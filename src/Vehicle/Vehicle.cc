@@ -2196,10 +2196,10 @@ void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
 
 
 }
-void Vehicle::setDpButton(bool dpButton)
+void Vehicle::setIsKrisoDPClickableLayer(bool isKrisoDPClickableLayer)
 {
-    _dpButton = dpButton;
-    emit dpButtonChanged(dpButton);
+    _isKrisoDPClickableLayer = isKrisoDPClickableLayer;
+    emit isKrisoDPClickableLayerChanged(isKrisoDPClickableLayer);
 }
 
 void Vehicle::kriso_dpClickedLocation(QGeoCoordinate clickedLocation)
