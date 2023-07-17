@@ -8,70 +8,70 @@
     "shortDesc": "dp_surge_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              1
 },
 {
     "name":             "dp_surge_dgain",
     "shortDesc": "dp_surge_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              2
 },
 {
     "name":             "dp_sway_pgain",
     "shortDesc": "dp_sway_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              3
 },
 {
     "name":             "dp_sway_dgain",
     "shortDesc": "dp_sway_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              4
 },
 {
     "name":             "dp_yaw_pgain",
     "shortDesc": "dp_yaw_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              5
 },
 {
     "name":             "dp_yaw_dgain",
     "shortDesc": "dp_yaw_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              6
 },
 {
     "name":             "nav_surge_pgain",
     "shortDesc": "nav_surge_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              7
 },
 {
     "name":             "nav_surge_dgain",
     "shortDesc": "nav_surge_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              8
 },
 {
     "name":             "nav_yaw_pgain",
     "shortDesc": "nav_yaw_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              9
 },
 {
     "name":             "nav_yaw_dgain",
     "shortDesc": "nav_yaw_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              null
+    "default":              10
 },
 {
     "name":             "lat",

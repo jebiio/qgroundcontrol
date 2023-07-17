@@ -590,9 +590,13 @@ Item {
                     Layout.fillWidth: true
                 }
                 QGCButton {
-                    id: setupIcon
+                    id: hdgGainButton
                     text: "Gain"
-                    onClicked: dpGainEditorContainer.visible = !dpGainEditorContainer.visible
+                    onClicked: {
+                        if (hdgMode.isPressed) {            
+                        hdgGainEditorContainer.visible = !hdgGainEditorContainer.visible;
+                        dpGainEditorContainer.visible = false;}
+                    }
                 }
             }
 
@@ -635,15 +639,7 @@ Item {
                 Item {
                     Layout.fillWidth: true
                 }
-                QGCButton {
-                    id: hdgGainButton
-                    text: "Gain"
-                    onClicked: {
-                        if (hdgMode.isPressed) {            
-                        hdgGainEditorContainer.visible = !hdgGainEditorContainer.visible;
-                        dpGainEditorContainer.visible = false;}
-                    }
-                }
+
             }
         }
     }
@@ -818,7 +814,7 @@ Item {
                 TextField {
                     id: dpSurgePGainInput
                     placeholderText: "Enter value"
-                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
                     font.pointSize: 10
                     width: parent.width * 0.5
                 }
@@ -833,7 +829,7 @@ Item {
                 }
                 TextField {
                     id: dpSurgeDGainInput
-                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_dgain").rawValue.toFixed(2)
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -849,7 +845,7 @@ Item {
                 }
                 TextField {
                     id: dpSwayPGainInput
-                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_pgain").rawValue.toFixed(2)
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -865,7 +861,7 @@ Item {
                 }
                 TextField {
                     id: dpSwayDGainInput
-                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_dgain").rawValue.toFixed(2)
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -881,7 +877,7 @@ Item {
                 }
                 TextField {
                     id: dpYawPGainInput
-                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_pgain").rawValue.toFixed(2)
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -898,7 +894,7 @@ Item {
                 }
                 TextField {
                     id: dpYawDGainInput
-                    // text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_dgain").rawValue.toFixed(2)
+                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
                     width: parent.width * 0.5
@@ -976,6 +972,7 @@ Item {
                 TextField {
                     id: navSurgePGainInput
                     placeholderText: "Enter value"
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_pgain").rawValue.toFixed(2)
                     font.pointSize: 10
                     width: parent.width * 0.5
 
@@ -992,6 +989,7 @@ Item {
                 TextField {
                     id: navSurgeDGainInput
                     placeholderText: "Enter value"
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_dgain").rawValue.toFixed(2)
                     font.pointSize: 10
                     width: parent.width * 0.5
 
@@ -1008,6 +1006,7 @@ Item {
                 TextField {
                     id: navYawPGainInput
                     placeholderText: "Enter value"
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_pgain").rawValue.toFixed(2)
                     font.pointSize: 10
                     width: parent.width * 0.5
 
@@ -1024,6 +1023,7 @@ Item {
                 TextField {
                     id: navYawDGainInput
                     placeholderText: "Enter value"
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_dgain").rawValue.toFixed(2)
                     font.pointSize: 10
                     width: parent.width * 0.5
 

@@ -55,18 +55,18 @@ KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
     _addFact(&_lat,                 _latFactName);
     _addFact(&_lon,                 _lonFactName);
 
-    _dp_surge_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _dp_surge_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _dp_sway_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _dp_sway_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _dp_yaw_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _dp_yaw_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _nav_surge_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _nav_surge_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _nav_yaw_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _nav_yaw_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _lat.setRawValue(std::numeric_limits<float>::quiet_NaN());
-    _lon.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _dp_surge_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _dp_surge_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _dp_sway_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _dp_sway_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _dp_yaw_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _dp_yaw_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _nav_surge_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _nav_surge_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _nav_yaw_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _nav_yaw_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _lat.setRawValue(std::numeric_limits<float>::quiet_NaN());
+    // _lon.setRawValue(std::numeric_limits<float>::quiet_NaN());
 
 }
 
