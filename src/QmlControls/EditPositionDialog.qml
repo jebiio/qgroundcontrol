@@ -73,83 +73,83 @@ QGCViewDialog {
                     }
                 }
 
-                Item { width: 1; height: ScreenTools.defaultFontPixelHeight; Layout.columnSpan: 2}
+                // Item { width: 1; height: ScreenTools.defaultFontPixelHeight; Layout.columnSpan: 2}
 
-                QGCLabel {
-                    text: qsTr("Zone")
-                }
-                FactTextField {
-                    fact:               controller.zone
-                    Layout.fillWidth:   true
-                }
+                // QGCLabel {
+                //     text: qsTr("Zone")
+                // }
+                // FactTextField {
+                //     fact:               controller.zone
+                //     Layout.fillWidth:   true
+                // }
 
-                QGCLabel {
-                    text: qsTr("Hemisphere")
-                }
-                FactComboBox {
-                    fact:               controller.hemisphere
-                    indexModel:         false
-                    Layout.fillWidth:   true
-                }
+                // QGCLabel {
+                //     text: qsTr("Hemisphere")
+                // }
+                // FactComboBox {
+                //     fact:               controller.hemisphere
+                //     indexModel:         false
+                //     Layout.fillWidth:   true
+                // }
 
-                QGCLabel {
-                    text: qsTr("Easting")
-                }
-                FactTextField {
-                    fact:               controller.easting
-                    Layout.fillWidth:   true
-                }
+                // QGCLabel {
+                //     text: qsTr("Easting")
+                // }
+                // FactTextField {
+                //     fact:               controller.easting
+                //     Layout.fillWidth:   true
+                // }
 
-                QGCLabel {
-                    text: qsTr("Northing")
-                }
-                FactTextField {
-                    fact:               controller.northing
-                    Layout.fillWidth:   true
-                }
+                // QGCLabel {
+                //     text: qsTr("Northing")
+                // }
+                // FactTextField {
+                //     fact:               controller.northing
+                //     Layout.fillWidth:   true
+                // }
 
-                QGCButton {
-                    text:               qsTr("Set UTM")
-                    Layout.alignment:   Qt.AlignRight
-                    Layout.columnSpan:  2
-                    onClicked: {
-                        controller.setFromUTM()
-                        reject()
-                    }
-                }
+                // QGCButton {
+                //     text:               qsTr("Set UTM")
+                //     Layout.alignment:   Qt.AlignRight
+                //     Layout.columnSpan:  2
+                //     onClicked: {
+                //         controller.setFromUTM()
+                //         reject()
+                //     }
+                // }
 
-                Item { width: 1; height: ScreenTools.defaultFontPixelHeight; Layout.columnSpan: 2}
+                // Item { width: 1; height: ScreenTools.defaultFontPixelHeight; Layout.columnSpan: 2}
 
-                QGCLabel {
-                    text:              qsTr("MGRS")
-                }
-                FactTextField {
-                    fact:              controller.mgrs
-                    Layout.fillWidth:  true
-                }
+                // QGCLabel {
+                //     text:              qsTr("MGRS")
+                // }
+                // FactTextField {
+                //     fact:              controller.mgrs
+                //     Layout.fillWidth:  true
+                // }
 
-                QGCButton {
-                    text:              qsTr("Set MGRS")
-                    Layout.alignment:  Qt.AlignRight
-                    Layout.columnSpan: 2
-                    onClicked: {
-                        controller.setFromMGRS()
-                        reject()
-                    }
-                }
+                // QGCButton {
+                //     text:              qsTr("Set MGRS")
+                //     Layout.alignment:  Qt.AlignRight
+                //     Layout.columnSpan: 2
+                //     onClicked: {
+                //         controller.setFromMGRS()
+                //         reject()
+                //     }
+                // }
 
-                Item { width: 1; height: ScreenTools.defaultFontPixelHeight; Layout.columnSpan: 2}
+                // Item { width: 1; height: ScreenTools.defaultFontPixelHeight; Layout.columnSpan: 2}
 
-                QGCButton {
-                    text:              qsTr("Set From Vehicle Position")
-                    visible:           QGroundControl.multiVehicleManager.activeVehicle && QGroundControl.multiVehicleManager.activeVehicle.coordinate.isValid
-                    Layout.alignment:  Qt.AlignRight
-                    Layout.columnSpan: 2
-                    onClicked: {
-                        controller.setFromVehicle()
-                        reject()
-                    }
-                }
+                // QGCButton {
+                //     text:              qsTr("Set From Vehicle Position")
+                //     visible:           QGroundControl.multiVehicleManager.activeVehicle && QGroundControl.multiVehicleManager.activeVehicle.coordinate.isValid
+                //     Layout.alignment:  Qt.AlignRight
+                //     Layout.columnSpan: 2
+                //     onClicked: {
+                //         controller.setFromVehicle()
+                //         reject()
+                //     }
+                // }
             }
         } // Column
     } // QGCFlickable

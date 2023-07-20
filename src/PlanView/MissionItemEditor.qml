@@ -139,15 +139,15 @@ Rectangle {
 
                 QGCLabel { text: missionItem.commandName }
 
-                QGCColoredImage {
-                    height:             ScreenTools.defaultFontPixelWidth
-                    width:              height
-                    fillMode:           Image.PreserveAspectFit
-                    smooth:             true
-                    antialiasing:       true
-                    color:              qgcPal.text
-                    source:             "/qmlimages/arrow-down.png"
-                }
+                // QGCColoredImage {
+                //     height:             ScreenTools.defaultFontPixelWidth
+                //     width:              height
+                //     fillMode:           Image.PreserveAspectFit
+                //     smooth:             true
+                //     antialiasing:       true
+                //     color:              qgcPal.text
+                //     source:             "/qmlimages/arrow-down.png"
+                // }
             }
 
             QGCMouseArea {
