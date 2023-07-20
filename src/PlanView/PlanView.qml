@@ -664,53 +664,53 @@ Item {
                         enabled:            toolStrip._isRallyLayer ? true : _missionController.flyThroughCommandsAllowed
                         visible:            toolStrip._isRallyLayer || toolStrip._isMissionLayer
                         checkable:          true
-                    },
-                    ToolStripAction {
-                        text:               _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
-                        iconSource:         "/qmlimages/MapAddMission.svg"
-                        enabled:            !_missionController.onlyInsertTakeoffValid
-                        visible:            toolStrip._isMissionLayer && _planMasterController.controllerVehicle.roiModeSupported
-                        checkable:          !_missionController.isROIActive
-                        onCheckedChanged:   _addROIOnClick = checked
-                        onTriggered: {
-                            if (_missionController.isROIActive) {
-                                toolStrip.allAddClickBoolsOff()
-                                insertCancelROIAfterCurrent()
-                            }
-                        }
-                        property bool myAddROIOnClick: _addROIOnClick
-                        onMyAddROIOnClickChanged: checked = _addROIOnClick
-                    },
-                    ToolStripAction {
-                        text:               _singleComplexItem ? _missionController.complexMissionItemNames[0] : qsTr("Pattern")
-                        iconSource:         "/qmlimages/MapDrawShape.svg"
-                        enabled:            _missionController.flyThroughCommandsAllowed
-                        visible:            toolStrip._isMissionLayer
-                        dropPanelComponent: _singleComplexItem ? undefined : patternDropPanel
-                        onTriggered: {
-                            toolStrip.allAddClickBoolsOff()
-                            if (_singleComplexItem) {
-                                insertComplexItemAfterCurrent(_missionController.complexMissionItemNames[0])
-                            }
-                        }
-                    },
-                    ToolStripAction {
-                        text:       _planMasterController.controllerVehicle.multiRotor ? qsTr("Return") : qsTr("Land")
-                        iconSource: "/res/rtl.svg"
-                        enabled:    _missionController.isInsertLandValid
-                        visible:    toolStrip._isMissionLayer
-                        onTriggered: {
-                            toolStrip.allAddClickBoolsOff()
-                            insertLandItemAfterCurrent()
-                        }
-                    },
-                    ToolStripAction {
-                        text:               qsTr("Center")
-                        iconSource:         "/qmlimages/MapCenter.svg"
-                        enabled:            true
-                        visible:            true
-                        dropPanelComponent: centerMapDropPanel
                     }
+                    // ToolStripAction {
+                    //     text:               _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
+                    //     iconSource:         "/qmlimages/MapAddMission.svg"
+                    //     enabled:            !_missionController.onlyInsertTakeoffValid
+                    //     visible:            toolStrip._isMissionLayer && _planMasterController.controllerVehicle.roiModeSupported
+                    //     checkable:          !_missionController.isROIActive
+                    //     onCheckedChanged:   _addROIOnClick = checked
+                    //     onTriggered: {
+                    //         if (_missionController.isROIActive) {
+                    //             toolStrip.allAddClickBoolsOff()
+                    //             insertCancelROIAfterCurrent()
+                    //         }
+                    //     }
+                    //     property bool myAddROIOnClick: _addROIOnClick
+                    //     onMyAddROIOnClickChanged: checked = _addROIOnClick
+                    // },
+                    // ToolStripAction {
+                    //     text:               _singleComplexItem ? _missionController.complexMissionItemNames[0] : qsTr("Pattern")
+                    //     iconSource:         "/qmlimages/MapDrawShape.svg"
+                    //     enabled:            _missionController.flyThroughCommandsAllowed
+                    //     visible:            toolStrip._isMissionLayer
+                    //     dropPanelComponent: _singleComplexItem ? undefined : patternDropPanel
+                    //     onTriggered: {
+                    //         toolStrip.allAddClickBoolsOff()
+                    //         if (_singleComplexItem) {
+                    //             insertComplexItemAfterCurrent(_missionController.complexMissionItemNames[0])
+                    //         }
+                    //     }
+                    // },
+                    // ToolStripAction {
+                    //     text:       _planMasterController.controllerVehicle.multiRotor ? qsTr("Return") : qsTr("Land")
+                    //     iconSource: "/res/rtl.svg"
+                    //     enabled:    _missionController.isInsertLandValid
+                    //     visible:    toolStrip._isMissionLayer
+                    //     onTriggered: {
+                    //         toolStrip.allAddClickBoolsOff()
+                    //         insertLandItemAfterCurrent()
+                    //     }
+                    // },
+                    // ToolStripAction {
+                    //     text:               qsTr("Center")
+                    //     iconSource:         "/qmlimages/MapCenter.svg"
+                    //     enabled:            true
+                    //     visible:            true
+                    //     dropPanelComponent: centerMapDropPanel
+                    // }
                 ]
             }
 
@@ -814,16 +814,17 @@ Item {
                     visible:    (!planControlColapsed || !_airspaceEnabled) && QGroundControl.corePlugin.options.enablePlanViewSelector
                     Component.onCompleted: currentIndex = 0
                     QGCTabButton {
-                        text:       qsTr("Mission")
+                        text:       qsTr("WP 계획 생성")
+                        width: parent.width
                     }
-                    QGCTabButton {
-                        text:       qsTr("Fence")
-                        enabled:    _geoFenceController.supported
-                    }
-                    QGCTabButton {
-                        text:       qsTr("Rally")
-                        enabled:    _rallyPointController.supported
-                    }
+                    // QGCTabButton {
+                    //     text:       qsTr("Fence")
+                    //     enabled:    _geoFenceController.supported
+                    // }
+                    // QGCTabButton {
+                    //     text:       qsTr("Rally")
+                    //     enabled:    _rallyPointController.supported
+                    // }
                 }
             }
             //-------------------------------------------------------
@@ -901,26 +902,26 @@ Item {
             }
         }
 
-        TerrainStatus {
-            id:                 terrainStatus
-            anchors.margins:    _toolsMargin
-            anchors.leftMargin: 0
-            anchors.left:       mapScale.left
-            anchors.right:      rightPanel.left
-            anchors.bottom:     parent.bottom
-            height:             ScreenTools.defaultFontPixelHeight * 7
-            missionController:  _missionController
-            visible:            _internalVisible && _editingLayer === _layerMission && QGroundControl.corePlugin.options.showMissionStatus
+        // TerrainStatus {
+        //     id:                 terrainStatus
+        //     anchors.margins:    _toolsMargin
+        //     anchors.leftMargin: 0
+        //     anchors.left:       mapScale.left
+        //     anchors.right:      rightPanel.left
+        //     anchors.bottom:     parent.bottom
+        //     height:             ScreenTools.defaultFontPixelHeight * 7
+        //     missionController:  _missionController
+        //     visible:            _internalVisible && _editingLayer === _layerMission && QGroundControl.corePlugin.options.showMissionStatus
 
-            onSetCurrentSeqNum: _missionController.setCurrentPlanViewSeqNum(seqNum, true)
+        //     onSetCurrentSeqNum: _missionController.setCurrentPlanViewSeqNum(seqNum, true)
 
-            property bool _internalVisible: _planViewSettings.showMissionItemStatus.rawValue
+        //     property bool _internalVisible: _planViewSettings.showMissionItemStatus.rawValue
 
-            function toggleVisible() {
-                _internalVisible = !_internalVisible
-                _planViewSettings.showMissionItemStatus.rawValue = _internalVisible
-            }
-        }
+        //     function toggleVisible() {
+        //         _internalVisible = !_internalVisible
+        //         _planViewSettings.showMissionItemStatus.rawValue = _internalVisible
+        //     }
+        // }
 
         MapScale {
             id:                     mapScale
