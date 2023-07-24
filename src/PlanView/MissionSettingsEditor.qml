@@ -104,7 +104,7 @@ Rectangle {
             font.pointSize: ScreenTools.smallFontPointSize
         }
         FactTextField {
-            fact:               QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
+            fact:               QGroundControl.settingsManager.appSettings.krisoDefaultSpeed
             Layout.fillWidth:   true
         }
 
@@ -113,7 +113,7 @@ Rectangle {
             font.pointSize: ScreenTools.smallFontPointSize
         }
         FactTextField {
-            fact:               QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
+            fact:               QGroundControl.settingsManager.appSettings.krisoDefaultAcceptRadius
             Layout.fillWidth:   true
         }
 
