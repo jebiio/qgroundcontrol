@@ -126,10 +126,6 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     _altitudeFact.setRawValue(specifiesAltitude() ? _missionItem._param7Fact.rawValue() : qQNaN());
     _amslAltAboveTerrainFact.setRawValue(qQNaN());
 
-    float defaultSpeed = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultSpeed()->rawValue().toFloat();
-    float defaultAccpetRad = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultAcceptRadius()->rawValue().toFloat();
-    _krisoSpeedFact.setRawValue(defaultSpeed);
-    _krisoAcceptRadiusFact.setRawValue(defaultAccpetRad);
 
     // In flyView we skip some of the intialization to save memory
     if (!_flyView) {
@@ -286,9 +282,12 @@ void SimpleMissionItem::_setupMetaData(void)
     _missionItem._commandFact.setMetaData(_commandMetaData);
     _missionItem._frameFact.setMetaData(_frameMetaData);
     _altitudeFact.setMetaData(_altitudeMetaData);
-    _krisoSpeedFact.setMetaData(_krisoSpeedMetaData);
-    _krisoAcceptRadiusFact.setMetaData(_krisoAcceptRadiusMetaData);
     _amslAltAboveTerrainFact.setMetaData(_altitudeMetaData);
+
+    float defaultSpeed = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultSpeed()->rawValue().toFloat();
+    float defaultAccpetRad = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultAcceptRadius()->rawValue().toFloat();
+    _krisoSpeedFact.setRawValue(defaultSpeed);
+    _krisoAcceptRadiusFact.setRawValue(defaultAccpetRad);
 }
 
 SimpleMissionItem::~SimpleMissionItem()
