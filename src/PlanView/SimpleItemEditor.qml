@@ -97,23 +97,18 @@ Rectangle {
             text: qsTr("Speed")
         }
         FactTextField {
-            fact:       missionItem.altitude
+            fact:       missionItem.krisoSpeed
             width: parent.width 
-        }
-        QGCButton {
-            text:   "Set Speed"
         }
 
         QGCLabel {
             text: qsTr("Acceptance Radius")
         }
         FactTextField {
-            fact:   missionItem.altitude
+            fact:   missionItem.krisoAcceptRadius
             width: parent.width 
         }
-        QGCButton {
-            text:   "Set Accept Rad"
-        }
+
 
         // ColumnLayout {
         //     anchors.left:       parent.left

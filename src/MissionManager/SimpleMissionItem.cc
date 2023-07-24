@@ -22,6 +22,8 @@
 #include "PlanMasterController.h"
 
 FactMetaData* SimpleMissionItem::_altitudeMetaData =        nullptr;
+FactMetaData* SimpleMissionItem::_krisoAcceptRadiusMetaData =      nullptr;
+FactMetaData* SimpleMissionItem::_krisoSpeedMetaData =      nullptr;
 FactMetaData* SimpleMissionItem::_commandMetaData =         nullptr;
 FactMetaData* SimpleMissionItem::_defaultParamMetaData =    nullptr;
 FactMetaData* SimpleMissionItem::_frameMetaData =           nullptr;
@@ -57,6 +59,8 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     , _commandTree                      (qgcApp()->toolbox()->missionCommandTree())
     , _supportedCommandFact             (0, "Command:",             FactMetaData::valueTypeUint32)
     , _altitudeFact                     (0, "Altitude",             FactMetaData::valueTypeDouble)
+    , _krisoAcceptRadiusFact            (0, "Acceptance Radius",    FactMetaData::valueTypeFloat)
+    , _krisoSpeedFact                   (0, "Speed",                FactMetaData::valueTypeFloat)
     , _amslAltAboveTerrainFact          (0, "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData                   (FactMetaData::valueTypeDouble)
     , _param2MetaData                   (FactMetaData::valueTypeDouble)
@@ -86,6 +90,8 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     , _commandTree              (qgcApp()->toolbox()->missionCommandTree())
     , _supportedCommandFact     (0,         "Command:",             FactMetaData::valueTypeUint32)
     , _altitudeFact             (0,         "Altitude",             FactMetaData::valueTypeDouble)
+    , _krisoAcceptRadiusFact    (0,         "Acceptance Radius",    FactMetaData::valueTypeFloat)
+    , _krisoSpeedFact           (0,         "Speed",                FactMetaData::valueTypeFloat)
     , _amslAltAboveTerrainFact  (0,         "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData           (FactMetaData::valueTypeDouble)
     , _param2MetaData           (FactMetaData::valueTypeDouble)
@@ -120,6 +126,11 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     _altitudeFact.setRawValue(specifiesAltitude() ? _missionItem._param7Fact.rawValue() : qQNaN());
     _amslAltAboveTerrainFact.setRawValue(qQNaN());
 
+    float defaultSpeed = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultSpeed()->rawValue().toFloat();
+    float defaultAccpetRad = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultAcceptRadius()->rawValue().toFloat();
+    _krisoSpeedFact.setRawValue(defaultSpeed);
+    _krisoAcceptRadiusFact.setRawValue(defaultAccpetRad);
+
     // In flyView we skip some of the intialization to save memory
     if (!_flyView) {
         _setupMetaData();
@@ -152,6 +163,8 @@ void SimpleMissionItem::_connectSignals(void)
     connect(this,                               &SimpleMissionItem::altitudeModeChanged,    this, &SimpleMissionItem::_setDirty);
 
     connect(&_altitudeFact,                     &Fact::valueChanged,                        this, &SimpleMissionItem::_altitudeChanged);
+    connect(&_krisoAcceptRadiusFact,            &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoAcceptRadiusChanged);
+    connect(&_krisoSpeedFact,                   &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoSpeedChanged);
     connect(this,                               &SimpleMissionItem::altitudeModeChanged,    this, &SimpleMissionItem::_altitudeModeChanged);
     connect(this,                               &SimpleMissionItem::terrainAltitudeChanged, this, &SimpleMissionItem::_terrainAltChanged);
 
@@ -260,11 +273,21 @@ void SimpleMissionItem::_setupMetaData(void)
         _longitudeMetaData->setRawUnits("deg");
         _longitudeMetaData->setDecimalPlaces(7);
 
+        _krisoSpeedMetaData = new FactMetaData(FactMetaData::valueTypeFloat);
+        _krisoSpeedMetaData->setRawUnits("m/s");
+        _krisoSpeedMetaData->setDecimalPlaces(2);
+
+        _krisoAcceptRadiusMetaData = new FactMetaData(FactMetaData::valueTypeFloat);
+        _krisoAcceptRadiusMetaData->setRawUnits("deg");
+        _krisoAcceptRadiusMetaData->setDecimalPlaces(2);
+
     }
 
     _missionItem._commandFact.setMetaData(_commandMetaData);
     _missionItem._frameFact.setMetaData(_frameMetaData);
     _altitudeFact.setMetaData(_altitudeMetaData);
+    _krisoSpeedFact.setMetaData(_krisoSpeedMetaData);
+    _krisoAcceptRadiusFact.setMetaData(_krisoAcceptRadiusMetaData);
     _amslAltAboveTerrainFact.setMetaData(_altitudeMetaData);
 }
 
@@ -719,6 +742,21 @@ void SimpleMissionItem::_altitudeChanged(void)
     if (_altitudeMode != QGroundControlQmlGlobal::AltitudeModeCalcAboveTerrain) {
         _missionItem._param7Fact.setRawValue(_altitudeFact.rawValue());
     }
+}
+
+void SimpleMissionItem::_krisoAcceptRadiusChanged(void)
+{   
+    
+    qDebug() << _krisoAcceptRadiusFact.rawValue() ;
+
+}
+
+
+void SimpleMissionItem::_krisoSpeedChanged(void)
+{   
+    
+    qDebug() << _krisoSpeedFact.rawValue() ;
+
 }
 
 void SimpleMissionItem::_terrainAltChanged(void)
