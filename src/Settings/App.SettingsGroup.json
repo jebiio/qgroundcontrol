@@ -325,6 +325,25 @@
     "longDesc":  "Host name to forward mavlink to. i.e: localhost:14445",
     "type":             "string",
     "default":     "localhost:14445"
+},
+{
+    "name":             "krisoDefaultSpeed",
+    "shortDesc": "Speed for Kriso waypoint",
+    "longDesc":  "- ",
+    "type":             "float",
+    "default":     11.1,
+    "min":              0.1,
+    "units":            "m/s",
+    "decimalPlaces":    2
+},
+{
+    "name":             "krisoDefaultAcceptRadius",
+    "shortDesc": "Accepetance Radius for Kriso waypoint",
+    "longDesc":  "- ",
+    "type":             "float",
+    "default":          22.2,
+    "units":            "deg",
+    "decimalPlaces":    2
 }
 ]
 }
