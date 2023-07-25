@@ -637,7 +637,10 @@ FlightMap {
                 gotoLocationItem.show(clickMenu.coord)
                 _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
                 // _activeVehicle.updateDPCoordinateFact(coord.latitude(), coord.longitude());
+            }else {
+                gotoLocationItem.hide()
             }
+
         }
     }
 

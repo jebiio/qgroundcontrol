@@ -684,7 +684,7 @@ Item {
                 }
                 QGCButton {
                     id : coordinateButton
-                    text: "좌표선택"
+                    text: _activeVehicle.dpButton ? "선택완료" : "좌표선택"
                     onClicked: {
                         _activeVehicle.isKrisoDPClickableLayer = !_activeVehicle.isKrisoDPClickableLayer
                     }
