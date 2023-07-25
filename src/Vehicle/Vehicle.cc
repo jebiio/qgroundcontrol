@@ -2158,6 +2158,41 @@ void Vehicle::kriso_sendHDGCommand(float speed, float degree)
 
 }
 
+void Vehicle::kriso_sendWTCommand(void)
+{
+
+
+    LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
+    QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+
+    // Send a heartbeat out on each link
+    for (int i=0; i<sharedLinks.count(); i++) {
+        LinkInterface* link = sharedLinks[i].get();
+        auto linkConfiguration = link->linkConfiguration();
+        if (link->isConnected() && linkConfiguration) {
+            mavlink_message_t message;
+            mavlink_msg_kriso_wt_command_pack_chan(_mavlink->getSystemId(),
+                                            _mavlink->getComponentId(),
+                                            link->mavlinkChannel(),
+                                            &message,
+                                            lat,        // nav_surge_pgain
+                                            lon,        // nav_surge_dgain
+                                            yaw,        // nav_yaw_pgain
+                                            ,        // nav_yaw_dgain
+                                            ,        // lat , sizeof(double)*5
+                                            ,        // lon , sizeof(double)*5
+                                            ,         // spd_cmd , sizeof(double)*5
+                                            ,         // acceptance_radius, sizeof(float)*5
+                                            );
+
+            uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+            int len = mavlink_msg_to_send_buffer(buffer, &message);
+            link->writeBytesThreadSafe((const char*)buffer, len);
+        }
+    }
+
+}
+
 void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
 {
     // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
