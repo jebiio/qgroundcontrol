@@ -39,6 +39,7 @@ Rectangle {
         }
     }
 
+
     Component.onCompleted: updateAltitudeModeText()
 
     Connections {
@@ -49,6 +50,7 @@ Rectangle {
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
     Component { id: altModeDialogComponent; AltModeDialog { } }
 
+
     Column {
         id:                 editorColumn
         anchors.margins:    _margin
@@ -57,230 +59,272 @@ Rectangle {
         anchors.top:        parent.top
         spacing:            _margin
 
+        // QGCLabel {
+        //     width:          parent.width
+        //     wrapMode:       Text.WordWrap
+        //     font.pointSize: ScreenTools.smallFontPointSize
+        //     text:           "hello"
+        //     // text:           missionItem.rawEdit ?
+        //     //                     qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
+        //     //                     missionItem.commandDescription
+        // }
+
+        // QGCLabel {
+        //     text: qsTr("Latitude")
+        // }
+        // TextField {
+        //     text:                missionItem.coordinate.latitude
+        //     width: parent.width 
+        // }
+
+        // QGCLabel {
+        //     text: qsTr("Longitude")
+        // }
+        // TextField {
+        //     text:                missionItem.coordinate.longitude
+        //     width: parent.width 
+        // }
+
+        // QGCButton {
+        //     text:   "Set Coordinate"
+        //     onClicked: {
+        //         controller.setFromGeo()
+        //     }
+        // }
+
+
         QGCLabel {
-            width:          parent.width
-            wrapMode:       Text.WordWrap
-            font.pointSize: ScreenTools.smallFontPointSize
-            text:           missionItem.rawEdit ?
-                                qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
-                                missionItem.commandDescription
+            text: qsTr("Speed")
+        }
+        FactTextField {
+            fact:       missionItem.krisoSpeed
+            width: parent.width 
         }
 
-        ColumnLayout {
-            anchors.left:       parent.left
-            anchors.right:      parent.right
-            spacing:            _margin
-            visible:            missionItem.isTakeoffItem && missionItem.wizardMode // Hack special case for takeoff item
-
-            QGCLabel {
-                text:               qsTr("Move '%1' %2 to the %3 location. %4")
-                .arg(_controllerVehicle.vtol ? qsTr("T") : qsTr("T"))
-                .arg(_controllerVehicle.vtol ? qsTr("Transition Direction") : qsTr("Takeoff"))
-                .arg(_controllerVehicle.vtol ? qsTr("desired") : qsTr("climbout"))
-                .arg(_controllerVehicle.vtol ? (qsTr("Ensure distance from launch to transition direction is far enough to complete transition.")) : "")
-                Layout.fillWidth:   true
-                wrapMode:           Text.WordWrap
-                visible:            !initialClickLabel.visible
-            }
-
-            QGCLabel {
-                text:               qsTr("Ensure clear of obstacles and into the wind.")
-                Layout.fillWidth:   true
-                wrapMode:           Text.WordWrap
-                visible:            !initialClickLabel.visible
-            }
-
-            QGCButton {
-                text:               qsTr("Done")
-                Layout.fillWidth:   true
-                visible:            !initialClickLabel.visible
-                onClicked: {
-                    missionItem.wizardMode = false
-                }
-            }
-
-            QGCLabel {
-                id:                 initialClickLabel
-                text:               missionItem.launchTakeoffAtSameLocation ?
-                                        qsTr("Click in map to set planned Takeoff location.") :
-                                        qsTr("Click in map to set planned Launch location.")
-                Layout.fillWidth:   true
-                wrapMode:           Text.WordWrap
-                visible:            missionItem.isTakeoffItem && !missionItem.launchCoordinate.isValid
-            }
+        QGCLabel {
+            text: qsTr("Acceptance Radius")
+        }
+        FactTextField {
+            fact:   missionItem.krisoAcceptRadius
+            width: parent.width 
         }
 
-        Column {
-            anchors.left:       parent.left
-            anchors.right:      parent.right
-            spacing:            _altRectMargin
-            visible:            !missionItem.wizardMode
 
-            ColumnLayout {
-                anchors.left:   parent.left
-                anchors.right:  parent.right
-                spacing:        0
-                visible:        _specifiesAltitude
+        // ColumnLayout {
+        //     anchors.left:       parent.left
+        //     anchors.right:      parent.right
+        //     spacing:            _margin
+        //     visible:            missionItem.isTakeoffItem && missionItem.wizardMode // Hack special case for takeoff item
 
-                QGCLabel {
-                    Layout.fillWidth:   true
-                    wrapMode:           Text.WordWrap
-                    font.pointSize:     ScreenTools.smallFontPointSize
-                    text:               qsTr("Altitude below specifies the approximate altitude of the ground. Normally 0 for landing back at original launch location.")
-                    visible:            missionItem.isLandCommand
-                }
+        //     QGCLabel {
+        //         text:               qsTr("Move '%1' %2 to the %3 location. %4")
+        //         .arg(_controllerVehicle.vtol ? qsTr("T") : qsTr("T"))
+        //         .arg(_controllerVehicle.vtol ? qsTr("Transition Direction") : qsTr("Takeoff"))
+        //         .arg(_controllerVehicle.vtol ? qsTr("desired") : qsTr("climbout"))
+        //         .arg(_controllerVehicle.vtol ? (qsTr("Ensure distance from launch to transition direction is far enough to complete transition.")) : "")
+        //         Layout.fillWidth:   true
+        //         wrapMode:           Text.WordWrap
+        //         visible:            !initialClickLabel.visible
+        //     }
 
-                MouseArea {
-                    Layout.preferredWidth:  childrenRect.width
-                    Layout.preferredHeight: childrenRect.height
+        //     QGCLabel {
+        //         text:               qsTr("Ensure clear of obstacles and into the wind.")
+        //         Layout.fillWidth:   true
+        //         wrapMode:           Text.WordWrap
+        //         visible:            !initialClickLabel.visible
+        //     }
 
-                    onClicked: {
-                        if (_globalAltModeIsMixed) {
-                            var removeModes = []
-                            var updateFunction = function(altMode){ missionItem.altitudeMode = altMode }
-                            if (!_controllerVehicle.supportsTerrainFrame) {
-                                removeModes.push(QGroundControl.AltitudeModeTerrainFrame)
-                            }
-                            if (!QGroundControl.corePlugin.options.showMissionAbsoluteAltitude && missionItem.altitudeMode !== QGroundControl.AltitudeModeAbsolute) {
-                                removeModes.push(QGroundControl.AltitudeModeAbsolute)
-                            }
-                            removeModes.push(QGroundControl.AltitudeModeMixed)
-                            mainWindow.showPopupDialogFromComponent(altModeDialogComponent, { rgRemoveModes: removeModes, updateAltModeFn: updateFunction })
-                        }
-                    }
+        //     QGCButton {
+        //         text:               qsTr("Done")
+        //         Layout.fillWidth:   true
+        //         visible:            !initialClickLabel.visible
+        //         onClicked: {
+        //             missionItem.wizardMode = false
+        //         }
+        //     }
 
-                    RowLayout {
-                        spacing: _altRectMargin
+        //     QGCLabel {
+        //         id:                 initialClickLabel
+        //         text:               missionItem.launchTakeoffAtSameLocation ?
+        //                                 qsTr("Click in map to set planned Takeoff location.") :
+        //                                 qsTr("Click in map to set planned Launch location.")
+        //         Layout.fillWidth:   true
+        //         wrapMode:           Text.WordWrap
+        //         visible:            missionItem.isTakeoffItem && !missionItem.launchCoordinate.isValid
+        //     }
+        // }
 
-                        QGCLabel {
-                            Layout.alignment:   Qt.AlignBaseline
-                            text:               qsTr("Altitude")
-                            font.pointSize:     ScreenTools.smallFontPointSize
-                        }
-                        QGCLabel {
-                            id:                 altModeLabel
-                            Layout.alignment:   Qt.AlignBaseline
-                            visible:            _globalAltMode !== QGroundControl.AltitudeModeRelative
-                        }
-                        QGCColoredImage {
-                            height:     ScreenTools.defaultFontPixelHeight / 2
-                            width:      height
-                            source:     "/res/DropArrow.svg"
-                            color:      qgcPal.text
-                            visible:    _globalAltModeIsMixed
-                        }
-                    }
-                }
+        // Column {
+        //     anchors.left:       parent.left
+        //     anchors.right:      parent.right
+        //     spacing:            _altRectMargin
+        //     visible:            !missionItem.wizardMode
 
-                FactTextField {
-                    id:                 altField
-                    Layout.fillWidth:   true
-                    fact:               missionItem.altitude
-                }
+        //     ColumnLayout {
+        //         anchors.left:   parent.left
+        //         anchors.right:  parent.right
+        //         spacing:        0
+        //         visible:        _specifiesAltitude
 
-                QGCLabel {
-                    font.pointSize:     ScreenTools.smallFontPointSize
-                    text:               qsTr("Actual AMSL alt sent: %1 %2").arg(missionItem.amslAltAboveTerrain.valueString).arg(missionItem.amslAltAboveTerrain.units)
-                    visible:            missionItem.altitudeMode === QGroundControl.AltitudeModeCalcAboveTerrain
-                }
-            }
+        //         QGCLabel {
+        //             Layout.fillWidth:   true
+        //             wrapMode:           Text.WordWrap
+        //             font.pointSize:     ScreenTools.smallFontPointSize
+        //             text:               qsTr("Altitude below specifies the approximate altitude of the ground. Normally 0 for landing back at original launch location.")
+        //             visible:            missionItem.isLandCommand
+        //         }
 
-            ColumnLayout {
-                anchors.left:   parent.left
-                anchors.right:  parent.right
-                spacing:        _margin
+        //         MouseArea {
+        //             Layout.preferredWidth:  childrenRect.width
+        //             Layout.preferredHeight: childrenRect.height
 
-                Repeater {
-                    model: missionItem.comboboxFacts
+        //             onClicked: {
+        //                 if (_globalAltModeIsMixed) {
+        //                     var removeModes = []
+        //                     var updateFunction = function(altMode){ missionItem.altitudeMode = altMode }
+        //                     if (!_controllerVehicle.supportsTerrainFrame) {
+        //                         removeModes.push(QGroundControl.AltitudeModeTerrainFrame)
+        //                     }
+        //                     if (!QGroundControl.corePlugin.options.showMissionAbsoluteAltitude && missionItem.altitudeMode !== QGroundControl.AltitudeModeAbsolute) {
+        //                         removeModes.push(QGroundControl.AltitudeModeAbsolute)
+        //                     }
+        //                     removeModes.push(QGroundControl.AltitudeModeMixed)
+        //                     mainWindow.showPopupDialogFromComponent(altModeDialogComponent, { rgRemoveModes: removeModes, updateAltModeFn: updateFunction })
+        //                 }
+        //             }
 
-                    ColumnLayout {
-                        Layout.fillWidth:   true
-                        spacing:            0
+        //             RowLayout {
+        //                 spacing: _altRectMargin
 
-                        QGCLabel {
-                            font.pointSize: ScreenTools.smallFontPointSize
-                            text:           object.name
-                            visible:        object.name !== ""
-                        }
+        //                 QGCLabel {
+        //                     Layout.alignment:   Qt.AlignBaseline
+        //                     text:               qsTr("Altitude")
+        //                     font.pointSize:     ScreenTools.smallFontPointSize
+        //                 }
+        //                 QGCLabel {
+        //                     id:                 altModeLabel
+        //                     Layout.alignment:   Qt.AlignBaseline
+        //                     visible:            _globalAltMode !== QGroundControl.AltitudeModeRelative
+        //                 }
+        //                 QGCColoredImage {
+        //                     height:     ScreenTools.defaultFontPixelHeight / 2
+        //                     width:      height
+        //                     source:     "/res/DropArrow.svg"
+        //                     color:      qgcPal.text
+        //                     visible:    _globalAltModeIsMixed
+        //                 }
+        //             }
+        //         }
 
-                        FactComboBox {
-                            Layout.fillWidth:   true
-                            indexModel:         false
-                            model:              object.enumStrings
-                            fact:               object
-                        }
-                    }
-                }
-            }
+        //         FactTextField {
+        //             id:                 altField
+        //             Layout.fillWidth:   true
+        //             fact:               missionItem.altitude
+        //         }
 
-            GridLayout {
-                anchors.left:   parent.left
-                anchors.right:  parent.right
-                flow:           GridLayout.TopToBottom
-                rows:           missionItem.textFieldFacts.count +
-                                missionItem.nanFacts.count +
-                                (missionItem.speedSection.available ? 1 : 0)
-                columns:        2
+        //         QGCLabel {
+        //             font.pointSize:     ScreenTools.smallFontPointSize
+        //             text:               qsTr("Actual AMSL alt sent: %1 %2").arg(missionItem.amslAltAboveTerrain.valueString).arg(missionItem.amslAltAboveTerrain.units)
+        //             visible:            missionItem.altitudeMode === QGroundControl.AltitudeModeCalcAboveTerrain
+        //         }
+        //     }
 
-                Repeater {
-                    model: missionItem.textFieldFacts
+        //     // ColumnLayout {
+        //     //     anchors.left:   parent.left
+        //     //     anchors.right:  parent.right
+        //     //     spacing:        _margin
 
-                    QGCLabel { text: object.name }
-                }
+        //     //     Repeater {
+        //     //         model: missionItem.comboboxFacts
 
-                Repeater {
-                    model: missionItem.nanFacts
+        //     //         ColumnLayout {
+        //     //             Layout.fillWidth:   true
+        //     //             spacing:            0
 
-                    QGCCheckBox {
-                        text:           object.name
-                        checked:        !isNaN(object.rawValue)
-                        onClicked:      object.rawValue = checked ? 0 : NaN
-                    }
-                }
+        //     //             QGCLabel {
+        //     //                 font.pointSize: ScreenTools.smallFontPointSize
+        //     //                 text:           object.name
+        //     //                 visible:        object.name !== ""
+        //     //             }
 
-                QGCCheckBox {
-                    id:         flightSpeedCheckbox
-                    text:       qsTr("Flight Speed")
-                    checked:    missionItem.speedSection.specifyFlightSpeed
-                    onClicked:  missionItem.speedSection.specifyFlightSpeed = checked
-                    visible:    missionItem.speedSection.available
-                }
+        //     //             FactComboBox {
+        //     //                 Layout.fillWidth:   true
+        //     //                 indexModel:         false
+        //     //                 model:              object.enumStrings
+        //     //                 fact:               object
+        //     //             }
+        //     //         }
+        //     //     }
+        //     // }
+
+        //     // GridLayout {
+        //     //     anchors.left:   parent.left
+        //     //     anchors.right:  parent.right
+        //     //     flow:           GridLayout.TopToBottom
+        //     //     rows:           missionItem.textFieldFacts.count +
+        //     //                     missionItem.nanFacts.count +
+        //     //                     (missionItem.speedSection.available ? 1 : 0)
+        //     //     columns:        2
+
+        //     //     Repeater {
+        //     //         model: missionItem.textFieldFacts
+
+        //     //         QGCLabel { text: object.name }
+        //     //     }
+
+        //     //     Repeater {
+        //     //         model: missionItem.nanFacts
+
+        //     //         QGCCheckBox {
+        //     //             text:           object.name
+        //     //             checked:        !isNaN(object.rawValue)
+        //     //             onClicked:      object.rawValue = checked ? 0 : NaN
+        //     //         }
+        //     //     }
+
+        //     //     QGCCheckBox {
+        //     //         id:         flightSpeedCheckbox
+        //     //         text:       qsTr("Flight Speed")
+        //     //         checked:    missionItem.speedSection.specifyFlightSpeed
+        //     //         onClicked:  missionItem.speedSection.specifyFlightSpeed = checked
+        //     //         visible:    missionItem.speedSection.available
+        //     //     }
 
 
-                Repeater {
-                    model: missionItem.textFieldFacts
+        //     //     Repeater {
+        //     //         model: missionItem.textFieldFacts
 
-                    FactTextField {
-                        showUnits:          true
-                        fact:               object
-                        Layout.fillWidth:   true
-                        enabled:            !object.readOnly
-                    }
-                }
+        //     //         FactTextField {
+        //     //             showUnits:          true
+        //     //             fact:               object
+        //     //             Layout.fillWidth:   true
+        //     //             enabled:            !object.readOnly
+        //     //         }
+        //     //     }
 
-                Repeater {
-                    model: missionItem.nanFacts
+        //     //     Repeater {
+        //     //         model: missionItem.nanFacts
 
-                    FactTextField {
-                        showUnits:          true
-                        fact:               object
-                        Layout.fillWidth:   true
-                        enabled:            !isNaN(object.rawValue)
-                    }
-                }
+        //     //         FactTextField {
+        //     //             showUnits:          true
+        //     //             fact:               object
+        //     //             Layout.fillWidth:   true
+        //     //             enabled:            !isNaN(object.rawValue)
+        //     //         }
+        //     //     }
 
-                FactTextField {
-                    fact:               missionItem.speedSection.flightSpeed
-                    Layout.fillWidth:   true
-                    enabled:            flightSpeedCheckbox.checked
-                    visible:            missionItem.speedSection.available
-                }
-            }
+        //     //     FactTextField {
+        //     //         fact:               missionItem.speedSection.flightSpeed
+        //     //         Layout.fillWidth:   true
+        //     //         enabled:            flightSpeedCheckbox.checked
+        //     //         visible:            missionItem.speedSection.available
+        //     //     }
+        //     // }
 
-            CameraSection {
-                checked:    missionItem.cameraSection.settingsSpecified
-                visible:    missionItem.cameraSection.available
-            }
-        }
+        //     // CameraSection {
+        //     //     checked:    missionItem.cameraSection.settingsSpecified
+        //     //     visible:    missionItem.cameraSection.available
+        //     // }
+        // }
     }
 }

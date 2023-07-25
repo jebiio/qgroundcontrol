@@ -139,15 +139,15 @@ Rectangle {
 
                 QGCLabel { text: missionItem.commandName }
 
-                QGCColoredImage {
-                    height:             ScreenTools.defaultFontPixelWidth
-                    width:              height
-                    fillMode:           Image.PreserveAspectFit
-                    smooth:             true
-                    antialiasing:       true
-                    color:              qgcPal.text
-                    source:             "/qmlimages/arrow-down.png"
-                }
+                // QGCColoredImage {
+                //     height:             ScreenTools.defaultFontPixelWidth
+                //     width:              height
+                //     fillMode:           Image.PreserveAspectFit
+                //     smooth:             true
+                //     antialiasing:       true
+                //     color:              qgcPal.text
+                //     source:             "/qmlimages/arrow-down.png"
+                // }
             }
 
             QGCMouseArea {
@@ -204,7 +204,8 @@ Rectangle {
 
                 QGCMenuItem {
                     text:           qsTr("Move to vehicle position")
-                    visible:        missionItem.specifiesCoordinate
+                    visible:        false
+                    // visible:        missionItem.specifiesCoordinate kriso
                     enabled:        _activeVehicle
                     onTriggered:    missionItem.coordinate = _activeVehicle.coordinate
 
@@ -213,7 +214,8 @@ Rectangle {
 
                 QGCMenuItem {
                     text:           qsTr("Move to previous item position")
-                    visible:        _missionController.previousCoordinate.isValid
+                    visible:        false
+                    // visible:        _missionController.previousCoordinate.isValid kriso
                     onTriggered:    missionItem.coordinate = _missionController.previousCoordinate
                 }
 
@@ -231,7 +233,8 @@ Rectangle {
                     text:       qsTr("Show all values")
                     checkable:  true
                     checked:    missionItem.isSimpleItem ? missionItem.rawEdit : false
-                    visible:    missionItem.isSimpleItem && !_waypointsOnlyMode
+                    visible:    false
+                    // visible:    missionItem.isSimpleItem && !_waypointsOnlyMode kriso
 
                     onTriggered:    {
                         if (missionItem.rawEdit) {
@@ -250,6 +253,7 @@ Rectangle {
                 QGCMenuItem {
                     text:       qsTr("Item #%1").arg(missionItem.sequenceNumber)
                     enabled:    false
+                    visible:    false
                 }
             }
         }

@@ -33,7 +33,9 @@ public:
     Q_PROPERTY(bool             friendlyEditAllowed     READ friendlyEditAllowed                                NOTIFY friendlyEditAllowedChanged)
     Q_PROPERTY(bool             rawEdit                 READ rawEdit                WRITE setRawEdit            NOTIFY rawEditChanged)              ///< true: raw item editing with all params
     Q_PROPERTY(bool             specifiesAltitude       READ specifiesAltitude                                  NOTIFY commandChanged)
-    Q_PROPERTY(Fact*            altitude                READ altitude                                           CONSTANT)                           ///< Altitude as specified by altitudeMode. Not necessarily true mission item altitude
+    Q_PROPERTY(Fact*            altitude                READ altitude                                           CONSTANT)   
+    Q_PROPERTY(Fact*            krisoAcceptRadius       READ krisoAcceptRadius                                  CONSTANT)   
+    Q_PROPERTY(Fact*            krisoSpeed              READ krisoSpeed                                         CONSTANT)                           ///< Altitude as specified by altitudeMode. Not necessarily true mission item altitude
     Q_PROPERTY(QGroundControlQmlGlobal::AltMode altitudeMode READ altitudeMode WRITE setAltitudeMode       NOTIFY altitudeModeChanged)
     Q_PROPERTY(Fact*            amslAltAboveTerrain     READ amslAltAboveTerrain                                CONSTANT)                           ///< Actual AMSL altitude for item if altitudeMode == AltitudeAboveTerrain
     Q_PROPERTY(int              command                 READ command                WRITE setCommand            NOTIFY commandChanged)
@@ -72,6 +74,8 @@ public:
     bool            specifiesAltitude   (void) const;
     QGroundControlQmlGlobal::AltMode altitudeMode(void) const { return _altitudeMode; }
     Fact*           altitude            (void) { return &_altitudeFact; }
+    Fact*           krisoAcceptRadius    (void) { return &_krisoAcceptRadiusFact; }
+    Fact*           krisoSpeed          (void) { return &_krisoSpeedFact; }
     Fact*           amslAltAboveTerrain (void) { return &_amslAltAboveTerrainFact; }
     bool            isLoiterItem        (void) const;
     bool            showLoiterRadius    (void) const;
@@ -155,6 +159,8 @@ private slots:
     void _sendCoordinateChanged                 (void);
     void _sendFriendlyEditAllowedChanged        (void);
     void _altitudeChanged                       (void);
+    void _krisoAcceptRadiusChanged              (void);
+    void _krisoSpeedChanged                     (void);
     void _altitudeModeChanged                   (void);
     void _terrainAltChanged                     (void);
     void _updateLastSequenceNumber              (void);
@@ -188,6 +194,8 @@ private:
 
     QGroundControlQmlGlobal::AltMode    _altitudeMode = QGroundControlQmlGlobal::AltitudeModeRelative;
     Fact                                _altitudeFact;
+    Fact                                _krisoAcceptRadiusFact;    
+    Fact                                _krisoSpeedFact;
     Fact                                _amslAltAboveTerrainFact;
 
     QmlObjectListModel  _textFieldFacts;
@@ -200,6 +208,10 @@ private:
     static FactMetaData*    _frameMetaData;
     static FactMetaData*    _latitudeMetaData;
     static FactMetaData*    _longitudeMetaData;
+    static FactMetaData*    _speedMetaData;
+    static FactMetaData*    _krisoAcceptRadiusMetaData;
+    static FactMetaData*    _krisoSpeedMetaData;
+
 
     FactMetaData    _param1MetaData;
     FactMetaData    _param2MetaData;
