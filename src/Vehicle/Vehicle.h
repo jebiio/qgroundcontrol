@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include <chrono>
+
+
 #include <QElapsedTimer>
 #include <QObject>
 #include <QVariantList>
@@ -434,7 +437,7 @@ public:
     Q_INVOKABLE void forceArm                       ();
     Q_INVOKABLE void kriso_sendEmergencyCommand     ();
     Q_INVOKABLE void kriso_sendHDGCommand           (float speed, float degree);
-    Q_INVOKABLE void kriso_sendWTCommand            ();
+    Q_INVOKABLE void kriso_sendWTCommand            (QmlObjectListModel* visualItems);
     Q_INVOKABLE void kriso_sendDPCommand            (double lat, double lon, float yaw);
     Q_INVOKABLE void kriso_sendLogCommand           ();
     Q_INVOKABLE void kriso_hdgGainSave              (float surgeP, float surgeD, float yawP, float yawD);
@@ -1074,6 +1077,8 @@ private:
     int     _id;                    ///< Mavlink system id
     int     _defaultComponentId;
     bool    _offlineEditingVehicle = false; ///< true: This Vehicle is a "disconnected" vehicle for ui use while offline editing
+
+    QmlObjectListModel* _visualItems =          nullptr; //jaeeun kriso
 
     MAV_AUTOPILOT       _firmwareType;
     MAV_TYPE            _vehicleType;

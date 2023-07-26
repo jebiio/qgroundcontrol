@@ -552,9 +552,10 @@ Item {
                 text: "계획생성"
                 onClicked: mainWindow.showPlanView()
             }
-
             QGCButton {
                 text: "운행시작"
+                onClicked: _activeVehicle.kriso_sendWTCommand(_missionController.visualItems)
+                // onClicked: _activeVehicle.kriso_sendWTCommand()
             }
         }
 

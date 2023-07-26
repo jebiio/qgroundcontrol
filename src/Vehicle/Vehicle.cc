@@ -55,6 +55,9 @@
 #include "MockLink.h"
 #endif
 #include "Autotune.h"
+#include "SimpleMissionItem.h"
+#include "QmlObjectListModel.h"
+
 
 #if defined(QGC_AIRMAP_ENABLED)
 #include "AirspaceVehicleManager.h"
@@ -2158,12 +2161,55 @@ void Vehicle::kriso_sendHDGCommand(float speed, float degree)
 
 }
 
-void Vehicle::kriso_sendWTCommand(void)
+void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
 {
+
+    _visualItems = visualItems;
+
+    qDebug() <<_visualItems->count();
+    double lat[5] = {1.0,2.0,3.0,4.0,5.0};
+    double lon[5] = {1.0,2.0,3.0,4.0,5.0};
+    float speedValues[5] = {1.1, 1.2, 1.3,1.4,1.5};
+    float acceptRadiValues[5] = {1.1, 1.2, 1.3,1.4,1.5};
+
+
+
+
+    for (int i=0; i<_visualItems->count(); i++) {
+        double speedMemeber = 0.0;
+        double speed = 0.0;
+        double alt = 0.0;
+        double acceptRadi = 0.0;
+        if (visualItems->value<VisualMissionItem*>(i)->isSimpleItem()){
+            SimpleMissionItem* item = visualItems->value<SimpleMissionItem*>(i);
+            speedMemeber = item->_krisoSpeed;
+            speed = item->krisoSpeed()->rawValue().toFloat();
+            alt = item->altitude()->rawValue().toDouble();
+            acceptRadi = item->altitude()->rawValue().toFloat();
+
+            speedValues[i] = speed;
+            acceptRadiValues[i] = acceptRadi;
+            lat[i] = item->coordinate().latitude();
+            lon[i] = item->coordinate().longitude();
+
+            
+            qDebug() << "speed Fact: " << speed ;
+            qDebug() << "speed Memeber: " << speedMemeber ;
+            qDebug() << "alt : " << alt;
+            qDebug() << "speedsection : " << item->speedSection()->flightSpeed()->rawValue().toDouble();;
+            // qDebug() << "jaeeun  : " << item->jaeeun();
+        }
+        
+    
+    }
+    // uint64_t time_usec = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
 
     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
     QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+
+
+
 
     // Send a heartbeat out on each link
     for (int i=0; i<sharedLinks.count(); i++) {
@@ -2175,16 +2221,16 @@ void Vehicle::kriso_sendWTCommand(void)
                                             _mavlink->getComponentId(),
                                             link->mavlinkChannel(),
                                             &message,
-                                            lat,        // nav_surge_pgain
-                                            lon,        // nav_surge_dgain
-                                            yaw,        // nav_yaw_pgain
-                                            ,        // nav_yaw_dgain
-                                            ,        // lat , sizeof(double)*5
-                                            ,        // lon , sizeof(double)*5
-                                            ,         // spd_cmd , sizeof(double)*5
-                                            ,         // acceptance_radius, sizeof(float)*5
+                                            lat,        // lat , sizeof(double)*5
+                                            lon,        // lon , sizeof(double)*5
+                                            speedValues,         // spd_cmd , sizeof(double)*5
+                                            acceptRadiValues,         // acceptance_radius, sizeof(float)*5
+                                            1.0,        // nav_surge_pgain
+                                            2.0,        // nav_surge_dgain
+                                            3.0,        // nav_yaw_pgain
+                                            4.0        // nav_yaw_dgain
                                             );
-
+            
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
             int len = mavlink_msg_to_send_buffer(buffer, &message);
             link->writeBytesThreadSafe((const char*)buffer, len);
@@ -2192,6 +2238,48 @@ void Vehicle::kriso_sendWTCommand(void)
     }
 
 }
+
+
+// void Vehicle::kriso_sendWTCommand(void)
+// {
+//     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
+//     QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+
+//     // Send a heartbeat out on each link
+//     double lat[5] =   {0, 0, 0, 0, 0};
+//     double lon[5] =   {0, 0, 0, 0, 0};
+//     float speed[5] =  {0, 0, 0, 0, 0};
+//     float radius[5] = {0, 0, 0, 0, 0};
+//     float val = 0;
+
+//     for (int i=0; i<sharedLinks.count(); i++) {
+//         qDebug() << "Send mavlink WT - Jaeeun : "<< i;
+//         LinkInterface* link = sharedLinks[i].get();
+//         auto linkConfiguration = link->linkConfiguration();
+//         if (link->isConnected() && linkConfiguration) {
+//             mavlink_message_t message;
+//             mavlink_msg_kriso_wt_command_pack_chan(_mavlink->getSystemId(),
+//                                             _mavlink->getComponentId(),
+//                                             link->mavlinkChannel(),
+//                                             &message,
+//                                             lat,        // target lat 
+//                                             lon,        // target lon
+//                                             speed,        // spd_cmd
+//                                             radius,        // acceptance radius    
+//                                             val,        // surge p gain
+//                                             val,        // surge d gain
+//                                             val,        // yaw p gain
+//                                             val         // yaw d gain
+//                                             );
+
+//             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+//             int len = mavlink_msg_to_send_buffer(buffer, &message);
+//             link->writeBytesThreadSafe((const char*)buffer, len);
+//         }
+//     }
+
+// }
+
 
 void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
 {
@@ -2204,6 +2292,7 @@ void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
 
     // Send a heartbeat out on each link
     for (int i=0; i<sharedLinks.count(); i++) {
+        qDebug() << "Send mavlink WT - Link : "<< i;
         LinkInterface* link = sharedLinks[i].get();
         auto linkConfiguration = link->linkConfiguration();
         if (link->isConnected() && linkConfiguration) {
