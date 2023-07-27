@@ -787,9 +787,9 @@ void SimpleMissionItem::_krisoSpeedChanged(void)
 
     qDebug() << "현재  : " <<_krisoSpeedFact.rawValue().toDouble() ;
     
-    double speed = _krisoSpeedFact.rawValue().toDouble();
-    _krisoSpeed = speed;
-    _krisoSpeedFact.setRawValue(speed);
+    // double speed = _krisoSpeedFact.rawValue().toDouble();
+    // _krisoSpeed = speed;
+    // _krisoSpeedFact.setRawValue(speed);
 
 
 }

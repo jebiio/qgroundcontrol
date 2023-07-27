@@ -2182,7 +2182,6 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
         double acceptRadi = 0.0;
         if (visualItems->value<VisualMissionItem*>(i)->isSimpleItem()){
             SimpleMissionItem* item = visualItems->value<SimpleMissionItem*>(i);
-            speedMemeber = item->_krisoSpeed;
             speed = item->krisoSpeed()->rawValue().toFloat();
             alt = item->altitude()->rawValue().toDouble();
             acceptRadi = item->altitude()->rawValue().toFloat();
