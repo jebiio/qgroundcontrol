@@ -33,6 +33,8 @@ FactMetaData* SimpleMissionItem::_longitudeMetaData =       nullptr;
 const char* SimpleMissionItem::_jsonAltitudeModeKey =           "AltitudeMode";
 const char* SimpleMissionItem::_jsonAltitudeKey =               "Altitude";
 const char* SimpleMissionItem::_jsonAMSLAltAboveTerrainKey =    "AMSLAltAboveTerrain";
+const char* SimpleMissionItem::_jsonKrisoSpeedeKey =               "KrisoSpeede";
+const char* SimpleMissionItem::_jsonKrisoAcceptRadKey =            "KrisoAcceptRad";
 
 struct EnumInfo_s {
     const char *    label;
@@ -59,8 +61,8 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     , _commandTree                      (qgcApp()->toolbox()->missionCommandTree())
     , _supportedCommandFact             (0, "Command:",             FactMetaData::valueTypeUint32)
     , _altitudeFact                     (0, "Altitude",             FactMetaData::valueTypeDouble)
-    , _krisoAcceptRadiusFact            (0, "Acceptance Radius",    FactMetaData::valueTypeFloat)
-    , _krisoSpeedFact                   (0, "Speed",                FactMetaData::valueTypeFloat)
+    , _krisoAcceptRadiusFact            (0, "Acceptance Radius",    FactMetaData::valueTypeDouble)
+    , _krisoSpeedFact                   (0, "Speed",                FactMetaData::valueTypeDouble)
     , _amslAltAboveTerrainFact          (0, "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData                   (FactMetaData::valueTypeDouble)
     , _param2MetaData                   (FactMetaData::valueTypeDouble)
@@ -90,8 +92,8 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     , _commandTree              (qgcApp()->toolbox()->missionCommandTree())
     , _supportedCommandFact     (0,         "Command:",             FactMetaData::valueTypeUint32)
     , _altitudeFact             (0,         "Altitude",             FactMetaData::valueTypeDouble)
-    , _krisoAcceptRadiusFact    (0,         "Acceptance Radius",    FactMetaData::valueTypeFloat)
-    , _krisoSpeedFact           (0,         "Speed",                FactMetaData::valueTypeFloat)
+    , _krisoAcceptRadiusFact    (0,         "Acceptance Radius",    FactMetaData::valueTypeDouble)
+    , _krisoSpeedFact           (0,         "Speed",                FactMetaData::valueTypeDouble)
     , _amslAltAboveTerrainFact  (0,         "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData           (FactMetaData::valueTypeDouble)
     , _param2MetaData           (FactMetaData::valueTypeDouble)
@@ -125,6 +127,11 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     _isCurrentItem = missionItem.isCurrentItem();
     _altitudeFact.setRawValue(specifiesAltitude() ? _missionItem._param7Fact.rawValue() : qQNaN());
     _amslAltAboveTerrainFact.setRawValue(qQNaN());
+
+    double defaultSpeed = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultSpeed()->rawValue().toDouble();
+//    double defaultAccpetRad = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultAcceptRadius()->rawValue().toDouble();
+    _krisoSpeedFact.setRawValue(defaultSpeed);
+    _krisoAcceptRadiusFact.setRawValue( _missionItem._param1Fact.rawValue());    
 
 
     // In flyView we skip some of the intialization to save memory
@@ -284,10 +291,9 @@ void SimpleMissionItem::_setupMetaData(void)
     _altitudeFact.setMetaData(_altitudeMetaData);
     _amslAltAboveTerrainFact.setMetaData(_altitudeMetaData);
 
-    float defaultSpeed = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultSpeed()->rawValue().toFloat();
-    float defaultAccpetRad = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultAcceptRadius()->rawValue().toFloat();
-    _krisoSpeedFact.setRawValue(defaultSpeed);
-    _krisoAcceptRadiusFact.setRawValue(defaultAccpetRad);
+
+    _krisoSpeedFact.setMetaData(_krisoSpeedMetaData);
+    _krisoAcceptRadiusFact.setMetaData(_krisoAcceptRadiusMetaData);
 }
 
 SimpleMissionItem::~SimpleMissionItem()
@@ -310,6 +316,8 @@ void SimpleMissionItem::save(QJsonArray&  missionItems)
                 saveObject[_jsonAltitudeModeKey] =          _altitudeMode;
                 saveObject[_jsonAltitudeKey] =              _altitudeFact.rawValue().toDouble();
                 saveObject[_jsonAMSLAltAboveTerrainKey] =   _amslAltAboveTerrainFact.rawValue().toDouble();
+                saveObject[_jsonKrisoSpeedeKey] =   _krisoSpeedFact.rawValue().toDouble();
+                saveObject[_jsonKrisoAcceptRadKey] =   _krisoAcceptRadiusFact.rawValue().toDouble();
             }
         }
         missionItems.append(saveObject);
@@ -320,12 +328,16 @@ void SimpleMissionItem::save(QJsonArray&  missionItems)
 bool SimpleMissionItem::load(QTextStream &loadStream)
 {
     bool success;
+    qDebug() << "****Load***********";
     if ((success = _missionItem.load(loadStream))) {
         if (specifiesAltitude()) {
             _altitudeMode = _missionItem.relativeAltitude() ? QGroundControlQmlGlobal::AltitudeModeRelative : QGroundControlQmlGlobal::AltitudeModeAbsolute;
             _altitudeFact.setRawValue(_missionItem._param7Fact.rawValue());
             _amslAltAboveTerrainFact.setRawValue(qQNaN());
         }
+
+        _krisoSpeedFact.setRawValue(qQNaN());
+        _krisoAcceptRadiusFact.setRawValue( _missionItem._param1Fact.rawValue());
         _connectSignals();
         _updateOptionalSections();
         _rebuildFacts();
@@ -342,11 +354,13 @@ bool SimpleMissionItem::load(const QJsonObject& json, int sequenceNumber, QStrin
     }
 
     if (specifiesAltitude()) {
-        if (json.contains(_jsonAltitudeModeKey) || json.contains(_jsonAltitudeKey) || json.contains(_jsonAMSLAltAboveTerrainKey)) {
+        if (json.contains(_jsonAltitudeModeKey) || json.contains(_jsonAltitudeKey) || json.contains(_jsonKrisoSpeedeKey) || json.contains(_jsonKrisoAcceptRadKey) || json.contains(_jsonAMSLAltAboveTerrainKey)) {
             QList<JsonHelper::KeyValidateInfo> keyInfoList = {
                 { _jsonAltitudeModeKey,         QJsonValue::Double, true },
                 { _jsonAltitudeKey,             QJsonValue::Double, true },
                 { _jsonAMSLAltAboveTerrainKey,  QJsonValue::Double, true },
+                { _jsonKrisoSpeedeKey,          QJsonValue::Double, true },
+                { _jsonKrisoAcceptRadKey,       QJsonValue::Double, true },
             };
             if (!JsonHelper::validateKeys(json, keyInfoList, errorString)) {
                 return false;
@@ -355,10 +369,15 @@ bool SimpleMissionItem::load(const QJsonObject& json, int sequenceNumber, QStrin
             _altitudeMode = (QGroundControlQmlGlobal::AltMode)(int)json[_jsonAltitudeModeKey].toDouble();
             _altitudeFact.setRawValue(JsonHelper::possibleNaNJsonValue(json[_jsonAltitudeKey]));
             _amslAltAboveTerrainFact.setRawValue(JsonHelper::possibleNaNJsonValue(json[_jsonAltitudeKey]));
+            _krisoSpeedFact.setRawValue(JsonHelper::possibleNaNJsonValue(json[_jsonKrisoSpeedeKey]));
+            _krisoAcceptRadiusFact.setRawValue(JsonHelper::possibleNaNJsonValue(json[_jsonKrisoAcceptRadKey]));
+
         } else {
             _altitudeMode = _missionItem.relativeAltitude() ? QGroundControlQmlGlobal::AltitudeModeRelative : QGroundControlQmlGlobal::AltitudeModeAbsolute;
             _altitudeFact.setRawValue(_missionItem._param7Fact.rawValue());
             _amslAltAboveTerrainFact.setRawValue(qQNaN());
+            // _krisoSpeedFact.setRawValue(JsonHelper::possibleNaNJsonValue(qQNaN()));
+            // _krisoAcceptRadiusFact.setRawValue(JsonHelper::possibleNaNJsonValue(qQNaN()));
         }
     }
 
@@ -454,7 +473,7 @@ void SimpleMissionItem::_rebuildTextFieldFacts(void)
     _textFieldFacts.clear();
     
     if (rawEdit()) {
-        _missionItem._param1Fact._setName("Param1");
+        _missionItem._param1Fact._setName("KrisoSpeed");
         _missionItem._param1Fact.setMetaData(_defaultParamMetaData);
         _textFieldFacts.append(&_missionItem._param1Fact);
         _missionItem._param2Fact._setName("Param2");
@@ -664,6 +683,18 @@ bool SimpleMissionItem::rawEdit(void) const
     return _rawEdit || !friendlyEditAllowed();
 }
 
+// void SimpleMissionItem::setKrisoSpeed(double speed)
+// {
+//     // _krisoSpeed = speed;
+//     // emit krisoSpeedChanged(this->speed());
+    
+//     if (_krisoSpeedFact.rawValue().toDouble() = speed) {
+//         _krisoSpeedFact.setRawValue(speed);
+//         emit krisoSpeedChanged(speed);
+//     }
+
+// }
+
 void SimpleMissionItem::setRawEdit(bool rawEdit)
 {
     if (this->rawEdit() != rawEdit) {
@@ -745,16 +776,21 @@ void SimpleMissionItem::_altitudeChanged(void)
 
 void SimpleMissionItem::_krisoAcceptRadiusChanged(void)
 {   
-    
-    qDebug() << _krisoAcceptRadiusFact.rawValue() ;
+    _missionItem._param1Fact.setRawValue(_krisoAcceptRadiusFact.rawValue());
+    qDebug() << "_krisoAcceptRadiusChanged 호출 됨!!!!! 값 :" <<_krisoAcceptRadiusFact.rawValue().toDouble();
 
 }
 
 
 void SimpleMissionItem::_krisoSpeedChanged(void)
 {   
+
+    qDebug() << "현재  : " <<_krisoSpeedFact.rawValue().toDouble() ;
     
-    qDebug() << _krisoSpeedFact.rawValue() ;
+    double speed = _krisoSpeedFact.rawValue().toDouble();
+    _krisoSpeed = speed;
+    _krisoSpeedFact.setRawValue(speed);
+
 
 }
 
@@ -813,7 +849,7 @@ void SimpleMissionItem::_setDefaultsForCommand(void)
         _missionItem._param5Fact.setRawValue(_mapCenterHint.latitude());
         _missionItem._param6Fact.setRawValue(_mapCenterHint.longitude());
     }
-
+    
     // Set global defaults first, then if there are param defaults they will get reset
     _altitudeMode = QGroundControlQmlGlobal::AltitudeModeRelative;
     emit altitudeModeChanged();
@@ -830,6 +866,14 @@ void SimpleMissionItem::_setDefaultsForCommand(void)
         _missionItem._param7Fact.setRawValue(0);
         _missionItem.setFrame(MAV_FRAME_MISSION);
     }
+
+    // kriso fact
+    double defaultSpeed = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultSpeed()->rawValue().toDouble();
+    double defaultAccpetRad = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultAcceptRadius()->rawValue().toDouble();
+    _krisoSpeedFact.setRawValue(defaultSpeed);
+    // _krisoAcceptRadiusFact.setRawValue(defaultAccpetRad);    
+    _missionItem._param1Fact.setRawValue(defaultAccpetRad);
+
 
     MAV_CMD command = static_cast<MAV_CMD>(this->command());
     const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_controllerVehicle, _previousVTOLMode, command);

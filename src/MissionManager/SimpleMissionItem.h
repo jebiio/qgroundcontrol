@@ -145,6 +145,7 @@ signals:
     void friendlyEditAllowedChanged (bool friendlyEditAllowed);
     void headingDegreesChanged      (double heading);
     void rawEditChanged             (bool rawEdit);
+    void krisoSpeedChanged          (double speed);
     void cameraSectionChanged       (QObject* cameraSection);
     void speedSectionChanged        (QObject* cameraSection);
     void altitudeModeChanged        (void);
@@ -224,6 +225,9 @@ private:
     static const char* _jsonAltitudeModeKey;
     static const char* _jsonAltitudeKey;
     static const char* _jsonAMSLAltAboveTerrainKey;
+    static const char* _jsonKrisoSpeedeKey;
+    static const char* _jsonKrisoAcceptRadKey;
+
 };
 
 #endif

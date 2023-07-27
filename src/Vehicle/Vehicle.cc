@@ -2187,6 +2187,7 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
             alt = item->altitude()->rawValue().toDouble();
             acceptRadi = item->altitude()->rawValue().toFloat();
 
+
             speedValues[i] = speed;
             acceptRadiValues[i] = acceptRadi;
             lat[i] = item->coordinate().latitude();
@@ -2196,7 +2197,9 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
             qDebug() << "speed Fact: " << speed ;
             qDebug() << "speed Memeber: " << speedMemeber ;
             qDebug() << "alt : " << alt;
-            qDebug() << "speedsection : " << item->speedSection()->flightSpeed()->rawValue().toDouble();;
+            qDebug() << "speedsection : " << item->speedSection()->flightSpeed()->rawValue().toDouble();
+            qDebug() << "Radius : " << item->krisoAcceptRadius()->rawValue().toDouble();
+            qDebug() << "------------------------------------------------------";
             // qDebug() << "jaeeun  : " << item->jaeeun();
         }
         
