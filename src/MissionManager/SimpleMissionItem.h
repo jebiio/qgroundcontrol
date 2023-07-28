@@ -36,6 +36,10 @@ public:
     Q_PROPERTY(Fact*            altitude                READ altitude                                           CONSTANT)   
     Q_PROPERTY(Fact*            krisoAcceptRadius       READ krisoAcceptRadius                                  CONSTANT)   
     Q_PROPERTY(Fact*            krisoSpeed              READ krisoSpeed                                         CONSTANT)                           ///< Altitude as specified by altitudeMode. Not necessarily true mission item altitude
+    Q_PROPERTY(Fact*            krisoNavSurgePgain      READ krisoNavSurgePgain                                 CONSTANT)   
+    Q_PROPERTY(Fact*            krisoNavSurgeDgain      READ krisoNavSurgeDgain                                 CONSTANT)
+    Q_PROPERTY(Fact*            krisoNavYawPgain        READ krisoNavYawPgain                                   CONSTANT)
+    // Q_PROPERTY(Fact*            krisoNavYawDgain        READ krisoNavYawDgain                                   CONSTANT)
     Q_PROPERTY(QGroundControlQmlGlobal::AltMode altitudeMode READ altitudeMode WRITE setAltitudeMode       NOTIFY altitudeModeChanged)
     Q_PROPERTY(Fact*            amslAltAboveTerrain     READ amslAltAboveTerrain                                CONSTANT)                           ///< Actual AMSL altitude for item if altitudeMode == AltitudeAboveTerrain
     Q_PROPERTY(int              command                 READ command                WRITE setCommand            NOTIFY commandChanged)
@@ -74,8 +78,12 @@ public:
     bool            specifiesAltitude   (void) const;
     QGroundControlQmlGlobal::AltMode altitudeMode(void) const { return _altitudeMode; }
     Fact*           altitude            (void) { return &_altitudeFact; }
-    Fact*           krisoAcceptRadius    (void) { return &_krisoAcceptRadiusFact; }
+    Fact*           krisoAcceptRadius   (void) { return &_krisoAcceptRadiusFact; }
     Fact*           krisoSpeed          (void) { return &_krisoSpeedFact; }
+    Fact*           krisoNavSurgePgain  (void) {return & _krisoNavSurgePgainFact;}
+    Fact*           krisoNavSurgeDgain  (void) {return & _krisoNavSurgeDgainFact;}
+    Fact*           krisoNavYawPgain    (void) {return & _krisoNavYawPgainFact;}
+    // Fact*           krisoNavYawDgain   (void) {return & _krisoNavYawDgainFact;}
     Fact*           amslAltAboveTerrain (void) { return &_amslAltAboveTerrainFact; }
     bool            isLoiterItem        (void) const;
     bool            showLoiterRadius    (void) const;
@@ -162,6 +170,10 @@ private slots:
     void _altitudeChanged                       (void);
     void _krisoAcceptRadiusChanged              (void);
     void _krisoSpeedChanged                     (void);
+    void _krisoNavSurgePgainChanged             (void);        
+    void _krisoNavSurgeDgainChanged             (void);    
+    void _krisoNavYawPgainChanged               (void);
+    // void _krisoNavYawDgainChanged               (void);
     void _altitudeModeChanged                   (void);
     void _terrainAltChanged                     (void);
     void _updateLastSequenceNumber              (void);
@@ -196,7 +208,11 @@ private:
     QGroundControlQmlGlobal::AltMode    _altitudeMode = QGroundControlQmlGlobal::AltitudeModeRelative;
     Fact                                _altitudeFact;
     Fact                                _krisoAcceptRadiusFact;    
-    Fact                                _krisoSpeedFact;
+    Fact                                _krisoSpeedFact;    
+    Fact                                _krisoNavSurgePgainFact;    
+    Fact                                _krisoNavSurgeDgainFact;    
+    Fact                                _krisoNavYawPgainFact;
+    // Fact                                _krisoNavYawDgainFact;     
     Fact                                _amslAltAboveTerrainFact;
 
     QmlObjectListModel  _textFieldFacts;
@@ -212,6 +228,10 @@ private:
     static FactMetaData*    _speedMetaData;
     static FactMetaData*    _krisoAcceptRadiusMetaData;
     static FactMetaData*    _krisoSpeedMetaData;
+    static FactMetaData*    _krisoNavSurgePgainMetaData;
+    static FactMetaData*    _krisoNavSurgeDgainMetaData;
+    static FactMetaData*    _krisoNavYawPgainMetaData;
+    // static FactMetaData*    _krisoNavYawDgainMetaData;
 
 
     FactMetaData    _param1MetaData;
@@ -221,6 +241,7 @@ private:
     FactMetaData    _param5MetaData;
     FactMetaData    _param6MetaData;
     FactMetaData    _param7MetaData;
+    // FactMetaData    _param8MetaData;
 
     static const char* _jsonAltitudeModeKey;
     static const char* _jsonAltitudeKey;

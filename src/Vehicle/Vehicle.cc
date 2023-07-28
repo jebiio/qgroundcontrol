@@ -2167,43 +2167,41 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     _visualItems = visualItems;
 
     qDebug() <<_visualItems->count();
-    double lat[5] = {1.0,2.0,3.0,4.0,5.0};
-    double lon[5] = {1.0,2.0,3.0,4.0,5.0};
-    float speedValues[5] = {1.1, 1.2, 1.3,1.4,1.5};
-    float acceptRadiValues[5] = {1.1, 1.2, 1.3,1.4,1.5};
+    double lat[5] = {};
+    double lon[5] = {};
+    float speedValues[5] = {};
+    float acceptRadiValues[5] = {};
+    float navSurgePgain = 0.0;         
+    float navSurgeDgain = 0.0;     
+    float navYawPgain = 0.0; 
+    // float navYawDgain = 0.0;   
 
-
-
-
-    for (int i=0; i<_visualItems->count(); i++) {
-        double speedMemeber = 0.0;
+   for (int i = 1; i < _visualItems->count(); i++) {
         double speed = 0.0;
-        double alt = 0.0;
         double acceptRadi = 0.0;
         if (visualItems->value<VisualMissionItem*>(i)->isSimpleItem()){
             SimpleMissionItem* item = visualItems->value<SimpleMissionItem*>(i);
             speed = item->krisoSpeed()->rawValue().toFloat();
-            alt = item->altitude()->rawValue().toDouble();
-            acceptRadi = item->altitude()->rawValue().toFloat();
+            acceptRadi = item->krisoAcceptRadius()->rawValue().toDouble();
 
-
-            speedValues[i] = speed;
-            acceptRadiValues[i] = acceptRadi;
-            lat[i] = item->coordinate().latitude();
-            lon[i] = item->coordinate().longitude();
-
-            
+            // i-1을 사용해 배열에 값 저장(배열 인덱스는 0부터 시작)
+            speedValues[i-1] = speed;
+            acceptRadiValues[i-1] = acceptRadi;
+            lat[i-1] = item->coordinate().latitude();
+            lon[i-1] = item->coordinate().longitude();
+            navSurgePgain =item->krisoNavSurgePgain()->rawValue().toDouble();                     
+            navSurgeDgain =item->krisoNavSurgeDgain()->rawValue().toDouble();         
+            navYawPgain =  item->krisoNavYawPgain()->rawValue().toDouble(); 
+            // navYawDgain =  item->krisoNavYawDgain()->rawValue().toDouble();       
             qDebug() << "speed Fact: " << speed ;
-            qDebug() << "speed Memeber: " << speedMemeber ;
-            qDebug() << "alt : " << alt;
-            qDebug() << "speedsection : " << item->speedSection()->flightSpeed()->rawValue().toDouble();
-            qDebug() << "Radius : " << item->krisoAcceptRadius()->rawValue().toDouble();
+            qDebug() << "Radius : " << acceptRadi;
+            qDebug() << "krisoNavSurgePgain: " <<navSurgePgain;
+            qDebug() << "krisoNavSurgeDgain: " <<navSurgeDgain;
+            qDebug() << "krisoNavYawPgain: "   <<navYawPgain;
+            // qDebug() << "krisoNavYawDgain: "   <<navYawDgain;
             qDebug() << "------------------------------------------------------";
-            // qDebug() << "jaeeun  : " << item->jaeeun();
         }
-        
-    
-    }
+   }
     // uint64_t time_usec = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
 
@@ -2227,9 +2225,9 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
                                             lon,        // lon , sizeof(double)*5
                                             speedValues,         // spd_cmd , sizeof(double)*5
                                             acceptRadiValues,         // acceptance_radius, sizeof(float)*5
-                                            1.0,        // nav_surge_pgain
-                                            2.0,        // nav_surge_dgain
-                                            3.0,        // nav_yaw_pgain
+                                            navSurgePgain,        // nav_surge_pgain
+                                            navSurgeDgain,        // nav_surge_dgain
+                                            navYawPgain,        // nav_yaw_pgain
                                             4.0        // nav_yaw_dgain
                                             );
             

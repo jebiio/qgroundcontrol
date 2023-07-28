@@ -76,5 +76,32 @@ Rectangle {
             fact:   missionItem.krisoAcceptRadius
             width: parent.width 
         }
+
+        QGCLabel {
+            text: qsTr("nav_surge_pgain")
+        }
+        FactTextField {
+            fact:   missionItem.krisoNavSurgePgain
+            width: parent.width 
+        }
+
+
+        QGCLabel {
+            text: qsTr("nav_surge_dgain")
+        }
+        FactTextField {
+            fact:   missionItem.krisoNavSurgeDgain
+            width: parent.width 
+        }
+
+
+        QGCLabel {
+            text: qsTr("nav_yaw_pgain")
+        }
+        FactTextField {
+            fact:   missionItem.krisoNavYawPgain
+            width: parent.width 
+        }
+
     }
 }
