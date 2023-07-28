@@ -2171,9 +2171,9 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     double lon[5] = {};
     float speedValues[5] = {};
     float acceptRadiValues[5] = {};
-    float navSurgePgain = 0.0;         
-    float navSurgeDgain = 0.0;     
-    float navYawPgain = 0.0; 
+    // float navSurgePgain = 0.0;         
+    // float navSurgeDgain = 0.0;     
+    // float navYawPgain = 0.0; 
     // float navYawDgain = 0.0;   
 
    for (int i = 1; i < _visualItems->count(); i++) {
@@ -2189,15 +2189,15 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
             acceptRadiValues[i-1] = acceptRadi;
             lat[i-1] = item->coordinate().latitude();
             lon[i-1] = item->coordinate().longitude();
-            navSurgePgain =item->krisoNavSurgePgain()->rawValue().toDouble();                     
-            navSurgeDgain =item->krisoNavSurgeDgain()->rawValue().toDouble();         
-            navYawPgain =  item->krisoNavYawPgain()->rawValue().toDouble(); 
+            // navSurgePgain =item->krisoNavSurgePgain()->rawValue().toDouble();                     
+            // navSurgeDgain =item->krisoNavSurgeDgain()->rawValue().toDouble();         
+            // navYawPgain =  item->krisoNavYawPgain()->rawValue().toDouble(); 
             // navYawDgain =  item->krisoNavYawDgain()->rawValue().toDouble();       
             qDebug() << "speed Fact: " << speed ;
             qDebug() << "Radius : " << acceptRadi;
-            qDebug() << "krisoNavSurgePgain: " <<navSurgePgain;
-            qDebug() << "krisoNavSurgeDgain: " <<navSurgeDgain;
-            qDebug() << "krisoNavYawPgain: "   <<navYawPgain;
+            // qDebug() << "krisoNavSurgePgain: " <<navSurgePgain;
+            // qDebug() << "krisoNavSurgeDgain: " <<navSurgeDgain;
+            // qDebug() << "krisoNavYawPgain: "   <<navYawPgain;
             // qDebug() << "krisoNavYawDgain: "   <<navYawDgain;
             qDebug() << "------------------------------------------------------";
         }
@@ -2225,9 +2225,9 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
                                             lon,        // lon , sizeof(double)*5
                                             speedValues,         // spd_cmd , sizeof(double)*5
                                             acceptRadiValues,         // acceptance_radius, sizeof(float)*5
-                                            navSurgePgain,        // nav_surge_pgain
-                                            navSurgeDgain,        // nav_surge_dgain
-                                            navYawPgain,        // nav_yaw_pgain
+                                            1.0,        // nav_surge_pgain
+                                            2.0,        // nav_surge_dgain
+                                            3.0,        // nav_yaw_pgain
                                             4.0        // nav_yaw_dgain
                                             );
             
