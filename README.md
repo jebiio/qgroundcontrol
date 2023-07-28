@@ -1,3 +1,25 @@
+# 빌드
+## kriso mavlink 자동 업데이트 및 반영시키기
+```bash
+git submodule update --init --recursive
+source ./generate_copy_kriso_mavlink.sh
+#kriso mavlink를 /libs/mavlink에 자동 복사해주기 떄문에 Qt Creator에서 바로 빌드하시오
+```
+
+# 빌드시 Error 해결
+* airmap 에러 발생시
+  * qgroundcontrol.pro 파일의 15번째 줄에 아래 내용 추가
+```
+DEFINES += DISABLE_AIRMAP
+```
+
+* Ubuntu 22.04에서 빌드시 error
+  * gst-plugins-good에서 compile error 수정
+```bash
+git submodule update --init --recursive
+source ./error_fix_ubuntu2204_build.sh
+```
+
 # QGroundControl Ground Control Station
 
 [![Releases](https://img.shields.io/github/release/mavlink/QGroundControl.svg)](https://github.com/mavlink/QGroundControl/releases)
