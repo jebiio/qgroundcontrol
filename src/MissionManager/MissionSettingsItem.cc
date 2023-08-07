@@ -22,13 +22,22 @@
 QGC_LOGGING_CATEGORY(MissionSettingsItemLog, "MissionSettingsItemLog")
 
 const char* MissionSettingsItem::_plannedHomePositionAltitudeName = "PlannedHomePositionAltitude";
+const char* MissionSettingsItem::_krisoNavSurgePgainName = "nav_surge_pgain";
+const char* MissionSettingsItem::_krisoNavSurgeDgainName = "nav_surge_dgain";
+const char* MissionSettingsItem::_krisoNavYawPgainName = "nav_yaw_pgain";
+const char* MissionSettingsItem::_krisoNavYawDgainName = "nav_yaw_dgain";
 
 QMap<QString, FactMetaData*> MissionSettingsItem::_metaDataMap;
+
 
 MissionSettingsItem::MissionSettingsItem(PlanMasterController* masterController, bool flyView)
     : ComplexMissionItem                (masterController, flyView)
     , _managerVehicle                   (masterController->managerVehicle())
     , _plannedHomePositionAltitudeFact  (0, _plannedHomePositionAltitudeName,   FactMetaData::valueTypeDouble)
+    , _krisoNavSurgePgainFact           (0, _krisoNavSurgePgainName,   FactMetaData::valueTypeFloat)
+    , _krisoNavSurgeDgainFact           (0, _krisoNavSurgeDgainName,   FactMetaData::valueTypeFloat)
+    , _krisoNavYawPgainFact             (0, _krisoNavYawPgainName,     FactMetaData::valueTypeFloat)
+    , _krisoNavYawDgainFact             (0, _krisoNavYawDgainName,    FactMetaData::valueTypeFloat)
     , _cameraSection                    (masterController)
     , _speedSection                     (masterController)
 {
@@ -40,7 +49,21 @@ MissionSettingsItem::MissionSettingsItem(PlanMasterController* masterController,
     }
 
     _plannedHomePositionAltitudeFact.setMetaData    (_metaDataMap[_plannedHomePositionAltitudeName]);
+
+    _krisoNavSurgePgainFact.setMetaData    (_metaDataMap[_krisoNavSurgePgainName]);
+    _krisoNavSurgeDgainFact.setMetaData    (_metaDataMap[_krisoNavSurgeDgainName]);
+    _krisoNavYawPgainFact.setMetaData      (_metaDataMap[_krisoNavYawPgainName]);
+    _krisoNavYawDgainFact.setMetaData      (_metaDataMap[_krisoNavYawDgainName]);
+
     _plannedHomePositionAltitudeFact.setRawValue    (_plannedHomePositionAltitudeFact.rawDefaultValue());
+
+    _krisoNavSurgePgainFact.setRawValue    (_krisoNavSurgePgainFact.rawDefaultValue());
+    _krisoNavSurgeDgainFact.setRawValue    (_krisoNavSurgeDgainFact.rawDefaultValue());
+    _krisoNavYawPgainFact.setRawValue      (_krisoNavYawPgainFact.rawDefaultValue());
+    _krisoNavYawDgainFact.setRawValue      (_krisoNavYawDgainFact.rawDefaultValue());
+
+
+    
     setHomePositionSpecialCase(true);
 
     _cameraSection.setAvailable(true);
@@ -61,6 +84,11 @@ MissionSettingsItem::MissionSettingsItem(PlanMasterController* masterController,
     connect(this,               &MissionSettingsItem::amslEntryAltChanged,              this, &MissionSettingsItem::maxAMSLAltitudeChanged);
 
     connect(&_plannedHomePositionAltitudeFact,  &Fact::rawValueChanged,                 this, &MissionSettingsItem::_updateAltitudeInCoordinate);
+    
+    connect(&_krisoNavSurgePgainFact,           &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoNavSurgePgainChanged);
+    connect(&_krisoNavSurgeDgainFact,           &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoNavSurgeDgainChanged);
+    connect(&_krisoNavYawPgainFact,             &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoNavYawPgainChanged);
+    connect(&_krisoNavYawDgainFact,             &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoNavYawDgainChanged);
 
     connect(_managerVehicle, &Vehicle::homePositionChanged, this, &MissionSettingsItem::_updateHomePosition);
     _updateHomePosition(_managerVehicle->homePosition());
@@ -297,4 +325,28 @@ void MissionSettingsItem::_updateHomePosition(const QGeoCoordinate& homePosition
     if (_flyView) {
         setCoordinate(homePosition);
     }
+}
+
+
+void MissionSettingsItem::_krisoNavSurgePgainChanged(void)
+{
+    // double newSurgePGain = value.toFloat();
+    // _missionItem._param3Fact.setRawValue(_krisoNavSurgePgainFact.rawValue());
+    qDebug() <<"현재 NavSurgePgain : " << _krisoNavSurgePgainFact.rawValue().toFloat();
+}
+void MissionSettingsItem::_krisoNavSurgeDgainChanged(void)
+{
+    // _missionItem._param4Fact.setRawValue(_krisoNavSurgeDgainFact.rawValue());
+    qDebug() <<"현재 NavSurgeDgain : " << _krisoNavSurgeDgainFact.rawValue().toFloat();
+}
+void MissionSettingsItem::_krisoNavYawPgainChanged(void)
+{
+    // _missionItem._param7Fact.setRawValue(_krisoNavYawPgainFact.rawValue());
+    qDebug() <<"현재 NavYawPgain : " << _krisoNavYawPgainFact.rawValue().toFloat();
+}
+
+void MissionSettingsItem::_krisoNavYawDgainChanged(void)
+{
+    // _missionItem._param8Fact.setRawValue(_krisoNavYawDgainFact.rawValue());
+    qDebug() <<"현재 NavYawDgain : " << _krisoNavYawDgainFact.rawValue().toFloat();
 }

@@ -29,10 +29,19 @@ public:
     MissionSettingsItem(PlanMasterController* masterController, bool flyView);
 
     Q_PROPERTY(Fact*    plannedHomePositionAltitude READ plannedHomePositionAltitude                            CONSTANT)
+    Q_PROPERTY(Fact*            krisoNavSurgePgain      READ krisoNavSurgePgain                                 CONSTANT)   
+    Q_PROPERTY(Fact*            krisoNavSurgeDgain      READ krisoNavSurgeDgain                                 CONSTANT)
+    Q_PROPERTY(Fact*            krisoNavYawPgain        READ krisoNavYawPgain                                   CONSTANT)
+    Q_PROPERTY(Fact*            krisoNavYawDgain        READ krisoNavYawDgain                                   CONSTANT)
     Q_PROPERTY(QObject* cameraSection               READ cameraSection                                          CONSTANT)
     Q_PROPERTY(QObject* speedSection                READ speedSection                                           CONSTANT)
 
     Fact*           plannedHomePositionAltitude (void) { return &_plannedHomePositionAltitudeFact; }
+    Fact*           krisoNavSurgePgain  (void) {return & _krisoNavSurgePgainFact;}
+    Fact*           krisoNavSurgeDgain  (void) {return & _krisoNavSurgeDgainFact;}
+    Fact*           krisoNavYawPgain    (void) {return & _krisoNavYawPgainFact;}
+    Fact*           krisoNavYawDgain   (void) {return & _krisoNavYawDgainFact;}
+    
     CameraSection*  cameraSection               (void) { return &_cameraSection; }
     SpeedSection*   speedSection                (void) { return &_speedSection; }
 
@@ -104,11 +113,18 @@ private slots:
     void _setHomeAltFromTerrain                 (double terrainAltitude);
     void _setCoordinateWorker                   (const QGeoCoordinate& coordinate);
     void _updateHomePosition                    (const QGeoCoordinate& homePosition);
-
+    void _krisoNavSurgePgainChanged             (void);
+    void _krisoNavSurgeDgainChanged             (void);
+    void _krisoNavYawPgainChanged               (void);
+    void _krisoNavYawDgainChanged               (void);
 private:
     Vehicle*        _managerVehicle =                   nullptr;
     QGeoCoordinate  _plannedHomePositionCoordinate;     // Does not include altitude
     Fact            _plannedHomePositionAltitudeFact;
+    Fact            _krisoNavSurgePgainFact;
+    Fact            _krisoNavSurgeDgainFact;
+    Fact            _krisoNavYawPgainFact;
+    Fact            _krisoNavYawDgainFact;
     int             _sequenceNumber =                   0;
     bool            _plannedHomePositionFromVehicle =   false;
     bool            _plannedHomePositionMovedByUser =   false;
@@ -118,6 +134,15 @@ private:
     static QMap<QString, FactMetaData*> _metaDataMap;
 
     static const char* _plannedHomePositionAltitudeName;
+    static const char* _krisoNavSurgePgainName;    
+    static const char* _krisoNavSurgeDgainName;
+    static const char* _krisoNavYawPgainName;
+    static const char* _krisoNavYawDgainName;
+
+    // static FactMetaData*    _krisoNavSurgePgainMetaData;
+    // static FactMetaData*    _krisoNavSurgeDgainMetaData;
+    // static FactMetaData*    _krisoNavYawPgainMetaData;
+    // static FactMetaData*    _krisoNavYawDgainMetaData;
 };
 
 #endif

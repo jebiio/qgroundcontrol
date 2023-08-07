@@ -10,6 +10,34 @@
     "units":            "m",
     "decimalPlaces":    1,
     "default":     0
+},
+{
+    "name":             "nav_surge_pgain",
+    "shortDesc": "nav_surge_pgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              1.0
+},
+{
+    "name":             "nav_surge_dgain",
+    "shortDesc": "nav_surge_dgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              2.0
+},
+{
+    "name":             "nav_yaw_pgain",
+    "shortDesc": "nav_yaw_pgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              3.0
+},
+{
+    "name":             "nav_yaw_dgain",
+    "shortDesc": "nav_yaw_dgain",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              4.0
 }
 ]
 }
