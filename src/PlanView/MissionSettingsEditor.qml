@@ -100,21 +100,37 @@ Rectangle {
         // }
 
         QGCLabel {
-            text:           qsTr("Initial Waypoint Speed")
-            font.pointSize: ScreenTools.smallFontPointSize
+            text: qsTr("nav_surge_pgain")
         }
+
         FactTextField {
-            fact:               QGroundControl.settingsManager.appSettings.krisoDefaultSpeed
-            Layout.fillWidth:   true
+            fact:   missionItem.krisoNavSurgePgain
+            width: parent.width 
         }
 
         QGCLabel {
-            text:           qsTr("Initial Waypoint Accept Radius")
-            font.pointSize: ScreenTools.smallFontPointSize
+            text: qsTr("nav_surge_dgain")
         }
         FactTextField {
-            fact:               QGroundControl.settingsManager.appSettings.krisoDefaultAcceptRadius
-            Layout.fillWidth:   true
+            fact:   missionItem.krisoNavSurgeDgain
+            width: parent.width 
+        }
+
+
+        QGCLabel {
+            text: qsTr("nav_yaw_pgain")
+        }
+        FactTextField {
+            fact:   missionItem.krisoNavYawPgain
+            width: parent.width 
+        }
+
+        QGCLabel {
+            text: qsTr("nav_yaw_dgain")
+        }
+        FactTextField {
+            fact:   missionItem.krisoNavYawDgain
+            width: parent.width 
         }
 
         // QGCLabel {
