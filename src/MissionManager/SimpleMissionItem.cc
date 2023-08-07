@@ -24,9 +24,9 @@
 FactMetaData* SimpleMissionItem::_altitudeMetaData =        nullptr;
 FactMetaData* SimpleMissionItem::_krisoAcceptRadiusMetaData =      nullptr;
 FactMetaData* SimpleMissionItem::_krisoSpeedMetaData =      nullptr;
-FactMetaData* SimpleMissionItem::_krisoNavSurgePgainMetaData =      nullptr;
-FactMetaData* SimpleMissionItem::_krisoNavSurgeDgainMetaData =      nullptr;
-FactMetaData* SimpleMissionItem::_krisoNavYawPgainMetaData =        nullptr;
+// FactMetaData* SimpleMissionItem::_krisoNavSurgePgainMetaData =      nullptr;
+// FactMetaData* SimpleMissionItem::_krisoNavSurgeDgainMetaData =      nullptr;
+// FactMetaData* SimpleMissionItem::_krisoNavYawPgainMetaData =        nullptr;
 // FactMetaData* SimpleMissionItem::_krisoNavYawDgainMetaData =       nullptr;
 FactMetaData* SimpleMissionItem::_commandMetaData =         nullptr;
 FactMetaData* SimpleMissionItem::_defaultParamMetaData =    nullptr;
@@ -67,10 +67,10 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     , _altitudeFact                     (0, "Altitude",             FactMetaData::valueTypeDouble)
     , _krisoAcceptRadiusFact            (0, "Acceptance Radius",    FactMetaData::valueTypeDouble)
     , _krisoSpeedFact                   (0, "Speed",                FactMetaData::valueTypeDouble)
-    , _krisoNavSurgePgainFact           (0, "krisoNavSurgePgain",   FactMetaData::valueTypeDouble)
-    , _krisoNavSurgeDgainFact           (0, "krisoNavSurgeDgain",   FactMetaData::valueTypeDouble)
-    , _krisoNavYawPgainFact             (0, "krisoNavYawPgain",     FactMetaData::valueTypeDouble)
-    // , _krisoNavYawDgainFact            (0, "krisoNavYawDgain",    FactMetaData::valueTypeDouble)        
+    // , _krisoNavSurgePgainFact           (0, "krisoNavSurgePgain",   FactMetaData::valueTypeDouble)
+    // , _krisoNavSurgeDgainFact           (0, "krisoNavSurgeDgain",   FactMetaData::valueTypeDouble)
+    // , _krisoNavYawPgainFact             (0, "krisoNavYawPgain",     FactMetaData::valueTypeDouble)
+    // , _krisoNavYawDgainFact             (0, "krisoNavYawDgain",    FactMetaData::valueTypeDouble)        
     , _amslAltAboveTerrainFact          (0, "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData                   (FactMetaData::valueTypeDouble)
     , _param2MetaData                   (FactMetaData::valueTypeDouble)
@@ -102,9 +102,9 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
     , _altitudeFact             (0,         "Altitude",             FactMetaData::valueTypeDouble)
     , _krisoAcceptRadiusFact    (0,         "Acceptance Radius",    FactMetaData::valueTypeDouble)
     , _krisoSpeedFact           (0,         "Speed",                FactMetaData::valueTypeDouble)
-    , _krisoNavSurgePgainFact   (0, "krisoNavSurgePgain",   FactMetaData::valueTypeDouble)
-    , _krisoNavSurgeDgainFact   (0, "krisoNavSurgeDgain",   FactMetaData::valueTypeDouble)
-    , _krisoNavYawPgainFact     (0, "krisoNavYawPgain",     FactMetaData::valueTypeDouble)
+    // , _krisoNavSurgePgainFact   (0, "krisoNavSurgePgain",   FactMetaData::valueTypeDouble)
+    // , _krisoNavSurgeDgainFact   (0, "krisoNavSurgeDgain",   FactMetaData::valueTypeDouble)
+    // , _krisoNavYawPgainFact     (0, "krisoNavYawPgain",     FactMetaData::valueTypeDouble)
     // , _krisoNavYawDgainFact     (0, "krisoNavYawDgain",    FactMetaData::valueTypeDouble)  
     , _amslAltAboveTerrainFact  (0,         "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData           (FactMetaData::valueTypeDouble)
@@ -144,10 +144,10 @@ SimpleMissionItem::SimpleMissionItem(PlanMasterController* masterController, boo
 //    double defaultAccpetRad = qgcApp()->toolbox()->settingsManager()->appSettings()->krisoDefaultAcceptRadius()->rawValue().toDouble();
     _krisoSpeedFact.setRawValue(_missionItem._param2Fact.rawValue());
     _krisoAcceptRadiusFact.setRawValue( _missionItem._param1Fact.rawValue());  
-    _krisoNavSurgePgainFact.setRawValue(_missionItem._param3Fact.rawValue());                
-    _krisoNavSurgeDgainFact.setRawValue(_missionItem._param4Fact.rawValue());
-    _krisoNavYawPgainFact.setRawValue(_missionItem._param7Fact.rawValue());             
-    // _krisoNavYawPgainFact.setRawValue(_missionItem._param8Fact.rawValue());           
+    // _krisoNavSurgePgainFact.setRawValue(0.0);                
+    // _krisoNavSurgeDgainFact.setRawValue(0.0);
+    // _krisoNavYawPgainFact.setRawValue(0.0);             
+    // _krisoNavYawPgainFact.setRawValue(0.0);           
     
     
     // In flyView we skip some of the intialization to save memory
@@ -184,9 +184,9 @@ void SimpleMissionItem::_connectSignals(void)
     connect(&_altitudeFact,                     &Fact::valueChanged,                        this, &SimpleMissionItem::_altitudeChanged);
     connect(&_krisoAcceptRadiusFact,            &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoAcceptRadiusChanged);
     connect(&_krisoSpeedFact,                   &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoSpeedChanged);
-    connect(&_krisoNavSurgePgainFact,           &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoNavSurgePgainChanged);  
-    connect(&_krisoNavSurgeDgainFact,           &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoNavSurgeDgainChanged);  
-    connect(&_krisoNavYawPgainFact,             &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoNavYawPgainChanged);    
+    // connect(&_krisoNavSurgePgainFact,           &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoNavSurgePgainChanged);  
+    // connect(&_krisoNavSurgeDgainFact,           &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoNavSurgeDgainChanged);  
+    // connect(&_krisoNavYawPgainFact,             &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoNavYawPgainChanged);    
     // connect(&_krisoNavYawDgainFact,             &Fact::valueChanged,                        this, &SimpleMissionItem::_krisoNavYawDgainChanged);    
 
     connect(this,                               &SimpleMissionItem::altitudeModeChanged,    this, &SimpleMissionItem::_altitudeModeChanged);
@@ -305,17 +305,17 @@ void SimpleMissionItem::_setupMetaData(void)
         _krisoAcceptRadiusMetaData->setRawUnits("deg");
         _krisoAcceptRadiusMetaData->setDecimalPlaces(2);
 
-        _krisoNavSurgePgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
-        _krisoNavSurgePgainMetaData->setRawUnits("m/s");
-        _krisoNavSurgePgainMetaData->setDecimalPlaces(2);
+        // _krisoNavSurgePgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
+        // // _krisoNavSurgePgainMetaData->setRawUnits("m/s"); 재은
+        // _krisoNavSurgePgainMetaData->setDecimalPlaces(2);
 
-        _krisoNavSurgeDgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);      
-        _krisoNavSurgeDgainMetaData->setRawUnits("m/s");
-        _krisoNavSurgeDgainMetaData->setDecimalPlaces(2);
+        // _krisoNavSurgeDgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);      
+        // _krisoNavSurgeDgainMetaData->setRawUnits("m/s");
+        // _krisoNavSurgeDgainMetaData->setDecimalPlaces(2);
 
-        _krisoNavYawPgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
-        _krisoNavYawPgainMetaData->setRawUnits("m/s");
-        _krisoNavYawPgainMetaData->setDecimalPlaces(2);
+        // _krisoNavYawPgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
+        // _krisoNavYawPgainMetaData->setRawUnits("m/s");
+        // _krisoNavYawPgainMetaData->setDecimalPlaces(2);
 
         // _krisoNavYawDgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
         // _krisoNavYawDgainMetaData->setRawUnits("m/s");
@@ -331,9 +331,9 @@ void SimpleMissionItem::_setupMetaData(void)
     _krisoSpeedFact.setMetaData(_krisoSpeedMetaData);
     _krisoAcceptRadiusFact.setMetaData(_krisoAcceptRadiusMetaData);
     
-    _krisoNavSurgePgainFact.setMetaData(_krisoNavSurgePgainMetaData);
-    _krisoNavSurgeDgainFact.setMetaData(_krisoNavSurgeDgainMetaData);
-    _krisoNavYawPgainFact.setMetaData(_krisoNavYawPgainMetaData);
+    // _krisoNavSurgePgainFact.setMetaData(_krisoNavSurgePgainMetaData);
+    // _krisoNavSurgeDgainFact.setMetaData(_krisoNavSurgeDgainMetaData);
+    // _krisoNavYawPgainFact.setMetaData(_krisoNavYawPgainMetaData);
     // _krisoNavYawDgainFact.setMetaData(_krisoNavYawDgainMetaData);
 
 
@@ -827,25 +827,25 @@ void SimpleMissionItem::_krisoSpeedChanged(void)
 
 }
 
-void SimpleMissionItem::_krisoNavSurgePgainChanged(void)
-{
-    _missionItem._param3Fact.setRawValue(_krisoNavSurgePgainFact.rawValue());
-    qDebug() <<"현재 NavSurgePgain : " << _krisoNavSurgePgainFact.rawValue().toDouble();
-}
-void SimpleMissionItem::_krisoNavSurgeDgainChanged(void)
-{
-    _missionItem._param4Fact.setRawValue(_krisoNavSurgeDgainFact.rawValue());
-    qDebug() <<"현재 NavSurgeDgain : " << _krisoNavSurgeDgainFact.rawValue().toDouble();
-}
-void SimpleMissionItem::_krisoNavYawPgainChanged(void)
-{
-    _missionItem._param7Fact.setRawValue(_krisoNavYawPgainFact.rawValue());
-    qDebug() <<"현재 NavYawPgain : " << _krisoNavYawPgainFact.rawValue().toDouble();
-}
+// void SimpleMissionItem::_krisoNavSurgePgainChanged(void)
+// {
+//     // _missionItem._param3Fact.setRawValue(_krisoNavSurgePgainFact.rawValue());
+//     qDebug() <<"현재 NavSurgePgain : " << _krisoNavSurgePgainFact.rawValue().toDouble();
+// }
+// void SimpleMissionItem::_krisoNavSurgeDgainChanged(void)
+// {
+//     // _missionItem._param4Fact.setRawValue(_krisoNavSurgeDgainFact.rawValue());
+//     qDebug() <<"현재 NavSurgeDgain : " << _krisoNavSurgeDgainFact.rawValue().toDouble();
+// }
+// void SimpleMissionItem::_krisoNavYawPgainChanged(void)
+// {
+//     // _missionItem._param7Fact.setRawValue(_krisoNavYawPgainFact.rawValue());
+//     qDebug() <<"현재 NavYawPgain : " << _krisoNavYawPgainFact.rawValue().toDouble();
+// }
 
 // void SimpleMissionItem::_krisoNavYawDgainChanged(void)
 // {
-//     _missionItem._param8Fact.setRawValue(_krisoNavYawDgainFact.rawValue());
+//     // _missionItem._param8Fact.setRawValue(_krisoNavYawDgainFact.rawValue());
 //     qDebug() <<"현재 NavYawDgain : " << _krisoNavYawDgainFact.rawValue().toDouble();
 // }
 
