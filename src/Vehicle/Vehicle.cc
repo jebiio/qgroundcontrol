@@ -57,6 +57,7 @@
 #include "Autotune.h"
 #include "SimpleMissionItem.h"
 #include "QmlObjectListModel.h"
+#include "MissionSettingsItem.h"
 
 
 #if defined(QGC_AIRMAP_ENABLED)
@@ -2171,14 +2172,25 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     double lon[5] = {};
     float speedValues[5] = {};
     float acceptRadiValues[5] = {};
-    // float navSurgePgain = 0.0;         
-    // float navSurgeDgain = 0.0;     
-    // float navYawPgain = 0.0; 
-    // float navYawDgain = 0.0;   
+    float navSurgePgain = 0.0;         
+    float navSurgeDgain = 0.0;     
+    float navYawPgain = 0.0; 
+    float navYawDgain = 0.0;   
+
+    MissionSettingsItem* settingsItem = visualItems->value<MissionSettingsItem*>(0);
+    
+    if (settingsItem) {
+        navSurgePgain = settingsItem->krisoNavSurgePgain()->rawValue().toFloat(); 
+        navSurgeDgain = settingsItem->krisoNavSurgeDgain()->rawValue().toFloat(); 
+        navYawPgain = settingsItem->krisoNavYawPgain()->rawValue().toFloat(); 
+        navYawDgain = settingsItem->krisoNavYawDgain()->rawValue().toFloat(); 
+    }
 
    for (int i = 1; i < _visualItems->count(); i++) {
         double speed = 0.0;
         double acceptRadi = 0.0;
+
+
         if (visualItems->value<VisualMissionItem*>(i)->isSimpleItem()){
             SimpleMissionItem* item = visualItems->value<SimpleMissionItem*>(i);
             speed = item->krisoSpeed()->rawValue().toFloat();
@@ -2195,6 +2207,7 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
             // navYawDgain =  item->krisoNavYawDgain()->rawValue().toDouble();       
             qDebug() << "speed Fact: " << speed ;
             qDebug() << "Radius : " << acceptRadi;
+
             // qDebug() << "krisoNavSurgePgain: " <<navSurgePgain;
             // qDebug() << "krisoNavSurgeDgain: " <<navSurgeDgain;
             // qDebug() << "krisoNavYawPgain: "   <<navYawPgain;
@@ -2207,9 +2220,6 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
 
     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
     QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
-
-
-
 
     // Send a heartbeat out on each link
     for (int i=0; i<sharedLinks.count(); i++) {
@@ -2225,10 +2235,10 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
                                             lon,        // lon , sizeof(double)*5
                                             speedValues,         // spd_cmd , sizeof(double)*5
                                             acceptRadiValues,         // acceptance_radius, sizeof(float)*5
-                                            1.0,        // nav_surge_pgain
-                                            2.0,        // nav_surge_dgain
-                                            3.0,        // nav_yaw_pgain
-                                            4.0        // nav_yaw_dgain
+                                            navSurgePgain,        // nav_surge_pgain
+                                            navSurgeDgain,        // nav_surge_dgain
+                                            navYawPgain,        // nav_yaw_pgain
+                                            navYawDgain        // nav_yaw_dgain
                                             );
             
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
@@ -2283,9 +2293,6 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
 
 void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
 {
-    // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
-    // Also, suppose 1.0f is the parameter to send an emergency command.
-    // You may need to modify the details based on your own specifications.
     
     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
     QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
