@@ -22,7 +22,8 @@ const char* KrisoGainFactGroup::_nav_surge_dgainFactName = "nav_surge_dgain";
 const char* KrisoGainFactGroup::_nav_yaw_pgainFactName   = "nav_yaw_pgain";  
 const char* KrisoGainFactGroup::_nav_yaw_dgainFactName   = "nav_yaw_dgain";  
 const char* KrisoGainFactGroup::_latFactName =                 "lat";  
-const char* KrisoGainFactGroup::_lonFactName =                 "lon";  
+const char* KrisoGainFactGroup::_lonFactName =                 "lon";
+const char* KrisoGainFactGroup::_dp_yawFactName =              "dp_yaw";
 
 
 KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
@@ -39,6 +40,7 @@ KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
     , _nav_yaw_dgain                  (0, _nav_yaw_dgainFactName,           FactMetaData::valueTypeFloat)
     , _lat                            (0, _latFactName,               FactMetaData::valueTypeDouble)
     , _lon                            (0, _lonFactName,               FactMetaData::valueTypeDouble)
+    , _dp_yaw                         (0, _dp_yawFactName,               FactMetaData::valueTypeFloat)
     
 
 {
@@ -54,6 +56,7 @@ KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
     _addFact(&_nav_yaw_dgain,       _nav_yaw_dgainFactName);
     _addFact(&_lat,                 _latFactName);
     _addFact(&_lon,                 _lonFactName);
+    _addFact(&_dp_yaw,              _dp_yawFactName);
 
     // _dp_surge_pgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
     // _dp_surge_dgain.setRawValue(std::numeric_limits<float>::quiet_NaN());
@@ -87,7 +90,7 @@ void KrisoGainFactGroup::updateHDGFact(float surgeP, float surgeD, float yawP, f
     nav_yaw_dgain()->setRawValue                     (yawD);
 }
 
-void KrisoGainFactGroup::updateDPFact(float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD)
+void KrisoGainFactGroup::updateDPFact(float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD, float yaw)
 {
     dp_surge_pgain()->setRawValue                       (surgeP);
     dp_surge_dgain()->setRawValue                       (surgeD);
@@ -95,5 +98,6 @@ void KrisoGainFactGroup::updateDPFact(float surgeP, float surgeD, float swayP, f
     dp_sway_dgain()->setRawValue                        (swayD);
     dp_yaw_pgain()->setRawValue                         (yawP);
     dp_yaw_dgain()->setRawValue                         (yawD);
+    dp_yaw()->setRawValue                                (yaw);
 
 }

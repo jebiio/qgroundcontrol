@@ -86,6 +86,13 @@
     "type":             "double",
     "decimalPlaces":        7,
     "default":              null
+},
+{
+    "name":             "dp_yaw",
+    "shortDesc": "yaw",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
 }
 
 ]

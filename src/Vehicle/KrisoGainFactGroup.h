@@ -31,6 +31,7 @@ public:
     Q_PROPERTY(Fact* nav_yaw_dgain         READ  nav_yaw_dgain    CONSTANT)    
     Q_PROPERTY(Fact* lat                   READ  lat              CONSTANT)
     Q_PROPERTY(Fact* lon                   READ  lon              CONSTANT)
+    Q_PROPERTY(Fact* dp_yaw                READ  dp_yaw           CONSTANT)
 
     Fact*       dp_surge_pgain    (){return &_dp_surge_pgain;}  
     Fact*       dp_surge_dgain    (){return &_dp_surge_dgain;}  
@@ -44,10 +45,11 @@ public:
     Fact*       nav_yaw_dgain     (){return &_nav_yaw_dgain;}   
     Fact*       lat               () {return &_lat; }
     Fact*       lon               () {return &_lon; }
+    Fact*       dp_yaw            () {return &_dp_yaw; }
 
 
     void updateHDGFact(float surgeP, float surgeD, float yawP, float yawD);
-    void updateDPFact(float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD);
+    void updateDPFact(float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD, float yaw);
     void updateDPCoordinateFact(QGeoCoordinate clickedCoordindate);
 
 
@@ -63,6 +65,8 @@ public:
     static const char* _nav_yaw_dgainFactName;    
     static const char* _latFactName;
     static const char* _lonFactName;
+    static const char* _dp_yawFactName;
+    
 
 protected:
 
@@ -78,5 +82,6 @@ protected:
     Fact        _nav_yaw_dgain;
     Fact        _lat;
     Fact        _lon;
+    Fact        _dp_yaw;
 
 };
