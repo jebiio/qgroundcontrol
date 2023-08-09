@@ -406,7 +406,7 @@ Item {
         radius:     _radius
     }
 
-
+    // 모드선택
     Rectangle {
         id: container
         color: "white"
@@ -441,10 +441,12 @@ Item {
                     onIsPressedChanged: {
                         missionModeRow.enabled = !isPressed;
                         if(isPressed) {
-                            hdgcontainer.visible = false;
-                            dpmodeContainer.visible = false;
+                            _activeVehicle.kriso_sendOPModeCommand(0)
+                            hdgGainEditorContainer.visible = false;
+                            dpGainEditorContainer.visible = false;
                             autoMode.isPressed = false;
                             simulationMode.isPressed = false;
+                            wpcontainer.visible = false;
                         }
                     }
                 }
@@ -453,6 +455,7 @@ Item {
                     text: "자동"
                     onIsPressedChanged: {
                         if(isPressed) {
+                            _activeVehicle.kriso_sendOPModeCommand(1)
                             manualMode.isPressed = false;
                             missionModeRow.enabled = true;
                         }
@@ -463,6 +466,7 @@ Item {
                     text: "시뮬레이션"
                     onIsPressedChanged: {
                         if(isPressed) {
+                            _activeVehicle.kriso_sendOPModeCommand(2)
                             manualMode.isPressed = false;
                             missionModeRow.enabled = true;
                         }
@@ -489,7 +493,7 @@ Item {
                             wpcontainer.visible = true;
                             dpMode.isPressed = false;
                             dpGainEditorContainer.visible = false;
-                            hdgcontainer.visible = false
+                            hdgGainEditorContainer.visible = false
                         }else {
                             wpcontainer.visible = false;
                         }
@@ -501,12 +505,12 @@ Item {
                     enabled: !manualMode.isPressed
                     onIsPressedChanged: {
                         if(isPressed) {
-                            hdgcontainer.visible = true;
+                            hdgGainEditorContainer.visible = true;
                             dpMode.isPressed = false;
                             dpGainEditorContainer.visible = false;
                         } else {
-                            hdgcontainer.visible = false;
                             hdgGainEditorContainer.visible = false;
+                            // hdgGainEditorContainer.visible = false;
                         }
                     }
                 }
@@ -516,12 +520,23 @@ Item {
                     enabled: !manualMode.isPressed
                     onIsPressedChanged: {
                         if(isPressed) {
-                            dpmodeContainer.visible = true;
+                            dpGainEditorContainer.visible = true;
                             hdgMode.isPressed = false;
                             hdgGainEditorContainer.visible = false;
                         } else {
-                            dpmodeContainer.visible = false;
+                            // dpmodeContainer.visible = false;
                             dpGainEditorContainer.visible = false;
+                        }
+                    }
+                }
+            }
+
+            Row {
+                Button {
+                    text: "모드변경"
+                    onClicked: {
+                        if(hdgMode.isPressed){
+                            _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
                         }
                     }
                 }
@@ -529,6 +544,7 @@ Item {
         }
     }
 
+    // WP Container
     Rectangle {
         id: wpcontainer
         color: "white"
@@ -536,7 +552,7 @@ Item {
         anchors.top : container.bottom
         anchors.left: parent.left
         anchors.margins: 10
-        visible: false
+        visible : wpMode.isPressed ? ture : false
 
         implicitWidth: rightPanel.width + padding * 2
         implicitHeight: wpColumn.height + padding * 2
@@ -562,195 +578,197 @@ Item {
 
     } 
 
-    Rectangle {
-        id: hdgcontainer
-        color: "white"
-        radius: 10
-        anchors.top : container.bottom
-        anchors.left: parent.left
-        anchors.margins: 10
-        visible: false
+    // Rectangle {
+    //     id: hdgcontainer
+    //     color: "white"
+    //     radius: 10
+    //     anchors.top : container.bottom
+    //     anchors.left: parent.left
+    //     anchors.margins: 10
+    //     visible: false
 
-        implicitWidth: rightPanel.width + padding * 2
-        implicitHeight: hdgColumn.height + padding * 2
+    //     implicitWidth: rightPanel.width + padding * 2
+    //     implicitHeight: hdgColumn.height + padding * 2
 
-        property real padding: 10
+    //     property real padding: 10
 
-        Column {
-            id: hdgColumn
-            anchors.centerIn: parent
-            spacing: 10
+    //     Column {
+    //         id: hdgColumn
+    //         anchors.centerIn: parent
+    //         spacing: 10
 
-            RowLayout {
-                width : parent.width
-                Text {
-                    text: "< HDG >\n제어명령"
-                    color: "black"
-                }
-                Item {
-                    Layout.fillWidth: true
-                }
-                QGCButton {
-                    id: hdgGainButton
-                    text: "Gain"
-                    onClicked: {
-                        if (hdgMode.isPressed) {            
-                        hdgGainEditorContainer.visible = !hdgGainEditorContainer.visible;
-                        dpGainEditorContainer.visible = false;}
-                    }
-                }
-            }
+    //         RowLayout {
+    //             width : parent.width
+    //             Text {
+    //                 text: "< HDG >\n제어명령"
+    //                 color: "black"
+    //             }
+    //             Item {
+    //                 Layout.fillWidth: true
+    //             }
+    //             QGCButton {
+    //                 id: hdgGainButton
+    //                 text: "Gain"
+    //                 onClicked: {
+    //                     if (hdgMode.isPressed) {            
+    //                     hdgGainEditorContainer.visible = !hdgGainEditorContainer.visible;
+    //                     dpGainEditorContainer.visible = false;}
+    //                 }
+    //             }
+    //         }
 
-            Row {
-                spacing: 10
+    //         Row {
+    //             spacing: 10
 
-                Text {
-                    text: "속도 값  "
-                    color: "black"
-                }
-                QGCTextField {
-                    id : hdgSpeedInput
-                    placeholderText: "속도 입력"
-                }
-            }
+    //             Text {
+    //                 text: "속도 값  "
+    //                 color: "black"
+    //             }
+    //             QGCTextField {
+    //                 // id : hdgSpeedInput
+    //                 placeholderText: "속도 입력"
+    //             }
+    //         }
 
-            Row {
-                spacing: 10
+    //         Row {
+    //             spacing: 10
 
-                Text {
-                    text: "선수각 값"
-                    color: "black"
-                }
-                QGCTextField {
-                    id : hdgDegreeInput
-                    placeholderText: "선수각 입력"
-                }
-            }
+    //             Text {
+    //                 text: "선수각 값"
+    //                 color: "black"
+    //             }
+    //             QGCTextField {
+    //                 // id : hdgDegreeInput
+    //                 placeholderText: "선수각 입력"
+    //             }
+    //         }
 
-            RowLayout {
-                width : parent.width
-                Button {
-                    text: "명령전송"
-                    onClicked: {
-                        _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
-                        hdgSpeedInput.text = "";
-                        hdgDegreeInput.text = "";
-                    }
-                }
-                Item {
-                    Layout.fillWidth: true
-                }
+    //         RowLayout {
+    //             width : parent.width
+    //             Button {
+    //                 text: "명령전송"
+    //                 onClicked: {
+    //                     _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
+    //                     hdgSpeedInput.text = "";
+    //                     hdgDegreeInput.text = "";
+    //                 }
+    //             }
+    //             Item {
+    //                 Layout.fillWidth: true
+    //             }
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
-    Rectangle {
-        id: dpmodeContainer
-        color: "white"
-        radius: 10
-        anchors.top : container.bottom
-        anchors.left: parent.left
-        anchors.margins: 10
-        visible: false
+    // DP Container
+    // Rectangle {
+    //     id: dpmodeContainer
+    //     color: "white"
+    //     radius: 10
+    //     anchors.top: toolStrip.bottom
+    //     anchors.left: container.right
+    //     anchors.margins: 10
+    //     visible: false
 
-        implicitWidth: rightPanel.width + padding * 2
-        implicitHeight: dpModeColumn.height + padding * 2
+    //     implicitWidth: rightPanel.width + padding * 2
+    //     implicitHeight: dpModeColumn.height + padding * 2
 
-        property real padding: 10
+    //     property real padding: 10
 
-        Column {
-            id: dpModeColumn
-            anchors.centerIn: parent
-            spacing: 10
+    //     Column {
+    //         id: dpModeColumn
+    //         anchors.centerIn: parent
+    //         spacing: 10
             
-            RowLayout {
-                width : parent.width
-                Text {
-                    text: "< DP >\n입력값"
-                    color: "black"
-                }
-                Item {
-                    Layout.fillWidth: true
-                }
-                QGCButton {
-                    id : dpGainButton
-                    text: "Gain"
-                    onClicked: {
-                        if (dpMode.isPressed){
-                            dpGainEditorContainer.visible = !dpGainEditorContainer.visible;
-                            hdgGainEditorContainer.visible = false;
-                        }
-                    }
-                }
-                QGCButton {
-                    id : coordinateButton
-                    text: _activeVehicle.dpButton ? "선택완료" : "좌표선택"
-                    onClicked: {
-                        _activeVehicle.isKrisoDPClickableLayer = !_activeVehicle.isKrisoDPClickableLayer
-                    }
-                }
-            }
+    //         RowLayout {
+    //             width : parent.width
+    //             Text {
+    //                 text: "< DP >\n입력값"
+    //                 color: "black"
+    //             }
+    //             Item {
+    //                 Layout.fillWidth: true
+    //             }
+    //             Button {
+    //                 id : dpGainButton
+    //                 text: "Gain"
+    //                 onClicked: {
+    //                     if (dpMode.isPressed){
+    //                         dpGainEditorContainer.visible = !dpGainEditorContainer.visible;
+    //                         hdgGainEditorContainer.visible = false;
+    //                     }
+    //                 }
+    //             }
+    //             QGCButton {
+    //                 id : coordinateButton
+    //                 text: _activeVehicle.dpButton ? "선택완료" : "좌표선택"
+    //                 onClicked: {
+    //                     _activeVehicle.isKrisoDPClickableLayer = !_activeVehicle.isKrisoDPClickableLayer
+    //                 }
+    //             }
+    //         }
 
 
-            Row {
-                spacing: 10
+    //         Row {
+    //             spacing: 10
 
-                Text {
-                    text: "위도"
-                    color: "black"
-                }
-                QGCTextField {
-                    id: dpLatInput
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("lat").rawValue.toFixed(7)
-                    placeholderText: "위도 입력"
-                }
-            }
+    //             Text {
+    //                 text: "위도"
+    //                 color: "black"
+    //             }
+    //             QGCTextField {
+    //                 // id: dpLatInput
+    //                 text : _activeVehicle.getFactGroup("krisoGain").getFact("lat").rawValue.toFixed(7)
+    //                 placeholderText: "위도 입력"
+    //             }
+    //         }
 
-            Row {
-                spacing: 10
+    //         Row {
+    //             spacing: 10
 
-                Text {
-                    text: "경도"
-                    color: "black"
-                }
-                QGCTextField {
-                    id: dpLonInput
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("lon").rawValue.toFixed(7)
-                    placeholderText: "경도 입력"
-                }
-            }
+    //             Text {
+    //                 text: "경도"
+    //                 color: "black"
+    //             }
+    //             QGCTextField {
+    //                 // id: dpLonInput
+    //                 text : _activeVehicle.getFactGroup("krisoGain").getFact("lon").rawValue.toFixed(7)
+    //                 placeholderText: "경도 입력"
+    //             }
+    //         }
 
-            Row {
-                spacing: 10
+    //         Row {
+    //             spacing: 10
 
-                Text {
-                    text: "선수각"
-                    color: "black"
-                }
-                QGCTextField {
-                    id: dpYawInput
-                    placeholderText: "각도 입력"
-                }
-            }
+    //             Text {
+    //                 text: "선수각"
+    //                 color: "black"
+    //             }
+    //             QGCTextField {
+    //                 id: dpYawInput
+    //                 placeholderText: "각도 입력"
+    //             }
+    //         }
 
-            Button {
-                text: "명령전송"
-                onClicked: {
-                    _activeVehicle.kriso_sendDPCommand(parseFloat(dpLatInput.text), parseFloat(dpLonInput.text), parseFloat(dpYawInput.text))
-                }
-            }
-        }
-    }
+    //         Button {
+    //             text: "명령전송"
+    //             onClicked: {
+    //                 _activeVehicle.kriso_sendDPCommand(parseFloat(dpLatInput.text), parseFloat(dpLonInput.text), parseFloat(dpYawInput.text))
+    //             }
+    //         }
+    //     }
+    // }
 
+    // DP Gain Container
     Rectangle {
         id: dpGainEditorContainer
         color: "white"
         radius: 10
         anchors.top: toolStrip.bottom
-        anchors.left: dpmodeContainer.right
+        anchors.left: container.right
         anchors.margins: 10
-        width: 320
+        width: 280
         height: dpMainColumn.height + 2*padding
         visible: false
         // visible: dpMode.isPressed && !hdgMode.isPressed
@@ -763,11 +781,12 @@ Item {
             width: dpGainEditorContainer.width - 2*padding
             spacing: 5
             padding: 10
+            
 
             RowLayout {
                 width: dpMainColumn.width
                 Text {
-                    text: "Gain Editor"
+                    text: "DP Editor"
                     font.pointSize: 12
                 }
                 Item {
@@ -780,19 +799,11 @@ Item {
                 }
                 QGCButton {
                     text: "Save"
-                    onClicked: {
-                        _activeVehicle.kriso_dpGainSave(
-                            parseFloat(dpSurgePGainInput.text), 
-                            parseFloat(dpSurgeDGainInput.text), 
-                            parseFloat(dpSwayPGainInput.text), 
-                            parseFloat(dpSwayDGainInput.text),
-                            parseFloat(dpYawPGainInput.text), 
-                            parseFloat(dpYawDGainInput.text)
-                        );
+                    onClicked:{
+                        _activeVehicle.kriso_sendDPCommand();
                         // Save logic goes here
                         dpGainEditorContainer.visible = false
                     }
-                    font.pointSize: 10
                 }
             }
 
@@ -803,6 +814,55 @@ Item {
             }
 
             // ===============================  dp mode ====================================
+
+            RowLayout {
+                Text {
+                    text: "선수각"
+                    color: "black"
+                }
+                QGCTextField {
+                    id: dpYawInput
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("yaw").rawValue.toFixed(2)
+                }
+            }
+
+            RowLayout {
+                Text {
+                    text: "위도"
+                    color: "black"
+                }
+                QGCTextField {
+                    id: dpLatInput
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("lat").rawValue.toFixed(7)
+                }
+            }
+
+            RowLayout {
+                Text {
+                    text: "경도"
+                    color: "black"
+                }
+                QGCTextField {
+                    id: dpLonInput
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("lon").rawValue.toFixed(7)
+                }
+            }
+
+            RowLayout {
+                Text {
+                    text: "      "
+                    font.pointSize: 12
+                }
+                
+                Button {
+                    text: "좌표선택"
+                    Layout.alignment: Qt.AlignVCenter
+                    onClicked: {
+                        _activeVehicle.isKrisoDPClickableLayer = !_activeVehicle.isKrisoDPClickableLayer
+                    }
+                }
+            }
+
             RowLayout {
                 Text {
                     id: dpSurgePGainText
@@ -812,12 +872,11 @@ Item {
                     Layout.preferredWidth: 100
                     
                 }
-                TextField {
+                QGCTextField {
                     id: dpSurgePGainInput
                     placeholderText: "Enter value"
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
                     font.pointSize: 10
-                    width: parent.width * 0.5
                 }
             }
             RowLayout {
@@ -828,12 +887,11 @@ Item {
                     Layout.preferredWidth: 100
                     
                 }
-                TextField {
+                QGCTextField {
                     id: dpSurgeDGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
-                    width: parent.width * 0.5
                 }
             }
             RowLayout {
@@ -844,12 +902,11 @@ Item {
                     Layout.preferredWidth: 100
                     
                 }
-                TextField {
+                QGCTextField {
                     id: dpSwayPGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
-                    width: parent.width * 0.5
                 }
             }
             RowLayout {
@@ -860,28 +917,26 @@ Item {
                     Layout.preferredWidth: 100
                     
                 }
-                TextField {
+                QGCTextField {
                     id: dpSwayDGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
-                    width: parent.width * 0.5
                 }
             }
             RowLayout {
+                width: parent.width * 0.8
                 Text {
                     text: "dp_yaw_pgain"
                     font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
-                    
+                    Layout.preferredWidth: 100        
                 }
-                TextField {
+                QGCTextField {
                     id: dpYawPGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
-                    width: parent.width * 0.5
 
                 }
             }
@@ -893,24 +948,43 @@ Item {
                     Layout.preferredWidth: 100
                     
                 }
-                TextField {
+                QGCTextField {
                     id: dpYawDGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                     font.pointSize: 10
-                    width: parent.width * 0.5
-
+                }
+            }
+            RowLayout {
+                width: parent.width
+                Item {
+                    Layout.fillWidth: true
+                }
+                Button {
+                    text: "입력완료"
+                    onClicked: {
+                        _activeVehicle.kriso_dpGainSave(
+                            parseFloat(dpSurgePGainInput.text), 
+                            parseFloat(dpSurgeDGainInput.text), 
+                            parseFloat(dpSwayPGainInput.text), 
+                            parseFloat(dpSwayDGainInput.text),
+                            parseFloat(dpYawPGainInput.text), 
+                            parseFloat(dpYawDGainInput.text),
+                            parseFloat(dpYawInput.text)
+                        )
+                    }
                 }
             }
         }
     }
 
+    // HDG Gain Container
     Rectangle {
         id: hdgGainEditorContainer
         color: "white"
         radius: 10
         anchors.top: toolStrip.bottom
-        anchors.left: dpmodeContainer.right
+        anchors.left: container.right
         anchors.margins: 10
         width: 320
         height: hdgMainColumn.height + 2*padding
@@ -929,7 +1003,7 @@ Item {
             RowLayout {
                 width: hdgMainColumn.width
                 Text {
-                    text: "Gain Editor"
+                    text: "HDG Gain Editor"
                     font.pointSize: 12
                 }
                 Item {
@@ -961,6 +1035,37 @@ Item {
                 height: 1
                 width: hdgMainColumn.width
             }
+
+            RowLayout {
+                Text {
+                    text: "속도값"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    id : hdgSpeedInput
+                    placeholderText: "속도 입력"
+                    width: parent.width * 0.5 
+                }
+            }
+
+            RowLayout {
+                Text {
+                    text: "선수각"
+                    font.pointSize: 10
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 100
+                    
+                }
+                TextField {
+                    id : hdgDegreeInput
+                    placeholderText: "선수각 입력"
+                    width: parent.width * 0.5
+                }
+            }
+
 
             RowLayout {
                 Text {
