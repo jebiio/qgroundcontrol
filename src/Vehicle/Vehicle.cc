@@ -3755,6 +3755,12 @@ void Vehicle::setTrajectoryVisible(bool trajectoryVisible)
     emit trajectoryVisibleChanged(trajectoryVisible);
 }
 
+void Vehicle::setPlanPathVisible(bool planPathVisible)
+{
+    _planPathVisible = planPathVisible;
+    emit planPathVisibleChanged(planPathVisible);
+}
+
 
 void Vehicle::startMavlinkLog()
 {

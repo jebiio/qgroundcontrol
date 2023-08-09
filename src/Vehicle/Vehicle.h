@@ -264,6 +264,7 @@ public:
     Q_PROPERTY(double               loadProgress                READ loadProgress                                                   NOTIFY loadProgressChanged)
     Q_PROPERTY(bool                 initialConnectComplete      READ isInitialConnectComplete                                       NOTIFY initialConnectComplete)
     Q_PROPERTY(bool                 trajectoryVisible           READ trajectoryVisible            WRITE setTrajectoryVisible        NOTIFY trajectoryVisibleChanged)
+    Q_PROPERTY(bool                 planPathVisible             READ planPathVisible              WRITE setPlanPathVisible          NOTIFY planPathVisibleChanged)
     // Q_PROPERTY(bool                 krisoEmergencyStop          READ krisoEmergencyStop           WRITE setKrisoEmergencyStop       NOTIFY krisoEmergencyStopChanged) jaeeun
     Q_PROPERTY(bool                 isKrisoDPClickableLayer     READ isKrisoDPClickableLayer    WRITE setIsKrisoDPClickableLayer    NOTIFY isKrisoDPClickableLayerChanged)
 
@@ -626,6 +627,7 @@ public:
     bool            hilMode                     () const { return _base_mode & MAV_MODE_FLAG_HIL_ENABLED; }
     Actuators*      actuators                   () const { return _actuators; }
     bool            trajectoryVisible           () const{ return _trajectoryVisible; }
+    bool            planPathVisible             () const { return _planPathVisible; }
     bool            isKrisoDPClickableLayer                    () const { return _isKrisoDPClickableLayer; }
 
 
@@ -871,6 +873,7 @@ public slots:
     void _offlineFirmwareTypeSettingChanged (QVariant varFirmwareType); // Should only be used by MissionControler to set firmware from Plan file
     void _offlineVehicleTypeSettingChanged  (QVariant varVehicleType);  // Should only be used by MissionController to set vehicle type from Plan file
     void setTrajectoryVisible               (bool trajectoryVisible);
+    void setPlanPathVisible                 (bool planPathVisible);
     void setIsKrisoDPClickableLayer         (bool isKrisoDPClickableLayer);
 
 
@@ -980,6 +983,7 @@ signals:
 
     void sensorsParametersResetAck      (bool success);
     void trajectoryVisibleChanged       (bool trajectoryVisible);
+    void planPathVisibleChanged         (bool planPathVisible);
     void isKrisoDPClickableLayerChanged                (bool isKrisoDPClickableLayer);
     // void krisoEmergencyStopChanged      (); jaeeun
 private slots:
@@ -1143,6 +1147,7 @@ private:
     bool            _readyToFly                             = false;
     bool            _allSensorsHealthy                      = true;
     bool            _trajectoryVisible                      = true;
+    bool            _planPathVisible                        = true;
     bool            _isKrisoDPClickableLayer                = false;
 
     SysStatusSensorInfo _sysStatusSensorInfo;

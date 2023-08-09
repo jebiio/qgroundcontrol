@@ -367,7 +367,7 @@ FlightMap {
 
     // Add the items associated with each vehicles flight plan to the map
     Repeater {
-        model: QGroundControl.multiVehicleManager.vehicles
+        model: _activeVehicle.planPathVisible? QGroundControl.multiVehicleManager.vehicles : null
 
         PlanMapItems {
             map:                    _root
@@ -388,6 +388,7 @@ FlightMap {
         model: pipMode ? undefined : _missionController.directionArrows
 
         delegate: MapLineArrow {
+            visible:        _activeVehicle.planPathVisible 
             fromCoord:      object ? object.coordinate1 : undefined
             toCoord:        object ? object.coordinate2 : undefined
             arrowPosition:  2

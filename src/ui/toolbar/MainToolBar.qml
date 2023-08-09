@@ -133,6 +133,11 @@ Rectangle {
         }
 
         QGCButton {
+            text:               "Show Plan Path"
+            onClicked:          _activeVehicle.planPathVisible = !_activeVehicle.planPathVisible
+            visible:            _activeVehicle && currentToolbar === flyViewToolbar
+        }
+        QGCButton {
             text:               "Clear Path"
             // onClicked:          _activeVehicle.TrajectoryPoints.clearWaypoints()
             onClicked:          _activeVehicle.trajectoryVisible = !_activeVehicle.trajectoryVisible
