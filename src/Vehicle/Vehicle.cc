@@ -2291,7 +2291,7 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
 // }
 
 
-void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
+void Vehicle::kriso_sendDPCommand(void)
 {
     
     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
@@ -2308,9 +2308,9 @@ void Vehicle::kriso_sendDPCommand(double lat, double lon, float yaw)
                                             _mavlink->getComponentId(),
                                             link->mavlinkChannel(),
                                             &message,
-                                            lat,        // target lat 
-                                            lon,        // target lon
-                                            yaw,        // target position yaw
+                                            _krisoGainFactGroup.getFact("lat")->rawValue().toFloat(),        // target lat 
+                                            _krisoGainFactGroup.getFact("lon")->rawValue().toFloat(),        // target lon
+                                            _krisoGainFactGroup.getFact("dp_yaw")->rawValue().toFloat(),        // target position yaw
                                             _krisoGainFactGroup.getFact("dp_surge_pgain")->rawValue().toFloat(),        // surge P for dp
                                             _krisoGainFactGroup.getFact("dp_surge_dgain")->rawValue().toFloat(),        // surge D for dp
                                             _krisoGainFactGroup.getFact("dp_sway_pgain")->rawValue().toFloat(),        // Sway P for dp
@@ -2338,9 +2338,9 @@ void Vehicle::kriso_dpClickedLocation(QGeoCoordinate clickedLocation)
     _krisoGainFactGroup.updateDPCoordinateFact(clickedLocation);
 }
 
-void Vehicle::kriso_dpGainSave(float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD)
+void Vehicle::kriso_dpGainSave(float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD, float yaw)
 {
-    _krisoGainFactGroup.updateDPFact(surgeP, surgeD, swayP, swayD, yawP, yawD);
+    _krisoGainFactGroup.updateDPFact(surgeP, surgeD, swayP, swayD, yawP, yawD, yaw);
 }
 
 void Vehicle::kriso_hdgGainSave(float surgeP, float surgeD, float yawP, float yawD)
@@ -2368,6 +2368,40 @@ void Vehicle::kriso_sendLogCommand(void)
                                             link->mavlinkChannel(),
                                             &message,
                                             1             // ros log command : 1
+                                            );
+
+            uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+            int len = mavlink_msg_to_send_buffer(buffer, &message);
+            link->writeBytesThreadSafe((const char*)buffer, len);
+        }
+    }
+
+
+}
+
+void Vehicle::kriso_sendOPModeCommand(int mode)
+{
+    // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
+    // Also, suppose 1.0f is the parameter to send an emergency command.
+    // You may need to modify the details based on your own specifications.
+    
+    LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
+    QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+
+    // Send a heartbeat out on each link
+    for (int i=0; i<sharedLinks.count(); i++) {
+        LinkInterface* link = sharedLinks[i].get();
+        auto linkConfiguration = link->linkConfiguration();
+        if (link->isConnected() && linkConfiguration) {
+            mavlink_message_t message;
+            mavlink_msg_kriso_control_command_pack_chan(_mavlink->getSystemId(),
+                                            _mavlink->getComponentId(),
+                                            link->mavlinkChannel(),
+                                            &message,
+                                            mode,
+                                            0,
+                                            0,
+                                            0           
                                             );
 
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
