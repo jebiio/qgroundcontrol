@@ -441,7 +441,7 @@ public:
     Q_INVOKABLE void kriso_sendWTCommand            (QmlObjectListModel* visualItems);
     Q_INVOKABLE void kriso_sendDPCommand            ();
     Q_INVOKABLE void kriso_sendLogCommand           ();
-    Q_INVOKABLE void kriso_sendOPModeCommand        (int mode);
+    Q_INVOKABLE void kriso_sendOPModeCommand        (int opMode, int missionMode);
     Q_INVOKABLE void kriso_hdgGainSave              (float surgeP, float surgeD, float yawP, float yawD);
     Q_INVOKABLE void kriso_dpGainSave               (float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD, float yaw);
     Q_INVOKABLE void kriso_dpClickedLocation        (QGeoCoordinate clickedLocation);

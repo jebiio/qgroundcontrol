@@ -441,7 +441,6 @@ Item {
                     onIsPressedChanged: {
                         missionModeRow.enabled = !isPressed;
                         if(isPressed) {
-                            _activeVehicle.kriso_sendOPModeCommand(0)
                             hdgGainEditorContainer.visible = false;
                             dpGainEditorContainer.visible = false;
                             autoMode.isPressed = false;
@@ -455,7 +454,6 @@ Item {
                     text: "자동"
                     onIsPressedChanged: {
                         if(isPressed) {
-                            _activeVehicle.kriso_sendOPModeCommand(1)
                             manualMode.isPressed = false;
                             missionModeRow.enabled = true;
                         }
@@ -466,7 +464,6 @@ Item {
                     text: "시뮬레이션"
                     onIsPressedChanged: {
                         if(isPressed) {
-                            _activeVehicle.kriso_sendOPModeCommand(2)
                             manualMode.isPressed = false;
                             missionModeRow.enabled = true;
                         }
@@ -539,8 +536,24 @@ Item {
                 Button {
                     text: "모드변경"
                     onClicked: {
-                        if(hdgMode.isPressed){
-                            
+                        if(manualMode.checked){
+                            _activeVehicle.kriso_sendOPModeCommand(1, 0)
+                        }else if(autoMode.checked){
+                            if(wpMode.checked){
+                                _activeVehicle.kriso_sendOPModeCommand(2, 1)
+                            }else if(hdgMode.checked){
+                                _activeVehicle.kriso_sendOPModeCommand(2, 2)
+                            }else if(dpMode.checked){
+                                _activeVehicle.kriso_sendOPModeCommand(2, 3)
+                            }
+                        }else if(simulationMode.checked){
+                            if(wpMode.checked){
+                                _activeVehicle.kriso_sendOPModeCommand(3, 1)
+                            }else if(hdgMode.checked){
+                                _activeVehicle.kriso_sendOPModeCommand(3, 2)
+                            }else if(dpMode.checked){
+                                _activeVehicle.kriso_sendOPModeCommand(3, 3)
+                            }
                         }
                     }
                 }
@@ -869,7 +882,15 @@ Item {
                     text: "좌표선택"
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
-                        _activeVehicle.isKrisoDPClickableLayer = !_activeVehicle.isKrisoDPClickableLayer
+                        _activeVehicle.isKrisoDPClickableLayer = true
+                    }
+                }
+
+                Button {
+                    text: "선택완료"
+                    Layout.alignment: Qt.AlignVCenter
+                    onClicked: {
+                        _activeVehicle.isKrisoDPClickableLayer = false
                     }
                 }
             }

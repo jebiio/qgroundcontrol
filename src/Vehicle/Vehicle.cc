@@ -2379,7 +2379,7 @@ void Vehicle::kriso_sendLogCommand(void)
 
 }
 
-void Vehicle::kriso_sendOPModeCommand(int mode)
+void Vehicle::kriso_sendOPModeCommand(int opMode, int missionMode)
 {
     // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
     // Also, suppose 1.0f is the parameter to send an emergency command.
@@ -2398,8 +2398,8 @@ void Vehicle::kriso_sendOPModeCommand(int mode)
                                             _mavlink->getComponentId(),
                                             link->mavlinkChannel(),
                                             &message,
-                                            mode,
-                                            0,
+                                            opMode,
+                                            missionMode,
                                             0,
                                             0           
                                             );
