@@ -4,45 +4,16 @@
     "QGC.MetaData.Facts":
 [
 {
-    "name":             "t1_rpm",
-    "shortDesc": "T1_RPM",
-    "type":             "float",
-    "decimalPlaces":    1
+    "name":             "nav_longitude",
+    "shortDesc":        "NAV_LONGITUDE",
+    "type":             "double",
+    "decimalPlaces":    7
 },
 {
-    "name":             "t2_rpm",
-    "shortDesc":        "T2_RPM",
-    "type":             "float",
-    "decimalPlaces":        2,
-    "default":              2
-},
-{
-    "name":             "t3_rpm",
-    "shortDesc":        "T3_RPM",
-    "type":             "float",
-    "decimalPlaces":        2,
-    "default":              null
-},
-{
-    "name":             "t3_angle",
-    "shortDesc":        "T3_Angle",
-    "type":             "float",
-    "decimalPlaces":        2,
-    "default":              null
-},
-{
-    "name":             "t4_rpm",
-    "shortDesc":        "T4_RPM",
-    "type":             "float",
-    "decimalPlaces":        2,
-    "default":              null
-},
-{
-    "name":             "t4_angle",
-    "shortDesc":        "T4_Angle",
-    "type":             "float",
-    "decimalPlaces":        2,
-    "default":              null
+    "name":             "nav_latitude",
+    "shortDesc":        "NAV_LATITUDE",
+    "type":             "double",
+    "decimalPlaces":    7
 },
 {
     "name":             "nav_roll",
@@ -61,6 +32,13 @@
 {
     "name":             "nav_yaw",
     "shortDesc":        "NAV_YAW",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "nav_yaw_rate",
+    "shortDesc":        "NAV_YAW_RATE",
     "type":             "float",
     "decimalPlaces":        2,
     "default":              null
@@ -94,16 +72,18 @@
     "default":              null
 },
 {
-    "name":             "nav_longitude",
-    "shortDesc":        "NAV_LONGITUDE",
-    "type":             "double",
-    "decimalPlaces":    7
+    "name":             "nav_wspd",
+    "shortDesc":        "NAV_WSPD",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
 },
 {
-    "name":             "nav_latitude",
-    "shortDesc":        "NAV_LATITUDE",
-    "type":             "double",
-    "decimalPlaces":    7
+    "name":             "nav_heave",
+    "shortDesc":        "NAV_HEAVE",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
 },
 {
     "name":             "nav_gpstime",
@@ -141,6 +121,13 @@
     "default":              null
 },
 {
+    "name":             "wea_dewpt",
+    "shortDesc":        "WEA_DEWPT",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
     "name":             "wea_windirt",
     "shortDesc":        "WEA_WINDIRT",
     "type":             "float",
@@ -155,8 +142,22 @@
     "default":              null
 },
 {
+    "name":             "wea_windirr",
+    "shortDesc":        "WEA_WATRDIRR",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wea_watspdr",
+    "shortDesc":        "WEA_WATSPDR",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
     "name":             "wea_watdir",
-    "shortDesc":        "WEA_WATRDIR",
+    "shortDesc":        "WEA_WATDIR",
     "type":             "float",
     "decimalPlaces":        2,
     "default":              null
