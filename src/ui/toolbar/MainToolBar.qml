@@ -140,7 +140,7 @@ Rectangle {
         QGCButton {
             text:               "Clear Path"
             // onClicked:          _activeVehicle.TrajectoryPoints.clearWaypoints()
-            onClicked:          _activeVehicle.trajectoryVisible = !_activeVehicle.trajectoryVisible
+            onClicked:          _activeVehicle.kriso_sendLogCommand() //Logging start로 바꿈
             visible:            _activeVehicle && currentToolbar === flyViewToolbar
         }    
 
