@@ -446,7 +446,7 @@ Item {
                             dpGainEditorContainer.visible = false;
                             autoMode.isPressed = false;
                             simulationMode.isPressed = false;
-                            wpcontainer.visible = false;
+                            moveToPlanView.visible = false;
                         }
                     }
                 }
@@ -490,12 +490,12 @@ Item {
                     enabled: !manualMode.isPressed
                     onIsPressedChanged: {
                         if(isPressed){
-                            wpcontainer.visible = true;
+                            moveToPlanView.visible = true;
                             dpMode.isPressed = false;
                             dpGainEditorContainer.visible = false;
                             hdgGainEditorContainer.visible = false
                         }else {
-                            wpcontainer.visible = false;
+                            moveToPlanView.visible = false;
                         }
                     }
                 }
@@ -508,6 +508,7 @@ Item {
                             hdgGainEditorContainer.visible = true;
                             dpMode.isPressed = false;
                             dpGainEditorContainer.visible = false;
+                            moveToPlanView.visible = false;
                         } else {
                             hdgGainEditorContainer.visible = false;
                             // hdgGainEditorContainer.visible = false;
@@ -523,6 +524,7 @@ Item {
                             dpGainEditorContainer.visible = true;
                             hdgMode.isPressed = false;
                             hdgGainEditorContainer.visible = false;
+                            moveToPlanView.visible = false;
                         } else {
                             // dpmodeContainer.visible = false;
                             dpGainEditorContainer.visible = false;
@@ -532,51 +534,60 @@ Item {
             }
 
             Row {
+                spacing: 10
+                
                 Button {
                     text: "모드변경"
                     onClicked: {
                         if(hdgMode.isPressed){
-                            _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
+                            
                         }
                     }
+                }
+
+                QGCButton {
+                    id : moveToPlanView
+                    text: "계획생성"
+                    visible : wpMode.isPressed ? true : false
+                    onClicked: mainWindow.showPlanView()
                 }
             }
         }
     }
 
     // WP Container
-    Rectangle {
-        id: wpcontainer
-        color: "white"
-        radius: 10
-        anchors.top : container.bottom
-        anchors.left: parent.left
-        anchors.margins: 10
-        visible : wpMode.isPressed ? ture : false
+    // Rectangle {
+    //     id: wpcontainer
+    //     color: "white"
+    //     radius: 10
+    //     anchors.top : container.bottom
+    //     anchors.left: parent.left
+    //     anchors.margins: 10
+    //     visible : wpMode.isPressed ? ture : false
 
-        implicitWidth: rightPanel.width + padding * 2
-        implicitHeight: wpColumn.height + padding * 2
+    //     implicitWidth: rightPanel.width + padding * 2
+    //     implicitHeight: wpColumn.height + padding * 2
 
-        property real padding: 10
+    //     property real padding: 10
 
-        Row {
-            id: wpColumn
-            anchors.centerIn: parent
-            spacing: 10
+    //     Row {
+    //         id: wpColumn
+    //         anchors.centerIn: parent
+    //         spacing: 10
 
-            QGCButton {
-                text: "계획생성"
-                onClicked: mainWindow.showPlanView()
-            }
-            QGCButton {
-                text: "운행시작"
-                onClicked: _activeVehicle.kriso_sendWTCommand(_missionController.visualItems)
-                // onClicked: _activeVehicle.kriso_sendWTCommand()
-            }
-        }
+    //         QGCButton {
+    //             text: "계획생성"
+    //             onClicked: mainWindow.showPlanView()
+    //         }
+    //         QGCButton {
+    //             text: "운행시작"
+    //             onClicked: _activeVehicle.kriso_sendWTCommand(_missionController.visualItems)
+    //             // onClicked: _activeVehicle.kriso_sendWTCommand()
+    //         }
+    //     }
 
 
-    } 
+    // } 
 
     // Rectangle {
     //     id: hdgcontainer
@@ -1017,12 +1028,7 @@ Item {
                 QGCButton {
                     text: "Save"
                     onClicked: {
-                        _activeVehicle.kriso_hdgGainSave(
-                            parseFloat(navSurgePGainInput.text), 
-                            parseFloat(navSurgeDGainInput.text), 
-                            parseFloat(navYawPGainInput.text), 
-                            parseFloat(navYawDGainInput.text)
-                        );
+                        _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
                         // Save logic goes here
                         hdgGainEditorContainer.visible = false
                     }
@@ -1133,6 +1139,23 @@ Item {
                     font.pointSize: 10
                     width: parent.width * 0.5
 
+                }
+            }
+            RowLayout {
+                width: parent.width
+                Item {
+                    Layout.fillWidth: true
+                }
+                Button {
+                    text: "입력완료"
+                    onClicked: {
+                        _activeVehicle.kriso_hdgGainSave(
+                            parseFloat(navSurgePGainInput.text), 
+                            parseFloat(navSurgeDGainInput.text), 
+                            parseFloat(navYawPGainInput.text), 
+                            parseFloat(navYawDGainInput.text)
+                        );
+                    }
                 }
             }
         }
