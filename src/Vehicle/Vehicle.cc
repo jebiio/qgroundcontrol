@@ -755,10 +755,10 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
         _handleHighLatency2(message);
         break;
     case MAVLINK_MSG_ID_ATTITUDE:
-        _handleAttitude(message);
+        // _handleAttitude(message);
         break;
     case MAVLINK_MSG_ID_ATTITUDE_QUATERNION:
-        _handleAttitudeQuaternion(message);
+        // _handleAttitudeQuaternion(message);
         break;
     case MAVLINK_MSG_ID_STATUSTEXT:
         _handleStatusText(message);
@@ -1112,6 +1112,7 @@ void Vehicle::_handleAttitudeQuaternion(mavlink_message_t& message)
 
 void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
 {
+    qDebug() << "----------------- GPS Raw Int -------------------------";
     mavlink_gps_raw_int_t gpsRawInt;
     mavlink_msg_gps_raw_int_decode(&message, &gpsRawInt);
 
@@ -1146,7 +1147,7 @@ void Vehicle::_handleKRISOStatus(mavlink_message_t& message)
 
     if (!_globalPositionIntMessageAvailable) {
         QGeoCoordinate newPosition(krisoStatus.nav_latitude, krisoStatus.nav_longitude, 1.0);
-        // QGeoCoordinate newPosition(krisoStatus.nav_latitude  / (double)1E7, krisoStatus.nav_longitude / (double)1E7, 1.0);
+        // QGeoCoordinate newPositilllmon(krisoStatus.nav_latitude  / (double)1E7, krisoStatus.nav_longitude / (double)1E7, 1.0);
         if (newPosition != _coordinate) {
             _coordinate = newPosition;
             emit coordinateChanged(_coordinate);
