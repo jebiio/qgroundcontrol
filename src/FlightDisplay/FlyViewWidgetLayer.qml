@@ -299,133 +299,58 @@ Item {
             anchors.top:        parent.top
         }
 
-         Rectangle {
+        Rectangle {
             color: "white"
             radius: 10
-            width : parent.width
+            width: parent.width
             height: 100
             opacity: 0.8
             anchors.margins: 10
-            visible : ture
+            visible: true
 
             QGCTabBar {
-                id:         layerTabBar
-                width:      parent.width
-                visible:    (!planControlColapsed || !_airspaceEnabled) && QGroundControl.corePlugin.options.enablePlanViewSelector
-                Component.onCompleted: currentIndex = 0
+                id: layerTabBar
+                width: parent.width
+                visible: (!planControlColapsed || !_airspaceEnabled) && QGroundControl.corePlugin.options.enablePlanViewSelector
+                Component.onCompleted: {
+                    currentIndex = 0
+                    krisoStatusBtn.clicked()
+                }
+                
                 QGCTabButton {
-                    text:       qsTr("상태정보")
+                    id: krisoStatusBtn
+                    text: qsTr("상태정보")
+                    onClicked: {
+                        page1.currentPage = 1
+                    }
                 }
                 QGCTabButton {
-                    text:       qsTr("배터리정보")
-                    enabled:    true
+                    id: krisoBatteryBtn
+                    text: qsTr("배터리정보")
+                    enabled: true
+                    onClicked: {
+                        page1.currentPage = 2
+                    }
                 }
                 QGCTabButton {
-                    text:       qsTr("로깅정보")
-                    enabled:    true
+                    id: krisoLoggingStatusBtn
+                    text: qsTr("로깅정보")
+                    enabled: true
                 }
                 QGCTabButton {
-                    text:       qsTr("궤적설정")
-                    enabled:    true
+                    id: krisoTajectorySetupBtn
+                    text: qsTr("궤적설정")
+                    enabled: true
                 }
             }
-            PageView{
+
+            PageView {
+                id: page1
+                _krisoFactName: "KrisoStatus"
                 anchors.top: layerTabBar.bottom
-
             }
+
         }
-        //-------------------------------------------------------
-        // Mission Item Editor
-        // Item {
-        //     id:                     missionItemEditor
-        //     anchors.left:           parent.left
-        //     anchors.right:          parent.right 
-        //     anchors.top:            rightControls.bottom
-        //     anchors.topMargin:      ScreenTools.defaultFontPixelHeight * 0.25
-        //     anchors.bottom:         parent.bottom
-        //     anchors.bottomMargin:   ScreenTools.defaultFontPixelHeight * 0.25
-        //     visible:                true
-       
-        //     ListView {
-        //         id: view
-
-        //         property var collapsed: ({})
-
-        //         width: _rightPanelWidth * 0.9
-        //         height: 500
-        //         focus: true
-        //         clip: true
-        //         spacing: 10
-
-        //         model: NameModel { }
-
-        //         delegate: KrisoDelegate {
-        //             readonly property ListView __lv: ListView.view
-
-        //             anchors {
-        //                 left: parent.left
-        //                 leftMargin: 2
-
-        //                 right: parent.right
-        //                 rightMargin: 2
-        //             }
-
-        //             expanded: view.isSectionExpanded(model.team)
-
-        //             MouseArea {
-        //                 anchors.fill: parent
-        //                 onClicked: __lv.currentIndex = index
-        //             }
-        //         }
-
-        //         // highlight: HighlightDelegate {
-        //         //     width: parent.width
-        //         //     anchors {
-        //         //         left: parent.left
-        //         //         right: parent.right
-        //         //     }
-        //         // }
-
-        //         // team name (head)
-        //         section {
-        //             property: "team"
-        //             criteria: ViewSection.FullString
-
-        //             delegate: SectionDelegate {
-        //                 anchors {
-        //                     left: parent.left
-        //                     right: parent.right
-        //                 }
-
-        //                 text: section
-
-        //                 onClicked: view.toggleSection( section )
-        //             }
-        //         }
-
-        //         function isSectionExpanded( section ) {
-        //             return !(section in collapsed);
-        //         }
-
-        //         function showSection( section ) {
-        //             delete collapsed[section]
-        //             /*emit*/ collapsedChanged();
-        //         }
-
-        //         function hideSection( section ) {
-        //             collapsed[section] = true
-        //             /*emit*/ collapsedChanged();
-        //         }
-
-        //         function toggleSection( section ) {
-        //             if ( isSectionExpanded( section ) ) {
-        //                 hideSection( section )
-        //             } else {
-        //                 showSection( section )
-        //             }
-        //         }
-        //     }
-        // }
     
     }
 

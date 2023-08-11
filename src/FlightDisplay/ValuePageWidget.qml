@@ -174,17 +174,17 @@ Column {
                         text:   qsTr("Select the values you want to display:")
                     }
 
-                    Loader {
-                        anchors.left:       parent.left
-                        anchors.right:      parent.right
-                        sourceComponent:    factGroupList
+                    // Loader {
+                    //     anchors.left:       parent.left
+                    //     anchors.right:      parent.right
+                    //     sourceComponent:    factGroupList
 
-                        property var    factGroup:     _activeVehicle
-                        property string factGroupName: "Vehicle"
-                    }
+                    //     property var    factGroup:     _activeVehicle
+                    //     property string factGroupName: "Vehicle"
+                    // }
 
                     Repeater {
-                        model: activeVehicle.factGroupNames
+                        model: ["kriso", "krisoVoltage"]
                         Loader {
                             anchors.left:       parent.left
                             anchors.right:      parent.right
