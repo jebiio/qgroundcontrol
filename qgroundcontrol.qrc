@@ -76,6 +76,7 @@
         <file alias="PreFlightCheckList.qml">src/FlightDisplay/PreFlightCheckList.qml</file>
         <file alias="PX4FlowSensor.qml">src/VehicleSetup/PX4FlowSensor.qml</file>
         <file alias="QGCInstrumentWidget.qml">src/FlightMap/Widgets/QGCInstrumentWidget.qml</file>
+        <file alias="QGroundControl/FlightDisplay/PageViewVoltage.qml">src/FlightDisplay/PageViewVoltage.qml</file>
         <file alias="QGroundControl/FlightDisplay/PageView.qml">src/FlightDisplay/PageView.qml</file>
         <file alias="PageView.qml">src/FlightDisplay/PageView.qml</file>
         <file alias="QGCInstrumentWidgetAlternate.qml">src/FlightMap/Widgets/QGCInstrumentWidgetAlternate.qml</file>

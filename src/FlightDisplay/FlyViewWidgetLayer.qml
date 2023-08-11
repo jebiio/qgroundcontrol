@@ -320,8 +320,10 @@ Item {
                 QGCTabButton {
                     id: krisoStatusBtn
                     text: qsTr("상태정보")
+                    enabled: true
                     onClicked: {
-                        page1.currentPage = 1
+                        page1.visible = true
+                        page2.visible = false
                     }
                 }
                 QGCTabButton {
@@ -329,7 +331,8 @@ Item {
                     text: qsTr("배터리정보")
                     enabled: true
                     onClicked: {
-                        page1.currentPage = 2
+                        page1.visible = false
+                        page2.visible = true
                     }
                 }
                 QGCTabButton {
@@ -348,6 +351,14 @@ Item {
                 id: page1
                 _krisoFactName: "KrisoStatus"
                 anchors.top: layerTabBar.bottom
+                visible: false
+            }
+
+            PageViewVoltage {
+                id: page2
+                _krisoFactName: "KrisoVoltage"
+                anchors.top: layerTabBar.bottom
+                visible: false
             }
 
         }

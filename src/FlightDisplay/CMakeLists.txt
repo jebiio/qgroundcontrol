@@ -59,5 +59,6 @@ add_custom_target(FligthDisplayQml
 		KrisoDelegate.qml
 		PageView.qml
 		ValuePageWidget.qml
+		PageViewVoltage.qml
 )
 

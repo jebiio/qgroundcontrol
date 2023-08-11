@@ -34,6 +34,22 @@ Rectangle {
 
     QGCPalette { id:qgcPal; colorGroupEnabled: parent.enabled }
 
+    
+
+    // onCurrentPageChanged: {
+    //     switch(currentPage) {
+    //         case 1:
+    //             pageFlickable.visible = true
+    //             page2.visible = false
+    //             break
+    //         case 2:
+    //             pageFlickable.visible = false
+    //             page2.visible = true
+    //             break
+    //         default:
+    //             break
+    //     }
+    // }
 
     RowLayout{
         id: pageCombo
@@ -81,27 +97,60 @@ Rectangle {
 
 
     // Fact 표기 되는 부분 
-    QGCFlickable {
-        id:                 pageFlickable
-        anchors.margins:    _margins
-        anchors.top:        pageCombo.bottom
-        anchors.left:       parent.left
-        anchors.right:      parent.right
-        height:             Math.min(_maxHeight, pageWidgetLoader.height)
-        contentHeight:      pageWidgetLoader.height
-        flickableDirection: Flickable.VerticalFlick
-        clip:               true
 
-        property real _maxHeight: maxHeight - y - _margins
 
-        Loader {
-            id:     pageWidgetLoader
-            source: _instrumentPages[0].url
-            property real pageWidth:  parent.width
+    Rectangle {
+        id: page2
+        anchors.top: pageCombo.bottom
+        width: parent.width
+        height: _largeColumn.height
+
+        Column {
+            id: _largeColumn
+            width:      _pageWidth
+            spacing:    _margins
+            anchors.margins:    _margins
+            anchors.top:        pageCombo.bottom
+            anchors.left:       parent.left
+            anchors.right:      parent.right
+
+            Repeater {
+                model :_activeVehicle.getFactGroup("krisoVoltage").factNames
+                // model: _activeVehicle ? controller.largeValueKrisos : 0
+                Loader {
+                    sourceComponent: fact ? largeValueKriso : undefined
+                    property Fact fact: _activeVehicle.getFactGroup("krisoVoltage").getFact(modelData)
+                    // property Fact fact: _activeVehicle.getFact(modelData.replace("Vehicle.", ""))
+                }
+            } 
+
+            Component {
+                id: largeValueKriso
+
+                Column {
+                    width:  _largeColumn.width
+                    property bool largeValueKriso: true
+
+                    QGCLabel {
+                        width:                  parent.width
+                        horizontalAlignment:    Text.AlignHCenter
+                        wrapMode:               Text.WordWrap
+                        text:                   fact.shortDescription + (fact.units ? " (" + fact.units + ")" : "")
+                        color:                  "black"
+                    }
+                    QGCLabel {
+                        width:                  parent.width
+                        horizontalAlignment:    Text.AlignHCenter
+                        font.pointSize:         ScreenTools.mediumFontPointSize * (largeValueKriso ? 1.3 : 1.0)
+                        font.family:            largeValueKriso ? ScreenTools.demiboldFontFamily : ScreenTools.normalFontFamily
+                        fontSizeMode:           Text.HorizontalFit
+                        text:                   fact.enumOrValueString
+                        color:                  "black"
+                    }
+                }
+            }
         }
-
     }
-
 
 
 }

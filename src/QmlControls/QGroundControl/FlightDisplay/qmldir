@@ -45,6 +45,7 @@ PowerMonitoringDelegate         1.0 PowerMonitoringDelegate.qml
 KrisoDelegate                   1.0 KrisoDelegate.qml
 PageView                        1.0 PageView.qml
 ValuePageWidget                 1.0 ValuePageWidget.qml
+PageViewVoltage                 1.0 PageViewVoltage.qml
 
 
 
