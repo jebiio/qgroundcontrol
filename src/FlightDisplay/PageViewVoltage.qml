@@ -82,7 +82,7 @@ Rectangle {
             sourceSize.height:      height
             color:                  qgcPal.text
             fillMode:               Image.PreserveAspectFit
-            visible:                true
+            visible:                false
             // visible:                (_krisoFactName != "KrisoVoltage") ? true : false
             // visible:                pageWidgetLoader.item ? (pageWidgetLoader.item.showSettingsIcon ? pageWidgetLoader.item.showSettingsIcon : false) : false
 
