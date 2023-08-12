@@ -14,12 +14,12 @@ import QGroundControl.Controllers   1.0
 Rectangle {
     id:     _root
     height: pageFlickable.y + pageFlickable.height + _margins
-    color:  qgcPal.window
+    color:  "white"
     radius: ScreenTools.defaultFontPixelWidth * 0.5
     width:  ScreenTools.defaultFontPixelWidth * 45
     anchors.left: parent.left
     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-    
+    // color: "white"
     property real   maxHeight     : 500  ///< Maximum height that should be taken, smaller than this is ok
 
     property real   _margins:           ScreenTools.defaultFontPixelWidth / 2

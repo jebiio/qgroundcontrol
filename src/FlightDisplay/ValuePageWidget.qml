@@ -88,6 +88,7 @@ Column {
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
                 text:                   fact.shortDescription + (fact.units ? " (" + fact.units + ")" : "")
+                color:                  "black"
             }
             QGCLabel {
                 width:                  parent.width
@@ -96,6 +97,7 @@ Column {
                 font.family:            largeValue ? ScreenTools.demiboldFontFamily : ScreenTools.normalFontFamily
                 fontSizeMode:           Text.HorizontalFit
                 text:                   fact.enumOrValueString
+                color:                  "black"
             }
         }
     }
@@ -114,12 +116,14 @@ Column {
                 horizontalAlignment:    Text.AlignHCenter
                 font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize * 0.75 : ScreenTools.smallFontPointSize
                 text:                   fact.shortDescription
+                color:                  "black"
             }
             QGCLabel {
                 width:                  parent.width
                 horizontalAlignment:    Text.AlignHCenter
                 fontSizeMode:           Text.HorizontalFit
                 text:                   fact.enumOrValueString
+                color:                  "black"
             }
             QGCLabel {
                 width:                  parent.width
@@ -127,6 +131,7 @@ Column {
                 font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize * 0.75 : ScreenTools.smallFontPointSize
                 fontSizeMode:           Text.HorizontalFit
                 text:                   fact.units
+                color:                  "black"
             }
         }
     }
@@ -184,7 +189,7 @@ Column {
                     // }
 
                     Repeater {
-                        model: ["kriso", "krisoVoltage"]
+                        model: ["kriso"]
                         Loader {
                             anchors.left:       parent.left
                             anchors.right:      parent.right
