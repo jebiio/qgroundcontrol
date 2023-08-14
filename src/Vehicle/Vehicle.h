@@ -52,6 +52,7 @@
 #include "KrisoStatusFactGroup.h"
 #include "KrisoVoltageStatusFactGroup.h"
 #include "KrisoGainFactGroup.h"
+#include "KrisoCmdFactGroup.h"
 
 
 class Actuators;
@@ -335,6 +336,7 @@ public:
     Q_PROPERTY(FactGroup*           hygrometer      READ hygrometerFactGroup        CONSTANT)
     Q_PROPERTY(QmlObjectListModel*  batteries       READ batteries                  CONSTANT)
     Q_PROPERTY(Actuators*           actuators       READ actuators                  CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoCmd        READ krisoCmdFactGroup          CONSTANT)
 
     Q_PROPERTY(int      firmwareMajorVersion        READ firmwareMajorVersion       NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareMinorVersion        READ firmwareMinorVersion       NOTIFY firmwareVersionChanged)
@@ -700,6 +702,7 @@ public:
     FactGroup* terrainFactGroup             () { return &_terrainFactGroup; }
     FactGroup* hygrometerFactGroup          () { return &_hygrometerFactGroup; }
     QmlObjectListModel* batteries           () { return &_batteryFactGroupListModel; }
+    FactGroup* krisoCmdFactGroup            () { return &_krisoCmdFactGroup; }
 
     MissionManager*                 missionManager      () { return _missionManager; }
     GeoFenceManager*                geoFenceManager     () { return _geoFenceManager; }
@@ -1379,6 +1382,7 @@ private:
     KrisoStatusFactGroup                  _krisoStatusFactGroup;
     KrisoVoltageStatusFactGroup           _krisoVoltageStatusFactGroup;
     KrisoGainFactGroup                    _krisoGainFactGroup;
+    KrisoCmdFactGroup                     _krisoCmdFactGroup;
 
     MissionManager*                 _missionManager             = nullptr;
     GeoFenceManager*                _geoFenceManager            = nullptr;
@@ -1431,6 +1435,7 @@ private:
     static const char* _estimatorStatusFactGroupName;
     static const char* _hygrometerFactGroupName;
     static const char* _terrainFactGroupName;
+    static const char* _krisoCmdFactGroupName;
 
     static const int _vehicleUIUpdateRateMSecs      = 100;
 

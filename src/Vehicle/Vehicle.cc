@@ -100,7 +100,7 @@ const char* Vehicle::_distanceToGCSFactName =       "distanceToGCS";
 const char* Vehicle::_hobbsFactName =               "hobbs";
 const char* Vehicle::_throttlePctFactName =         "throttlePct";
 
-const char* Vehicle::_krisoStatusFactGroupName =        "kriso";
+const char* Vehicle::_krisoStatusFactGroupName =        "krisoStatus";
 const char* Vehicle::_krisoVoltageStatusFactGroupName = "krisoVoltage";
 const char* Vehicle::_krisoGainFactGroupName = "krisoGain";
 const char* Vehicle::_gpsFactGroupName =                "gps";
@@ -117,6 +117,7 @@ const char* Vehicle::_escStatusFactGroupName =          "escStatus";
 const char* Vehicle::_estimatorStatusFactGroupName =    "estimatorStatus";
 const char* Vehicle::_terrainFactGroupName =            "terrain";
 const char* Vehicle::_hygrometerFactGroupName =         "hygrometer";
+const char* Vehicle::_krisoCmdFactGroupName =           "krisoCmd";
 
 // Standard connected vehicle
 Vehicle::Vehicle(LinkInterface*             link,
@@ -181,6 +182,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _krisoStatusFactGroup         (this)
     , _krisoVoltageStatusFactGroup  (this)
     , _krisoGainFactGroup           (this)
+    , _krisoCmdFactGroup            (this)
 {
     _linkManager = _toolbox->linkManager();
 
@@ -331,7 +333,8 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _localPositionSetpointFactGroup   (this)
     , _krisoStatusFactGroup             (this)
     , _krisoVoltageStatusFactGroup      (this)
-    , _krisoGainFactGroup           (this)
+    , _krisoGainFactGroup               (this)
+    , _krisoCmdFactGroup                (this)
 {
     _linkManager = _toolbox->linkManager();
 
@@ -466,6 +469,7 @@ void Vehicle::_commonInit()
     _addFactGroup(&_estimatorStatusFactGroup,   _estimatorStatusFactGroupName);
     _addFactGroup(&_hygrometerFactGroup,        _hygrometerFactGroupName);
     _addFactGroup(&_terrainFactGroup,           _terrainFactGroupName);
+    _addFactGroup(&_krisoCmdFactGroup,          _krisoCmdFactGroupName);
 
     // Add firmware-specific fact groups, if provided
     QMap<QString, FactGroup*>* fwFactGroups = _firmwarePlugin->factGroups();

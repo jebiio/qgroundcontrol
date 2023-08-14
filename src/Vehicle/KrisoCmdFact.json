@@ -1,0 +1,61 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "t1_rpm",
+    "shortDesc":        "t1_rpm",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t2_rpm",
+    "shortDesc":        "t2_rpm",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t3_rpm",
+    "shortDesc":        "t3_rpm",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t3_angle",
+    "shortDesc":        "t3_angle",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t4_rpm",
+    "shortDesc":        "t4_rpm",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "t4_angle",
+    "shortDesc":        "t4_angle",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "oper_mode",
+    "shortDesc":        "Operation Mode",
+    "type":             "uint32",
+    "default":              null
+},
+{
+    "name":             "mission_mode",
+    "shortDesc":        "Mission Mode",
+    "type":             "uint32",
+    "default":              null
+}
+]
+}
