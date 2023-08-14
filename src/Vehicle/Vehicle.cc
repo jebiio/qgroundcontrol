@@ -2349,7 +2349,7 @@ void Vehicle::kriso_hdgGainSave(float surgeP, float surgeD, float yawP, float ya
     _krisoGainFactGroup.updateHDGFact(surgeP, surgeD, yawP, yawD);
 }
 
-void Vehicle::kriso_sendLogCommand(void)
+void Vehicle::kriso_sendLogCommand(int logcmd)
 {
     // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
     // Also, suppose 1.0f is the parameter to send an emergency command.
@@ -2368,7 +2368,7 @@ void Vehicle::kriso_sendLogCommand(void)
                                             _mavlink->getComponentId(),
                                             link->mavlinkChannel(),
                                             &message,
-                                            1             // ros log command : 1
+                                            logcmd             // ros log command : 1
                                             );
 
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
