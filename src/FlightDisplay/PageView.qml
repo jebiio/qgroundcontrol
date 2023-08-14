@@ -44,15 +44,16 @@ Rectangle {
         height: 25
 
         Rectangle {
-            anchors.fill: parent
+            width: parent.width
+            Layout.fillHeight: true
             color: "#5688B9"
-            z: -1 // 다른 컨텐츠 아래에 배치되도록
-        }
-        Text{
-            text : _krisoFactName
-            color: "white"
-            font.pointSize: 10
-            anchors.centerIn: parent
+
+            Text{
+                text : _krisoFactName
+                color: "white"
+                font.pointSize: 10
+                anchors.centerIn: parent
+            }
         }
 
         QGCColoredImage {
@@ -66,17 +67,15 @@ Rectangle {
             sourceSize.height:      height
             color:                  qgcPal.text
             fillMode:               Image.PreserveAspectFit
-            visible:                true
+            // visible:                true
             // visible:                (_krisoFactName != "KrisoVoltage") ? true : false
-            // visible:                pageWidgetLoader.item ? (pageWidgetLoader.item.showSettingsIcon ? pageWidgetLoader.item.showSettingsIcon : false) : false
+            visible:                pageWidgetLoader.item ? (pageWidgetLoader.item.showSettingsIcon ? pageWidgetLoader.item.showSettingsIcon : false) : false
 
             QGCMouseArea {
                 fillItem:   parent
                 onClicked:  pageWidgetLoader.item.showSettings()
             }
         }
-
-
     }
 
 

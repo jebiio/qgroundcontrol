@@ -14,7 +14,7 @@ import QGroundControl.Controllers   1.0
 Rectangle {
     id:     _root
     height: pageFlickable.y + pageFlickable.height + _margins
-    color:  qgcPal.window
+    color:  "white"
     radius: ScreenTools.defaultFontPixelWidth * 0.5
     width:  ScreenTools.defaultFontPixelWidth * 45
     anchors.left: parent.left
@@ -34,22 +34,6 @@ Rectangle {
 
     QGCPalette { id:qgcPal; colorGroupEnabled: parent.enabled }
 
-    
-
-    // onCurrentPageChanged: {
-    //     switch(currentPage) {
-    //         case 1:
-    //             pageFlickable.visible = true
-    //             page2.visible = false
-    //             break
-    //         case 2:
-    //             pageFlickable.visible = false
-    //             page2.visible = true
-    //             break
-    //         default:
-    //             break
-    //     }
-    // }
 
     RowLayout{
         id: pageCombo
@@ -60,39 +44,17 @@ Rectangle {
         height: 25
 
         Rectangle {
-            anchors.fill: parent
+            width: parent.width
+            Layout.fillHeight: true
             color: "#5688B9"
-            z: -1 // 다른 컨텐츠 아래에 배치되도록
-        }
-        Text{
-            text : _krisoFactName
-            color: "white"
-            font.pointSize: 10
-            anchors.centerIn: parent
-        }
-
-        QGCColoredImage {
-            anchors.rightMargin:     _margins * 5
-            anchors.right:           parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            source:                 "/res/gear-white.svg"
-            mipmap:                 true
-            height:                 parent.height * 0.7
-            width:                  height
-            sourceSize.height:      height
-            color:                  qgcPal.text
-            fillMode:               Image.PreserveAspectFit
-            visible:                false
-            // visible:                (_krisoFactName != "KrisoVoltage") ? true : false
-            // visible:                pageWidgetLoader.item ? (pageWidgetLoader.item.showSettingsIcon ? pageWidgetLoader.item.showSettingsIcon : false) : false
-
-            QGCMouseArea {
-                fillItem:   parent
-                onClicked:  pageWidgetLoader.item.showSettings()
+             // 다른 컨텐츠 아래에 배치되도록
+            Text{
+                text : _krisoFactName
+                color: "white"
+                font.pointSize: 10
+                anchors.centerIn: parent
             }
         }
-
-
     }
 
 
