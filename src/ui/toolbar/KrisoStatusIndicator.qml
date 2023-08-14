@@ -27,7 +27,9 @@ RowLayout {
     property bool   _armed:             _activeVehicle ? _activeVehicle.armed : false
     property real   _margins:           ScreenTools.defaultFontPixelWidth
     property real   _spacing:           ScreenTools.defaultFontPixelWidth / 2
+    property string    _op_mode:           _activeVehicle.getFactGroup("krisoCmd").getFact("op_mode").rawValue.toString()
 
+    property Fact fact: _activeVehicle.getFactGroup("krisoCmd").getFact("op_mode") // fact 수정필요
 
     QGCLabel {
         id: mainStatusLabel
@@ -38,11 +40,11 @@ RowLayout {
 
         text: {
             if (_activeVehicle) {
-                switch (_activeVehicle.kriso.nav_mode) {
-                    case 1: return mainStatusLabel._manualModeText;
-                    case 2: return mainStatusLabel._autoModeText;
-                    case 3: return mainStatusLabel._simulationModeText;
-                    default: return "수동";
+                switch (_activeVehicle.krisoCmd.oper_mode) {
+                    case 0: return mainStatusLabel._manualModeText;
+                    case 1: return mainStatusLabel._autoModeText;
+                    case 2: return mainStatusLabel._simulationModeText;
+                    default: return "운용모드확인불가";
                 }
             } else {
                 return "";
@@ -66,6 +68,11 @@ RowLayout {
     //     visible:    _activeVehicle
     // }
 
+    Text{
+        text: fact.value
+        color: "white"
+    }
+
 
     QGCLabel {
         id: modeLabel
@@ -74,26 +81,33 @@ RowLayout {
         property string _wpModeText:            qsTr("WP Mode")
         font.pointSize: 13
 
-        text: {
-            if (_activeVehicle) {
-                switch (_activeVehicle.kriso.nav_mode) {
-                    case 'dp': return modeLabel._dpModeText;
-                    case 'wp': return modeLabel._wpModeText;
-                    case 'hdg': return modeLabel._hdgModeText;
-                    default: return "HDG Mode";
-                }
-            } else {
-                return "";
-            }
-        }
+    
+        text: _activeVehicle.getFactGroup("krisoCmd").getFact("op_mode").rawValue.toString()
+    
+
+        // text: {
+        //     if (_activeVehicle) {
+        //         switch (_op_mode) {
+        //             case 0: return modeLabel._dpModeText;
+        //             case 1: return modeLabel._wpModeText;
+        //             case 2: return modeLabel._hdgModeText;
+        //             default: return "미션모드확인불가";
+        //         }
+        //     } else {
+        //         return "";
+        //     }
+        // }
     }
 
     Switch {
         id: customToggle
         width: 100 
         height: 25
-        checked: true
+        checked: {
+            ( (_activeVehicle.krisoCmd.oper_mode === 1 || _activeVehicle.krisoCmd.oper_mode === 2) && _activeVehicle.krisoCmd.op_mode !== null) ? true : false
+        }
         enabled: false 
+        visible: _activeVehicle ? true : false
 
         onCheckedChanged: {
             console.log("Switch is now:", checked ? "ON" : "OFF")
@@ -123,7 +137,6 @@ RowLayout {
             visible: false
             anchors.verticalCenter: parent.verticalCenter
             x: customToggle.checked ? background.width - width - 2 : 2
-
         }
     }
 

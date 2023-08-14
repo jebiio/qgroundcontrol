@@ -20,6 +20,7 @@ const char* KrisoCmdFactGroup::_t4_rpmFactName       = "t4_rpm";
 const char* KrisoCmdFactGroup::_t4_angleFactName     = "t4_angle";
 const char* KrisoCmdFactGroup::_oper_modeFactName     = "oper_mode";
 const char* KrisoCmdFactGroup::_mission_modeFactName  = "mission_mode"; 
+const char* KrisoCmdFactGroup::_logging_statusFactName  = "logging_status"; 
 // const char* KrisoCmdFactGroup::_ca_modeFactName       = "ca_mode";
 // const char* KrisoCmdFactGroup::_ca_methodFactName     = "ca_method";  
 
@@ -34,7 +35,8 @@ KrisoCmdFactGroup::KrisoCmdFactGroup(QObject* parent)
     , _t4_rpm                 (0, _t4_rpmFactName,          FactMetaData::valueTypeFloat)         
     , _t4_angle               (0, _t4_angleFactName,        FactMetaData::valueTypeFloat)    
     , _oper_mode              (0, _oper_modeFactName,       FactMetaData::valueTypeUint32)  
-    , _mission_mode           (0, _mission_modeFactName,    FactMetaData::valueTypeUint32)      
+    , _mission_mode           (0, _mission_modeFactName,    FactMetaData::valueTypeUint32)    
+    , _logging_status          (0, _logging_statusFactName,    FactMetaData::valueTypeUint8)      
 {
     _addFact(&_t1_rpm,       _t1_rpmFactName);    
     _addFact(&_t2_rpm,       _t2_rpmFactName);
@@ -44,6 +46,7 @@ KrisoCmdFactGroup::KrisoCmdFactGroup(QObject* parent)
     _addFact(&_t4_angle,     _t4_angleFactName);
     _addFact(&_oper_mode,    _oper_modeFactName);
     _addFact(&_mission_mode, _mission_modeFactName);
+    _addFact(&_logging_status, _logging_statusFactName);
 
 
 }
@@ -54,8 +57,8 @@ void KrisoCmdFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t&
     case MAVLINK_MSG_ID_KRISO_CONTROL_COMMAND_TO_VCC:
         _handleKRISOSCommand(message);
         break;
-    case MAVLINK_MSG_ID_HIGH_LATENCY:
-        // _handleHighLatency(message);
+    case MAVLINK_MSG_ID_KRISO_ROS_LOG_STATUS:
+        _handleKRISOSLogStatus(message);
         break;
     case MAVLINK_MSG_ID_HIGH_LATENCY2:
         // _handleHighLatency2(message);
@@ -81,3 +84,11 @@ void KrisoCmdFactGroup::_handleKRISOSCommand(mavlink_message_t& message)
     mission_mode()->setRawValue     (krisoCmd.mission_mode);     
 }
 
+
+void KrisoCmdFactGroup::_handleKRISOSLogStatus(mavlink_message_t& message)
+{
+    mavlink_kriso_ros_log_status_t krisoLoggingStatus;
+    mavlink_msg_kriso_ros_log_status_decode(&message, &krisoLoggingStatus);
+    
+    logging_status()->setRawValue   (krisoLoggingStatus.logging_status);
+}

@@ -26,7 +26,8 @@ public:
     Q_PROPERTY(Fact*  t4_rpm                    READ t4_rpm         CONSTANT)
     Q_PROPERTY(Fact*  t4_angle                  READ t4_angle       CONSTANT)
     Q_PROPERTY(Fact*  oper_mode                 READ oper_mode      CONSTANT)     
-    Q_PROPERTY(Fact*  mission_mode              READ mission_mode   CONSTANT)     
+    Q_PROPERTY(Fact*  mission_mode              READ mission_mode   CONSTANT) 
+    Q_PROPERTY(Fact*  logging_status            READ logging_status   CONSTANT)     
 
  
 
@@ -38,6 +39,7 @@ public:
     Fact*       t4_angle          (){return &_t4_angle;}    
     Fact*       oper_mode         (){return &_oper_mode;}  
     Fact*       mission_mode      (){return &_mission_mode;}  
+    Fact*       logging_status    (){return &_logging_status;}  
 
 
     // Overrides from FactGroup
@@ -52,10 +54,12 @@ public:
     static const char* _t4_angleFactName;
     static const char* _oper_modeFactName;
     static const char* _mission_modeFactName;
+    static const char* _logging_statusFactName;
 
 
 protected:
     void _handleKRISOSCommand(mavlink_message_t& message);
+    void _handleKRISOSLogStatus(mavlink_message_t& message);
     
     Fact        _t1_rpm;
     Fact        _t2_rpm;
@@ -65,5 +69,6 @@ protected:
     Fact        _t4_angle;
     Fact        _oper_mode;
     Fact        _mission_mode;
+    Fact        _logging_status;
 
 };

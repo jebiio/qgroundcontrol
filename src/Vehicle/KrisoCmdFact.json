@@ -56,6 +56,12 @@
     "shortDesc":        "Mission Mode",
     "type":             "uint32",
     "default":              null
+},
+{
+    "name":             "logging_status",
+    "shortDesc":        "logging_status Mode",
+    "type":             "uint8",
+    "default":              null
 }
 ]
 }

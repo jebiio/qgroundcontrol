@@ -77,6 +77,9 @@ Rectangle {
             Layout.preferredHeight: viewButtonRow.height
             visible:                currentToolbar === flyViewToolbar
         }
+        Item{
+            width: 20 
+        }
 
         QGCButton {
             id:                 disconnectButton
