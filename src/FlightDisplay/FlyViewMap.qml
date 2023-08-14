@@ -629,7 +629,7 @@ FlightMap {
         }
 
         onClicked: {
-            if (!globals.guidedControllerFlyView.guidedUIVisible && _activeVehicle.isKrisoDPClickableLayer) {
+            if (_activeVehicle && !globals.guidedControllerFlyView.guidedUIVisible && _activeVehicle.isKrisoDPClickableLayer) {
                 orbitMapCircle.hide()
                 gotoLocationItem.hide()
                 var clickCoord = _root.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)

@@ -54,7 +54,7 @@ Column {
             heightFactor:   0.3333
             width: setupbtn.width
             Layout.alignment:   Qt.AlignHCenter
-            onClicked:  _activeVehicle.kriso_sendLogCommand()
+            // onClicked:  _activeVehicle.kriso_sendLogCommand()
         }
     }
 }
