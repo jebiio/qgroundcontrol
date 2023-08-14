@@ -126,23 +126,23 @@ Rectangle {
             visible:            _activeVehicle && currentToolbar === flyViewToolbar
         }
 
-        QGCButton {
-            text:               "Show Trajectory Line"
-            onClicked:          _activeVehicle.trajectoryVisible = !_activeVehicle.trajectoryVisible
-            visible:            _activeVehicle && currentToolbar === flyViewToolbar
-        }
+        // QGCButton {
+        //     text:               "Show Trajectory Line"
+        //     onClicked:          _activeVehicle.trajectoryVisible = !_activeVehicle.trajectoryVisible
+        //     visible:            _activeVehicle && currentToolbar === flyViewToolbar
+        // }
 
-        QGCButton {
-            text:               "Show Plan Path"
-            onClicked:          _activeVehicle.planPathVisible = !_activeVehicle.planPathVisible
-            visible:            _activeVehicle && currentToolbar === flyViewToolbar
-        }
-        QGCButton {
-            text:               "Clear Path"
-            // onClicked:          _activeVehicle.TrajectoryPoints.clearWaypoints()
-            onClicked:          _activeVehicle.kriso_sendLogCommand() //Logging start로 바꿈
-            visible:            _activeVehicle && currentToolbar === flyViewToolbar
-        }    
+        // QGCButton {
+        //     text:               "Show Plan Path"
+        //     onClicked:          _activeVehicle.planPathVisible = !_activeVehicle.planPathVisible
+        //     visible:            _activeVehicle && currentToolbar === flyViewToolbar
+        // }
+        // QGCButton {
+        //     text:               "Clear Path"
+        //     onClicked:          _activeVehicle.TrajectoryPoints.clearWaypoints()
+        //     // onClicked:          _activeVehicle.kriso_sendLogCommand() //Logging start로 바꿈
+        //     visible:            _activeVehicle && currentToolbar === flyViewToolbar
+        // }    
 
     }    
 

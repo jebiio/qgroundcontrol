@@ -303,8 +303,8 @@ Item {
             color: "white"
             radius: 10
             width: parent.width
-            height: 100
-            opacity: 0.8
+            height: layerTabBar.height
+            opacity: 0.9
             anchors.margins: 10
             visible: true
 
@@ -324,6 +324,8 @@ Item {
                     onClicked: {
                         page1.visible = true
                         page2.visible = false
+                        loggingPage.visible = false
+                        trajectoryPage.visible = false
                     }
                 }
                 QGCTabButton {
@@ -333,17 +335,33 @@ Item {
                     onClicked: {
                         page1.visible = false
                         page2.visible = true
+                        loggingPage.visible = false
+                        trajectoryPage.visible = false
                     }
                 }
                 QGCTabButton {
                     id: krisoLoggingStatusBtn
                     text: qsTr("로깅정보")
                     enabled: true
+                    onClicked: {
+                        page1.visible = false
+                        page2.visible = false
+                        loggingPage.visible = true
+                        trajectoryPage.visible = false
+
+                    }
                 }
                 QGCTabButton {
                     id: krisoTajectorySetupBtn
                     text: qsTr("궤적설정")
                     enabled: true
+                    onClicked: {
+                        page1.visible = false
+                        page2.visible = false
+                        loggingPage.visible = false
+                        trajectoryPage.visible = true
+
+                    }
                 }
             }
 
@@ -359,6 +377,249 @@ Item {
                 _krisoFactName: "KrisoVoltage"
                 anchors.top: layerTabBar.bottom
                 visible: false
+            }
+
+            Rectangle {
+                id: loggingPage
+                anchors.top: layerTabBar.bottom
+                radius: 4
+                width: parent.width
+                height: 100 
+                color: "white"
+                visible: false
+
+                Row {
+                    anchors.centerIn: parent
+                    spacing: 10  // 텍스트와 토글 사이의 간격
+
+                    Text {
+                        text: "로깅시작"
+                        font.pointSize: 10
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    Switch {
+                        id: toggleSwitch
+                        width: 50
+                        height: 25
+                        checked: false
+
+                        onCheckedChanged: {
+                            console.log("Switch is now:", checked ? "ON" : "OFF")
+                            if (checked){
+                                _activeVehicle.kriso_sendLogCommand(1) 
+                            }else {
+                                _activeVehicle.kriso_sendLogCommand(0) 
+                            }
+                        }
+
+                        background: Rectangle {
+                            radius: toggleSwitch.height / 3
+                            color: toggleSwitch.checked ? "green" : "lightgray"
+                            border.color: "gray"
+                            border.width: 2
+                        }
+
+                        indicator: Rectangle {
+                            width: toggleSwitch.width / 2.2
+                            height: toggleSwitch.height / 1.2
+                            radius: height / 2
+                            color: "white"
+                            anchors.verticalCenter: parent.verticalCenter
+                            x: toggleSwitch.checked ? toggleSwitch.width - width - toggleSwitch.height / 10 : toggleSwitch.height / 10
+                        }
+                    }
+                }
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: toggleSwitch.bottom 
+                    anchors.topMargin: 20
+
+                    Rectangle {
+                        width: 100
+                        height: 25
+                        color: toggleSwitch.checked ? "green" : "red"
+                        radius: 4
+                        border.color: "gray"
+                        border.width: 2
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: toggleSwitch.checked ? "로깅중" : "로깅 중단"
+                            color: "white"
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                id: trajectoryPage
+                anchors.top: layerTabBar.bottom
+                radius: 4
+                width: 500
+                height: 150
+                color: "white"
+                visible: false
+                // padding: 10 
+                // 궤적 표기 설정 타이틀
+
+                ColumnLayout{
+                    
+                    anchors.left: parent.left
+                    anchors.margins: 10
+                    spacing: 10
+
+                    Text {
+                        id : trjaectoryTitle
+                        anchors.top: parent.top
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "궤적 표기 설정"
+                        font.pointSize: 11
+                    }
+
+                    RowLayout {
+                        id: moveTrajectoryRow
+                        // anchors.centerIn: parent
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
+                        // anchors.top: trjaectoryTitle.bottom
+            
+                        anchors.topMargin: 20
+                        spacing: 10  // 텍스트와 토글 사이의 간격
+
+                        Text {
+                            text: "이동궤적"
+                            font.pointSize: 10
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        Switch {
+                            id: moveTrajectoryToggle
+                            width: 50
+                            height: 25
+                            checked: true
+
+                            onCheckedChanged: {
+                                console.log("Switch is now:", checked ? "ON" : "OFF")
+                                if (checked){
+                                    _activeVehicle.trajectoryVisible = true
+                                }else {
+                                    _activeVehicle.trajectoryVisible = false
+                                }
+                            }
+
+                            background: Rectangle {
+                                radius: moveTrajectoryToggle.height / 3
+                                color: moveTrajectoryToggle.checked ? "green" : "lightgray"
+                                border.color: "gray"
+                                border.width: 1
+                            }
+
+                            indicator: Rectangle {
+                                width: moveTrajectoryToggle.width / 2.2
+                                height: moveTrajectoryToggle.height / 1.2
+                                radius: height / 2
+                                color: "white"
+                                anchors.verticalCenter: parent.verticalCenter
+                                x: moveTrajectoryToggle.checked ? moveTrajectoryToggle.width - width - moveTrajectoryToggle.height / 10 : moveTrajectoryToggle.height / 10
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        id : planTrajectoryRow
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter // 중앙 정렬
+                        spacing: 10  // 텍스트와 토글 사이의 간격
+
+                        Text {
+                            text: "계획궤적"
+                            font.pointSize: 10
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        Switch {
+                            id: planTrajectoryToggle
+                            width: 50
+                            height: 25
+                            checked: true
+
+                            onCheckedChanged: {
+                                console.log("Switch is now:", checked ? "ON" : "OFF")
+                                if (checked){
+                                    _activeVehicle.planPathVisible = true
+                                }else {
+                                    _activeVehicle.planPathVisible = false
+                                }
+                            }
+
+                            background: Rectangle {
+                                radius: planTrajectoryToggle.height / 3
+                                color: planTrajectoryToggle.checked ? "green" : "lightgray"
+                                border.color: "gray"
+                                border.width: 1
+                            }
+
+                            indicator: Rectangle {
+                                width: planTrajectoryToggle.width / 2.2
+                                height: planTrajectoryToggle.height / 1.2
+                                radius: height / 2
+                                color: "white"
+                                anchors.verticalCenter: parent.verticalCenter
+                                x: planTrajectoryToggle.checked ? planTrajectoryToggle.width - width - planTrajectoryToggle.height / 10 : planTrajectoryToggle.height / 10
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        id : clearTrajectoryRow
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
+                        spacing: 10  // 텍스트와 토글 사이의 간격
+
+                        Text {
+                            text: "궤적삭제"
+                            font.pointSize: 10
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        Switch {
+                            id: clearTrajectoryToggle
+                            width: 100
+                            height: 25
+                            checked:  false
+
+                            onCheckedChanged: {
+                                console.log("Switch is now:", checked ? "ON" : "OFF")
+                                if (checked){
+                                    // _activeVehicle.planPathVisible = true
+                                }else {
+                                    // _activeVehicle.planPathVisible = false
+                                }
+                            }
+
+                            background: Rectangle {
+                                radius: clearTrajectoryToggle.height / 3
+                                color: clearTrajectoryToggle.checked ? "green" : "lightgray"
+                                border.color: "gray"
+                                border.width: 1
+                            }
+
+                            indicator: Rectangle {
+                                width: clearTrajectoryToggle.width / 2.2
+                                height: clearTrajectoryToggle.height / 1.2
+                                radius: height / 2
+                                color: "white"
+                                anchors.verticalCenter: parent.verticalCenter
+                                x: clearTrajectoryToggle.checked ? clearTrajectoryToggle.width - width - clearTrajectoryToggle.height / 10 : clearTrajectoryToggle.height / 10
+                            }
+                        }
+
+                    }
+                }
+            
+
+
             }
 
         }
