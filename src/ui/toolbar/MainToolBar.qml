@@ -97,6 +97,7 @@ Rectangle {
         anchors.right:          parent.right
         contentWidth:           indicatorLoader.x + indicatorLoader.width
         flickableDirection:     Flickable.HorizontalFlick
+        visible:                false
 
         Loader {
             id:                 indicatorLoader
