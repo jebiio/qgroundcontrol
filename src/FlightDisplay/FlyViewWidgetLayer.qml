@@ -414,7 +414,7 @@ Item {
                         }
 
                         background: Rectangle {
-                            radius: toggleSwitch.height / 3
+                            radius: toggleSwitch.height / 2
                             color: toggleSwitch.checked ? "green" : "lightgray"
                             border.color: "gray"
                             border.width: 2
