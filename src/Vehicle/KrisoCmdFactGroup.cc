@@ -48,6 +48,9 @@ KrisoCmdFactGroup::KrisoCmdFactGroup(QObject* parent)
     _addFact(&_mission_mode, _mission_modeFactName);
     _addFact(&_logging_status, _logging_statusFactName);
 
+    _oper_mode.setRawValue(10);
+    _mission_mode.setRawValue(10);
+
 
 }
 

@@ -27,9 +27,10 @@ RowLayout {
     property bool   _armed:             _activeVehicle ? _activeVehicle.armed : false
     property real   _margins:           ScreenTools.defaultFontPixelWidth
     property real   _spacing:           ScreenTools.defaultFontPixelWidth / 2
-    property string    _op_mode:           _activeVehicle.getFactGroup("krisoCmd").getFact("op_mode").rawValue.toString()
-
-    property Fact fact: _activeVehicle.getFactGroup("krisoCmd").getFact("op_mode") // fact 수정필요
+    
+    property int oper_mode :  _activeVehicle.getFactGroup("krisoCmd").getFact("oper_mode").value
+    property int mission_mode : _activeVehicle.getFactGroup("krisoCmd").getFact("mission_mode").value
+    property int logging_status :  _activeVehicle.getFactGroup("krisoCmd").getFact("logging_status").value
 
     QGCLabel {
         id: mainStatusLabel
@@ -40,7 +41,7 @@ RowLayout {
 
         text: {
             if (_activeVehicle) {
-                switch (_activeVehicle.krisoCmd.oper_mode) {
+                switch (oper_mode) {
                     case 0: return mainStatusLabel._manualModeText;
                     case 1: return mainStatusLabel._autoModeText;
                     case 2: return mainStatusLabel._simulationModeText;
@@ -68,10 +69,10 @@ RowLayout {
     //     visible:    _activeVehicle
     // }
 
-    Text{
-        text: fact.value
-        color: "white"
-    }
+    // Text{
+    //     text: _activeVehicle.getFactGroup("krisoCmd").getFact("oper_mode").enumOrValueString
+    //     color: "white"
+    // }
 
 
     QGCLabel {
@@ -82,21 +83,20 @@ RowLayout {
         font.pointSize: 13
 
     
-        text: _activeVehicle.getFactGroup("krisoCmd").getFact("op_mode").rawValue.toString()
-    
 
-        // text: {
-        //     if (_activeVehicle) {
-        //         switch (_op_mode) {
-        //             case 0: return modeLabel._dpModeText;
-        //             case 1: return modeLabel._wpModeText;
-        //             case 2: return modeLabel._hdgModeText;
-        //             default: return "미션모드확인불가";
-        //         }
-        //     } else {
-        //         return "";
-        //     }
-        // }
+        text: {
+            if(_activeVehicle){
+                switch (mission_mode) {
+                    case 0: return modeLabel._wpModeText;
+                    case 1: return modeLabel._hdgModeText;
+                    case 2: return modeLabel._dpModeText;
+                    default: return "미션모드확인불가";
+                }
+            }else {
+                return "";
+            }
+            
+        }
     }
 
     Switch {
@@ -104,10 +104,11 @@ RowLayout {
         width: 100 
         height: 25
         checked: {
-            ( (_activeVehicle.krisoCmd.oper_mode === 1 || _activeVehicle.krisoCmd.oper_mode === 2) && _activeVehicle.krisoCmd.op_mode !== null) ? true : false
+            (mission_mode !== null && mission_mode !== 0) && ((oper_mode === 1 || oper_mode === 2) && oper_mode !== null)
         }
         enabled: false 
-        visible: _activeVehicle ? true : false
+        visible: (_activeVehicle && oper_mode !== 0) ? true : false
+
 
         onCheckedChanged: {
             console.log("Switch is now:", checked ? "ON" : "OFF")
