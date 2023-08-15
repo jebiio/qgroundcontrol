@@ -53,6 +53,9 @@ Item {
     property rect   _centerViewport:        Qt.rect(0, 0, width, height)
     property real   _rightPanelWidth:       ScreenTools.defaultFontPixelWidth * 45
 
+    property int logging_status :  _activeVehicle.getFactGroup("krisoCmd").getFact("logging_status").value
+
+
     QGCToolInsets {
         id:                     _totalToolInsets
         leftEdgeTopInset:       toolStrip.leftInset
@@ -438,14 +441,15 @@ Item {
                     Rectangle {
                         width: 100
                         height: 25
-                        color: toggleSwitch.checked ? "green" : "red"
+                        color: (logging_status === 1)? "green" : "red"
                         radius: 4
                         border.color: "gray"
                         border.width: 2
 
                         Text {
+                            id: loggingStatus
                             anchors.centerIn: parent
-                            text: toggleSwitch.checked ? "로깅중" : "로깅 중단"
+                            text: (logging_status === 1) ? "로깅중" : "로깅 중단"
                             color: "white"
                         }
                     }

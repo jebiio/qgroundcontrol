@@ -30,7 +30,6 @@ RowLayout {
     
     property int oper_mode :  _activeVehicle.getFactGroup("krisoCmd").getFact("oper_mode").value
     property int mission_mode : _activeVehicle.getFactGroup("krisoCmd").getFact("mission_mode").value
-    property int logging_status :  _activeVehicle.getFactGroup("krisoCmd").getFact("logging_status").value
 
     QGCLabel {
         id: mainStatusLabel

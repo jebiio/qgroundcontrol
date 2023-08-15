@@ -59,7 +59,7 @@
 },
 {
     "name":             "logging_status",
-    "shortDesc":        "logging_status Mode",
+    "shortDesc":        "logging_status",
     "type":             "uint8",
     "default":              null
 }
