@@ -189,7 +189,7 @@ Column {
                     // }
 
                     Repeater {
-                        model: ["krisoStatus", "krisoCmd"]
+                        model: ["krisoStatus", "krisoCmd", "krisoAIS", "krisoDPtoVCC"]
                         Loader {
                             anchors.left:       parent.left
                             anchors.right:      parent.right
