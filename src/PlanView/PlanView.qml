@@ -752,13 +752,13 @@ Item {
                 anchors.top:        parent.top
                 //-------------------------------------------------------
                 // Airmap Airspace Control
-                AirspaceControl {
-                    id:             airspaceControl
-                    width:          parent.width
-                    visible:        _airspaceEnabled
-                    planView:       true
-                    showColapse:    true
-                }
+                // AirspaceControl {
+                //     id:             airspaceControl
+                //     width:          parent.width
+                //     visible:        _airspaceEnabled
+                //     planView:       true
+                //     showColapse:    true
+                // }
                 //-------------------------------------------------------
                 // Mission Controls (Colapsed)
                 Rectangle {
@@ -1044,6 +1044,7 @@ Item {
                 Layout.fillWidth:   true
                 text:               qsTr("Create Plan")
                 showSpacer:         false
+                visible:            false
             }
 
             GridLayout {
