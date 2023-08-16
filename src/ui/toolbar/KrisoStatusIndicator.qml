@@ -30,6 +30,7 @@ RowLayout {
     
     property int oper_mode :  _activeVehicle.getFactGroup("krisoCmd").getFact("oper_mode").value
     property int mission_mode : _activeVehicle.getFactGroup("krisoCmd").getFact("mission_mode").value
+    property int dp_start_stop: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("dp_start_stop").value
 
     QGCLabel {
         id: mainStatusLabel
@@ -103,11 +104,19 @@ RowLayout {
         width: 100 
         height: 25
         checked: {
-            (mission_mode !== null && mission_mode !== 0) && ((oper_mode === 1 || oper_mode === 2) && oper_mode !== null)
+            if((mission_mode !== 10) && ((oper_mode === 1 || oper_mode === 2)))
+            {
+                if(dp_start_stop === 0){
+                    return false;
+                }else {
+                    return true;
+                }
+            }else {
+                return false
+            }
         }
         enabled: false 
-        visible: (_activeVehicle && oper_mode !== 0) ? true : false
-
+        visible: (_activeVehicle && mission_mode === 2) ? true : false //DP모드일때만  On,Off 표기
 
         onCheckedChanged: {
             console.log("Switch is now:", checked ? "ON" : "OFF")
