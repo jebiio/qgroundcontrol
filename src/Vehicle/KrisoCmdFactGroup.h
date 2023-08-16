@@ -58,8 +58,8 @@ public:
 
 
 protected:
-    void _handleKRISOSCommand(mavlink_message_t& message);
-    void _handleKRISOSLogStatus(mavlink_message_t& message);
+    void _handleKRISOCommand(mavlink_message_t& message);
+    void _handleKRISOLogStatus(mavlink_message_t& message);
     
     Fact        _t1_rpm;
     Fact        _t2_rpm;

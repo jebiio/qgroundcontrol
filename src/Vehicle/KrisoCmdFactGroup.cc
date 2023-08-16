@@ -58,10 +58,10 @@ void KrisoCmdFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t&
 {
     switch (message.msgid) {
     case MAVLINK_MSG_ID_KRISO_CONTROL_COMMAND_TO_VCC:
-        _handleKRISOSCommand(message);
+        _handleKRISOCommand(message);
         break;
     case MAVLINK_MSG_ID_KRISO_ROS_LOG_STATUS:
-        _handleKRISOSLogStatus(message);
+        _handleKRISOLogStatus(message);
         break;
     case MAVLINK_MSG_ID_HIGH_LATENCY2:
         // _handleHighLatency2(message);
@@ -72,7 +72,7 @@ void KrisoCmdFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t&
 
 }
 
-void KrisoCmdFactGroup::_handleKRISOSCommand(mavlink_message_t& message)
+void KrisoCmdFactGroup::_handleKRISOCommand(mavlink_message_t& message)
 {
     mavlink_kriso_control_command_to_vcc_t krisoCmd;
     mavlink_msg_kriso_control_command_to_vcc_decode(&message, &krisoCmd);
@@ -88,7 +88,7 @@ void KrisoCmdFactGroup::_handleKRISOSCommand(mavlink_message_t& message)
 }
 
 
-void KrisoCmdFactGroup::_handleKRISOSLogStatus(mavlink_message_t& message)
+void KrisoCmdFactGroup::_handleKRISOLogStatus(mavlink_message_t& message)
 {
     mavlink_kriso_ros_log_status_t krisoLoggingStatus;
     mavlink_msg_kriso_ros_log_status_decode(&message, &krisoLoggingStatus);
