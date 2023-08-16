@@ -1146,7 +1146,7 @@ void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
 
 void Vehicle::_handleKRISOStatus(mavlink_message_t& message)
 {
-    qDebug() << "-----------------kris status -------------------------";
+    // qDebug() << "-----------------kris status -------------------------";
     mavlink_kriso_status_t krisoStatus;
     mavlink_msg_kriso_status_decode(&message, &krisoStatus);
 
