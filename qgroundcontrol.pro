@@ -12,6 +12,7 @@ QMAKE_PROJECT_DEPTH = 0 # undocumented qmake flag to force absolute paths in mak
 # These are disabled until proven correct
 DEFINES += QGC_GST_TAISYNC_DISABLED
 DEFINES += QGC_GST_MICROHARD_DISABLED
+DEFINES += DISABLE_AIRMAP
 
 exists($${OUT_PWD}/qgroundcontrol.pro) {
     error("You must use shadow build (e.g. mkdir build; cd build; qmake ../qgroundcontrol.pro).")
@@ -746,6 +747,12 @@ HEADERS += \
     src/Vehicle/VehicleVibrationFactGroup.h \
     src/Vehicle/VehicleWindFactGroup.h \
     src/Vehicle/VehicleHygrometerFactGroup.h \
+    src/Vehicle/KrisoStatusFactGroup.h \
+    src/Vehicle/KrisoGainFactGroup.h \
+    src/Vehicle/KrisoCmdFactGroup.h \
+    src/Vehicle/KrisoAISFactGroup.h \
+    src/Vehicle/KrisoDPtoVCCFactGroup.h \
+    src/Vehicle/KrisoVoltageStatusFactGroup.h \
     src/VehicleSetup/JoystickConfigController.h \
     src/comm/LinkConfiguration.h \
     src/comm/LinkInterface.h \
@@ -998,6 +1005,12 @@ SOURCES += \
     src/Vehicle/VehicleVibrationFactGroup.cc \
     src/Vehicle/VehicleHygrometerFactGroup.cc \
     src/Vehicle/VehicleWindFactGroup.cc \
+    src/Vehicle/KrisoStatusFactGroup.cc \
+    src/Vehicle/KrisoGainFactGroup.cc \
+    src/Vehicle/KrisoCmdFactGroup.cc \
+    src/Vehicle/KrisoAISFactGroup.cc \
+    src/Vehicle/KrisoDPtoVCCFactGroup.cc \
+    src/Vehicle/KrisoVoltageStatusFactGroup.cc \
     src/VehicleSetup/JoystickConfigController.cc \
     src/comm/LinkConfiguration.cc \
     src/comm/LinkInterface.cc \
