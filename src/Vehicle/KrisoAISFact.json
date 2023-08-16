@@ -6,21 +6,21 @@
 {
     "name":             "lon",
     "shortDesc":        "lon",
-    "type":             "double"
+    "type":             "double",
+    "decimalPlaces":        7,
+    "default":              null
 },
 {
     "name":             "lat",
     "shortDesc":        "lat",
     "type":             "double",
-    "decimalPlaces":        2,
-    "default":              2
+    "decimalPlaces":        7,
+    "default":              null
 },
 {
     "name":             "msg_type",
     "shortDesc":        "msg_type",
-    "type":             "uint32",
-    "decimalPlaces":        2,
-    "default":              3
+    "type":             "uint32"
 },
 {
     "name":             "repeat",

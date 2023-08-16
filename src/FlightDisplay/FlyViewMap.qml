@@ -58,6 +58,10 @@ FlightMap {
     property bool   _keepVehicleCentered:       pipMode ? true : false
     property bool   _saveZoomLevelSetting:      true
 
+    property double ais_lat :  _activeVehicle.getFactGroup("krisoAIS").getFact("lat").value
+    property double ais_lon :  _activeVehicle.getFactGroup("krisoAIS").getFact("lon").value
+
+
     function updateAirspace(reset) {
         if(_airspaceEnabled) {
             var coordinateNW = _root.toCoordinate(Qt.point(0,0), false /* clipToViewPort */)
@@ -262,16 +266,16 @@ FlightMap {
     }
 
     // SOS Custom Map item
-    // MapItemView {
-    //     model: QGroundControl.multiVehicleManager.vehicles
-    //     delegate: SosMapItem {
-    //         vehicle:        object
-    //         coordinate:     QtPositioning.coordinate(37.6608614, 127.0005897)
-    //         map:            _root
-    //         size:           pipMode ? ScreenTools.defaultFontPixelHeight : ScreenTools.defaultFontPixelHeight * 3
-    //         z:              QGroundControl.zOrderVehicles
-    //     }
-    // }
+    MapItemView {
+        model: QGroundControl.multiVehicleManager.vehicles
+        delegate: SosMapItem {
+            vehicle:        object
+            coordinate:     QtPositioning.coordinate(ais_lat, ais_lon)
+            map:            _root
+            size:           pipMode ? ScreenTools.defaultFontPixelHeight : ScreenTools.defaultFontPixelHeight * 3
+            z:              QGroundControl.zOrderVehicles
+        }
+    }
 
     // Add the vehicles to the map
     MapItemView {
