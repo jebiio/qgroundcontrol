@@ -1,0 +1,143 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "lon",
+    "shortDesc":        "lon",
+    "type":             "double"
+},
+{
+    "name":             "lat",
+    "shortDesc":        "lat",
+    "type":             "double",
+    "decimalPlaces":        2,
+    "default":              2
+},
+{
+    "name":             "msg_type",
+    "shortDesc":        "msg_type",
+    "type":             "uint32",
+    "decimalPlaces":        2,
+    "default":              3
+},
+{
+    "name":             "repeat",
+    "shortDesc":        "repeat",
+    "type":             "uint32",
+    "decimalPlaces":        2,
+    "default":              3
+},
+{
+    "name":             "mmsi",
+    "shortDesc":        "mmsi",
+    "type":             "uint32",
+    "decimalPlaces":        2,
+    "default":              3
+},
+{
+    "name":             "reserved_1",
+    "shortDesc":        "reserved_1",
+    "type":             "uint32",
+    "decimalPlaces":        2,
+    "default":              6
+},
+{
+    "name":             "speed",
+    "shortDesc":        "speed",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              7
+},
+{
+    "name":             "course",
+    "shortDesc":        "course",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              8
+},
+{
+    "name":             "heading",
+    "shortDesc":        "heading",
+    "type":             "uint32",
+    "decimalPlaces":        2,
+    "default":              9
+},
+{
+    "name":             "second",
+    "shortDesc":        "second",
+    "type":             "uint32",
+    "decimalPlaces":        2,
+    "default":              10
+},
+{
+    "name":             "reserved_2",
+    "shortDesc":        "reserved_2",
+    "type":             "uint32",
+    "decimalPlaces":        7,
+    "default":              null
+},
+{
+    "name":             "radio",
+    "shortDesc":        "radio",
+    "type":             "uint32",
+    "decimalPlaces":        7,
+    "default":              null
+},
+{
+    "name":             "accuracy",
+    "shortDesc":        "accuracy",
+    "type":             "uint8",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "cs",
+    "shortDesc":        "cs",
+    "type":             "uint8",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "display",
+    "shortDesc":        "display",
+    "type":             "uint8",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "dsc",
+    "shortDesc":        "dsc",
+    "type":             "uint8",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "band",
+    "shortDesc":        "band",
+    "type":             "uint8",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "msg22",
+    "shortDesc":        "msg22",
+    "type":             "uint8",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "assigned",
+    "shortDesc":        "assigned",
+    "type":             "uint8",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "raim",
+    "shortDesc":        "raim",
+    "type":             "uint8"
+}
+]
+}

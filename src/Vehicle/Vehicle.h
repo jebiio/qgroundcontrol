@@ -53,6 +53,7 @@
 #include "KrisoVoltageStatusFactGroup.h"
 #include "KrisoGainFactGroup.h"
 #include "KrisoCmdFactGroup.h"
+#include "KrisoAISFactGroup.h"
 
 
 class Actuators;
@@ -337,6 +338,7 @@ public:
     Q_PROPERTY(QmlObjectListModel*  batteries       READ batteries                  CONSTANT)
     Q_PROPERTY(Actuators*           actuators       READ actuators                  CONSTANT)
     Q_PROPERTY(FactGroup*           krisoCmd        READ krisoCmdFactGroup          CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoAIS        READ krisoAISFactGroup          CONSTANT)
 
     Q_PROPERTY(int      firmwareMajorVersion        READ firmwareMajorVersion       NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareMinorVersion        READ firmwareMinorVersion       NOTIFY firmwareVersionChanged)
@@ -703,6 +705,7 @@ public:
     FactGroup* hygrometerFactGroup          () { return &_hygrometerFactGroup; }
     QmlObjectListModel* batteries           () { return &_batteryFactGroupListModel; }
     FactGroup* krisoCmdFactGroup            () { return &_krisoCmdFactGroup; }
+    FactGroup* krisoAISFactGroup            () { return &_krisoAISFactGroup; }
 
     MissionManager*                 missionManager      () { return _missionManager; }
     GeoFenceManager*                geoFenceManager     () { return _geoFenceManager; }
@@ -1383,6 +1386,7 @@ private:
     KrisoVoltageStatusFactGroup           _krisoVoltageStatusFactGroup;
     KrisoGainFactGroup                    _krisoGainFactGroup;
     KrisoCmdFactGroup                     _krisoCmdFactGroup;
+    KrisoAISFactGroup                     _krisoAISFactGroup;
 
     MissionManager*                 _missionManager             = nullptr;
     GeoFenceManager*                _geoFenceManager            = nullptr;
@@ -1436,6 +1440,7 @@ private:
     static const char* _hygrometerFactGroupName;
     static const char* _terrainFactGroupName;
     static const char* _krisoCmdFactGroupName;
+    static const char* _krisoAISFactGroupName;
 
     static const int _vehicleUIUpdateRateMSecs      = 100;
 
