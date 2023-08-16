@@ -66,8 +66,8 @@ QGC_APP_COPYRIGHT   = "Copyright (C) 2019 QGroundControl Development Team. All r
 
 WindowsBuild {
     QGC_INSTALLER_SCRIPT        = "$$SOURCE_DIR\\deploy\\windows\\nullsoft_installer.nsi"
-    QGC_INSTALLER_ICON          = "$$SOURCE_DIR\\deploy\\windows\\WindowsQGC.ico"
-    QGC_INSTALLER_HEADER_BITMAP = "$$SOURCE_DIR\\deploy\\windows\\installheader.bmp"
+    QGC_INSTALLER_ICON          = "$$SOURCE_DIR\\deploy\\windows\\kriso.ico"
+    QGC_INSTALLER_HEADER_BITMAP = "$$SOURCE_DIR\\deploy\\windows\\kriso-installheader.bmp"
     QGC_INSTALLER_DRIVER_MSI    = "$$SOURCE_DIR\\deploy\\windows\\driver.msi"
 }
 
@@ -355,9 +355,9 @@ CustomBuild {
         RESOURCES += $$PWD/resources/InstrumentValueIcons/InstrumentValueIcons.qrc
     }
 } else {
-    DEFINES += QGC_APPLICATION_NAME=\"\\\"QGroundControl\\\"\"
-    DEFINES += QGC_ORG_NAME=\"\\\"QGroundControl.org\\\"\"
-    DEFINES += QGC_ORG_DOMAIN=\"\\\"org.qgroundcontrol\\\"\"
+    DEFINES += QGC_APPLICATION_NAME=\"\\\"KRISOGroundControl\\\"\"
+    DEFINES += QGC_ORG_NAME=\"\\\"KRISO\\\"\"
+    DEFINES += QGC_ORG_DOMAIN=\"\\\"kriso.re.kr\\\"\"
     RESOURCES += \
         $$PWD/qgroundcontrol.qrc \
         $$PWD/qgcresources.qrc \
@@ -1564,7 +1564,7 @@ LinuxBuild {
     share_qgroundcontrol.files = $${IN_PWD}/resources/
 
     share_icons.path = $${PREFIX}/share/icons/hicolor/128x128/apps/
-    share_icons.files = $${IN_PWD}/resources/icons/qgroundcontrol.png
+    share_icons.files = $${IN_PWD}/resources/icons/kriso.png
     share_metainfo.path = $${PREFIX}/share/metainfo/
     share_metainfo.files = $${IN_PWD}/deploy/org.mavlink.qgroundcontrol.metainfo.xml
     share_applications.path = $${PREFIX}/share/applications/
