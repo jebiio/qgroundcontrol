@@ -100,10 +100,11 @@ Rectangle {
         anchors.right:          parent.right
         contentWidth:           indicatorLoader.x + indicatorLoader.width
         flickableDirection:     Flickable.HorizontalFlick
-        visible:                false
+        visible:                true
 
         Loader {
             id:                 indicatorLoader
+            anchors.leftMargin: 20
             anchors.left:       parent.left
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
