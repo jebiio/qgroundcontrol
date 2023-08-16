@@ -508,6 +508,7 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory { APMFirmwarePlugin { 
         src/Vehicle/KrisoGainFactGroup.h \
         src/Vehicle/KrisoCmdFactGroup.h \
         src/Vehicle/KrisoAISFactGroup.h \
+        src/Vehicle/KrisoDPtoVCCFactGroup.h \
         src/Vehicle/KrisoVoltageStatusFactGroup.h \
         #src/qgcunittest/RadioConfigTest.h \
         #src/AnalyzeView/LogDownloadTest.h \
@@ -562,6 +563,7 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory { APMFirmwarePlugin { 
         src/Vehicle/KrisoGainFactGroup.cc \
         src/Vehicle/KrisoCmdFactGroup.cc \
         src/Vehicle/KrisoAISFactGroup.cc \
+        src/Vehicle/KrisoDPtoVCCFactGroup.cc \
         src/Vehicle/KrisoVoltageStatusFactGroup.cc \
         #src/qgcunittest/RadioConfigTest.cc \
         #src/AnalyzeView/LogDownloadTest.cc \

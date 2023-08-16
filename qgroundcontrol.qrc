@@ -365,6 +365,7 @@
         <file alias="Vehicle/KrisoVoltageStatusFact.json">src/Vehicle/KrisoVoltageStatusFact.json</file>
         <file alias="Vehicle/KrisoCmdFact.json">src/Vehicle/KrisoCmdFact.json</file>
         <file alias="Vehicle/KrisoAISFact.json">src/Vehicle/KrisoAISFact.json</file>
+        <file alias="Vehicle/KrisoDPtoVCCFact.json">src/Vehicle/KrisoDPtoVCCFact.json</file>
     </qresource>
     <qresource prefix="/MockLink">
         <file alias="APMArduSubMockLink.params">src/comm/APMArduSubMockLink.params</file>
