@@ -14,7 +14,5 @@ add_custom_target(FligthMapWidgetsQml
 		QGCMapToolButton.qml
 		QGCPitchIndicator.qml
 		QGCWaypointEditor.qml
-		PageView.qml
-		ValuePageWidget.qml
 )
 
