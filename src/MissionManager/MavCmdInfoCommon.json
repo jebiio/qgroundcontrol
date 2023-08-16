@@ -194,7 +194,7 @@
         {
             "id":                   22,
             "rawName":              "MAV_CMD_NAV_TAKEOFF",
-            "friendlyName":         "Takeoff",
+            "friendlyName":         "Launch",
             "description":          "Launch from the ground and travel towards the specified takeoff position.",
             "specifiesCoordinate":  true,
             "isTakeoffCommand":     true,

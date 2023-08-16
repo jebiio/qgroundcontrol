@@ -493,7 +493,7 @@ QString SimpleMissionItem::abbreviation() const
 
     switch(command()) {
     case MAV_CMD_NAV_TAKEOFF:
-        return tr("Takeoff");
+        return tr("Launch");
     case MAV_CMD_NAV_LAND:
         return tr("Land");
     case MAV_CMD_NAV_VTOL_TAKEOFF:
