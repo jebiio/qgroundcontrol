@@ -224,9 +224,6 @@
         <file alias="QGroundControl/FlightDisplay/NameModel.qml">src/FlightDisplay/NameModel.qml</file>
         <file alias="QGroundControl/FlightDisplay/SectionDelegate.qml">src/FlightDisplay/SectionDelegate.qml</file>
         <file alias="NameDelegate.qml">src/FlightDisplay/NameDelegate.qml</file>
-        <file alias="VesselStatusDelegate.qml">src/FlightDisplay/VesselStatusDelegate.qml</file>
-        <file alias="QGroundControl/FlightDisplay/KrisoDelegate.qml">src/FlightDisplay/KrisoDelegate.qml</file>
-        <file alias="PowerMonitoringDelegate.qml">src/FlightDisplay/PowerMonitoringDelegate.qml</file>
         <file alias="QGroundControl/FlightDisplay/HighlightDelegate.qml">src/FlightDisplay/HighlightDelegate.qml</file>
         <file alias="QGroundControl/FlightDisplay/GuidedActionActionList.qml">src/FlightDisplay/GuidedActionActionList.qml</file>
         <file alias="QGroundControl/FlightDisplay/GuidedActionConfirm.qml">src/FlightDisplay/GuidedActionConfirm.qml</file>

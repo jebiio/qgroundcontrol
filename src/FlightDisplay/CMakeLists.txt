@@ -54,9 +54,6 @@ add_custom_target(FligthDisplayQml
 		SectionDelegate.qml
 		NameDelegate.qml
 		HighlightDelegate.qml
-		VesselStatusDelegate.qml
-		PowerMonitoringDelegate.qml
-		KrisoDelegate.qml
 		PageView.qml
 		ValuePageWidget.qml
 		PageViewVoltage.qml
