@@ -38,6 +38,8 @@ MapQuickItem {
     property var    _map:           map
     property bool   _multiVehicle:  QGroundControl.multiVehicleManager.vehicles.count > 1
 
+    property int ais_heading :  _activeVehicle.getFactGroup("krisoAIS").getFact("heading").value
+
     sourceItem: Item {
         id:         vehicleItem
         width:      vehicleIcon.width
@@ -71,7 +73,7 @@ MapQuickItem {
             transform: Rotation {
                 origin.x:       vehicleIcon.width  / 2
                 origin.y:       vehicleIcon.height / 2
-                angle:          isNaN(heading) ? 0 : heading
+                angle:          isNaN(ais_heading) ? 0 : ais_heading
             }
         }
 
