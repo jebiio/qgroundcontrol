@@ -158,6 +158,7 @@ Item {
         id:                 telemetryPanel
         x:                  recalcXPosition()
         anchors.margins:    _toolsMargin
+        visible:            false
 
         // States for custom layout support
         states: [
