@@ -93,18 +93,6 @@ add_library(Vehicle
 	VehicleVibrationFactGroup.cc
 	VehicleVibrationFactGroup.h
 	VehicleWindFactGroup.cc	
-	KrisoStatusFactGroup.cc
-	KrisoStatusFactGroup.h
-	KrisoGainFactGroup.cc
-	KrisoGainFactGroup.h
-	KrisoCmdFactGroup.cc
-	KrisoCmdFactGroup.h
-	KrisoAISFactGroup.cc
-	KrisoAISFactGroup.h
-	KrisoDPtoVCCFactGroup.cc
-	KrisoDPtoVCCFactGroup.h
-	KrisoVoltageStatusFactGroup.cc
-	KrisoVoltageStatusFactGroup.h
 	VehicleWindFactGroup.h
         VehicleHygrometerFactGroup.cc
         VehicleHygrometerFactGroup.h
