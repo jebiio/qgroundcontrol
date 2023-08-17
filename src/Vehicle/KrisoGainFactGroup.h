@@ -52,9 +52,10 @@ public:
     Fact*       hdg_cmd           () {return &_hdg_cmd; }
 
 
-    void updateHDGFact(float surgeP, float surgeD, float yawP, float yawD);
+    void updateHDGFact(float speed, float degree, float surgeP, float surgeD, float yawP, float yawD);
     void updateDPFact(float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD, float yaw);
     void updateDPCoordinateFact(QGeoCoordinate clickedCoordindate);
+    
 
 
     static const char* _dp_surge_pgainFactName;

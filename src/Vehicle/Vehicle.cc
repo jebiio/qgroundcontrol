@@ -2139,7 +2139,7 @@ void Vehicle::kriso_sendEmergencyCommand(void)
 
 }
 
-void Vehicle::kriso_sendHDGCommand(float speed, float degree)
+void Vehicle::kriso_sendHDGCommand(void)
 {
     // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
     // Also, suppose 1.0f is the parameter to send an emergency command.
@@ -2158,8 +2158,8 @@ void Vehicle::kriso_sendHDGCommand(float speed, float degree)
                                             _mavlink->getComponentId(),
                                             link->mavlinkChannel(),
                                             &message,
-                                            speed,           // speed command
-                                            degree,          // HDG command (degree)
+                                            _krisoGainFactGroup.getFact("spd_cmd")->rawValue().toFloat(),             // speed command
+                                            _krisoGainFactGroup.getFact("hdg_cmd")->rawValue().toFloat(),           // HDG command (degree)
                                             _krisoGainFactGroup.getFact("nav_surge_pgain")->rawValue().toFloat(),            // surge p gain
                                             _krisoGainFactGroup.getFact("nav_surge_dgain")->rawValue().toFloat(),            // surge d gain
                                             _krisoGainFactGroup.getFact("nav_yaw_pgain")->rawValue().toFloat(),            // yaw p gain
@@ -2356,9 +2356,9 @@ void Vehicle::kriso_dpGainSave(float surgeP, float surgeD, float swayP, float sw
     _krisoGainFactGroup.updateDPFact(surgeP, surgeD, swayP, swayD, yawP, yawD, yaw);
 }
 
-void Vehicle::kriso_hdgGainSave(float surgeP, float surgeD, float yawP, float yawD)
+void Vehicle::kriso_hdgGainSave(float spd_cmd, float degree, float surgeP, float surgeD, float yawP, float yawD)
 {
-    _krisoGainFactGroup.updateHDGFact(surgeP, surgeD, yawP, yawD);
+    _krisoGainFactGroup.updateHDGFact(spd_cmd, degree, surgeP, surgeD, yawP, yawD);
 }
 
 void Vehicle::kriso_sendLogCommand(int logcmd)

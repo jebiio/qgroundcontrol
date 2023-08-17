@@ -1287,7 +1287,7 @@ Item {
                 QGCButton {
                     text: "Save"
                     onClicked: {
-                        _activeVehicle.kriso_sendHDGCommand(parseFloat(hdgSpeedInput.text), parseFloat(hdgDegreeInput.text))
+                        _activeVehicle.kriso_sendHDGCommand()
                         // Save logic goes here
                         hdgGainEditorContainer.visible = false
                     }
@@ -1409,6 +1409,8 @@ Item {
                     text: "입력완료"
                     onClicked: {
                         _activeVehicle.kriso_hdgGainSave(
+                            parseFloat(hdgSpeedInput.text),
+                            parseFloat(hdgDegreeInput.text),
                             parseFloat(navSurgePGainInput.text), 
                             parseFloat(navSurgeDGainInput.text), 
                             parseFloat(navYawPGainInput.text), 

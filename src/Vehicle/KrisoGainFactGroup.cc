@@ -75,8 +75,10 @@ void KrisoGainFactGroup::updateDPCoordinateFact(QGeoCoordinate clickedCoordindat
 }
 
 
-void KrisoGainFactGroup::updateHDGFact(float surgeP, float surgeD, float yawP, float yawD)
-{
+void KrisoGainFactGroup::updateHDGFact(float speed, float degree, float surgeP, float surgeD, float yawP, float yawD)
+{   
+    hdg_cmd()->setRawValue                          (degree);
+    spd_cmd()->setRawValue                          (speed);
     nav_surge_pgain()->setRawValue                   (surgeP);
     nav_surge_dgain()->setRawValue                   (surgeD);
     nav_yaw_pgain()->setRawValue                     (yawP);
