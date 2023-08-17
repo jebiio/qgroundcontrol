@@ -42,9 +42,9 @@ RowLayout {
         text: {
             if (_activeVehicle) {
                 switch (oper_mode) {
-                    case 0: return mainStatusLabel._manualModeText;
-                    case 1: return mainStatusLabel._autoModeText;
-                    case 2: return mainStatusLabel._simulationModeText;
+                    case 1: return mainStatusLabel._manualModeText;
+                    case 2: return mainStatusLabel._autoModeText;
+                    case 3: return mainStatusLabel._simulationModeText;
                     default: return "운용모드확인불가";
                 }
             } else {
@@ -87,9 +87,9 @@ RowLayout {
         text: {
             if(_activeVehicle){
                 switch (mission_mode) {
-                    case 0: return modeLabel._wpModeText;
-                    case 1: return modeLabel._hdgModeText;
-                    case 2: return modeLabel._dpModeText;
+                    case 1: return modeLabel._wpModeText;
+                    case 2: return modeLabel._hdgModeText;
+                    case 3: return modeLabel._dpModeText;
                     default: return "미션모드확인불가";
                 }
             }else {
