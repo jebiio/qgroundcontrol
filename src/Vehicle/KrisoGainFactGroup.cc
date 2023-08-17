@@ -24,6 +24,8 @@ const char* KrisoGainFactGroup::_nav_yaw_dgainFactName   = "nav_yaw_dgain";
 const char* KrisoGainFactGroup::_latFactName =                 "lat";  
 const char* KrisoGainFactGroup::_lonFactName =                 "lon";
 const char* KrisoGainFactGroup::_dp_yawFactName =              "dp_yaw";
+const char* KrisoGainFactGroup::_spd_cmdFactName =                 "spd_cmd";
+const char* KrisoGainFactGroup::_hdg_cmdFactName =              "hdg_cmd";
 
 
 KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
@@ -41,6 +43,8 @@ KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
     , _lat                            (0, _latFactName,               FactMetaData::valueTypeDouble)
     , _lon                            (0, _lonFactName,               FactMetaData::valueTypeDouble)
     , _dp_yaw                         (0, _dp_yawFactName,               FactMetaData::valueTypeFloat)
+    , _spd_cmd                        (0, _spd_cmdFactName,               FactMetaData::valueTypeFloat)
+    , _hdg_cmd                        (0, _hdg_cmdFactName,               FactMetaData::valueTypeFloat)
     
 
 {
@@ -57,6 +61,8 @@ KrisoGainFactGroup::KrisoGainFactGroup(QObject* parent)
     _addFact(&_lat,                 _latFactName);
     _addFact(&_lon,                 _lonFactName);
     _addFact(&_dp_yaw,              _dp_yawFactName);
+    _addFact(&_spd_cmd,             _spd_cmdFactName);
+    _addFact(&_hdg_cmd,              _hdg_cmdFactName);
 
 }
 

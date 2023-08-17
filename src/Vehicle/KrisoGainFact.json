@@ -93,7 +93,20 @@
     "type":             "float",
     "decimalPlaces":        2,
     "default":              null
+},
+{
+    "name":             "spd_cmd",
+    "shortDesc": "spd_cmd",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              7
+},
+{
+    "name":             "hdg_cmd",
+    "shortDesc": "spd_cmd",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              7
 }
-
 ]
 }

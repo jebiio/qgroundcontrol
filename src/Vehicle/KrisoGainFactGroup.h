@@ -32,6 +32,8 @@ public:
     Q_PROPERTY(Fact* lat                   READ  lat              CONSTANT)
     Q_PROPERTY(Fact* lon                   READ  lon              CONSTANT)
     Q_PROPERTY(Fact* dp_yaw                READ  dp_yaw           CONSTANT)
+    Q_PROPERTY(Fact* spd_cmd               READ  spd_cmd          CONSTANT)
+    Q_PROPERTY(Fact* hdg_cmd               READ  hdg_cmd          CONSTANT)
 
     Fact*       dp_surge_pgain    (){return &_dp_surge_pgain;}  
     Fact*       dp_surge_dgain    (){return &_dp_surge_dgain;}  
@@ -46,6 +48,8 @@ public:
     Fact*       lat               () {return &_lat; }
     Fact*       lon               () {return &_lon; }
     Fact*       dp_yaw            () {return &_dp_yaw; }
+    Fact*       spd_cmd           () {return &_spd_cmd; }
+    Fact*       hdg_cmd           () {return &_hdg_cmd; }
 
 
     void updateHDGFact(float surgeP, float surgeD, float yawP, float yawD);
@@ -66,6 +70,8 @@ public:
     static const char* _latFactName;
     static const char* _lonFactName;
     static const char* _dp_yawFactName;
+    static const char* _spd_cmdFactName;
+    static const char* _hdg_cmdFactName;
     
 
 protected:
@@ -83,5 +89,7 @@ protected:
     Fact        _lat;
     Fact        _lon;
     Fact        _dp_yaw;
+    Fact        _spd_cmd;
+    Fact        _hdg_cmd;
 
 };
