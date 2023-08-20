@@ -19,7 +19,6 @@ TrajectoryPoints::TrajectoryPoints(Vehicle* vehicle, QObject* parent)
 
 void TrajectoryPoints::clearWaypoints(void)
 {
-    // vehicle의 모든 waypoints를 지운다.
     _points.clear();
 }
 
