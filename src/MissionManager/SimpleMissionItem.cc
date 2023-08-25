@@ -306,7 +306,7 @@ void SimpleMissionItem::_setupMetaData(void)
         _krisoAcceptRadiusMetaData->setDecimalPlaces(2);
 
         // _krisoNavSurgePgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
-        // // _krisoNavSurgePgainMetaData->setRawUnits("m/s"); 재은
+        // // _krisoNavSurgePgainMetaData->setRawUnits("m/s");
         // _krisoNavSurgePgainMetaData->setDecimalPlaces(2);
 
         // _krisoNavSurgeDgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);      
@@ -810,7 +810,7 @@ void SimpleMissionItem::_altitudeChanged(void)
 void SimpleMissionItem::_krisoAcceptRadiusChanged(void)
 {   
     _missionItem._param1Fact.setRawValue(_krisoAcceptRadiusFact.rawValue());
-    qDebug() << "_krisoAcceptRadiusChanged 호출 됨!!!!! 값 :" <<_krisoAcceptRadiusFact.rawValue().toDouble();
+    qDebug() << "_krisoAcceptRadiusChanged !!! :" <<_krisoAcceptRadiusFact.rawValue().toDouble();
 
 }
 
@@ -818,7 +818,7 @@ void SimpleMissionItem::_krisoAcceptRadiusChanged(void)
 void SimpleMissionItem::_krisoSpeedChanged(void)
 {   
     _missionItem._param2Fact.setRawValue(_krisoSpeedFact.rawValue());
-    qDebug() << "현재  : " <<_krisoSpeedFact.rawValue().toDouble() ;
+    qDebug() << "now  : " <<_krisoSpeedFact.rawValue().toDouble() ;
     
     // double speed = _krisoSpeedFact.rawValue().toDouble();
     // _krisoSpeed = speed;
@@ -826,28 +826,6 @@ void SimpleMissionItem::_krisoSpeedChanged(void)
 
 
 }
-
-// void SimpleMissionItem::_krisoNavSurgePgainChanged(void)
-// {
-//     // _missionItem._param3Fact.setRawValue(_krisoNavSurgePgainFact.rawValue());
-//     qDebug() <<"현재 NavSurgePgain : " << _krisoNavSurgePgainFact.rawValue().toDouble();
-// }
-// void SimpleMissionItem::_krisoNavSurgeDgainChanged(void)
-// {
-//     // _missionItem._param4Fact.setRawValue(_krisoNavSurgeDgainFact.rawValue());
-//     qDebug() <<"현재 NavSurgeDgain : " << _krisoNavSurgeDgainFact.rawValue().toDouble();
-// }
-// void SimpleMissionItem::_krisoNavYawPgainChanged(void)
-// {
-//     // _missionItem._param7Fact.setRawValue(_krisoNavYawPgainFact.rawValue());
-//     qDebug() <<"현재 NavYawPgain : " << _krisoNavYawPgainFact.rawValue().toDouble();
-// }
-
-// void SimpleMissionItem::_krisoNavYawDgainChanged(void)
-// {
-//     // _missionItem._param8Fact.setRawValue(_krisoNavYawDgainFact.rawValue());
-//     qDebug() <<"현재 NavYawDgain : " << _krisoNavYawDgainFact.rawValue().toDouble();
-// }
 
 void SimpleMissionItem::_terrainAltChanged(void)
 {

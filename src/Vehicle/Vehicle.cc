@@ -2209,7 +2209,6 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
             speed = item->krisoSpeed()->rawValue().toFloat();
             acceptRadi = item->krisoAcceptRadius()->rawValue().toDouble();
 
-            // i-1을 사용해 배열에 값 저장(배열 인덱스는 0부터 시작)
             speedValues[i-1] = speed;
             acceptRadiValues[i-1] = acceptRadi;
             lat[i-1] = item->coordinate().latitude();

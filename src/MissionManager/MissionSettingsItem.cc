@@ -332,21 +332,21 @@ void MissionSettingsItem::_krisoNavSurgePgainChanged(void)
 {
     // double newSurgePGain = value.toFloat();
     // _missionItem._param3Fact.setRawValue(_krisoNavSurgePgainFact.rawValue());
-    qDebug() <<"현재 NavSurgePgain : " << _krisoNavSurgePgainFact.rawValue().toFloat();
+    qDebug() <<"NavSurgePgain : " << _krisoNavSurgePgainFact.rawValue().toFloat();
 }
 void MissionSettingsItem::_krisoNavSurgeDgainChanged(void)
 {
     // _missionItem._param4Fact.setRawValue(_krisoNavSurgeDgainFact.rawValue());
-    qDebug() <<"현재 NavSurgeDgain : " << _krisoNavSurgeDgainFact.rawValue().toFloat();
+    qDebug() <<"NavSurgeDgain : " << _krisoNavSurgeDgainFact.rawValue().toFloat();
 }
 void MissionSettingsItem::_krisoNavYawPgainChanged(void)
 {
     // _missionItem._param7Fact.setRawValue(_krisoNavYawPgainFact.rawValue());
-    qDebug() <<"현재 NavYawPgain : " << _krisoNavYawPgainFact.rawValue().toFloat();
+    qDebug() <<"NavYawPgain : " << _krisoNavYawPgainFact.rawValue().toFloat();
 }
 
 void MissionSettingsItem::_krisoNavYawDgainChanged(void)
 {
     // _missionItem._param8Fact.setRawValue(_krisoNavYawDgainFact.rawValue());
-    qDebug() <<"현재 NavYawDgain : " << _krisoNavYawDgainFact.rawValue().toFloat();
+    qDebug() <<"NavYawDgain : " << _krisoNavYawDgainFact.rawValue().toFloat();
 }

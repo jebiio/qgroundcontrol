@@ -67,7 +67,7 @@ QGC_APP_COPYRIGHT   = "Copyright (C) 2019 QGroundControl Development Team. All r
 WindowsBuild {
     QGC_INSTALLER_SCRIPT        = "$$SOURCE_DIR\\deploy\\windows\\nullsoft_installer.nsi"
     QGC_INSTALLER_ICON          = "$$SOURCE_DIR\\deploy\\windows\\kriso.ico"
-    QGC_INSTALLER_HEADER_BITMAP = "$$SOURCE_DIR\\deploy\\windows\\kriso-installheader.bmp"
+    QGC_INSTALLER_HEADER_BITMAP = "$$SOURCE_DIR\\deploy\\windows\\kriso-installerheader.bmp"
     QGC_INSTALLER_DRIVER_MSI    = "$$SOURCE_DIR\\deploy\\windows\\driver.msi"
 }
 
@@ -505,12 +505,6 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory { APMFirmwarePlugin { 
         src/Vehicle/SendMavCommandWithHandlerTest.h \
         src/Vehicle/SendMavCommandWithSignallingTest.h \
         src/Vehicle/VehicleLinkManagerTest.h \
-        src/Vehicle/KrisoStatusFactGroup.h \
-        src/Vehicle/KrisoGainFactGroup.h \
-        src/Vehicle/KrisoCmdFactGroup.h \
-        src/Vehicle/KrisoAISFactGroup.h \
-        src/Vehicle/KrisoDPtoVCCFactGroup.h \
-        src/Vehicle/KrisoVoltageStatusFactGroup.h \
         #src/qgcunittest/RadioConfigTest.h \
         #src/AnalyzeView/LogDownloadTest.h \
         #src/qgcunittest/FileDialogTest.h \
@@ -560,12 +554,6 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory { APMFirmwarePlugin { 
         src/Vehicle/SendMavCommandWithHandlerTest.cc \
         src/Vehicle/SendMavCommandWithSignallingTest.cc \
         src/Vehicle/VehicleLinkManagerTest.cc \
-        src/Vehicle/KrisoStatusFactGroup.cc \
-        src/Vehicle/KrisoGainFactGroup.cc \
-        src/Vehicle/KrisoCmdFactGroup.cc \
-        src/Vehicle/KrisoAISFactGroup.cc \
-        src/Vehicle/KrisoDPtoVCCFactGroup.cc \
-        src/Vehicle/KrisoVoltageStatusFactGroup.cc \
         #src/qgcunittest/RadioConfigTest.cc \
         #src/AnalyzeView/LogDownloadTest.cc \
         #src/qgcunittest/FileDialogTest.cc \

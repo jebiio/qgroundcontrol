@@ -296,7 +296,7 @@ void MissionController::sendItemsToVehicle(Vehicle* vehicle, QmlObjectListModel*
 
         // PlanManager takes control of MissionItems so no need to delete
         vehicle->missionManager()->writeMissionItems(rgMissionItems);
-        vehicle->kriso_sendWTCommand(visualMissionItems); // 재은 수정 
+        vehicle->kriso_sendWTCommand(visualMissionItems);
     }
 }
 
