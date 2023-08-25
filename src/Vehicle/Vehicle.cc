@@ -2189,6 +2189,7 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     float navSurgeDgain = 0.0;     
     float navYawPgain = 0.0; 
     float navYawDgain = 0.0;   
+    int missionItem_count = _visualItems->count() -1 ;
 
     MissionSettingsItem* settingsItem = visualItems->value<MissionSettingsItem*>(0);
     
@@ -2198,8 +2199,9 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
         navYawPgain = settingsItem->krisoNavYawPgain()->rawValue().toFloat(); 
         navYawDgain = settingsItem->krisoNavYawDgain()->rawValue().toFloat(); 
     }
-
    for (int i = 1; i < _visualItems->count(); i++) {
+        qDebug() << "visual item count :  " << i ; 
+
         double speed = 0.0;
         double acceptRadi = 0.0;
 
@@ -2250,7 +2252,8 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
                                             navSurgePgain,        // nav_surge_pgain
                                             navSurgeDgain,        // nav_surge_dgain
                                             navYawPgain,        // nav_yaw_pgain
-                                            navYawDgain        // nav_yaw_dgain
+                                            navYawDgain,        // nav_yaw_dgain
+                                            missionItem_count
                                             );
             
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
