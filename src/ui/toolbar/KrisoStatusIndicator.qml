@@ -77,9 +77,10 @@ RowLayout {
 
     QGCLabel {
         id: modeLabel
-        property string _hdgModeText:           qsTr("HDG Mode")
-        property string _dpModeText:            qsTr("DP Mode")
-        property string _wpModeText:            qsTr("WP Mode")
+        property string _remoteModeText:        qsTr("원격수동 모드")
+        property string _hdgModeText:           qsTr("HDG 모드")
+        property string _dpModeText:            qsTr("DP 모드")
+        property string _wpModeText:            qsTr("WP 모드")
         font.pointSize: 13
 
     
@@ -87,9 +88,10 @@ RowLayout {
         text: {
             if(_activeVehicle){
                 switch (mission_mode) {
-                    case 1: return modeLabel._wpModeText;
-                    case 2: return modeLabel._hdgModeText;
-                    case 3: return modeLabel._dpModeText;
+                    case 1: return modeLabel._remoteModeText;
+                    case 2: return modeLabel._wpModeText;
+                    case 3: return modeLabel._hdgModeText;
+                    case 4: return modeLabel._dpModeText;
                     default: return "미션모드확인불가";
                 }
             }else {
