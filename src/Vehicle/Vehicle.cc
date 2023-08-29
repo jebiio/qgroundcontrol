@@ -120,6 +120,8 @@ const char* Vehicle::_hygrometerFactGroupName =         "hygrometer";
 const char* Vehicle::_krisoCmdFactGroupName =           "krisoCmd";
 const char* Vehicle::_krisoAISFactGroupName =           "krisoAIS";
 const char* Vehicle::_krisoDPtoVCCFactGroupName =       "krisoDPtoVCC";
+const char* Vehicle::_krisoWTtoVCCFactGroupName =       "krisoWTtoVCC";
+const char* Vehicle::_krisoCKtoVCCFactGroupName =       "krisoCKtoVCC";
 
 // Standard connected vehicle
 Vehicle::Vehicle(LinkInterface*             link,
@@ -187,6 +189,9 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _krisoCmdFactGroup            (this)
     , _krisoAISFactGroup            (this)
     , _krisoDPtoVCCFactGroup        (this)
+    , _krisoWTtoVCCFactGroup        (this)
+    , _krisoCKtoVCCFactGroup        (this)
+
 {
     _linkManager = _toolbox->linkManager();
 
@@ -341,6 +346,8 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _krisoCmdFactGroup                (this)
     , _krisoAISFactGroup                (this)
     , _krisoDPtoVCCFactGroup            (this)
+    , _krisoWTtoVCCFactGroup            (this)
+    , _krisoCKtoVCCFactGroup            (this)    
 {
     _linkManager = _toolbox->linkManager();
 
@@ -478,6 +485,8 @@ void Vehicle::_commonInit()
     _addFactGroup(&_krisoCmdFactGroup,          _krisoCmdFactGroupName);
     _addFactGroup(&_krisoAISFactGroup,          _krisoAISFactGroupName);
     _addFactGroup(&_krisoDPtoVCCFactGroup,      _krisoDPtoVCCFactGroupName);
+    _addFactGroup(&_krisoWTtoVCCFactGroup,      _krisoWTtoVCCFactGroupName);
+    _addFactGroup(&_krisoCKtoVCCFactGroup,      _krisoCKtoVCCFactGroupName);
 
     // Add firmware-specific fact groups, if provided
     QMap<QString, FactGroup*>* fwFactGroups = _firmwarePlugin->factGroups();

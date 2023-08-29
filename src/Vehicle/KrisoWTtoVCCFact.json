@@ -1,0 +1,42 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "psi_d",
+    "shortDesc":        "psi_d",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "spd_d",
+    "shortDesc":        "spd_d",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wp_lat_d",
+    "shortDesc":        "wp_lat_d",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "wp_lon_d",
+    "shortDesc":        "wp_lon_d",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "track_path_idx",
+    "shortDesc":        "track_path_idx",
+    "type":             "uint32",
+    "decimalPlaces":        2,
+    "default":              null
+}
+]
+}

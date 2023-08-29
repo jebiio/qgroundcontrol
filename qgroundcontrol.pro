@@ -739,6 +739,8 @@ HEADERS += \
     src/Vehicle/KrisoCmdFactGroup.h \
     src/Vehicle/KrisoAISFactGroup.h \
     src/Vehicle/KrisoDPtoVCCFactGroup.h \
+    src/Vehicle/KrisoWTtoVCCFactGroup.h \
+    src/Vehicle/KrisoCKtoVCCFactGroup.h \
     src/Vehicle/KrisoVoltageStatusFactGroup.h \
     src/Vehicle/VehicleHygrometerFactGroup.h \
     src/VehicleSetup/JoystickConfigController.h \
@@ -998,6 +1000,8 @@ SOURCES += \
     src/Vehicle/KrisoCmdFactGroup.cc \
     src/Vehicle/KrisoAISFactGroup.cc \
     src/Vehicle/KrisoDPtoVCCFactGroup.cc \
+    src/Vehicle/KrisoWTtoVCCFactGroup.cc \
+    src/Vehicle/KrisoCKtoVCCFactGroup.cc \
     src/Vehicle/KrisoVoltageStatusFactGroup.cc \
     src/VehicleSetup/JoystickConfigController.cc \
     src/comm/LinkConfiguration.cc \

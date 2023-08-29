@@ -55,6 +55,8 @@
 #include "KrisoCmdFactGroup.h"
 #include "KrisoAISFactGroup.h"
 #include "KrisoDPtoVCCFactGroup.h"
+#include "KrisoWTtoVCCFactGroup.h"
+#include "KrisoCKtoVCCFactGroup.h"
 
 
 class Actuators;
@@ -335,12 +337,14 @@ public:
     Q_PROPERTY(FactGroup*           distanceSensors READ distanceSensorFactGroup    CONSTANT)
     Q_PROPERTY(FactGroup*           localPosition   READ localPositionFactGroup     CONSTANT)
     Q_PROPERTY(FactGroup*           localPositionSetpoint READ localPositionSetpointFactGroup CONSTANT)
-    Q_PROPERTY(FactGroup*           hygrometer      READ hygrometerFactGroup        CONSTANT)
-    Q_PROPERTY(QmlObjectListModel*  batteries       READ batteries                  CONSTANT)
-    Q_PROPERTY(Actuators*           actuators       READ actuators                  CONSTANT)
-    Q_PROPERTY(FactGroup*           krisoCmd        READ krisoCmdFactGroup          CONSTANT)
-    Q_PROPERTY(FactGroup*           krisoAIS        READ krisoAISFactGroup          CONSTANT)
+    Q_PROPERTY(FactGroup*           hygrometer      READ hygrometerFactGroup                CONSTANT)
+    Q_PROPERTY(QmlObjectListModel*  batteries       READ batteries                          CONSTANT)
+    Q_PROPERTY(Actuators*           actuators       READ actuators                          CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoCmd        READ krisoCmdFactGroup                  CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoAIS        READ krisoAISFactGroup                  CONSTANT)
     Q_PROPERTY(FactGroup*           krisoDPtoVCC        READ krisoDPtoVCCFactGroup          CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoWTtoVCC        READ krisoWTtoVCCFactGroup          CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoCKtoVCC        READ krisoCKtoVCCFactGroup          CONSTANT)
 
     Q_PROPERTY(int      firmwareMajorVersion        READ firmwareMajorVersion       NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareMinorVersion        READ firmwareMinorVersion       NOTIFY firmwareVersionChanged)
@@ -709,6 +713,8 @@ public:
     FactGroup* krisoCmdFactGroup            () { return &_krisoCmdFactGroup; }
     FactGroup* krisoAISFactGroup            () { return &_krisoAISFactGroup; }
     FactGroup* krisoDPtoVCCFactGroup            () { return &_krisoDPtoVCCFactGroup; }
+    FactGroup* krisoWTtoVCCFactGroup            () { return &_krisoWTtoVCCFactGroup; }
+    FactGroup* krisoCKtoVCCFactGroup            () { return &_krisoCKtoVCCFactGroup; }
 
     MissionManager*                 missionManager      () { return _missionManager; }
     GeoFenceManager*                geoFenceManager     () { return _geoFenceManager; }
@@ -1391,6 +1397,8 @@ private:
     KrisoCmdFactGroup                     _krisoCmdFactGroup;
     KrisoAISFactGroup                     _krisoAISFactGroup;
     KrisoDPtoVCCFactGroup                 _krisoDPtoVCCFactGroup;
+    KrisoWTtoVCCFactGroup                 _krisoWTtoVCCFactGroup;
+    KrisoCKtoVCCFactGroup                 _krisoCKtoVCCFactGroup;
 
     MissionManager*                 _missionManager             = nullptr;
     GeoFenceManager*                _geoFenceManager            = nullptr;
@@ -1446,6 +1454,8 @@ private:
     static const char* _krisoCmdFactGroupName;
     static const char* _krisoAISFactGroupName;
     static const char* _krisoDPtoVCCFactGroupName;
+    static const char* _krisoWTtoVCCFactGroupName;
+    static const char* _krisoCKtoVCCFactGroupName;
 
     static const int _vehicleUIUpdateRateMSecs      = 100;
 

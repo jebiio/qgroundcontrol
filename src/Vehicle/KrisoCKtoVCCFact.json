@@ -1,0 +1,21 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "psi_d",
+    "shortDesc":        "psi_d",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+},
+{
+    "name":             "spd_d",
+    "shortDesc":        "spd_d",
+    "type":             "float",
+    "decimalPlaces":        2,
+    "default":              null
+}
+]
+}
