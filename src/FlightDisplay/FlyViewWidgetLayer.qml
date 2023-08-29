@@ -652,7 +652,8 @@ Item {
         anchors.top : toolStrip.bottom
         anchors.left: parent.left
         anchors.margins: 10
-        visible :  _activeVehicle ? true : false
+        // visible :  _activeVehicle ? true : false
+        visible : true
 
         implicitWidth: missionModeRow.width + padding * 2
         implicitHeight: commandColumn.height + padding * 2
@@ -721,9 +722,9 @@ Item {
 
                 // remoteMode button 
                 KrisoRadioButton {
-                    id: remoteMode
+                    id: remoteModesed 
                     text: "원격수동"
-                    enabled: !manualMode.isPressed
+                    enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
                         if(isPressed) {
                             dpGainEditorContainer.visible = false;
@@ -741,7 +742,7 @@ Item {
                 KrisoRadioButton {
                     id: wpMode
                     text: "WP"
-                    enabled: !manualMode.isPressed
+                    enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
                         if(isPressed){
                             moveToPlanView.visible = true;
@@ -758,7 +759,7 @@ Item {
                 KrisoRadioButton {
                     id: hdgMode
                     text: "HDG"
-                    enabled: !manualMode.isPressed
+                    enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
                         if(isPressed) {
                             hdgGainEditorContainer.visible = true;
@@ -776,7 +777,7 @@ Item {
                 KrisoRadioButton {
                     id: dpMode
                     text: "DP"
-                    enabled: !manualMode.isPressed
+                    enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
                         if(isPressed) {
                             dpGainEditorContainer.visible = true;
@@ -1275,7 +1276,7 @@ Item {
 
                 Text {
                     id: "mainmoter"
-                    text: "주추진기1"
+                    text: "주추진기1(좌현)"
                     font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100   
@@ -1296,7 +1297,7 @@ Item {
             RowLayout {
 
                 Text {
-                    text: "주추진기2"
+                    text: "주추진기2(우현)"
                     font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100   
@@ -1316,7 +1317,7 @@ Item {
             RowLayout {
 
                 Text {
-                    text: "주추진기3"
+                    text: "선수추진기1(좌현)"
                     font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100   
@@ -1331,7 +1332,7 @@ Item {
             RowLayout {
                 
                 Text {
-                    text: "주추진기4                                      "
+                    text: "선수추진기2(우현)"
                     font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100   
