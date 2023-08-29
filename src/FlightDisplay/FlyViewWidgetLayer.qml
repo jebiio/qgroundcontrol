@@ -652,8 +652,7 @@ Item {
         anchors.top : toolStrip.bottom
         anchors.left: parent.left
         anchors.margins: 10
-        visible : true
-        // visible : _activeVehicle ? true : false
+        visible :  _activeVehicle ? true : false
 
         implicitWidth: missionModeRow.width + padding * 2
         implicitHeight: commandColumn.height + padding * 2
@@ -731,10 +730,10 @@ Item {
                             hdgMode.isPressed = false;
                             hdgGainEditorContainer.visible = false;
                             moveToPlanView.visible = false;
-                            rpmContainer.visible = true;
+                            remoteContainer.visible = true;
                         } else {
                             // maunal mode container추가 필요
-                            rpmContainer.visible = false;
+                            remoteContainer.visible = false;
                         }
                     }
                 }
@@ -749,6 +748,7 @@ Item {
                             dpMode.isPressed = false;
                             dpGainEditorContainer.visible = false;
                             hdgGainEditorContainer.visible = false
+                            remoteContainer.visible = false;
                         }else {
                             moveToPlanView.visible = false;
                         }
@@ -765,6 +765,7 @@ Item {
                             dpMode.isPressed = false;
                             dpGainEditorContainer.visible = false;
                             moveToPlanView.visible = false;
+                            remoteContainer.visible = false;
                         } else {
                             hdgGainEditorContainer.visible = false;
                             // hdgGainEditorContainer.visible = false;
@@ -782,6 +783,7 @@ Item {
                             hdgMode.isPressed = false;
                             hdgGainEditorContainer.visible = false;
                             moveToPlanView.visible = false;
+                            remoteContainer.visible = false;
                         } else {
                             // dpmodeContainer.visible = false;
                             dpGainEditorContainer.visible = false;
@@ -1235,7 +1237,7 @@ Item {
 
     // RPM Test
     Rectangle {
-        id : "rpmContainer"
+        id : remoteContainer
         color: "white"
         radius: 10
         anchors.top: container.bottom
