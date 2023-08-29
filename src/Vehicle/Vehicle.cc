@@ -2191,6 +2191,8 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     float navYawDgain = 0.0;   
     int missionItem_count = _visualItems->count() -1 ;
 
+    //  qDebug() << "visual item count :  " << missionItem_count ; 
+
     MissionSettingsItem* settingsItem = visualItems->value<MissionSettingsItem*>(0);
     
     if (settingsItem) {
@@ -2200,8 +2202,6 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
         navYawDgain = settingsItem->krisoNavYawDgain()->rawValue().toFloat(); 
     }
    for (int i = 1; i < _visualItems->count(); i++) {
-        qDebug() << "visual item count :  " << i ; 
-
         double speed = 0.0;
         double acceptRadi = 0.0;
 
@@ -2264,48 +2264,6 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
 
 }
 
-
-// void Vehicle::kriso_sendWTCommand(void)
-// {
-//     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
-//     QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
-
-//     // Send a heartbeat out on each link
-//     double lat[5] =   {0, 0, 0, 0, 0};
-//     double lon[5] =   {0, 0, 0, 0, 0};
-//     float speed[5] =  {0, 0, 0, 0, 0};
-//     float radius[5] = {0, 0, 0, 0, 0};
-//     float val = 0;
-
-//     for (int i=0; i<sharedLinks.count(); i++) {
-//         qDebug() << "Send mavlink WT - Jaeeun : "<< i;
-//         LinkInterface* link = sharedLinks[i].get();
-//         auto linkConfiguration = link->linkConfiguration();
-//         if (link->isConnected() && linkConfiguration) {
-//             mavlink_message_t message;
-//             mavlink_msg_kriso_wt_command_pack_chan(_mavlink->getSystemId(),
-//                                             _mavlink->getComponentId(),
-//                                             link->mavlinkChannel(),
-//                                             &message,
-//                                             lat,        // target lat 
-//                                             lon,        // target lon
-//                                             speed,        // spd_cmd
-//                                             radius,        // acceptance radius    
-//                                             val,        // surge p gain
-//                                             val,        // surge d gain
-//                                             val,        // yaw p gain
-//                                             val         // yaw d gain
-//                                             );
-
-//             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-//             int len = mavlink_msg_to_send_buffer(buffer, &message);
-//             link->writeBytesThreadSafe((const char*)buffer, len);
-//         }
-//     }
-
-// }
-
-
 void Vehicle::kriso_sendDPCommand(void)
 {
     
@@ -2342,6 +2300,7 @@ void Vehicle::kriso_sendDPCommand(void)
 
 
 }
+
 void Vehicle::setIsKrisoDPClickableLayer(bool isKrisoDPClickableLayer)
 {
     _isKrisoDPClickableLayer = isKrisoDPClickableLayer;
