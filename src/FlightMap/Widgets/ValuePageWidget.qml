@@ -179,12 +179,12 @@ Column {
                         anchors.right:      parent.right
                         sourceComponent:    factGroupList
 
-                        property var    factGroup:     _activeVehicle.getFactGroup("kriso")
-                        property string factGroupName: "Kriso"
+                        property var    factGroup:     _activeVehicle.getFactGroup("krisoStatus")
+                        property string factGroupName: "krisoStatus"
                     }
 
                     Repeater {
-                        model: "kriso"
+                        model: "krisoStatus"
                         Loader {
                             anchors.left:       parent.left
                             anchors.right:      parent.right
