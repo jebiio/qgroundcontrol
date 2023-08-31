@@ -854,7 +854,7 @@ Item {
         anchors.top: toolStrip.bottom
         anchors.left: container.right
         anchors.margins: 10
-        width: 280
+        width: 350
         height: dpMainColumn.height + 2*padding
         visible: false
         // visible: dpMode.isPressed && !hdgMode.isPressed
@@ -963,7 +963,7 @@ Item {
                     text: "dp_surge_pgain"
 
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 110
                     
                 }
                 QGCTextField {
@@ -978,7 +978,7 @@ Item {
                     text: "dp_surge_dgain"
 
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 110
                     
                 }
                 QGCTextField {
@@ -993,7 +993,7 @@ Item {
                     text: "dp_sway_pgain"
 
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 110
                     
                 }
                 QGCTextField {
@@ -1008,7 +1008,7 @@ Item {
                     text: "dp_sway_dgain" 
 
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 110
                     
                 }
                 QGCTextField {
@@ -1023,7 +1023,7 @@ Item {
                 Text {
                     text: "dp_yaw_pgain"
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100       
+                    Layout.preferredWidth: 110       
                 }
                 QGCTextField {
                     id: dpYawPGainInput
@@ -1038,7 +1038,7 @@ Item {
                     text: "dp_yaw_dgain"
 
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 110
                     
                 }
                 QGCTextField {
@@ -1078,7 +1078,7 @@ Item {
         anchors.top: toolStrip.bottom
         anchors.left: container.right
         anchors.margins: 10
-        width: 320
+        width: 400
         height: hdgMainColumn.height + 2*padding
         visible: false
         // visible: !dpMode.isPressed && hdgMode.isPressed
@@ -1088,12 +1088,12 @@ Item {
 
         Column {
             id: hdgMainColumn
-            width: hdgGainEditorContainer.width - 2*padding
+            width: hdgGainEditorContainer.width + 2*padding
             spacing: 5
             padding: 10
 
             RowLayout {
-                width: hdgMainColumn.width
+                // width: hdgMainColumn.width
                 Text {
                     text: "HDG Gain Editor"
                     font.pixelSize: container.width / 20
@@ -1101,19 +1101,17 @@ Item {
                 Item {
                     Layout.fillWidth: true
                 }
-                QGCButton {
+                Button {
                     text: "Cancel"
                     onClicked: hdgGainEditorContainer.visible = false
-                    font.pixelSize: container.width / 10
                 }
-                QGCButton {
+                Button {
                     text: "Save"
                     onClicked: {
                         _activeVehicle.kriso_sendHDGCommand()
                         // Save logic goes here
                         hdgGainEditorContainer.visible = false
                     }
-                    font.pixelSize: container.width / 10
                 }
             }
 
@@ -1127,7 +1125,7 @@ Item {
                 Text {
                     text: "속도값"
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 120
                     
                 }
                 TextField {
@@ -1141,7 +1139,7 @@ Item {
                 Text {
                     text: "선수각"
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 120
                     
                 }
                 TextField {
@@ -1157,7 +1155,7 @@ Item {
                     text: "nav_surge_pgain"
                    
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 120
                     
                 }
                 TextField {
@@ -1174,7 +1172,7 @@ Item {
                     text: "nav_surge_dgain"
                    
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 120
                     
                 }
                 TextField {
@@ -1191,7 +1189,7 @@ Item {
                     text: "nav_yaw_pgain"
                    
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 120
                     
                 }
                 TextField {
@@ -1208,7 +1206,7 @@ Item {
                     text: "nav_yaw_dgain"
                    
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 120
                     
                 }
                 TextField {
@@ -1221,7 +1219,6 @@ Item {
                 }
             }
             RowLayout {
-                width: parent.width
                 Item {
                     Layout.fillWidth: true
                 }
@@ -1250,8 +1247,8 @@ Item {
         anchors.top: container.bottom
         anchors.margins: 10
         anchors.left: parent.left
-        width: container.width + 60
-        height: 230
+        width: container.width + 80
+        height: container.height + 30
         visible: false
 
         Column {
@@ -1285,7 +1282,7 @@ Item {
                     text: "주추진기1(좌현)"
                    
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 110  
+                    Layout.preferredWidth: 150  
                 }
                 QGCTextField {
                     id: mainPro_t3_rpm
@@ -1306,7 +1303,7 @@ Item {
                     text: "주추진기2(우현)"
                    
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 110  
+                    Layout.preferredWidth: 150  
                 }
                 QGCTextField {
                     id: mainPro_t4_rpm
@@ -1326,7 +1323,7 @@ Item {
                     text: "선수추진기1(좌현)"
                    
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 110   
+                    Layout.preferredWidth: 150   
                 }
                 QGCTextField {
                     id: bowThrust_t1_rpm
@@ -1341,7 +1338,7 @@ Item {
                     text: "선수추진기2(우현)"
                    
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 110   
+                    Layout.preferredWidth: 150   
                 }
                 QGCTextField {
                     id: bowThrust_t2_rpm
