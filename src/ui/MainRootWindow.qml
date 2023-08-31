@@ -399,7 +399,7 @@ ApplicationWindow {
                         //anchors.centerIn: parent
                         Layout.alignment: Qt.AlignCenter
                         font.family:     ScreenTools.normalFontFamily
-                        font.pointSize: ScreenTools.smallFontPointSize
+                        font.pointSize: container.width / 20
                         color:  	"#808080"
                     }
                 }
@@ -560,7 +560,7 @@ ApplicationWindow {
                         QGCLabel {
                             id:                     versionLabel
                             text:                   qsTr("%1 Version").arg(QGroundControl.appName)
-                            font.pointSize:         ScreenTools.smallFontPointSize
+                            font.pointSize:         container.width / 20
                             wrapMode:               QGCLabel.WordWrap
                             Layout.maximumWidth:    parent.width
                             Layout.alignment:       Qt.AlignHCenter
@@ -568,7 +568,7 @@ ApplicationWindow {
 
                         QGCLabel {
                             text:                   QGroundControl.qgcVersion
-                            font.pointSize:         ScreenTools.smallFontPointSize
+                            font.pointSize:         container.width / 20
                             wrapMode:               QGCLabel.WrapAnywhere
                             Layout.maximumWidth:    parent.width
                             Layout.alignment:       Qt.AlignHCenter

@@ -479,7 +479,7 @@ Item {
                         anchors.top: parent.top
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "궤적 표기 설정"
-                        font.pointSize: 11
+                        font.pixelSize: 20
                     }
 
                     RowLayout {
@@ -531,50 +531,50 @@ Item {
                         }
                     }
 
-                    RowLayout {
-                        id : planTrajectoryRow
-                        Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignHCenter // 중앙 정렬
-                        spacing: 10  // 텍스트와 토글 사이의 간격
+                    // RowLayout {
+                    //     id : planTrajectoryRow
+                    //     Layout.fillWidth: true
+                    //     Layout.alignment: Qt.AlignHCenter // 중앙 정렬
+                    //     spacing: 10  // 텍스트와 토글 사이의 간격
 
-                        Text {
-                            text: "계획궤적"
-                            font.pointSize: 10
-                            verticalAlignment: Text.AlignVCenter
-                        }
+                    //     Text {
+                    //         text: "계획궤적"
+                    //         font.pointSize: 10
+                    //         verticalAlignment: Text.AlignVCenter
+                    //     }
 
-                        Switch {
-                            id: planTrajectoryToggle
-                            width: 50
-                            height: 25
-                            checked: true
+                    //     Switch {
+                    //         id: planTrajectoryToggle
+                    //         width: 50
+                    //         height: 25
+                    //         checked: true
 
-                            onCheckedChanged: {
-                                console.log("Switch is now:", checked ? "ON" : "OFF")
-                                if (checked){
-                                    _activeVehicle.planPathVisible = true
-                                }else {
-                                    _activeVehicle.planPathVisible = false
-                                }
-                            }
+                    //         onCheckedChanged: {
+                    //             console.log("Switch is now:", checked ? "ON" : "OFF")
+                    //             if (checked){
+                    //                 _activeVehicle.planPathVisible = true
+                    //             }else {
+                    //                 _activeVehicle.planPathVisible = false
+                    //             }
+                    //         }
 
-                            background: Rectangle {
-                                radius: planTrajectoryToggle.height / 3
-                                color: planTrajectoryToggle.checked ? "green" : "lightgray"
-                                border.color: "gray"
-                                border.width: 1
-                            }
+                    //         background: Rectangle {
+                    //             radius: planTrajectoryToggle.height / 3
+                    //             color: planTrajectoryToggle.checked ? "green" : "lightgray"
+                    //             border.color: "gray"
+                    //             border.width: 1
+                    //         }
 
-                            indicator: Rectangle {
-                                width: planTrajectoryToggle.width / 2.2
-                                height: planTrajectoryToggle.height / 1.2
-                                radius: height / 2
-                                color: "white"
-                                anchors.verticalCenter: parent.verticalCenter
-                                x: planTrajectoryToggle.checked ? planTrajectoryToggle.width - width - planTrajectoryToggle.height / 10 : planTrajectoryToggle.height / 10
-                            }
-                        }
-                    }
+                    //         indicator: Rectangle {
+                    //             width: planTrajectoryToggle.width / 2.2
+                    //             height: planTrajectoryToggle.height / 1.2
+                    //             radius: height / 2
+                    //             color: "white"
+                    //             anchors.verticalCenter: parent.verticalCenter
+                    //             x: planTrajectoryToggle.checked ? planTrajectoryToggle.width - width - planTrajectoryToggle.height / 10 : planTrajectoryToggle.height / 10
+                    //         }
+                    //     }
+                    // }
 
                     RowLayout {
                         id : clearTrajectoryRow
@@ -669,6 +669,7 @@ Item {
                 id: operationModeLabel
                 text: "< 명령 >\n운용모드"
                 color: "black"
+                font.pixelSize: container.width / 20
             }
 
             Row {
@@ -677,6 +678,7 @@ Item {
                 KrisoRadioButton {
                     id: manualMode
                     text: "수동"
+                    font.pointSize:10
                     onIsPressedChanged: {
                         missionModeRow.enabled = !isPressed;
                         if(isPressed) {
@@ -691,6 +693,7 @@ Item {
                 KrisoRadioButton {
                     id: autoMode
                     text: "자동"
+                    font.pointSize:10
                     onIsPressedChanged: {
                         if(isPressed) {
                             manualMode.isPressed = false;
@@ -701,6 +704,7 @@ Item {
                 KrisoRadioButton {
                     id: simulationMode
                     text: "시뮬레이션"
+                    font.pointSize:10
                     onIsPressedChanged: {
                         if(isPressed) {
                             manualMode.isPressed = false;
@@ -714,6 +718,7 @@ Item {
                 id: missionModeLabel
                 text: "임무모드 - 운용시작"
                 color: "black"
+                font.pointSize:10
             }
 
             Row {
@@ -724,6 +729,7 @@ Item {
                 KrisoRadioButton {
                     id: remoteModesed 
                     text: "원격수동"
+                    font.pointSize:10
                     enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
                         if(isPressed) {
@@ -742,6 +748,7 @@ Item {
                 KrisoRadioButton {
                     id: wpMode
                     text: "WP"
+                    font.pointSize:10
                     enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
                         if(isPressed){
@@ -759,6 +766,7 @@ Item {
                 KrisoRadioButton {
                     id: hdgMode
                     text: "HDG"
+                    font.pointSize:10
                     enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
                         if(isPressed) {
@@ -777,6 +785,7 @@ Item {
                 KrisoRadioButton {
                     id: dpMode
                     text: "DP"
+                    font.pointSize:10
                     enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
                         if(isPressed) {
@@ -825,9 +834,10 @@ Item {
                     }
                 }
                 // 계획생성 button
-                QGCButton {
+                Button {
                     id : moveToPlanView
                     text: "계획생성"
+                    font.pointSize: 10 
                     visible : wpMode.isPressed ? true : false
                     onClicked: mainWindow.showPlanView()
                 }
@@ -863,7 +873,7 @@ Item {
                 width: dpMainColumn.width
                 Text {
                     text: "DP Editor"
-                    font.pointSize: 12
+                    font.pixelSize: container.width / 20
                 }
                 Item {
                     Layout.fillWidth: true
@@ -951,7 +961,7 @@ Item {
                 Text {
                     id: dpSurgePGainText
                     text: "dp_surge_pgain"
-                    font.pointSize: 10
+
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -960,13 +970,13 @@ Item {
                     id: dpSurgePGainInput
                     placeholderText: "Enter value"
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
-                    font.pointSize: 10
+
                 }
             }
             RowLayout {
                 Text {
                     text: "dp_surge_dgain"
-                    font.pointSize: 10
+
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -975,13 +985,13 @@ Item {
                     id: dpSurgeDGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
-                    font.pointSize: 10
+
                 }
             }
             RowLayout {
                 Text {
                     text: "dp_sway_pgain"
-                    font.pointSize: 10
+
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -990,13 +1000,13 @@ Item {
                     id: dpSwayPGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
-                    font.pointSize: 10
+
                 }
             }
             RowLayout {
                 Text {
                     text: "dp_sway_dgain" 
-                    font.pointSize: 10
+
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -1005,29 +1015,28 @@ Item {
                     id: dpSwayDGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
-                    font.pointSize: 10
+
                 }
             }
             RowLayout {
                 width: parent.width * 0.8
                 Text {
                     text: "dp_yaw_pgain"
-                    font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100        
+                    Layout.preferredWidth: 100       
                 }
                 QGCTextField {
                     id: dpYawPGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
-                    font.pointSize: 10
+
 
                 }
             }
             RowLayout {
                 Text {
                     text: "dp_yaw_dgain"
-                    font.pointSize: 10
+
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -1036,7 +1045,6 @@ Item {
                     id: dpYawDGainInput
                     text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
-                    font.pointSize: 10
                 }
             }
             RowLayout {
@@ -1088,7 +1096,7 @@ Item {
                 width: hdgMainColumn.width
                 Text {
                     text: "HDG Gain Editor"
-                    font.pointSize: 12
+                    font.pixelSize: container.width / 20
                 }
                 Item {
                     Layout.fillWidth: true
@@ -1096,7 +1104,7 @@ Item {
                 QGCButton {
                     text: "Cancel"
                     onClicked: hdgGainEditorContainer.visible = false
-                    font.pointSize: 10
+                    font.pixelSize: container.width / 10
                 }
                 QGCButton {
                     text: "Save"
@@ -1105,7 +1113,7 @@ Item {
                         // Save logic goes here
                         hdgGainEditorContainer.visible = false
                     }
-                    font.pointSize: 10
+                    font.pixelSize: container.width / 10
                 }
             }
 
@@ -1118,7 +1126,6 @@ Item {
             RowLayout {
                 Text {
                     text: "속도값"
-                    font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -1133,7 +1140,6 @@ Item {
             RowLayout {
                 Text {
                     text: "선수각"
-                    font.pointSize: 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -1149,7 +1155,7 @@ Item {
             RowLayout {
                 Text {
                     text: "nav_surge_pgain"
-                    font.pointSize: 10
+                   
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -1158,7 +1164,7 @@ Item {
                     id: navSurgePGainInput
                     placeholderText: "Enter value"
                     text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_pgain").rawValue.toFixed(2)
-                    font.pointSize: 10
+                   
                     width: parent.width * 0.5
 
                 }
@@ -1166,7 +1172,7 @@ Item {
             RowLayout {
                 Text {
                     text: "nav_surge_dgain"
-                    font.pointSize: 10
+                   
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -1175,7 +1181,7 @@ Item {
                     id: navSurgeDGainInput
                     placeholderText: "Enter value"
                     text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_dgain").rawValue.toFixed(2)
-                    font.pointSize: 10
+                   
                     width: parent.width * 0.5
 
                 }
@@ -1183,7 +1189,7 @@ Item {
             RowLayout {
                 Text {
                     text: "nav_yaw_pgain"
-                    font.pointSize: 10
+                   
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -1192,7 +1198,7 @@ Item {
                     id: navYawPGainInput
                     placeholderText: "Enter value"
                     text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_pgain").rawValue.toFixed(2)
-                    font.pointSize: 10
+                   
                     width: parent.width * 0.5
 
                 }
@@ -1200,7 +1206,7 @@ Item {
             RowLayout {
                 Text {
                     text: "nav_yaw_dgain"
-                    font.pointSize: 10
+                   
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 100
                     
@@ -1209,7 +1215,7 @@ Item {
                     id: navYawDGainInput
                     placeholderText: "Enter value"
                     text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_dgain").rawValue.toFixed(2)
-                    font.pointSize: 10
+                   
                     width: parent.width * 0.5
 
                 }
@@ -1245,7 +1251,7 @@ Item {
         anchors.margins: 10
         anchors.left: parent.left
         width: container.width + 60
-        height: 250
+        height: 230
         visible: false
 
         Column {
@@ -1277,9 +1283,9 @@ Item {
                 Text {
                     id: "mainmoter"
                     text: "주추진기1(좌현)"
-                    font.pointSize: 10
+                   
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100   
+                    Layout.preferredWidth: 110  
                 }
                 QGCTextField {
                     id: mainPro_t3_rpm
@@ -1298,9 +1304,9 @@ Item {
 
                 Text {
                     text: "주추진기2(우현)"
-                    font.pointSize: 10
+                   
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100   
+                    Layout.preferredWidth: 110  
                 }
                 QGCTextField {
                     id: mainPro_t4_rpm
@@ -1318,9 +1324,9 @@ Item {
 
                 Text {
                     text: "선수추진기1(좌현)"
-                    font.pointSize: 10
+                   
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100   
+                    Layout.preferredWidth: 110   
                 }
                 QGCTextField {
                     id: bowThrust_t1_rpm
@@ -1333,9 +1339,9 @@ Item {
                 
                 Text {
                     text: "선수추진기2(우현)"
-                    font.pointSize: 10
+                   
                     Layout.alignment: Qt.AlignVCenter
-                    Layout.preferredWidth: 100   
+                    Layout.preferredWidth: 110   
                 }
                 QGCTextField {
                     id: bowThrust_t2_rpm

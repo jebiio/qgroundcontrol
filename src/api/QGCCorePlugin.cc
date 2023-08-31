@@ -310,7 +310,7 @@ void QGCCorePlugin::valuesWidgetDefaultSettings(QStringList& largeValues, QStrin
     KrisoStatusFactGroup* krisoStatusFactGroup = new KrisoStatusFactGroup(this);
     QStringList valueNames = krisoStatusFactGroup->factNames();
 
-    QString factGroupName = "kriso";
+    QString factGroupName = "krisoStatus";
 
     for (QString& name : valueNames)
     {
