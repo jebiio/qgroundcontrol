@@ -819,7 +819,7 @@ Item {
                             }else if(dpMode.checked){
                                 _activeVehicle.kriso_sendOPModeCommand(3, 4)
                             }else if(remoteMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(2, 1)
+                                _activeVehicle.kriso_sendOPModeCommand(3, 1)
                             }
                         }
                     }
@@ -1282,14 +1282,14 @@ Item {
                     Layout.preferredWidth: 100   
                 }
                 QGCTextField {
-                    placeholderText: "Enter value"
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
+                    id: mainPro_t3_rpm
+                    placeholderText: "t3_rpm"
                     font.pointSize: 8
                 }
 
                 QGCTextField {
-                    placeholderText: "Enter value"
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
+                    id: mainPro_t3_angle
+                    placeholderText: "t3_angle"
                     font.pointSize: 8
                 }
             }
@@ -1303,13 +1303,13 @@ Item {
                     Layout.preferredWidth: 100   
                 }
                 QGCTextField {
-                    placeholderText: "Enter value"
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
+                    id: mainPro_t4_rpm
+                    placeholderText: "t4_rpm"
                     font.pointSize: 8
                 }
                 QGCTextField {
-                    placeholderText: "Enter value"
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
+                    id: mainPro_t4_angle
+                    placeholderText: "t4_angle"
                     font.pointSize: 8
                 }
             }
@@ -1323,8 +1323,8 @@ Item {
                     Layout.preferredWidth: 100   
                 }
                 QGCTextField {
-                    placeholderText: "Enter value"
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
+                    id: bowThrust_t1_rpm
+                    placeholderText: "t1_rpm"
                     font.pointSize: 8
                 }
             }
@@ -1338,8 +1338,8 @@ Item {
                     Layout.preferredWidth: 100   
                 }
                 QGCTextField {
-                    placeholderText: "Enter value"
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
+                    id: bowThrust_t2_rpm
+                    placeholderText: "t2_rpm"
                     font.pointSize: 8
                 }
             }
@@ -1353,11 +1353,32 @@ Item {
                 }
 
                 Button {
-                    text: "전송버튼"
+                    text: "START"
+                    onClicked: {
+                        var t3_rpm = parseFloat(mainPro_t3_rpm.text);
+                        var t3_angle = parseFloat(mainPro_t3_angle.text);
+                        var t4_rpm = parseFloat(mainPro_t4_rpm.text);
+                        var t4_angle = parseFloat(mainPro_t4_angle.text);
+                        var t1_rpm = parseFloat(bowThrust_t1_rpm.text);
+                        var t2_rpm = parseFloat(bowThrust_t2_rpm.text);
+
+                        _activeVehicle.kriso_sendMTCommand(1,t1_rpm,t2_rpm,t3_rpm,t3_angle, t4_rpm,t4_angle); 
+                    }
                 }
 
                 Button {
-                    text: "초기화"
+                    id: initRemote
+                    text: "STOP"
+                    onClicked : {
+                        mainPro_t3_rpm.text = "0";
+                        mainPro_t3_angle.text = "0";
+                        mainPro_t4_rpm.text = "0";
+                        mainPro_t4_angle.text = "0";
+                        bowThrust_t1_rpm.text = "0";
+                        bowThrust_t2_rpm.text = "0";
+                        _activeVehicle.kriso_sendMTCommand(0,0,0,0,0,0,0); 
+
+                    }
                 }
             }
         }

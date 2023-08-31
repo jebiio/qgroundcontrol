@@ -455,6 +455,7 @@ public:
     Q_INVOKABLE void kriso_hdgGainSave(float spd_cmd, float degree, float surgeP, float surgeD, float yawP, float yawD);
     Q_INVOKABLE void kriso_dpGainSave               (float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD, float yaw);
     Q_INVOKABLE void kriso_dpClickedLocation        (QGeoCoordinate clickedLocation);
+    Q_INVOKABLE void kriso_sendMTCommand(int start, float t1_rpm, float t2_rpm, float t3_rpm, float t3_angle, float t4_rpm, float t4_angle);
 
     /// Sends PARAM_MAP_RC message to vehicle
     Q_INVOKABLE void sendParamMapRC(const QString& paramName, double scale, double centerValue, int tuningID, double minValue, double maxValue);
