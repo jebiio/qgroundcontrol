@@ -727,7 +727,7 @@ Item {
 
                 // remoteMode button 
                 KrisoRadioButton {
-                    id: remoteModesed 
+                    id: remoteMode 
                     text: "원격수동"
                     font.pointSize:10
                     enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
