@@ -702,6 +702,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     }
 
     switch (message.msgid) {
+    case MAVLINK_MSG_ID_KRISO_AIS_STATUS:
+        _handleKrisoAISStatus(message);
+        break;
     case MAVLINK_MSG_ID_HOME_POSITION:
         _handleHomePosition(message);
         break;
@@ -1539,6 +1542,22 @@ void Vehicle::_setHomePosition(QGeoCoordinate& homeCoord)
         _homePosition = homeCoord;
         emit homePositionChanged(_homePosition);
     }
+}
+
+void Vehicle::_handleKrisoAISStatus(mavlink_message_t& message)
+{
+    qCDebug(VehicleLog) << "!!!!! MAVLINK AIS!!!!!";
+    mavlink_kriso_ais_status_t aisStatus;
+
+    mavlink_msg_kriso_ais_status_decode(&message, &aisStatus);
+    
+    QGeoCoordinate aisPosition(aisStatus.lat, aisStatus.lon, 0);
+    _aisCoordinateList.append(QVariant::fromValue(aisPosition));
+
+    qCDebug(VehicleLog) << "Lat : " << aisPosition.latitude() << ",   Lon : " << aisPosition.longitude() ;
+    emit aisCoordinateListChanged();
+
+   // jaeeun 
 }
 
 void Vehicle::_handleHomePosition(mavlink_message_t& message)
@@ -3966,6 +3985,10 @@ const QVariantList& Vehicle::staticCameraList() const
     }
     static QVariantList emptyList;
     return emptyList;
+}
+
+const QVariantList& Vehicle::aisCoordinateList() const {
+    return _aisCoordinateList;
 }
 
 void Vehicle::_setupAutoDisarmSignalling()

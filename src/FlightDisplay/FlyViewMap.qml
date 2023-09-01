@@ -277,6 +277,17 @@ FlightMap {
         }
     }
 
+    MapItemView {
+        model: _activeVehicle.aisCoordinateList
+        delegate: SosMapItem {
+            vehicle:        object
+            coordinate:     QtPositioning.coordinate(model.latitude(), model.longitude())
+            map:            _root
+            size:           pipMode ? ScreenTools.defaultFontPixelHeight : ScreenTools.defaultFontPixelHeight * 3
+            z:              QGroundControl.zOrderVehicles
+        }
+    }
+
     // Add the vehicles to the map
     MapItemView {
         model: QGroundControl.multiVehicleManager.vehicles

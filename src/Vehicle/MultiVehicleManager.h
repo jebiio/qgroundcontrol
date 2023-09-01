@@ -63,6 +63,8 @@ public:
 
     QmlObjectListModel* vehicles(void) { return &_vehicles; }
 
+    QmlObjectListModel* ais(void) { return &_ais; } //jaeeun
+
     bool gcsHeartbeatEnabled(void) const { return _gcsHeartbeatEnabled; }
     void setGcsHeartbeatEnabled(bool gcsHeartBeatEnabled);
 
@@ -109,6 +111,8 @@ private:
     QList<int>  _ignoreVehicleIds;          ///< List of vehicle id for which we ignore further communication
 
     QmlObjectListModel  _vehicles;
+
+    QmlObjectListModel  _ais;
 
     FirmwarePluginManager*      _firmwarePluginManager;
     JoystickManager*            _joystickManager;

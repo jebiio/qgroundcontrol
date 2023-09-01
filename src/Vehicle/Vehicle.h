@@ -272,6 +272,8 @@ public:
     Q_PROPERTY(bool                 planPathVisible             READ planPathVisible              WRITE setPlanPathVisible          NOTIFY planPathVisibleChanged)
     // Q_PROPERTY(bool                 krisoEmergencyStop          READ krisoEmergencyStop           WRITE setKrisoEmergencyStop       NOTIFY krisoEmergencyStopChanged) jaeeun
     Q_PROPERTY(bool                 isKrisoDPClickableLayer     READ isKrisoDPClickableLayer    WRITE setIsKrisoDPClickableLayer    NOTIFY isKrisoDPClickableLayerChanged)
+    Q_PROPERTY(QVariantList         aisCoordinateList           READ aisCoordinateList                                              NOTIFY aisCoordinateListChanged)
+
 
 
 
@@ -844,11 +846,14 @@ public:
     const QVariantList&         toolIndicators      ();
     const QVariantList&         modeIndicators      ();
     const QVariantList&         staticCameraList    () const;
+    const QVariantList&         aisCoordinateList    () const;
+
 
     bool capabilitiesKnown      () const { return _capabilityBitsKnown; }
     uint64_t capabilityBits     () const { return _capabilityBits; }    // Change signalled by capabilityBitsChanged
 
     QGCCameraManager*           cameraManager       () { return _cameraManager; }
+    
     QString                     hobbsMeter          ();
 
     /// The vehicle is responsible for making the initial request for the Plan.
@@ -919,6 +924,7 @@ signals:
     void capabilityBitsChanged          (uint64_t capabilityBits);
     void toolIndicatorsChanged          ();
     void modeIndicatorsChanged          ();
+    void aisCoordinateListChanged       ();
     void textMessageReceived            (int uasid, int componentid, int severity, QString text);
     void calibrationEventReceived       (int uasid, int componentid, int severity, QSharedPointer<events::parser::ParsedEvent> event);
     void checkListStateChanged          ();
@@ -1041,6 +1047,7 @@ private:
     void _saveSettings                  ();
     void _startJoystick                 (bool start);
     void _handlePing                    (LinkInterface* link, mavlink_message_t& message);
+    void _handleKrisoAISStatus          (mavlink_message_t& message);
     void _handleHomePosition            (mavlink_message_t& message);
     void _handleHeartbeat               (mavlink_message_t& message);
     void _handleRadioStatus             (mavlink_message_t& message);
@@ -1098,6 +1105,9 @@ private:
     int     _id;                    ///< Mavlink system id
     int     _defaultComponentId;
     bool    _offlineEditingVehicle = false; ///< true: This Vehicle is a "disconnected" vehicle for ui use while offline editing
+
+    // QList<QGeoCoordinate> _aisCoordinate;
+    QVariantList _aisCoordinateList; // AIS coornidate list
 
     QmlObjectListModel* _visualItems =          nullptr; //jaeeun kriso
 
