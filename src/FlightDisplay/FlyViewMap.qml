@@ -266,27 +266,34 @@ FlightMap {
     }
 
     // SOS Custom Map item
-    MapItemView {
-        model: QGroundControl.multiVehicleManager.vehicles
-        delegate: SosMapItem {
-            vehicle:        object
-            coordinate:     QtPositioning.coordinate(ais_lat, ais_lon)
-            map:            _root
-            size:           pipMode ? ScreenTools.defaultFontPixelHeight : ScreenTools.defaultFontPixelHeight * 3
-            z:              QGroundControl.zOrderVehicles
-        }
-    }
+    // MapItemView {
+    //     model: QGroundControl.multiVehicleManager.vehicles
+    //     delegate: SosMapItem {
+    //         vehicle:        object
+    //         coordinate:     QtPositioning.coordinate(ais_lat, ais_lon)
+    //         map:            _root
+    //         size:           pipMode ? ScreenTools.defaultFontPixelHeight : ScreenTools.defaultFontPixelHeight * 3
+    //         z:              QGroundControl.zOrderVehicles
+    //     }
+    // }
+
 
     MapItemView {
-        model: _activeVehicle.aisCoordinateList
-        delegate: SosMapItem {
-            vehicle:        object
-            coordinate:     QtPositioning.coordinate(model.latitude(), model.longitude())
-            map:            _root
-            size:           pipMode ? ScreenTools.defaultFontPixelHeight : ScreenTools.defaultFontPixelHeight * 3
-            z:              QGroundControl.zOrderVehicles
+        model: _activeVehicle ? _activeVehicle.aisCoordinateList : 0 
+        delegate: MapQuickItem {
+            id: itemIndicator
+            coordinate: object.coordinate
+            z: QGroundControl.zOrderMapItems
+            sourceItem: Text {
+                text: "MMSI " + (isNaN(parseFloat(object.coordinate.altitude)) ? "0" : parseFloat(object.coordinate.altitude).toFixed(0))
+                color: "red"
+                font.pixelSize: 15
+                font.bold: true 
+                anchors.centerIn: parent
+            }
         }
     }
+    
 
     // Add the vehicles to the map
     MapItemView {

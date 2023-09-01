@@ -272,7 +272,7 @@ public:
     Q_PROPERTY(bool                 planPathVisible             READ planPathVisible              WRITE setPlanPathVisible          NOTIFY planPathVisibleChanged)
     // Q_PROPERTY(bool                 krisoEmergencyStop          READ krisoEmergencyStop           WRITE setKrisoEmergencyStop       NOTIFY krisoEmergencyStopChanged) jaeeun
     Q_PROPERTY(bool                 isKrisoDPClickableLayer     READ isKrisoDPClickableLayer    WRITE setIsKrisoDPClickableLayer    NOTIFY isKrisoDPClickableLayerChanged)
-    Q_PROPERTY(QVariantList         aisCoordinateList           READ aisCoordinateList                                              NOTIFY aisCoordinateListChanged)
+    Q_PROPERTY(QmlObjectListModel*  aisCoordinateList           READ aisCoordinateList                                              NOTIFY aisCoordinateListChanged)
 
 
 
@@ -556,6 +556,8 @@ public:
     void setPrearmError(const QString& prearmError);
 
     QmlObjectListModel* cameraTriggerPoints () { return &_cameraTriggerPoints; }
+    QmlObjectListModel* aisCoordinateList() { return &_aisCoordinateList; }
+
 
     int  flowImageIndex() const{ return _flowImageIndex; }
 
@@ -846,7 +848,6 @@ public:
     const QVariantList&         toolIndicators      ();
     const QVariantList&         modeIndicators      ();
     const QVariantList&         staticCameraList    () const;
-    const QVariantList&         aisCoordinateList    () const;
 
 
     bool capabilitiesKnown      () const { return _capabilityBitsKnown; }
@@ -1027,6 +1028,7 @@ private slots:
     void _firstRallyPointLoadComplete       ();
     void _sendMavCommandResponseTimeoutCheck();
     void _clearCameraTriggerPoints          ();
+    void _clearAisCoordinateList            ();
     void _updateDistanceHeadingToHome       ();
     void _updateMissionItemIndex            ();
     void _updateHeadingToNextWP             ();
@@ -1107,7 +1109,8 @@ private:
     bool    _offlineEditingVehicle = false; ///< true: This Vehicle is a "disconnected" vehicle for ui use while offline editing
 
     // QList<QGeoCoordinate> _aisCoordinate;
-    QVariantList _aisCoordinateList; // AIS coornidate list
+
+    QMap<int, QGeoCoordinate> _aisCoordinateMap;
 
     QmlObjectListModel* _visualItems =          nullptr; //jaeeun kriso
 
@@ -1222,6 +1225,7 @@ private:
     QTimer                          _flightTimeUpdater;
     TrajectoryPoints*               _trajectoryPoints = nullptr;
     QmlObjectListModel              _cameraTriggerPoints;
+    QmlObjectListModel              _aisCoordinateList;
     //QMap<QString, ADSBVehicle*>     _trafficVehicleMap;
 
     // Toolbox references

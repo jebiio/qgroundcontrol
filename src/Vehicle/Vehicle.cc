@@ -1546,18 +1546,25 @@ void Vehicle::_setHomePosition(QGeoCoordinate& homeCoord)
 
 void Vehicle::_handleKrisoAISStatus(mavlink_message_t& message)
 {
-    qCDebug(VehicleLog) << "!!!!! MAVLINK AIS!!!!!";
+    qDebug() << "!!!!! MAVLINK AIS!!!!!";
     mavlink_kriso_ais_status_t aisStatus;
 
     mavlink_msg_kriso_ais_status_decode(&message, &aisStatus);
     
-    QGeoCoordinate aisPosition(aisStatus.lat, aisStatus.lon, 0);
-    _aisCoordinateList.append(QVariant::fromValue(aisPosition));
+    int mmsi = aisStatus.mmsi;
+    double mmsiDouble = static_cast<double>(mmsi);
 
-    qCDebug(VehicleLog) << "Lat : " << aisPosition.latitude() << ",   Lon : " << aisPosition.longitude() ;
+    if (!_aisCoordinateMap.contains(mmsi)) {
+        QGeoCoordinate aisPosition = QGeoCoordinate(aisStatus.lat, aisStatus.lon, mmsiDouble);
+        _aisCoordinateMap[mmsi] = aisPosition;
+        _aisCoordinateList.append(new QGCQGeoCoordinate(aisPosition, this));
+        qDebug() << "New AIS Position - Lat: " << aisPosition.latitude() << ", Lon: " << aisPosition.longitude() << ", MMSI: "<< aisPosition.altitude();
+    } else {
+        // The mmsi number already exists, you can choose to update the coordinates if needed.
+        qDebug() << "AIS Position already exists for mmsi: " << mmsi;
+    }
+
     emit aisCoordinateListChanged();
-
-   // jaeeun 
 }
 
 void Vehicle::_handleHomePosition(mavlink_message_t& message)
@@ -2606,6 +2613,12 @@ void Vehicle::_rallyPointManagerError(int errorCode, const QString& errorMsg)
 void Vehicle::_clearCameraTriggerPoints()
 {
     _cameraTriggerPoints.clearAndDeleteContents();
+}
+
+void Vehicle::_clearAisCoordinateList()
+{
+    _aisCoordinateList.clearAndDeleteContents();
+    _aisCoordinateMap.clear();
 }
 
 void Vehicle::_flightTimerStart()
@@ -3985,10 +3998,6 @@ const QVariantList& Vehicle::staticCameraList() const
     }
     static QVariantList emptyList;
     return emptyList;
-}
-
-const QVariantList& Vehicle::aisCoordinateList() const {
-    return _aisCoordinateList;
 }
 
 void Vehicle::_setupAutoDisarmSignalling()
