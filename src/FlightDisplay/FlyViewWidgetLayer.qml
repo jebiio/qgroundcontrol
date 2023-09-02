@@ -1070,6 +1070,165 @@ Item {
         }
     }
 
+    // WP CA Gain Container
+    Rectangle {
+        id: wpCAEditorContainer
+        color: "white"
+        radius: 10
+        anchors.top: toolStrip.bottom
+        anchors.left: container.right
+        anchors.margins: 10
+        width: 400
+        height: caMainColumn.height + 2*padding
+        visible: visible
+        // visible: !dpMode.isPressed && hdgMode.isPressed
+
+
+        property real padding: 10 
+
+        Column {
+            id: caMainColumn
+            width: wpCAEditorContainer.width + 2*padding
+            spacing: 5
+            padding: 10
+
+            RowLayout {
+                // width: hdgMainColumn.width
+                Text {
+                    text: "CA Pram Editor"
+                    font.pixelSize: container.width / 20
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                Row {
+                    spacing: 10
+
+                    Switch {
+                        id: caToggleSwitch
+                        width: 50
+                        height: 25
+                        checked: false
+
+                        onCheckedChanged: {
+                            console.log("Switch is now:", checked ? "ON" : "OFF")
+                            if (checked){
+                                _activeVehicle.kriso_sendLogCommand(1) 
+                            }else {
+                                _activeVehicle.kriso_sendLogCommand(0) 
+                            }
+                        }
+
+                        background: Rectangle {
+                            radius: caToggleSwitch.height / 2
+                            color: caToggleSwitch.checked ? "green" : "lightgray"
+                            border.color: "gray"
+                            border.width: 2
+                        }
+
+                        indicator: Rectangle {
+                            width: caToggleSwitch.width / 2.2
+                            height: caToggleSwitch.height / 1.2
+                            radius: height / 2
+                            color: "white"
+                            anchors.verticalCenter: parent.verticalCenter
+                            x: caToggleSwitch.checked ? caToggleSwitch.width - width - caToggleSwitch.height / 10 : toggleSwitch.height / 10
+                        }
+                    }
+                }
+
+            }
+
+            Rectangle {
+                color: "gray"
+                height: 1
+                width: caMainColumn.width * 0.8
+            }
+
+            RowLayout {
+                Text {
+                    text: "ca_alert_range"
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 120
+                    
+                }
+                TextField {
+                    id : caAlertRangeInput
+                    placeholderText: "ca_alert_range"
+                    width: parent.width * 0.5 
+                }
+            }
+
+            RowLayout {
+                Text {
+                    text: "ca_avoid_range"
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 120
+                    
+                }
+                TextField {
+                    id : caAvoidRangeInput
+                    placeholderText: "ca_avoid_range"
+                    width: parent.width * 0.5
+                }
+            }
+
+
+            RowLayout {
+                Text {
+                    text: "ca_param1"
+                   
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 120
+                    
+                }
+                TextField {
+                    id: caPram1Input
+                    placeholderText: "ca_param1"
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_pgain").rawValue.toFixed(2)
+                   
+                    width: parent.width * 0.5
+
+                }
+            }
+            RowLayout {
+                Text {
+                    text: "ca_param2"
+                   
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.preferredWidth: 120
+                    
+                }
+                TextField {
+                    id: caParam2Input
+                    placeholderText: "ca_param2"
+                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_dgain").rawValue.toFixed(2)
+                   
+                    width: parent.width * 0.5
+
+                }
+            }
+            RowLayout {
+                Item {
+                    Layout.fillWidth: true
+                }
+                Button {
+                    text: "입력완료"
+                    onClicked: {
+                        _activeVehicle.kriso_hdgGainSave(
+                            parseFloat(hdgSpeedInput.text),
+                            parseFloat(hdgDegreeInput.text),
+                            parseFloat(navSurgePGainInput.text), 
+                            parseFloat(navSurgeDGainInput.text), 
+                            parseFloat(navYawPGainInput.text), 
+                            parseFloat(navYawDGainInput.text)
+                        );
+                    }
+                }
+            }
+        }
+    }
+
     // HDG Gain Container
     Rectangle {
         id: hdgGainEditorContainer
