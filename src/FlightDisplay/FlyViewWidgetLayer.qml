@@ -738,6 +738,7 @@ Item {
                             hdgGainEditorContainer.visible = false;
                             moveToPlanView.visible = false;
                             remoteContainer.visible = true;
+                            wpCAEditorContainer.visible = false
                         } else {
                             // maunal mode container추가 필요
                             remoteContainer.visible = false;
@@ -757,8 +758,10 @@ Item {
                             dpGainEditorContainer.visible = false;
                             hdgGainEditorContainer.visible = false
                             remoteContainer.visible = false;
+                            wpCAEditorContainer.visible = true;
                         }else {
                             moveToPlanView.visible = false;
+                            wpCAEditorContainer.visible = false;
                         }
                     }
                 }
@@ -775,6 +778,7 @@ Item {
                             dpGainEditorContainer.visible = false;
                             moveToPlanView.visible = false;
                             remoteContainer.visible = false;
+                            wpCAEditorContainer.visible = false;
                         } else {
                             hdgGainEditorContainer.visible = false;
                             // hdgGainEditorContainer.visible = false;
@@ -794,6 +798,7 @@ Item {
                             hdgGainEditorContainer.visible = false;
                             moveToPlanView.visible = false;
                             remoteContainer.visible = false;
+                            wpCAEditorContainer.visible = false;
                         } else {
                             // dpmodeContainer.visible = false;
                             dpGainEditorContainer.visible = false;
@@ -1080,7 +1085,7 @@ Item {
         anchors.margins: 10
         width: 400
         height: caMainColumn.height + 2*padding
-        visible: visible
+        visible: false
         // visible: !dpMode.isPressed && hdgMode.isPressed
 
 
@@ -1095,11 +1100,14 @@ Item {
             RowLayout {
                 // width: hdgMainColumn.width
                 Text {
-                    text: "CA Pram Editor"
+                    text: "CA Param Editor"
                     font.pixelSize: container.width / 20
                 }
                 Item {
                     Layout.fillWidth: true
+                }
+                Button {
+                    text: "Cancel"
                 }
                 Row {
                     spacing: 10
@@ -1109,6 +1117,7 @@ Item {
                         width: 50
                         height: 25
                         checked: false
+                        visible: false
 
                         onCheckedChanged: {
                             console.log("Switch is now:", checked ? "ON" : "OFF")
@@ -1183,7 +1192,7 @@ Item {
                     
                 }
                 TextField {
-                    id: caPram1Input
+                    id: caParam1Input
                     placeholderText: "ca_param1"
                     text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_pgain").rawValue.toFixed(2)
                    
@@ -1213,15 +1222,13 @@ Item {
                     Layout.fillWidth: true
                 }
                 Button {
-                    text: "입력완료"
+                    text: "명령전송"
                     onClicked: {
-                        _activeVehicle.kriso_hdgGainSave(
-                            parseFloat(hdgSpeedInput.text),
-                            parseFloat(hdgDegreeInput.text),
-                            parseFloat(navSurgePGainInput.text), 
-                            parseFloat(navSurgeDGainInput.text), 
-                            parseFloat(navYawPGainInput.text), 
-                            parseFloat(navYawDGainInput.text)
+                        _activeVehicle.kriso_sendCACommand(
+                            parseFloat(caAlertRangeInput.text),
+                            parseFloat(caAvoidRangeInput.text),
+                            parseFloat(caParam1Input.text), 
+                            parseFloat(caParam2Input.text)
                         );
                     }
                 }
