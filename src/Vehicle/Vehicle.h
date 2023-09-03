@@ -360,6 +360,7 @@ public:
     Q_PROPERTY(quint64  vehicleUID                  READ vehicleUID                 NOTIFY vehicleUIDChanged)
     Q_PROPERTY(QString  vehicleUIDStr               READ vehicleUIDStr              NOTIFY vehicleUIDChanged)
 
+    Q_INVOKABLE void resetAis  ();
     /// Resets link status counters
     Q_INVOKABLE void resetCounters  ();
 

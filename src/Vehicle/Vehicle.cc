@@ -620,6 +620,11 @@ QString Vehicle::vehicleTypeString() const
     }
 }
 
+void Vehicle::resetAis()
+{
+  _clearCameraTriggerPoints();
+}
+
 void Vehicle::resetCounters()
 {
     _messagesReceived   = 0;
