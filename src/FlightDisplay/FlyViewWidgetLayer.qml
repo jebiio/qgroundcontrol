@@ -883,19 +883,7 @@ Item {
                 Item {
                     Layout.fillWidth: true
                 }
-                QGCButton {
-                    text: "Cancel"
-                    onClicked: dpGainEditorContainer.visible = false
-                    font.pointSize: 10
-                }
-                QGCButton {
-                    text: "Save"
-                    onClicked:{
-                        _activeVehicle.kriso_sendDPCommand();
-                        // Save logic goes here
-                        dpGainEditorContainer.visible = false
-                    }
-                }
+
             }
 
             Rectangle {
@@ -1053,12 +1041,9 @@ Item {
                 }
             }
             RowLayout {
-                width: parent.width
-                Item {
-                    Layout.fillWidth: true
-                }
-                Button {
-                    text: "입력완료"
+
+                QGCButton {
+                    text: "명령전송"
                     onClicked: {
                         _activeVehicle.kriso_dpGainSave(
                             parseFloat(dpSurgePGainInput.text), 
@@ -1069,7 +1054,12 @@ Item {
                             parseFloat(dpYawDGainInput.text),
                             parseFloat(dpYawInput.text)
                         )
+                        _activeVehicle.kriso_sendDPCommand();
                     }
+                }
+                QGCButton {
+                    text: "취소"
+                    onClicked: dpGainEditorContainer.visible = false
                 }
             }
         }
@@ -1105,9 +1095,6 @@ Item {
                 }
                 Item {
                     Layout.fillWidth: true
-                }
-                Button {
-                    text: "Cancel"
                 }
                 Row {
                     spacing: 10
@@ -1221,7 +1208,7 @@ Item {
                 Item {
                     Layout.fillWidth: true
                 }
-                Button {
+                QGCButton {
                     text: "명령전송"
                     onClicked: {
                         _activeVehicle.kriso_sendCACommand(
@@ -1231,6 +1218,11 @@ Item {
                             parseFloat(caParam2Input.text)
                         );
                     }
+                }
+                QGCButton {
+                    text: "Cancel"
+                    onClicked: wpCAEditorContainer.visible = false
+
                 }
             }
         }
@@ -1267,18 +1259,6 @@ Item {
                 Item {
                     Layout.fillWidth: true
                 }
-                Button {
-                    text: "Cancel"
-                    onClicked: hdgGainEditorContainer.visible = false
-                }
-                Button {
-                    text: "Save"
-                    onClicked: {
-                        _activeVehicle.kriso_sendHDGCommand()
-                        // Save logic goes here
-                        hdgGainEditorContainer.visible = false
-                    }
-                }
             }
 
             Rectangle {
@@ -1288,6 +1268,9 @@ Item {
             }
 
             RowLayout {
+                Item {
+                    Layout.fillWidth: true
+                }
                 Text {
                     text: "속도값"
                     Layout.alignment: Qt.AlignVCenter
@@ -1388,7 +1371,7 @@ Item {
                 Item {
                     Layout.fillWidth: true
                 }
-                Button {
+                QGCButton {
                     text: "입력완료"
                     onClicked: {
                         _activeVehicle.kriso_hdgGainSave(
@@ -1399,7 +1382,12 @@ Item {
                             parseFloat(navYawPGainInput.text), 
                             parseFloat(navYawDGainInput.text)
                         );
+                        _activeVehicle.kriso_sendHDGCommand();
                     }
+                }
+                QGCButton {
+                    text: "취소"
+                    onClicked: hdgGainEditorContainer.visible = false
                 }
             }
         }
