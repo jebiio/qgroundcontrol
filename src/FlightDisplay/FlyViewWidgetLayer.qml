@@ -531,51 +531,6 @@ Item {
                         }
                     }
 
-                    // RowLayout {
-                    //     id : planTrajectoryRow
-                    //     Layout.fillWidth: true
-                    //     Layout.alignment: Qt.AlignHCenter // 중앙 정렬
-                    //     spacing: 10  // 텍스트와 토글 사이의 간격
-
-                    //     Text {
-                    //         text: "계획궤적"
-                    //         font.pointSize: 10
-                    //         verticalAlignment: Text.AlignVCenter
-                    //     }
-
-                    //     Switch {
-                    //         id: planTrajectoryToggle
-                    //         width: 50
-                    //         height: 25
-                    //         checked: true
-
-                    //         onCheckedChanged: {
-                    //             console.log("Switch is now:", checked ? "ON" : "OFF")
-                    //             if (checked){
-                    //                 _activeVehicle.planPathVisible = true
-                    //             }else {
-                    //                 _activeVehicle.planPathVisible = false
-                    //             }
-                    //         }
-
-                    //         background: Rectangle {
-                    //             radius: planTrajectoryToggle.height / 3
-                    //             color: planTrajectoryToggle.checked ? "green" : "lightgray"
-                    //             border.color: "gray"
-                    //             border.width: 1
-                    //         }
-
-                    //         indicator: Rectangle {
-                    //             width: planTrajectoryToggle.width / 2.2
-                    //             height: planTrajectoryToggle.height / 1.2
-                    //             radius: height / 2
-                    //             color: "white"
-                    //             anchors.verticalCenter: parent.verticalCenter
-                    //             x: planTrajectoryToggle.checked ? planTrajectoryToggle.width - width - planTrajectoryToggle.height / 10 : planTrajectoryToggle.height / 10
-                    //         }
-                    //     }
-                    // }
-
                     RowLayout {
                         id : clearTrajectoryRow
                         Layout.fillWidth: true
@@ -620,6 +575,11 @@ Item {
                             }
                         }
 
+                    }
+
+                    Button {
+                        text : "AIS Reset"
+                        onClicked : _activeVehicle.resetAis()
                     }
                 }
             
