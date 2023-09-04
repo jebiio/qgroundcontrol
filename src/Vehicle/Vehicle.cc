@@ -2148,7 +2148,7 @@ void Vehicle::setArmed(bool armed, bool showError)
 //     }
 // }
 
-void Vehicle::kriso_sendEmergencyCommand(void)
+void Vehicle::kriso_sendEmergencyCommand(int stop)
 {
     // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
     // Also, suppose 1.0f is the parameter to send an emergency command.
@@ -2167,7 +2167,7 @@ void Vehicle::kriso_sendEmergencyCommand(void)
                                             _mavlink->getComponentId(),
                                             link->mavlinkChannel(),
                                             &message,
-                                            1             // emergency : 1
+                                            stop             // emergency : 1
                                             );
 
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
@@ -2393,7 +2393,7 @@ void Vehicle::kriso_sendLogCommand(int logcmd)
 
 }
 
-void Vehicle::kriso_sendOPModeCommand(int opMode, int missionMode)
+void Vehicle::kriso_sendOPModeCommand(int opMode, int missionMode, int ca_mode, int ca_method)
 {
     // Suppose your MAVLink command for emergency stop is called MAVLINK_MSG_ID_KRISO_EMERGENCY_COMMAND.
     // Also, suppose 1.0f is the parameter to send an emergency command.
@@ -2414,8 +2414,8 @@ void Vehicle::kriso_sendOPModeCommand(int opMode, int missionMode)
                                             &message,
                                             opMode,
                                             missionMode,
-                                            0,
-                                            0           
+                                            ca_mode,
+                                            ca_method           
                                             );
 
             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];

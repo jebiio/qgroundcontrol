@@ -449,12 +449,12 @@ public:
     Q_INVOKABLE void gimbalYawStep                  (int direction);
     Q_INVOKABLE void centerGimbal                   ();
     Q_INVOKABLE void forceArm                       ();
-    Q_INVOKABLE void kriso_sendEmergencyCommand     ();
+    Q_INVOKABLE void kriso_sendEmergencyCommand     (int stop);
     Q_INVOKABLE void kriso_sendHDGCommand           ();
     Q_INVOKABLE void kriso_sendWTCommand            (QmlObjectListModel* visualItems);
     Q_INVOKABLE void kriso_sendDPCommand            ();
     Q_INVOKABLE void kriso_sendLogCommand           (int logcmd);
-    Q_INVOKABLE void kriso_sendOPModeCommand        (int opMode, int missionMode);
+    Q_INVOKABLE void kriso_sendOPModeCommand        (int opMode, int missionMode, int ca_mode, int ca_method);
     Q_INVOKABLE void kriso_sendCACommand            (float ca_alert_range, float ca_avoid_range, float ca_param1, float ca_param2);
     Q_INVOKABLE void kriso_hdgGainSave(float spd_cmd, float degree, float surgeP, float surgeD, float yawP, float yawD);
     Q_INVOKABLE void kriso_dpGainSave               (float surgeP, float surgeD, float swayP, float swayD, float yawP, float yawD, float yaw);
