@@ -759,7 +759,7 @@ Item {
                             dpGainEditorContainer.visible = false;
                             hdgGainEditorContainer.visible = false
                             remoteContainer.visible = false;
-                            wpCAEditorContainer.visible = true;
+                            // wpCAEditorContainer.visible = true;
                         }else {
                             moveToPlanView.visible = false;
                             wpCAEditorContainer.visible = false;
@@ -807,6 +807,61 @@ Item {
                     }
                 }
             }
+            
+            Row {
+                id : caModeRow
+                visible: wpMode.isPressed ? true : false
+                Column {
+                    Text{
+                        text : "충돌회피모드"
+                    }
+                    Switch {
+                        id: caToggle
+                        width: 50
+                        height: 20
+                        checked: false
+
+                        onCheckedChanged: {
+                            console.log("Switch is now:", checked ? "ON" : "OFF")
+                            if (wpMode.isPressed && checked){
+                                // _activeVehicle.trajectoryVisible = true
+                                wpCAEditorContainer.visible = true;
+                            }else {
+                                // _activeVehicle.trajectoryVisible = false
+                                wpCAEditorContainer.visible = false;
+                            }
+                        }
+
+                        background: Rectangle {
+                            radius: caToggle.height / 3
+                            color: caToggle.checked ? "green" : "lightgray"
+                            border.color: "gray"
+                            border.width: 1
+                        }
+
+                        indicator: Rectangle {
+                            width: caToggle.width / 2.2
+                            height: caToggle.height / 1.2
+                            radius: height / 2
+                            color: "white"
+                            anchors.verticalCenter: parent.verticalCenter
+                            x: caToggle.checked ? caToggle.width - width - caToggle.height / 10 : caToggle.height / 10
+                        }
+                    }
+                }
+                KrisoRadioButton{
+                    id: pathMode
+                    visible : caToggle.checked
+                    text: "경로모드"
+                    scale: 0.8
+                }
+                KrisoRadioButton{
+                    id : reactMode
+                    visible :  caToggle.checked
+                    text: "반응형"
+                    scale: 0.8
+                }
+            }
 
             Row {
                 spacing: 10
@@ -815,26 +870,33 @@ Item {
                     text: "모드변경"
                     onClicked: {
                         if(manualMode.checked){
-                            _activeVehicle.kriso_sendOPModeCommand(1, 0)
+                            _activeVehicle.kriso_sendOPModeCommand(1, 0, 0, 0)
                         }else if(autoMode.checked){
                             if(wpMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(2, 2)
+                                if(pathMode.checked){
+                                    _activeVehicle.kriso_sendOPModeCommand(2, 2,1,0)
+                                }else if(pathMode.checked){
+                                    _activeVehicle.kriso_sendOPModeCommand(2, 2,1,1)
+                                }else {
+                                    _activeVehicle.kriso_sendOPModeCommand(2, 2,0,0)
+                                }
+                                
                             }else if(hdgMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(2, 3)
+                                _activeVehicle.kriso_sendOPModeCommand(2, 3,0,0)
                             }else if(dpMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(2, 4)
+                                _activeVehicle.kriso_sendOPModeCommand(2, 4, 0, 0)
                             }else if (remoteMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(2, 1)
+                                _activeVehicle.kriso_sendOPModeCommand(2, 1, 0, 0)
                             }
                         }else if(simulationMode.checked){
                             if(wpMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(3, 2)
+                                _activeVehicle.kriso_sendOPModeCommand(3, 2, 0, 0)
                             }else if(hdgMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(3, 3)
+                                _activeVehicle.kriso_sendOPModeCommand(3, 3, 0, 0)
                             }else if(dpMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(3, 4)
+                                _activeVehicle.kriso_sendOPModeCommand(3, 4, 0, 0)
                             }else if(remoteMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(3, 1)
+                                _activeVehicle.kriso_sendOPModeCommand(3, 1, 0, 0)
                             }
                         }
                     }
