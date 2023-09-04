@@ -739,7 +739,8 @@ Item {
                             hdgGainEditorContainer.visible = false;
                             moveToPlanView.visible = false;
                             remoteContainer.visible = true;
-                            wpCAEditorContainer.visible = false
+                            wpCAEditorContainer.visible = false;
+                            caModeRow.visible = false;
                         } else {
                             // maunal mode container추가 필요
                             remoteContainer.visible = false;
@@ -760,6 +761,7 @@ Item {
                             hdgGainEditorContainer.visible = false
                             remoteContainer.visible = false;
                             // wpCAEditorContainer.visible = true;
+                            caModeRow.visible = true;
                         }else {
                             moveToPlanView.visible = false;
                             wpCAEditorContainer.visible = false;
@@ -780,6 +782,7 @@ Item {
                             moveToPlanView.visible = false;
                             remoteContainer.visible = false;
                             wpCAEditorContainer.visible = false;
+                            caModeRow.visible = false;
                         } else {
                             hdgGainEditorContainer.visible = false;
                             // hdgGainEditorContainer.visible = false;
@@ -800,6 +803,7 @@ Item {
                             moveToPlanView.visible = false;
                             remoteContainer.visible = false;
                             wpCAEditorContainer.visible = false;
+                            caModeRow.visible = false;
                         } else {
                             // dpmodeContainer.visible = false;
                             dpGainEditorContainer.visible = false;
@@ -810,7 +814,7 @@ Item {
             
             Row {
                 id : caModeRow
-                visible: wpMode.isPressed ? true : false
+                visible: false
                 Column {
                     Text{
                         text : "충돌회피모드"
@@ -851,15 +855,27 @@ Item {
                 }
                 KrisoRadioButton{
                     id: pathMode
-                    visible : caToggle.checked
                     text: "경로모드"
                     scale: 0.8
+                    visible :  caToggle.checked
+                    onCheckedChanged: {
+                    if (!caToggle.checked) {
+                        checked = false;
+                        visible = false;
+                    }
+                }
                 }
                 KrisoRadioButton{
                     id : reactMode
                     visible :  caToggle.checked
                     text: "반응형"
                     scale: 0.8
+                    onCheckedChanged: {
+                        if (!caToggle.checked) {
+                            checked = false;
+                            visible = false;
+                        }
+                    }
                 }
             }
 
@@ -873,10 +889,12 @@ Item {
                             _activeVehicle.kriso_sendOPModeCommand(1, 0, 0, 0)
                         }else if(autoMode.checked){
                             if(wpMode.checked){
-                                if(pathMode.checked){
-                                    _activeVehicle.kriso_sendOPModeCommand(2, 2,1,0)
-                                }else if(reactMode.checked){
-                                    _activeVehicle.kriso_sendOPModeCommand(2, 2,1,1)
+                                if(caToggle.checked){
+                                    if(pathMode.checked){
+                                        _activeVehicle.kriso_sendOPModeCommand(2, 2,1,0)
+                                    }else if(reactMode.checked){
+                                        _activeVehicle.kriso_sendOPModeCommand(2, 2,1,1)
+                                    }                                    
                                 }else {
                                     _activeVehicle.kriso_sendOPModeCommand(2, 2,0,0)
                                 }
@@ -890,7 +908,15 @@ Item {
                             }
                         }else if(simulationMode.checked){
                             if(wpMode.checked){
-                                _activeVehicle.kriso_sendOPModeCommand(3, 2, 0, 0)
+                                if(caToggle.checked){
+                                    if(pathMode.checked){
+                                        _activeVehicle.kriso_sendOPModeCommand(3, 2,1,0)
+                                    }else if(reactMode.checked){
+                                        _activeVehicle.kriso_sendOPModeCommand(3, 2,1,1)
+                                    }                                    
+                                }else {
+                                    _activeVehicle.kriso_sendOPModeCommand(3, 2,0,0)
+                                }
                             }else if(hdgMode.checked){
                                 _activeVehicle.kriso_sendOPModeCommand(3, 3, 0, 0)
                             }else if(dpMode.checked){
@@ -1075,7 +1101,6 @@ Item {
                 }
             }
             RowLayout {
-                width: parent.width * 0.8
                 Text {
                     text: "dp_yaw_pgain"
                     Layout.alignment: Qt.AlignVCenter
