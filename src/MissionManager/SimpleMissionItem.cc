@@ -302,7 +302,7 @@ void SimpleMissionItem::_setupMetaData(void)
         _krisoSpeedMetaData->setDecimalPlaces(2);
 
         _krisoAcceptRadiusMetaData = new FactMetaData(FactMetaData::valueTypeFloat);
-        _krisoAcceptRadiusMetaData->setRawUnits("deg");
+        _krisoAcceptRadiusMetaData->setRawUnits("m");
         _krisoAcceptRadiusMetaData->setDecimalPlaces(2);
 
         // _krisoNavSurgePgainMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
