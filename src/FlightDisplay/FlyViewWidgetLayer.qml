@@ -875,7 +875,7 @@ Item {
                             if(wpMode.checked){
                                 if(pathMode.checked){
                                     _activeVehicle.kriso_sendOPModeCommand(2, 2,1,0)
-                                }else if(pathMode.checked){
+                                }else if(reactMode.checked){
                                     _activeVehicle.kriso_sendOPModeCommand(2, 2,1,1)
                                 }else {
                                     _activeVehicle.kriso_sendOPModeCommand(2, 2,0,0)
