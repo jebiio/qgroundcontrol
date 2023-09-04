@@ -124,12 +124,28 @@ Rectangle {
         anchors.bottom:         parent.bottom
         spacing:                ScreenTools.defaultFontPixelWidth / 2
 
+        
         QGCButtonRed {
-            id:                 emergencyStop
-            text:               "Emergency Stop"
-            onClicked:          _activeVehicle.kriso_sendEmergencyCommand()
-            visible:            _activeVehicle && currentToolbar === flyViewToolbar
+            id: emergencyStop
+            text: "Emergency Stop Off"
+            checkable: true // 버튼을 선택 가능하게 함
+            onClicked: {
+                if (_activeVehicle) {
+                    if (emergencyStop.checked) {
+                        _activeVehicle.kriso_sendEmergencyCommand(1);
+                        emergencyStop.text = "Emergency Stop On";
+                    } else {
+                        _activeVehicle.kriso_sendEmergencyCommand(0);
+                        emergencyStop.text = "Emergency Stop Off";
+                    }
+                }
+            }
+            visible: _activeVehicle && currentToolbar === flyViewToolbar
         }
+
+
+
+
 
         // QGCButton {
         //     text:               "Show Trajectory Line"
