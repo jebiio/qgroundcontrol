@@ -462,7 +462,7 @@ Item {
                 anchors.top: layerTabBar.bottom
                 radius: 4
                 width: 500
-                height: 150
+                height: 160
                 color: "white"
                 visible: false
                 // padding: 10 
@@ -577,6 +577,17 @@ Item {
                         }
                     }
                     
+                    RowLayout{
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter // 중앙 정렬
+                        spacing: 10  // 텍스트와 토글 사이의 간격
+                        QGCButton {
+                            text: "Clear"
+                            visible: _activeVehicle
+                            onClicked: _activeVehicle.closeVehicle()
+                        }
+                    }
+
                     // RowLayout {
                     //     id : clearTrajectoryRow
                     //     Layout.fillWidth: true
@@ -765,6 +776,7 @@ Item {
                         }else {
                             moveToPlanView.visible = false;
                             wpCAEditorContainer.visible = false;
+                            caModeRow.visible = false;
                         }
                     }
                 }
@@ -1512,7 +1524,7 @@ Item {
                 }
 
                 Text {
-                    text: "        타각"
+                    text: "  타각"
                     font.pixelSize: 15
                 }
             }
