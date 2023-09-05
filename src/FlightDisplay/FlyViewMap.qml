@@ -278,22 +278,59 @@ FlightMap {
     // }
 
 
+    // MapItemView {
+    //     model: _activeVehicle ? _activeVehicle.aisCoordinateList : 0 
+    //     delegate: MapQuickItem {
+    //         id: itemIndicator
+    //         coordinate: object.coordinate
+    //         z: QGroundControl.zOrderMapItems
+    //         sourceItem: Item {
+    //             width: 30
+    //             height: 30
+    //             Rectangle {
+    //                 width: parent.width
+    //                 height: parent.height
+    //                 color: "red"
+    //                 rotation: 45 // 45도 회전하여 삼각형 모양을 만듭니다.
+    //                 anchors.centerIn: parent
+    //                 Text {
+    //                     text:(isNaN(parseFloat(object.coordinate.altitude)) ? "0" : parseFloat(object.coordinate.altitude).toFixed(0))
+    //                     color: "white"
+    //                     font.pixelSize: 15
+    //                     font.bold: true 
+    //                     anchors.centerIn: parent
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
     MapItemView {
         model: _activeVehicle ? _activeVehicle.aisCoordinateList : 0 
         delegate: MapQuickItem {
             id: itemIndicator
             coordinate: object.coordinate
             z: QGroundControl.zOrderMapItems
-            sourceItem: Text {
-                text: "MMSI " + (isNaN(parseFloat(object.coordinate.altitude)) ? "0" : parseFloat(object.coordinate.altitude).toFixed(0))
-                color: "red"
-                font.pixelSize: 15
-                font.bold: true 
-                anchors.centerIn: parent
+            sourceItem: Item {
+                width: 30
+                height: 30
+                Image {
+                    id: obstacle
+                    source: "/qmlimages/sos.svg" // 사용하려는 삼각형 이미지의 경로를 지정하세요
+                    width: parent.width
+                    height: parent.height
+                }
+                Text {
+                    text: (isNaN(parseFloat(object.coordinate.altitude)) ? "0" : parseFloat(object.coordinate.altitude).toFixed(0))
+                    color: "red"
+                    font.pixelSize: 10
+                    anchors.top: obstacle.bottom
+                    anchors.horizontalCenter: obstacle.horizontalCenter
+                }
             }
         }
     }
-    
+
 
     // Add the vehicles to the map
     MapItemView {

@@ -1567,6 +1567,21 @@ void Vehicle::_handleKrisoAISStatus(mavlink_message_t& message)
     } else {
         // The mmsi number already exists, you can choose to update the coordinates if needed.
         qDebug() << "AIS Position already exists for mmsi: " << mmsi;
+
+        QGeoCoordinate updateAisPosition = QGeoCoordinate(aisStatus.lat, aisStatus.lon, mmsiDouble);
+        _aisCoordinateMap[mmsi] = updateAisPosition;
+
+        for (int i = 0; i < _aisCoordinateList.count(); ++i) {
+            QObject* object = _aisCoordinateList.get(i);
+            QGCQGeoCoordinate* coordinateItem = qobject_cast<QGCQGeoCoordinate*>(object);
+
+            if (coordinateItem && coordinateItem->coordinate().altitude() == mmsiDouble) {
+                coordinateItem->setCoordinate(updateAisPosition);
+                qDebug() << "Updated AIS Position - Lat: " << updateAisPosition.latitude() << ", Lon: " << updateAisPosition.longitude() << ", MMSI: "<< updateAisPosition.altitude();
+                break;
+            }
+        }
+
     }
 
     emit aisCoordinateListChanged();
