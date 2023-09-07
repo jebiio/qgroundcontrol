@@ -528,6 +528,16 @@ FlightMap {
             }
         }
 
+        Connections {
+            target: _activeVehicle
+            onIsKrisoDPClickableLayerChanged: {
+                if (_activeVehicle.isKrisoDPClickableLayer) {
+                    gotoLocationItem.visible = false
+                }
+            }
+        }
+
+
         function show(coord) {
             gotoLocationItem.coordinate = coord
             gotoLocationItem.visible = true
@@ -667,41 +677,37 @@ FlightMap {
                     // _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
                 }
             }
-            QGCMenuItem {
-                text:           qsTr("Orbit at location")
-                visible:        globals.guidedControllerFlyView.showOrbit
+            // QGCMenuItem {
+            //     text:           qsTr("Orbit at location")
+            //     visible:        globals.guidedControllerFlyView.showOrbit
 
-                onTriggered: {
-                    orbitMapCircle.show(clickMenu.coord)
-                    globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionOrbit, clickMenu.coord, orbitMapCircle)
-                }
-            }
-            QGCMenuItem {
-                text:           qsTr("ROI at location")
-                visible:        globals.guidedControllerFlyView.showROI
+            //     onTriggered: {
+            //         orbitMapCircle.show(clickMenu.coord)
+            //         globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionOrbit, clickMenu.coord, orbitMapCircle)
+            //     }
+            // }
+            // QGCMenuItem {
+            //     text:           qsTr("ROI at location")
+            //     visible:        globals.guidedControllerFlyView.showROI
 
-                onTriggered: {
-                    roiLocationItem.show(clickMenu.coord)
-                    globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionROI, clickMenu.coord, roiLocationItem)
-                }
-            }
+            //     onTriggered: {
+            //         roiLocationItem.show(clickMenu.coord)
+            //         globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionROI, clickMenu.coord, roiLocationItem)
+            //     }
+            // }
         }
 
         onClicked: {
-            if (_activeVehicle && !globals.guidedControllerFlyView.guidedUIVisible && _activeVehicle.isKrisoDPClickableLayer) {
-                orbitMapCircle.hide()
-                gotoLocationItem.hide()
-                var clickCoord = _root.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
-                clickMenu.coord = clickCoord
-                // clickMenu.popup()
-                gotoLocationItem.show(clickMenu.coord)
-                _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
-                // _activeVehicle.updateDPCoordinateFact(coord.latitude(), coord.longitude());
-            }else {
-                gotoLocationItem.hide()
+            if (_activeVehicle && !globals.guidedControllerFlyView.guidedUIVisible) {
+                if (_activeVehicle.fixedDPCoordinateEnabled) {
+                    var clickCoord = _root.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */);
+                    clickMenu.coord = clickCoord;
+                    gotoLocationItem.show(clickMenu.coord);
+                    _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
+                } 
             }
-
         }
+        
     }
 
     // Airspace overlap support

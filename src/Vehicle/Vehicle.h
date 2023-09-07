@@ -272,6 +272,8 @@ public:
     Q_PROPERTY(bool                 planPathVisible             READ planPathVisible              WRITE setPlanPathVisible          NOTIFY planPathVisibleChanged)
     // Q_PROPERTY(bool                 krisoEmergencyStop          READ krisoEmergencyStop           WRITE setKrisoEmergencyStop       NOTIFY krisoEmergencyStopChanged) jaeeun
     Q_PROPERTY(bool                 isKrisoDPClickableLayer     READ isKrisoDPClickableLayer    WRITE setIsKrisoDPClickableLayer    NOTIFY isKrisoDPClickableLayerChanged)
+    Q_PROPERTY(bool                 fixedDPCoordinateEnabled    READ fixedDPCoordinateEnabled    WRITE setFixedDPCoordinateEnabled  NOTIFY fixedDPCoordinateEnabledChanged)
+    // Q_PROPERTY(bool                 currentDPCoordinateEnabled  READ currentDPCoordinateEnabled    WRITE setCurrentDPCoordinateEnabled  NOTIFY currentDPCoordinateEnabledChanged)
     Q_PROPERTY(QmlObjectListModel*  aisCoordinateList           READ aisCoordinateList                                              NOTIFY aisCoordinateListChanged)
 
 
@@ -647,6 +649,7 @@ public:
     bool            trajectoryVisible           () const{ return _trajectoryVisible; }
     bool            planPathVisible             () const { return _planPathVisible; }
     bool            isKrisoDPClickableLayer                    () const { return _isKrisoDPClickableLayer; }
+    bool            fixedDPCoordinateEnabled                   () const { return _fixedDPCoordinateEnabled; }
 
 
     /// Get the maximum MAVLink protocol version supported
@@ -900,6 +903,7 @@ public slots:
     void setTrajectoryVisible               (bool trajectoryVisible);
     void setPlanPathVisible                 (bool planPathVisible);
     void setIsKrisoDPClickableLayer         (bool isKrisoDPClickableLayer);
+    void setFixedDPCoordinateEnabled        (bool fixedDPCoordinateEnabled);
 
 
 signals:
@@ -1011,6 +1015,7 @@ signals:
     void trajectoryVisibleChanged       (bool trajectoryVisible);
     void planPathVisibleChanged         (bool planPathVisible);
     void isKrisoDPClickableLayerChanged                (bool isKrisoDPClickableLayer);
+    void fixedDPCoordinateEnabledChanged               (bool fixedDPCoordinateEnabled);
     // void krisoEmergencyStopChanged      (); jaeeun
 private slots:
     void _mavlinkMessageReceived            (LinkInterface* link, mavlink_message_t message);
@@ -1181,6 +1186,7 @@ private:
     bool            _trajectoryVisible                      = true;
     bool            _planPathVisible                        = true;
     bool            _isKrisoDPClickableLayer                = false;
+    bool            _fixedDPCoordinateEnabled               = false;
 
     SysStatusSensorInfo _sysStatusSensorInfo;
 

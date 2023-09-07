@@ -8,70 +8,70 @@
     "shortDesc": "dp_surge_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              1
+    "default":              null
 },
 {
     "name":             "dp_surge_dgain",
     "shortDesc": "dp_surge_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              2
+    "default":              null
 },
 {
     "name":             "dp_sway_pgain",
     "shortDesc": "dp_sway_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              3
+    "default":              null
 },
 {
     "name":             "dp_sway_dgain",
     "shortDesc": "dp_sway_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              4
+    "default":              null
 },
 {
     "name":             "dp_yaw_pgain",
     "shortDesc": "dp_yaw_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              5
+    "default":              null
 },
 {
     "name":             "dp_yaw_dgain",
     "shortDesc": "dp_yaw_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              6
+    "default":              null
 },
 {
     "name":             "nav_surge_pgain",
     "shortDesc": "nav_surge_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              7
+    "default":              null
 },
 {
     "name":             "nav_surge_dgain",
     "shortDesc": "nav_surge_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              8
+    "default":              null
 },
 {
     "name":             "nav_yaw_pgain",
     "shortDesc": "nav_yaw_pgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              9
+    "default":              null
 },
 {
     "name":             "nav_yaw_dgain",
     "shortDesc": "nav_yaw_dgain",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              10
+    "default":              null
 },
 {
     "name":             "lat",
@@ -99,14 +99,14 @@
     "shortDesc": "spd_cmd",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              7
+    "default":             null
 },
 {
     "name":             "hdg_cmd",
     "shortDesc": "spd_cmd",
     "type":             "float",
     "decimalPlaces":        2,
-    "default":              7
+    "default":              null
 }
 ]
 }

@@ -52,6 +52,7 @@ Item {
     property real   _toolsMargin:           ScreenTools.defaultFontPixelWidth * 0.75
     property rect   _centerViewport:        Qt.rect(0, 0, width, height)
     property real   _rightPanelWidth:       ScreenTools.defaultFontPixelWidth * 45
+    property var    _activeVehicleCoordinate:   _activeVehicle ? _activeVehicle.coordinate : QtPositioning.coordinate()
 
     property int logging_status :  _activeVehicle.getFactGroup("krisoCmd").getFact("logging_status").value
 
@@ -999,6 +1000,7 @@ Item {
                 Text {
                     text: "선수각"
                     color: "black"
+                    Layout.preferredWidth: 50
                 }
                 QGCTextField {
                     id: dpYawInput
@@ -1010,6 +1012,7 @@ Item {
                 Text {
                     text: "위도"
                     color: "black"
+                    Layout.preferredWidth: 50
                 }
                 QGCTextField {
                     id: dpLatInput
@@ -1021,6 +1024,7 @@ Item {
                 Text {
                     text: "경도"
                     color: "black"
+                    Layout.preferredWidth: 50
                 }
                 QGCTextField {
                     id: dpLonInput
@@ -1029,24 +1033,30 @@ Item {
             }
 
             RowLayout {
-                Text {
-                    text: "      "
-                    font.pointSize: 12
-                }
                 
                 Button {
-                    text: "좌표선택"
+                    text: _activeVehicle.fixedDPCoordinateEnabled ? "좌표고정" : "좌표선택"
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
-                        _activeVehicle.isKrisoDPClickableLayer = true
+                        _activeVehicle.fixedDPCoordinateEnabled = !_activeVehicle.fixedDPCoordinateEnabled;
                     }
                 }
 
+
                 Button {
-                    text: "선택완료"
+                    text: "좌표삭제"
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
-                        _activeVehicle.isKrisoDPClickableLayer = false
+                        _activeVehicle.isKrisoDPClickableLayer = true;
+                    }
+                }
+
+
+                Button {
+                    text: "현재선박좌표"
+                    Layout.alignment: Qt.AlignVCenter
+                    onClicked: {
+                         _activeVehicle.kriso_dpClickedLocation(_activeVehicleCoordinate);
                     }
                 }
             }
@@ -1063,21 +1073,17 @@ Item {
                 QGCTextField {
                     id: dpSurgePGainInput
                     placeholderText: "Enter value"
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_pgain").rawValue.toFixed(2)
-
                 }
             }
             RowLayout {
                 Text {
                     text: "dp_surge_dgain"
-
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: 110
                     
                 }
                 QGCTextField {
                     id: dpSurgeDGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_surge_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
 
                 }
@@ -1092,7 +1098,6 @@ Item {
                 }
                 QGCTextField {
                     id: dpSwayPGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
 
                 }
@@ -1107,7 +1112,6 @@ Item {
                 }
                 QGCTextField {
                     id: dpSwayDGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_sway_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
 
                 }
@@ -1120,7 +1124,6 @@ Item {
                 }
                 QGCTextField {
                     id: dpYawPGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_pgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
 
 
@@ -1136,7 +1139,6 @@ Item {
                 }
                 QGCTextField {
                     id: dpYawDGainInput
-                    text: _activeVehicle.getFactGroup("krisoGain").getFact("dp_yaw_dgain").rawValue.toFixed(2)
                     placeholderText: "Enter value"
                 }
             }
@@ -1368,9 +1370,6 @@ Item {
             }
 
             RowLayout {
-                Item {
-                    Layout.fillWidth: true
-                }
                 Text {
                     text: "속도값"
                     Layout.alignment: Qt.AlignVCenter
@@ -1410,8 +1409,6 @@ Item {
                 TextField {
                     id: navSurgePGainInput
                     placeholderText: "Enter value"
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_pgain").rawValue.toFixed(2)
-                   
                     width: parent.width * 0.5
 
                 }
@@ -1426,9 +1423,7 @@ Item {
                 }
                 TextField {
                     id: navSurgeDGainInput
-                    placeholderText: "Enter value"
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_dgain").rawValue.toFixed(2)
-                   
+                    placeholderText: "Enter value"                   
                     width: parent.width * 0.5
 
                 }
@@ -1444,7 +1439,6 @@ Item {
                 TextField {
                     id: navYawPGainInput
                     placeholderText: "Enter value"
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_pgain").rawValue.toFixed(2)
                    
                     width: parent.width * 0.5
 
@@ -1461,7 +1455,6 @@ Item {
                 TextField {
                     id: navYawDGainInput
                     placeholderText: "Enter value"
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_yaw_dgain").rawValue.toFixed(2)
                    
                     width: parent.width * 0.5
 

@@ -2362,6 +2362,12 @@ void Vehicle::setIsKrisoDPClickableLayer(bool isKrisoDPClickableLayer)
     emit isKrisoDPClickableLayerChanged(isKrisoDPClickableLayer);
 }
 
+void Vehicle::setFixedDPCoordinateEnabled(bool fixedDPCoordinateEnabled)
+{
+    _fixedDPCoordinateEnabled = fixedDPCoordinateEnabled;
+    emit fixedDPCoordinateEnabledChanged(fixedDPCoordinateEnabled);
+}
+
 void Vehicle::kriso_dpClickedLocation(QGeoCoordinate clickedLocation)
 {
     _krisoGainFactGroup.updateDPCoordinateFact(clickedLocation);
