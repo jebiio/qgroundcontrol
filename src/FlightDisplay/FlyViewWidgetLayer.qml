@@ -665,8 +665,8 @@ Item {
         anchors.top : toolStrip.bottom
         anchors.left: parent.left
         anchors.margins: 10
-        // visible :  _activeVehicle ? true : false
-        visible : true
+        visible :  _activeVehicle ? true : false
+        // visible : true
 
         implicitWidth: missionModeRow.width + padding * 2
         implicitHeight: commandColumn.height + padding * 2
@@ -1160,7 +1160,7 @@ Item {
                     }
                 }
                 QGCButton {
-                    text: "취소"
+                    text: "창닫기"
                     onClicked: dpGainEditorContainer.visible = false
                 }
             }
@@ -1282,9 +1282,7 @@ Item {
                 }
                 TextField {
                     id: caParam1Input
-                    placeholderText: "ca_param1"
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_pgain").rawValue.toFixed(2)
-                   
+                    placeholderText: "ca_param1"                   
                     width: parent.width * 0.5
 
                 }
@@ -1299,9 +1297,7 @@ Item {
                 }
                 TextField {
                     id: caParam2Input
-                    placeholderText: "ca_param2"
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("nav_surge_dgain").rawValue.toFixed(2)
-                   
+                    placeholderText: "ca_param2"                   
                     width: parent.width * 0.5
 
                 }
@@ -1322,7 +1318,7 @@ Item {
                     }
                 }
                 QGCButton {
-                    text: "Cancel"
+                    text: "창닫기"
                     onClicked: wpCAEditorContainer.visible = false
 
                 }
@@ -1366,7 +1362,7 @@ Item {
             Rectangle {
                 color: "gray"
                 height: 1
-                width: hdgMainColumn.width
+                width: hdgMainColumn.width * 0.8
             }
 
             RowLayout {
@@ -1479,7 +1475,7 @@ Item {
                     }
                 }
                 QGCButton {
-                    text: "취소"
+                    text: "창닫기"
                     onClicked: hdgGainEditorContainer.visible = false
                 }
             }
@@ -1512,12 +1508,12 @@ Item {
                 }
                 
                 Text {
-                    text: "RPM           "
+                    text: "RPM        "
                     font.pixelSize: 15
                 }
 
                 Text {
-                    text: "  타각"
+                    text: "타각"
                     font.pixelSize: 15
                 }
             }
