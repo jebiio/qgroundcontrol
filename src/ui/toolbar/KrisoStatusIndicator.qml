@@ -78,9 +78,9 @@ RowLayout {
     QGCLabel {
         id: modeLabel
         property string _remoteModeText:        qsTr("원격수동 모드")
-        property string _hdgModeText:           qsTr("HDG 모드")
+        property string _hdgModeText:           qsTr("CK 모드")
         property string _dpModeText:            qsTr("DP 모드")
-        property string _wpModeText:            qsTr("WP 모드")
+        property string _wpModeText:            qsTr("WT 모드")
         font.pointSize: 13
 
     

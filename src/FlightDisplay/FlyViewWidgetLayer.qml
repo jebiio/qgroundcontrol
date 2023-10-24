@@ -762,7 +762,7 @@ Item {
                 // wpMode button
                 KrisoRadioButton {
                     id: wpMode
-                    text: "WP"
+                    text: "WT"
                     font.pointSize:10
                     enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
@@ -784,7 +784,7 @@ Item {
                 // hdgMode button
                 KrisoRadioButton {
                     id: hdgMode
-                    text: "HDG"
+                    text: "CK"
                     font.pointSize:10
                     enabled: (autoMode.isPressed || simulationMode.isPressed) ? true : false
                     onIsPressedChanged: {
