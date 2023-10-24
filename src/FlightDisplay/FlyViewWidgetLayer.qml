@@ -1351,7 +1351,7 @@ Item {
             RowLayout {
                 // width: hdgMainColumn.width
                 Text {
-                    text: "HDG Gain Editor"
+                    text: "CK Gain Editor"
                     font.pixelSize: container.width / 20
                 }
                 Item {
