@@ -664,7 +664,16 @@ Item {
                         enabled:            toolStrip._isRallyLayer ? true : _missionController.flyThroughCommandsAllowed
                         visible:            toolStrip._isRallyLayer || toolStrip._isMissionLayer
                         checkable:          true
-                    }
+                    },
+                     ToolStripAction {
+                        text:               qsTr("Center")
+                        iconSource:         "/qmlimages/MapCenter.svg"
+                        enabled:            true
+                        visible:            true
+                        onTriggered: {
+                            editorMap.center = globals.activeVehicle.coordinate
+                        }
+                    }                   
                     // ToolStripAction {
                     //     text:               _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
                     //     iconSource:         "/qmlimages/MapAddMission.svg"
