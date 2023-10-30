@@ -16,11 +16,14 @@ import QGroundControl.FlightDisplay 1.0
 ToolStrip {
     id:     _root
     title:  qsTr("Voyage")
+    property var    mapControl  
+
 
     signal displayPreFlightChecklist
 
     FlyViewToolStripActionList {
         id: flyViewToolStripActionList
+        map : _root.mapControl
 
         onDisplayPreFlightChecklist: _root.displayPreFlightChecklist()
     }

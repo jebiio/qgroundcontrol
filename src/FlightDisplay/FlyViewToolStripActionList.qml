@@ -16,6 +16,7 @@ ToolStripActionList {
     id: _root
 
     signal displayPreFlightChecklist
+    property var    map
 
     model: [
         ToolStripAction {
@@ -23,11 +24,16 @@ ToolStripActionList {
             iconSource:     "/qmlimages/Plan.svg"
             onTriggered:    mainWindow.showPlanView()
         },
-        PreFlightCheckListShowAction { onTriggered: displayPreFlightChecklist() }
+        PreFlightCheckListShowAction { onTriggered: displayPreFlightChecklist() },
         // GuidedActionTakeoff { },
         // GuidedActionLand { },
         // GuidedActionRTL { },
         // GuidedActionPause { },
         // GuidedActionActionList { }
+        ToolStripAction {
+            text:           qsTr("Center")
+            iconSource:     "/qmlimages/MapCenter.svg"
+            onTriggered:    mapControl.center = globals.activeVehicle.coordinate
+        }
     ]
 }
