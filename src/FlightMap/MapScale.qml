@@ -223,6 +223,19 @@ Item {
         onClicked:          mapControl.zoomLevel -= 0.5
     }
 
+    QGCButton {
+        id:                 centerButton
+        anchors.top:        scaleText.top
+        anchors.bottom:     rightEnd.bottom
+        anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
+        anchors.left:       zoomDownButton.right
+        iconSource:         "/qmlimages/MapCenter.svg"
+        width:              height
+        opacity:            0.75
+        visible:            _zoomButtonsVisible
+        onClicked:          mapControl.center = globals.activeVehicle.coordinate
+    }
+
     Component.onCompleted: {
         if (scale.visible) {
             calculateScale();
