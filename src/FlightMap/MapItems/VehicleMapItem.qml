@@ -75,6 +75,25 @@ MapQuickItem {
             }
         }
 
+        Text {
+            id: surge_error
+            text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("surge_error").value
+            anchors.top : vehicleIcon.bottom
+        }
+
+        Text {
+            id: sway_error
+            text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("sway_error").value
+            anchors.top : surge_error.bottom
+        }        
+
+
+        Text {
+            id: yaw_error
+            text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("yaw_error").value
+            anchors.top : sway_error.bottom
+        }        
+
         QGCMapLabel {
             id:                         vehicleLabel
             anchors.top:                parent.bottom
