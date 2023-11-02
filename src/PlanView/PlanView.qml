@@ -54,6 +54,7 @@ Item {
     property var    _planViewSettings:                  QGroundControl.settingsManager.planViewSettings
     property bool   _promptForPlanUsageShowing:         false
 
+    property var    _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
     readonly property var       _layers:                [_layerMission, _layerGeoFence, _layerRallyPoints]
 
     readonly property int       _layerMission:              1
@@ -603,6 +604,32 @@ Item {
                     color:          object.color
                     border.color:   object.lineColor
                     border.width:   object.lineWidth
+                }
+            }
+
+            MapItemView {
+                model: _activeVehicle ? _activeVehicle.aisCoordinateList : 0 
+                delegate: MapQuickItem {
+                    id: itemIndicator
+                    coordinate: object.coordinate
+                    z: QGroundControl.zOrderMapItems
+                    sourceItem: Item {
+                        width: 30
+                        height: 30
+                        Image {
+                            id: obstacle
+                            source: "/qmlimages/sos.svg" // 사용하려는 삼각형 이미지의 경로를 지정하세요
+                            width: parent.width
+                            height: parent.height
+                        }
+                        Text {
+                            text: (isNaN(parseFloat(object.coordinate.altitude)) ? "0" : parseFloat(object.coordinate.altitude).toFixed(0))
+                            color: "red"
+                            font.pixelSize: 10
+                            anchors.top: obstacle.bottom
+                            anchors.horizontalCenter: obstacle.horizontalCenter
+                        }
+                    }
                 }
             }
         }
