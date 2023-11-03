@@ -159,7 +159,7 @@ Item {
         anchors.top:        scaleText.bottom
         anchors.leftMargin: buttonsOnLeft && (_zoomButtonsVisible || terrainButtonVisible) ? ScreenTools.defaultFontPixelWidth / 2 : 0
         anchors.left:       buttonsOnLeft ?
-                                (_zoomButtonsVisible ? zoomDownButton.right : (terrainButtonVisible ? terrainButton.right : parent.left)) :
+                                (_zoomButtonsVisible ? centerButton.right : (terrainButtonVisible ? terrainButton.right : parent.left)) :
                                 parent.left
         width:              2
         height:             ScreenTools.defaultFontPixelHeight
@@ -193,7 +193,7 @@ Item {
         text:               qsTr("T")
         width:              height
         opacity:            0.75
-        visible:            terrainButtonVisible
+        visible:            false
         onClicked:          terrainButtonClicked()
     }
 
