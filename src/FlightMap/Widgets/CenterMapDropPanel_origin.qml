@@ -25,31 +25,70 @@ ColumnLayout {
     property var    fitFunctions
     property bool   showMission:          true
     property bool   showAllItems:         true
-    property bool enableFlagChanged: false
 
-    QGCLabel { text: qsTr("수심가능 영역선택:") }
+    QGCLabel { text: qsTr("Center map on:") }
 
     QGCButton {
-        text:               qsTr("시작점 선택")
+        text:               qsTr("Mission")
         Layout.fillWidth:   true
         visible:            showMission
 
         onClicked: {
-            // dropPanel.hide()
+            dropPanel.hide()
             fitFunctions.fitMapViewportToMissionItems()
-            enableFlagChanged = true
         }
     }
 
     QGCButton {
-        text:               qsTr("종료점 선택")
+        text:               qsTr("All items")
         Layout.fillWidth:   true
         visible:            showAllItems
 
         onClicked: {
-            // dropPanel.hide()
+            dropPanel.hide()
             fitFunctions.fitMapViewportToAllItems()
         }
     }
 
+    QGCButton {
+        text:               qsTr("Launch")
+        Layout.fillWidth:   true
+
+        onClicked: {
+            dropPanel.hide()
+            map.center = fitFunctions.fitHomePosition()
+        }
+    }
+
+    QGCButton {
+        text:               qsTr("Vehicle")
+        Layout.fillWidth:   true
+        enabled:            globals.activeVehicle && globals.activeVehicle.coordinate.isValid
+
+        onClicked: {
+            dropPanel.hide()
+            map.center = globals.activeVehicle.coordinate
+        }
+    }
+
+    QGCButton {
+        text:               qsTr("Current Location")
+        Layout.fillWidth:   true
+        enabled:            map.gcsPosition.isValid
+
+        onClicked: {
+            dropPanel.hide()
+            map.center = map.gcsPosition
+        }
+    }
+
+    QGCButton {
+        text:               qsTr("Specified Location")
+        Layout.fillWidth:   true
+
+        onClicked: {
+            dropPanel.hide()
+            map.centerToSpecifiedLocation()
+        }
+    }
 } // Column

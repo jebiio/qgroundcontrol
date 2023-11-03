@@ -62,6 +62,9 @@ Item {
     readonly property int       _layerRallyPoints:          3
     readonly property string    _armedVehicleUploadPrompt:  qsTr("Vehicle is currently armed. Do you want to upload the mission to the vehicle?")
 
+    property var   _krisoCoordinate:  QtPositioning.coordinate(37.1797245,126.6285884)
+    property bool  _krisoFlag : false
+
     function mapCenter() {
         var coordinate = editorMap.center
         coordinate.latitude  = coordinate.latitude.toFixed(_decimalPlaces)
@@ -456,6 +459,7 @@ Item {
                     coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
                     coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
                     coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
+                    _krisoCoordinate = coordinate
 
                     switch (_editingLayer) {
                     case _layerMission:
@@ -472,9 +476,38 @@ Item {
                             _rallyPointController.addPoint(coordinate)
                         }
                         break
+
+
                     }
                 }
             }
+
+            MapItemView {
+                model: QGroundControl.multiVehicleManager.vehicles
+                delegate: MapQuickItem {
+                    id: itemIndicator
+                    coordinate: _krisoCoordinate
+                    z: QGroundControl.zOrderMapItems
+                    sourceItem: Item {
+                        width: 30
+                        height: 30
+                        Image {
+                            id: obstacle
+                            source: "/qmlimages/sos.svg" // 사용하려는 삼각형 이미지의 경로를 지정하세요
+                            width: parent.width
+                            height: parent.height
+                        }
+                        Text {
+                            text: "jaeeun test"
+                            color: "red"
+                            font.pixelSize: 10
+                            anchors.top: obstacle.bottom
+                            anchors.horizontalCenter: obstacle.horizontalCenter
+                        }
+                    }
+                }
+            }
+
 
             // Add the mission item visuals to the map
             Repeater {
@@ -691,62 +724,53 @@ Item {
                         enabled:            toolStrip._isRallyLayer ? true : _missionController.flyThroughCommandsAllowed
                         visible:            toolStrip._isRallyLayer || toolStrip._isMissionLayer
                         checkable:          true
+                    },                  
+                    ToolStripAction {
+                        text:               _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
+                        iconSource:         "/qmlimages/MapAddMission.svg"
+                        enabled:            !_missionController.onlyInsertTakeoffValid
+                        visible:            false
+                        checkable:          !_missionController.isROIActive
+                        onCheckedChanged:   _addROIOnClick = checked
+                        onTriggered: {
+                            if (_missionController.isROIActive) {
+                                toolStrip.allAddClickBoolsOff()
+                                insertCancelROIAfterCurrent()
+                            }
+                        }
+                        property bool myAddROIOnClick: _addROIOnClick
+                        onMyAddROIOnClickChanged: checked = _addROIOnClick
                     },
-                     ToolStripAction {
-                        text:               qsTr("Center")
-                        iconSource:         "/qmlimages/MapCenter.svg"
+                    ToolStripAction {
+                        text:               _singleComplexItem ? _missionController.complexMissionItemNames[0] : qsTr("Pattern")
+                        iconSource:         "/qmlimages/MapDrawShape.svg"
+                        enabled:            _missionController.flyThroughCommandsAllowed
+                        visible:            false
+                        dropPanelComponent: _singleComplexItem ? undefined : patternDropPanel
+                        onTriggered: {
+                            toolStrip.allAddClickBoolsOff()
+                            if (_singleComplexItem) {
+                                insertComplexItemAfterCurrent(_missionController.complexMissionItemNames[0])
+                            }
+                        }
+                    },
+                    ToolStripAction {
+                        text:       _planMasterController.controllerVehicle.multiRotor ? qsTr("Return") : qsTr("Land")
+                        iconSource: "/res/rtl.svg"
+                        enabled:    _missionController.isInsertLandValid
+                        visible:    false
+                        onTriggered: {
+                            toolStrip.allAddClickBoolsOff()
+                            insertLandItemAfterCurrent()
+                        }
+                    },
+                    ToolStripAction {
+                        text:               qsTr("수심영역")
+                        iconSource:         "/InstrumentValueIcons/flag.svg"
                         enabled:            true
                         visible:            true
-                        onTriggered: {
-                            editorMap.center = globals.activeVehicle.coordinate
-                        }
-                    }                   
-                    // ToolStripAction {
-                    //     text:               _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
-                    //     iconSource:         "/qmlimages/MapAddMission.svg"
-                    //     enabled:            !_missionController.onlyInsertTakeoffValid
-                    //     visible:            toolStrip._isMissionLayer && _planMasterController.controllerVehicle.roiModeSupported
-                    //     checkable:          !_missionController.isROIActive
-                    //     onCheckedChanged:   _addROIOnClick = checked
-                    //     onTriggered: {
-                    //         if (_missionController.isROIActive) {
-                    //             toolStrip.allAddClickBoolsOff()
-                    //             insertCancelROIAfterCurrent()
-                    //         }
-                    //     }
-                    //     property bool myAddROIOnClick: _addROIOnClick
-                    //     onMyAddROIOnClickChanged: checked = _addROIOnClick
-                    // },
-                    // ToolStripAction {
-                    //     text:               _singleComplexItem ? _missionController.complexMissionItemNames[0] : qsTr("Pattern")
-                    //     iconSource:         "/qmlimages/MapDrawShape.svg"
-                    //     enabled:            _missionController.flyThroughCommandsAllowed
-                    //     visible:            toolStrip._isMissionLayer
-                    //     dropPanelComponent: _singleComplexItem ? undefined : patternDropPanel
-                    //     onTriggered: {
-                    //         toolStrip.allAddClickBoolsOff()
-                    //         if (_singleComplexItem) {
-                    //             insertComplexItemAfterCurrent(_missionController.complexMissionItemNames[0])
-                    //         }
-                    //     }
-                    // },
-                    // ToolStripAction {
-                    //     text:       _planMasterController.controllerVehicle.multiRotor ? qsTr("Return") : qsTr("Land")
-                    //     iconSource: "/res/rtl.svg"
-                    //     enabled:    _missionController.isInsertLandValid
-                    //     visible:    toolStrip._isMissionLayer
-                    //     onTriggered: {
-                    //         toolStrip.allAddClickBoolsOff()
-                    //         insertLandItemAfterCurrent()
-                    //     }
-                    // },
-                    // ToolStripAction {
-                    //     text:               qsTr("Center")
-                    //     iconSource:         "/qmlimages/MapCenter.svg"
-                    //     enabled:            true
-                    //     visible:            true
-                    //     dropPanelComponent: centerMapDropPanel
-                    // }
+                        dropPanelComponent: centerMapDropPanel
+                    }
                 ]
             }
 
