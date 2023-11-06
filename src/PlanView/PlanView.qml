@@ -450,6 +450,11 @@ Item {
                 updateAirspace(false)
             }
 
+            ListModel {
+                id: coordinateModel
+            }
+            
+
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -459,7 +464,13 @@ Item {
                     coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
                     coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
                     coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
-                    _krisoCoordinate = coordinate
+
+
+                    if (_krisoFlag) {
+                        // 새로운 좌표를 모델에 추가
+                        coordinateModel.append({ "latitude": coordinate.latitude, "longitude": coordinate.longitude, "altitude": coordinate.altitude })
+                    }
+                    
 
                     switch (_editingLayer) {
                     case _layerMission:
@@ -483,10 +494,11 @@ Item {
             }
 
             MapItemView {
-                model: QGroundControl.multiVehicleManager.vehicles
+                model: coordinateModel
+                visible: _krisoFlag
                 delegate: MapQuickItem {
                     id: itemIndicator
-                    coordinate: _krisoCoordinate
+                    coordinate: QtPositioning.coordinate(model.latitude, model.longitude, model.altitude)
                     z: QGroundControl.zOrderMapItems
                     sourceItem: Item {
                         width: 30
@@ -769,8 +781,22 @@ Item {
                         iconSource:         "/InstrumentValueIcons/flag.svg"
                         enabled:            true
                         visible:            true
-                        dropPanelComponent: centerMapDropPanel
+                        // dropPanelComponent: centerMapDropPanel
+                        checkable:          true
+                        onCheckedChanged: _krisoFlag = !_krisoFlag
+                    },
+                    ToolStripAction {
+                        text:               qsTr("수심영역삭제")
+                        iconSource:         "/InstrumentValueIcons/flag.svg"
+                        enabled:            true
+                        visible:            true
+                        // dropPanelComponent: centerMapDropPanel
+                        checkable:          true
+                        onCheckedChanged: {
+                            coordinateModel.clear()
+                        }
                     }
+
                 ]
             }
 

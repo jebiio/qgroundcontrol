@@ -181,6 +181,7 @@ public:
     Q_PROPERTY(QString              flightMode                  READ flightMode                 WRITE setFlightMode                 NOTIFY flightModeChanged)
     Q_PROPERTY(TrajectoryPoints*    trajectoryPoints            MEMBER _trajectoryPoints                                            CONSTANT)
     Q_PROPERTY(QmlObjectListModel*  cameraTriggerPoints         READ cameraTriggerPoints                                            CONSTANT)
+    Q_PROPERTY(QmlObjectListModel*  tidalRangeList              READ tidalRangeList                                                 CONSTANT)
     Q_PROPERTY(float                latitude                    READ latitude                                                       NOTIFY coordinateChanged)
     Q_PROPERTY(float                longitude                   READ longitude                                                      NOTIFY coordinateChanged)
     Q_PROPERTY(bool                 messageTypeNone             READ messageTypeNone                                                NOTIFY messageTypeChanged)
@@ -463,6 +464,8 @@ public:
     Q_INVOKABLE void kriso_dpClickedLocation        (QGeoCoordinate clickedLocation);
     Q_INVOKABLE void kriso_sendMTCommand(int start, float t1_rpm, float t2_rpm, float t3_rpm, float t3_angle, float t4_rpm, float t4_angle);
 
+    Q_INVOKABLE void insertKrisoTidalRange(QGeoCoordinate tidalRange);
+
     /// Sends PARAM_MAP_RC message to vehicle
     Q_INVOKABLE void sendParamMapRC(const QString& paramName, double scale, double centerValue, int tuningID, double minValue, double maxValue);
 
@@ -561,6 +564,7 @@ public:
 
     QmlObjectListModel* cameraTriggerPoints () { return &_cameraTriggerPoints; }
     QmlObjectListModel* aisCoordinateList() { return &_aisCoordinateList; }
+    QmlObjectListModel* tidalRangeList() { return &_tidalRangeList; }
 
 
     int  flowImageIndex() const{ return _flowImageIndex; }
@@ -1035,6 +1039,7 @@ private slots:
     void _firstRallyPointLoadComplete       ();
     void _sendMavCommandResponseTimeoutCheck();
     void _clearCameraTriggerPoints          ();
+    void _clearTidalRangeList               ();
     void _clearAisCoordinateList            ();
     void _updateDistanceHeadingToHome       ();
     void _updateMissionItemIndex            ();
@@ -1234,6 +1239,8 @@ private:
     TrajectoryPoints*               _trajectoryPoints = nullptr;
     QmlObjectListModel              _cameraTriggerPoints;
     QmlObjectListModel              _aisCoordinateList;
+    QmlObjectListModel              _tidalRangeList;
+
     //QMap<QString, ADSBVehicle*>     _trafficVehicleMap;
 
     // Toolbox references

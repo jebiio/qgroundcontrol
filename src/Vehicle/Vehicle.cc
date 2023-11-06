@@ -2516,6 +2516,28 @@ void Vehicle::kriso_sendMTCommand(int start_stop, float t1_rpm, float t2_rpm, fl
     }
 }
 
+void Vehicle::insertKrisoTidalRange(QGeoCoordinate coordinate)
+{
+    // 새로운 좌표를 생성
+    QVariantMap coordinateData;
+    coordinateData["latitude"] = coordinate.latitude();
+    coordinateData["longitude"] = coordinate.longitude();
+    coordinateData["altitude"] = coordinate.altitude();
+
+    // // 모델에 좌표 데이터를 추가
+    // QVariant modelData = rootContext->contextProperty("coordinateModel");
+    // QAbstractItemModel* coordinateModel = qvariant_cast<QAbstractItemModel*>(modelData);
+    
+    // QModelIndex index = coordinateModel->index(coordinateModel->rowCount(), 0);
+    // coordinateModel->insertRow(index.row());
+    
+    // for (int i = 0; i < coordinateModel->columnCount(); i++) {
+    //     QModelIndex dataIndex = coordinateModel->index(index.row(), i);
+    //     if (coordinateData.contains(coordinateModel->headerData(i, Qt::Horizontal).toString())) {
+    //         coordinateModel->setData(dataIndex, coordinateData[coordinateModel->headerData(i, Qt::Horizontal).toString()]);
+    //     }
+    // }
+}
 
 void Vehicle::forceArm(void)
 {
@@ -2675,6 +2697,11 @@ void Vehicle::_rallyPointManagerError(int errorCode, const QString& errorMsg)
 void Vehicle::_clearCameraTriggerPoints()
 {
     _cameraTriggerPoints.clearAndDeleteContents();
+}
+
+void Vehicle::_clearTidalRangeList()
+{
+    _tidalRangeList.clearAndDeleteContents();
 }
 
 void Vehicle::_clearAisCoordinateList()
