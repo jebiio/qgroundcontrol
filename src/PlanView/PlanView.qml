@@ -495,7 +495,7 @@ Item {
 
             MapItemView {
                 model: coordinateModel
-                visible: _krisoFlag
+                visible: true
                 delegate: MapQuickItem {
                     id: itemIndicator
                     coordinate: QtPositioning.coordinate(model.latitude, model.longitude, model.altitude)
@@ -790,9 +790,7 @@ Item {
                         iconSource:         "/InstrumentValueIcons/flag.svg"
                         enabled:            true
                         visible:            true
-                        // dropPanelComponent: centerMapDropPanel
-                        checkable:          true
-                        onCheckedChanged: {
+                        onTriggered: {
                             coordinateModel.clear()
                         }
                     }
