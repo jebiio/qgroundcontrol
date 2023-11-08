@@ -224,129 +224,129 @@ Rectangle {
                                 }
                             }
 
-                            // GridLayout {
-                            //     id:         videoGrid
-                            //     columns:    2
-                            //     visible:    _videoSettings.visible
+                            GridLayout {
+                                id:         videoGrid
+                                columns:    2
+                                visible:    _videoSettings.visible
 
-                            //     QGCLabel {
-                            //         text:               qsTr("Video Settings")
-                            //         Layout.columnSpan:  2
-                            //         Layout.alignment:   Qt.AlignHCenter
-                            //     }
+                                QGCLabel {
+                                    text:               qsTr("Video Settings")
+                                    Layout.columnSpan:  2
+                                    Layout.alignment:   Qt.AlignHCenter
+                                }
 
-                            //     QGCLabel {
-                            //         id:         videoSourceLabel
-                            //         text:       qsTr("Source")
-                            //         visible:    !_videoAutoStreamConfig && _videoSettings.videoSource.visible
-                            //     }
-                            //     FactComboBox {
-                            //         id:                     videoSource
-                            //         Layout.preferredWidth:  _comboFieldWidth
-                            //         indexModel:             false
-                            //         fact:                   _videoSettings.videoSource
-                            //         visible:                videoSourceLabel.visible
-                            //     }
+                                QGCLabel {
+                                    id:         videoSourceLabel
+                                    text:       qsTr("Source")
+                                    visible:    !_videoAutoStreamConfig && _videoSettings.videoSource.visible
+                                }
+                                FactComboBox {
+                                    id:                     videoSource
+                                    Layout.preferredWidth:  _comboFieldWidth
+                                    indexModel:             false
+                                    fact:                   _videoSettings.videoSource
+                                    visible:                videoSourceLabel.visible
+                                }
 
-                            //     QGCLabel {
-                            //         id:         udpPortLabel
-                            //         text:       qsTr("UDP Port")
-                            //         visible:    !_videoAutoStreamConfig && (_isUDP264 || _isUDP265 || _isMPEGTS) && _videoSettings.udpPort.visible
-                            //     }
-                            //     FactTextField {
-                            //         Layout.preferredWidth:  _comboFieldWidth
-                            //         fact:                   _videoSettings.udpPort
-                            //         visible:                udpPortLabel.visible
-                            //     }
+                                QGCLabel {
+                                    id:         udpPortLabel
+                                    text:       qsTr("UDP Port")
+                                    visible:    !_videoAutoStreamConfig && (_isUDP264 || _isUDP265 || _isMPEGTS) && _videoSettings.udpPort.visible
+                                }
+                                FactTextField {
+                                    Layout.preferredWidth:  _comboFieldWidth
+                                    fact:                   _videoSettings.udpPort
+                                    visible:                udpPortLabel.visible
+                                }
 
-                            //     QGCLabel {
-                            //         id:         rtspUrlLabel
-                            //         text:       qsTr("RTSP URL")
-                            //         visible:    !_videoAutoStreamConfig && _isRTSP && _videoSettings.rtspUrl.visible
-                            //     }
-                            //     FactTextField {
-                            //         Layout.preferredWidth:  _comboFieldWidth
-                            //         fact:                   _videoSettings.rtspUrl
-                            //         visible:                rtspUrlLabel.visible
-                            //     }
+                                QGCLabel {
+                                    id:         rtspUrlLabel
+                                    text:       qsTr("RTSP URL")
+                                    visible:    !_videoAutoStreamConfig && _isRTSP && _videoSettings.rtspUrl.visible
+                                }
+                                FactTextField {
+                                    Layout.preferredWidth:  _comboFieldWidth
+                                    fact:                   _videoSettings.rtspUrl
+                                    visible:                rtspUrlLabel.visible
+                                }
 
-                            //     QGCLabel {
-                            //         id:         tcpUrlLabel
-                            //         text:       qsTr("TCP URL")
-                            //         visible:    !_videoAutoStreamConfig && _isTCP && _videoSettings.tcpUrl.visible
-                            //     }
-                            //     FactTextField {
-                            //         Layout.preferredWidth:  _comboFieldWidth
-                            //         fact:                   _videoSettings.tcpUrl
-                            //         visible:                tcpUrlLabel.visible
-                            //     }
+                                QGCLabel {
+                                    id:         tcpUrlLabel
+                                    text:       qsTr("TCP URL")
+                                    visible:    !_videoAutoStreamConfig && _isTCP && _videoSettings.tcpUrl.visible
+                                }
+                                FactTextField {
+                                    Layout.preferredWidth:  _comboFieldWidth
+                                    fact:                   _videoSettings.tcpUrl
+                                    visible:                tcpUrlLabel.visible
+                                }
 
-                            //     QGCLabel {
-                            //         text:                   qsTr("Aspect Ratio")
-                            //         visible:                !_videoAutoStreamConfig && _isGst && _videoSettings.aspectRatio.visible
-                            //     }
-                            //     FactTextField {
-                            //         Layout.preferredWidth:  _comboFieldWidth
-                            //         fact:                   _videoSettings.aspectRatio
-                            //         visible:                !_videoAutoStreamConfig && _isGst && _videoSettings.aspectRatio.visible
-                            //     }
+                                QGCLabel {
+                                    text:                   qsTr("Aspect Ratio")
+                                    visible:                !_videoAutoStreamConfig && _isGst && _videoSettings.aspectRatio.visible
+                                }
+                                FactTextField {
+                                    Layout.preferredWidth:  _comboFieldWidth
+                                    fact:                   _videoSettings.aspectRatio
+                                    visible:                !_videoAutoStreamConfig && _isGst && _videoSettings.aspectRatio.visible
+                                }
 
-                            //     QGCLabel {
-                            //         id:         videoFileFormatLabel
-                            //         text:       qsTr("File Format")
-                            //         visible:    _showSaveVideoSettings && _videoSettings.recordingFormat.visible
-                            //     }
-                            //     FactComboBox {
-                            //         Layout.preferredWidth:  _comboFieldWidth
-                            //         fact:                   _videoSettings.recordingFormat
-                            //         visible:                videoFileFormatLabel.visible
-                            //     }
+                                QGCLabel {
+                                    id:         videoFileFormatLabel
+                                    text:       qsTr("File Format")
+                                    visible:    _showSaveVideoSettings && _videoSettings.recordingFormat.visible
+                                }
+                                FactComboBox {
+                                    Layout.preferredWidth:  _comboFieldWidth
+                                    fact:                   _videoSettings.recordingFormat
+                                    visible:                videoFileFormatLabel.visible
+                                }
 
-                            //     QGCLabel {
-                            //         id:         maxSavedVideoStorageLabel
-                            //         text:       qsTr("Max Storage Usage")
-                            //         visible:    _showSaveVideoSettings && _videoSettings.maxVideoSize.visible && _videoSettings.enableStorageLimit.value
-                            //     }
-                            //     FactTextField {
-                            //         Layout.preferredWidth:  _comboFieldWidth
-                            //         fact:                   _videoSettings.maxVideoSize
-                            //         visible:                _showSaveVideoSettings && _videoSettings.enableStorageLimit.value && maxSavedVideoStorageLabel.visible
-                            //     }
+                                QGCLabel {
+                                    id:         maxSavedVideoStorageLabel
+                                    text:       qsTr("Max Storage Usage")
+                                    visible:    _showSaveVideoSettings && _videoSettings.maxVideoSize.visible && _videoSettings.enableStorageLimit.value
+                                }
+                                FactTextField {
+                                    Layout.preferredWidth:  _comboFieldWidth
+                                    fact:                   _videoSettings.maxVideoSize
+                                    visible:                _showSaveVideoSettings && _videoSettings.enableStorageLimit.value && maxSavedVideoStorageLabel.visible
+                                }
 
-                            //     QGCLabel {
-                            //         id:         videoDecodeLabel
-                            //         text:       qsTr("Video decode priority")
-                            //         visible:    forceVideoDecoderComboBox.visible
-                            //     }
-                            //     FactComboBox {
-                            //         id:                     forceVideoDecoderComboBox
-                            //         Layout.preferredWidth:  _comboFieldWidth
-                            //         fact:                   _videoSettings.forceVideoDecoder
-                            //         visible:                fact.visible
-                            //         indexModel:             false
-                            //     }
+                                QGCLabel {
+                                    id:         videoDecodeLabel
+                                    text:       qsTr("Video decode priority")
+                                    visible:    forceVideoDecoderComboBox.visible
+                                }
+                                FactComboBox {
+                                    id:                     forceVideoDecoderComboBox
+                                    Layout.preferredWidth:  _comboFieldWidth
+                                    fact:                   _videoSettings.forceVideoDecoder
+                                    visible:                fact.visible
+                                    indexModel:             false
+                                }
 
-                            //     Item { width: 1; height: 1}
-                            //     FactCheckBox {
-                            //         text:       qsTr("Disable When Disarmed")
-                            //         fact:       _videoSettings.disableWhenDisarmed
-                            //         visible:    !_videoAutoStreamConfig && _isGst && fact.visible
-                            //     }
+                                Item { width: 1; height: 1}
+                                FactCheckBox {
+                                    text:       qsTr("Disable When Disarmed")
+                                    fact:       _videoSettings.disableWhenDisarmed
+                                    visible:    !_videoAutoStreamConfig && _isGst && fact.visible
+                                }
 
-                            //     Item { width: 1; height: 1}
-                            //     FactCheckBox {
-                            //         text:       qsTr("Low Latency Mode")
-                            //         fact:       _videoSettings.lowLatencyMode
-                            //         visible:    !_videoAutoStreamConfig && _isGst && fact.visible
-                            //     }
+                                Item { width: 1; height: 1}
+                                FactCheckBox {
+                                    text:       qsTr("Low Latency Mode")
+                                    fact:       _videoSettings.lowLatencyMode
+                                    visible:    !_videoAutoStreamConfig && _isGst && fact.visible
+                                }
 
-                            //     Item { width: 1; height: 1}
-                            //     FactCheckBox {
-                            //         text:       qsTr("Auto-Delete Saved Recordings")
-                            //         fact:       _videoSettings.enableStorageLimit
-                            //         visible:    _showSaveVideoSettings && fact.visible
-                            //     }
-                            // }
+                                Item { width: 1; height: 1}
+                                FactCheckBox {
+                                    text:       qsTr("Auto-Delete Saved Recordings")
+                                    fact:       _videoSettings.enableStorageLimit
+                                    visible:    _showSaveVideoSettings && fact.visible
+                                }
+                            }
                         }
                     }
 

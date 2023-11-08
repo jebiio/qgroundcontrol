@@ -23,6 +23,9 @@ import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
 
+import QtQuick.Controls.Styles 1.4
+import QtGraphicalEffects 1.0
+
 FlightMap {
     id:                         _root
     allowGCSLocationCenter:     true
@@ -304,6 +307,37 @@ FlightMap {
     //         }
     //     }
     // }
+
+    MapItemView {
+        model: _activeVehicle ? _activeVehicle.tidalRangeList : 0 
+        delegate: MapQuickItem {
+            id: itemIndicator
+            coordinate: object.coordinate
+            z: QGroundControl.zOrderMapItems
+            sourceItem: Item {
+                width: 30
+                height: 30
+                Image {
+                    id: obstacle
+                    source: "/InstrumentValueIcons/flag.svg"
+                    width: parent.width
+                    height: parent.height
+                }
+                ColorOverlay {
+                    anchors.fill:       obstacle
+                    source:             obstacle
+                    color:              "#33ff33"
+                }
+                // Text {
+                //     text: "jaeeun test"
+                //     color: "red"
+                //     font.pixelSize: 10
+                //     anchors.top: obstacle.bottom
+                //     anchors.horizontalCenter: obstacle.horizontalCenter
+                // }
+            }
+        }
+    }
 
     MapItemView {
         model: _activeVehicle ? _activeVehicle.aisCoordinateList : 0 
@@ -677,37 +711,42 @@ FlightMap {
                     // _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
                 }
             }
-            // QGCMenuItem {
-            //     text:           qsTr("Orbit at location")
-            //     visible:        globals.guidedControllerFlyView.showOrbit
+            QGCMenuItem {
+                text:           qsTr("Orbit at location")
+                visible:        false
+                // visible:        globals.guidedControllerFlyView.showOrbit
 
-            //     onTriggered: {
-            //         orbitMapCircle.show(clickMenu.coord)
-            //         globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionOrbit, clickMenu.coord, orbitMapCircle)
-            //     }
-            // }
-            // QGCMenuItem {
-            //     text:           qsTr("ROI at location")
-            //     visible:        globals.guidedControllerFlyView.showROI
+                onTriggered: {
+                    orbitMapCircle.show(clickMenu.coord)
+                    globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionOrbit, clickMenu.coord, orbitMapCircle)
+                }
+            }
+            QGCMenuItem {
+                text:           qsTr("ROI at location")
+                visible:        false
+                // visible:        globals.guidedControllerFlyView.showROI
 
-            //     onTriggered: {
-            //         roiLocationItem.show(clickMenu.coord)
-            //         globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionROI, clickMenu.coord, roiLocationItem)
-            //     }
-            // }
-        }
-
-        onClicked: {
-            if (_activeVehicle && !globals.guidedControllerFlyView.guidedUIVisible) {
-                if (_activeVehicle.fixedDPCoordinateEnabled) {
-                    var clickCoord = _root.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */);
-                    clickMenu.coord = clickCoord;
-                    gotoLocationItem.show(clickMenu.coord);
-                    _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
-                } 
+                onTriggered: {
+                    roiLocationItem.show(clickMenu.coord)
+                    globals.guidedControllerFlyView.confirmAction(globals.guidedControllerFlyView.actionROI, clickMenu.coord, roiLocationItem)
+                }
             }
         }
-        
+        onClicked: {
+            var clickCoord = _root.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */);
+            clickMenu.coord = clickCoord;
+
+            if (_activeVehicle && !globals.guidedControllerFlyView.guidedUIVisible) {
+
+                if(_activeVehicle.fixedDPCoordinateEnabled){
+                    gotoLocationItem.show(clickMenu.coord);
+                    _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
+                    
+                }else if(_activeVehicle.krisoTidalEnabled){
+                    _activeVehicle.insertKrisoTidalRange(clickMenu.coord);
+                }
+            }
+        }
     }
 
     // Airspace overlap support

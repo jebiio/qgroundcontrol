@@ -272,10 +272,12 @@ public:
     Q_PROPERTY(bool                 trajectoryVisible           READ trajectoryVisible            WRITE setTrajectoryVisible        NOTIFY trajectoryVisibleChanged)
     Q_PROPERTY(bool                 planPathVisible             READ planPathVisible              WRITE setPlanPathVisible          NOTIFY planPathVisibleChanged)
     // Q_PROPERTY(bool                 krisoEmergencyStop          READ krisoEmergencyStop           WRITE setKrisoEmergencyStop       NOTIFY krisoEmergencyStopChanged) jaeeun
-    Q_PROPERTY(bool                 isKrisoDPClickableLayer     READ isKrisoDPClickableLayer    WRITE setIsKrisoDPClickableLayer    NOTIFY isKrisoDPClickableLayerChanged)
+    Q_PROPERTY(bool                 isKrisoDPClickableLayer     READ isKrisoDPClickableLayer     WRITE setIsKrisoDPClickableLayer    NOTIFY isKrisoDPClickableLayerChanged)
     Q_PROPERTY(bool                 fixedDPCoordinateEnabled    READ fixedDPCoordinateEnabled    WRITE setFixedDPCoordinateEnabled  NOTIFY fixedDPCoordinateEnabledChanged)
     // Q_PROPERTY(bool                 currentDPCoordinateEnabled  READ currentDPCoordinateEnabled    WRITE setCurrentDPCoordinateEnabled  NOTIFY currentDPCoordinateEnabledChanged)
     Q_PROPERTY(QmlObjectListModel*  aisCoordinateList           READ aisCoordinateList                                              NOTIFY aisCoordinateListChanged)
+    Q_PROPERTY(bool                 krisoTidalEnabled           READ krisoTidalEnabled           WRITE setKrisoTidalEnabled         NOTIFY krisoTidalEnabledChanged)
+
 
 
 
@@ -466,6 +468,8 @@ public:
 
     Q_INVOKABLE void insertKrisoTidalRange(QGeoCoordinate tidalRange);
 
+    Q_INVOKABLE void clearKrisoTidalRange(void){ _tidalRangeList.clear(); }
+
     /// Sends PARAM_MAP_RC message to vehicle
     Q_INVOKABLE void sendParamMapRC(const QString& paramName, double scale, double centerValue, int tuningID, double minValue, double maxValue);
 
@@ -654,6 +658,7 @@ public:
     bool            planPathVisible             () const { return _planPathVisible; }
     bool            isKrisoDPClickableLayer                    () const { return _isKrisoDPClickableLayer; }
     bool            fixedDPCoordinateEnabled                   () const { return _fixedDPCoordinateEnabled; }
+    bool            krisoTidalEnabled                           () const { return _krisoTidalEnabled; } 
 
 
     /// Get the maximum MAVLink protocol version supported
@@ -908,6 +913,7 @@ public slots:
     void setPlanPathVisible                 (bool planPathVisible);
     void setIsKrisoDPClickableLayer         (bool isKrisoDPClickableLayer);
     void setFixedDPCoordinateEnabled        (bool fixedDPCoordinateEnabled);
+    void setKrisoTidalEnabled               (bool krisoTidalEnabled);
 
 
 signals:
@@ -1021,6 +1027,10 @@ signals:
     void isKrisoDPClickableLayerChanged                (bool isKrisoDPClickableLayer);
     void fixedDPCoordinateEnabledChanged               (bool fixedDPCoordinateEnabled);
     // void krisoEmergencyStopChanged      (); jaeeun
+
+    // krisotidal
+    void krisoTidalEnabledChanged       (bool krisoTidalEnabled); 
+
 private slots:
     void _mavlinkMessageReceived            (LinkInterface* link, mavlink_message_t message);
     void _sendMessageMultipleNext           ();
@@ -1192,6 +1202,7 @@ private:
     bool            _planPathVisible                        = true;
     bool            _isKrisoDPClickableLayer                = false;
     bool            _fixedDPCoordinateEnabled               = false;
+    bool            _krisoTidalEnabled                      = false;
 
     SysStatusSensorInfo _sysStatusSensorInfo;
 

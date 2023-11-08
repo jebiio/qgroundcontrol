@@ -13,6 +13,7 @@ Button {
     leftPadding:    _horizontalPadding
     rightPadding:   _horizontalPadding
     focusPolicy:    Qt.ClickFocus
+    checkable:          false
 
     property bool   primary:        false                               ///< primary button for a group of buttons
     property real   pointSize:      ScreenTools.defaultFontPointSize    ///< Point size for button text
@@ -31,6 +32,8 @@ Button {
     property int _verticalPadding:      Math.round(ScreenTools.defaultFontPixelHeight * heightFactor)
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
+    
+    onCheckedChanged: checkable = false
 
     background: Rectangle {
         id:             backRect

@@ -33,6 +33,8 @@ Item {
     property var    _scaleLengthsFeet:      [10, 25, 50, 100, 250, 500, 1000, 2000, 3000, 4000, 5280, 5280*2, 5280*5, 5280*10, 5280*25, 5280*50, 5280*100, 5280*250, 5280*500, 5280*1000]
     property bool   _zoomButtonsVisible:    zoomButtonsVisible && !ScreenTools.isMobile
     property var    _color:                 mapControl.isSatelliteMap ? "white" : "black"
+    property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
+
 
     function formatDistanceMeters(meters) {
         var dist = Math.round(meters)
@@ -159,7 +161,7 @@ Item {
         anchors.top:        scaleText.bottom
         anchors.leftMargin: buttonsOnLeft && (_zoomButtonsVisible || terrainButtonVisible) ? ScreenTools.defaultFontPixelWidth / 2 : 0
         anchors.left:       buttonsOnLeft ?
-                                (_zoomButtonsVisible ? centerButton.right : (terrainButtonVisible ? terrainButton.right : parent.left)) :
+                                (_zoomButtonsVisible ? tidalDeleteButton.right : (terrainButtonVisible ? terrainButton.right : parent.left)) :
                                 parent.left
         width:              2
         height:             ScreenTools.defaultFontPixelHeight
@@ -234,6 +236,47 @@ Item {
         opacity:            0.75
         visible:            _zoomButtonsVisible
         onClicked:          mapControl.center = globals.activeVehicle.coordinate
+    }
+
+    QGCButton {
+        id:                 tidalAddButton
+        checkable:          true
+        anchors.top:        scaleText.top
+        anchors.bottom:     rightEnd.bottom
+        anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
+        anchors.left:       centerButton.right
+        text:               qsTr("Tidal")
+        width:              height
+        opacity:            0.75
+        visible:            _zoomButtonsVisible
+        checked:            _activeVehicle.krisoTidalEnabled
+
+        property string buttonText: _activeVehicle.krisoTidalEnabled ? qsTr("Tidal") : qsTr("Tidal Off")
+
+        onClicked: {
+            // Toggle the checked state and update the krisoTidalEnabled property accordingly
+            tidalAddButton.checked = !tidalAddButton.checked;
+            _activeVehicle.krisoTidalEnabled = tidalAddButton.checked;
+
+            // Update the button text based on the checked state
+            buttonText = tidalAddButton.checked ? qsTr("hello") : qsTr("Tidal Off");
+        }
+
+        onCheckedChanged:   _activeVehicle.krisoTidalEnabled = checked
+    }
+
+
+    QGCButton {
+        id:                 tidalDeleteButton
+        anchors.top:        scaleText.top
+        anchors.bottom:     rightEnd.bottom
+        anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
+        anchors.left:       tidalAddButton.right
+        text:               qsTr("Delete")
+        width:              height
+        opacity:            0.75
+        visible:            _zoomButtonsVisible
+        onClicked:          _activeVehicle.clearKrisoTidalRange();
     }
 
     Component.onCompleted: {

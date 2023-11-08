@@ -27,6 +27,10 @@ import QGroundControl.ShapeFileHelper   1.0
 import QGroundControl.Airspace          1.0
 import QGroundControl.Airmap            1.0
 
+import QtQuick.Controls.Styles 1.4
+import QtGraphicalEffects 1.0
+
+
 Item {
     id: _root
 
@@ -466,9 +470,10 @@ Item {
                     coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
 
 
-                    if (_krisoFlag) {
+                    if (_activeVehicle.krisoTidalEnabled) {
                         // 새로운 좌표를 모델에 추가
-                        coordinateModel.append({ "latitude": coordinate.latitude, "longitude": coordinate.longitude, "altitude": coordinate.altitude })
+                        // coordinateModel.append({ "latitude": coordinate.latitude, "longitude": coordinate.longitude, "altitude": coordinate.altitude })
+                        _activeVehicle.insertKrisoTidalRange(coordinate);
                     }
                     
 
@@ -494,28 +499,34 @@ Item {
             }
 
             MapItemView {
-                model: coordinateModel
+                model: _activeVehicle ? _activeVehicle.tidalRangeList : 0 
                 visible: true
                 delegate: MapQuickItem {
                     id: itemIndicator
-                    coordinate: QtPositioning.coordinate(model.latitude, model.longitude, model.altitude)
+                    coordinate: object.coordinate
                     z: QGroundControl.zOrderMapItems
                     sourceItem: Item {
                         width: 30
                         height: 30
                         Image {
                             id: obstacle
-                            source: "/qmlimages/sos.svg" // 사용하려는 삼각형 이미지의 경로를 지정하세요
+                            source: "/InstrumentValueIcons/flag.svg"
                             width: parent.width
                             height: parent.height
                         }
-                        Text {
-                            text: "jaeeun test"
-                            color: "red"
-                            font.pixelSize: 10
-                            anchors.top: obstacle.bottom
-                            anchors.horizontalCenter: obstacle.horizontalCenter
+                        ColorOverlay {
+                            anchors.fill:       obstacle
+                            source:             obstacle
+                            color:              "#33ff33"
                         }
+
+                        // Text {
+                        //     text: "jaeeun test"
+                        //     color: "red"
+                        //     font.pixelSize: 10
+                        //     anchors.top: obstacle.bottom
+                        //     anchors.horizontalCenter: obstacle.horizontalCenter
+                        // }
                     }
                 }
             }
@@ -780,18 +791,20 @@ Item {
                         text:               qsTr("수심영역")
                         iconSource:         "/InstrumentValueIcons/flag.svg"
                         enabled:            true
-                        visible:            true
+                        visible:            false
                         // dropPanelComponent: centerMapDropPanel
                         checkable:          true
-                        onCheckedChanged: _krisoFlag = !_krisoFlag
+                        checked:            _activeVehicle.krisoTidalEnabled
+                        onCheckedChanged: _activeVehicle.krisoTidalEnabled = !_activeVehicle.krisoTidalEnabled
                     },
                     ToolStripAction {
                         text:               qsTr("수심영역삭제")
                         iconSource:         "/InstrumentValueIcons/flag.svg"
                         enabled:            true
-                        visible:            true
+                        visible:            false
                         onTriggered: {
-                            coordinateModel.clear()
+                            // coordinateModel.clear()
+                            _activeVehicle.clearKrisoTidalRange();
                         }
                     }
 
