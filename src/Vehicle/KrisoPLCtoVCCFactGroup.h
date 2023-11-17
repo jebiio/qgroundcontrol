@@ -14,44 +14,6 @@
 
 
 
-int16 mr_mtr_sta
-int16 mr_flt_msg_err1
-int16 mr_flt_msg_err2
-int16 mr_flt_msg_warn1
-int16 mr_flt_msg_warn2
-int16 mr_mtr_curr_real
-int16 mr_temp
-int16 mr_mtr_rpm_real
-int16 mr_mtr_rot_real
-int16 ml_mtr_sta
-int16 ml_flt_msg_err1
-int16 ml_flt_msg_err2
-int16 ml_flt_msg_warn1
-int16 ml_flt_msg_warn2
-int16 ml_mtr_curr_real
-int16 ml_temp
-int16 ml_mtr_rpm_real
-int16 ml_mtr_rot_real
-int16 br_mtr_sta
-int16 br_flt_msg
-int16 br_mtr_curr_real
-int16 br_temp
-int16 br_mtr_rpm
-int16 br_mtr_rot_sta
-int16 bl_mtr_sta
-int16 bl_flt_msg
-int16 bl_mtr_curr_real
-int16 bl_temp
-int16 bl_mtr_rpm
-int16 bl_mtr_rot_sta
-int16 sr_str_rpm
-int16 sr_str_ang
-int16 sl_str_rpm
-int16 sl_str_ang
-int16 batt400vdc
-int16 batt24vdc_1
-int16 batt24vdc_2
-
 class KrisoPLCtoVCCFactGroup : public FactGroup
 {
     Q_OBJECT
@@ -98,43 +60,43 @@ public:
     Q_PROPERTY(Fact* batt24vdc_1           READ batt24vdc_1     CONSTANT)
     Q_PROPERTY(Fact* batt24vdc_2           READ batt24vdc_2     CONSTANT)
 
-    Fact*   mr_mtr_sta                  (){return &_mr_mtr_sta};                
-    Fact*   mr_flt_msg_err1             (){return &_mr_flt_msg_err1};               
-    Fact*   mr_flt_msg_err2             (){return &_mr_flt_msg_err2};           
-    Fact*   mr_flt_msg_warn1            (){return &_mr_flt_msg_warn1};            
-    Fact*   mr_flt_msg_warn2            (){return &_mr_flt_msg_warn2};          
-    Fact*   mr_mtr_curr_real            (){return &_mr_mtr_curr_real};               
-    Fact*   mr_temp                     (){return &_mr_temp};          
-    Fact*   mr_mtr_rpm_real             (){return &_mr_mtr_rpm_real};          
-    Fact*   mr_mtr_rot_real             (){return &_mr_mtr_rot_real};           
-    Fact*   ml_mtr_sta                  (){return &_ml_mtr_sta};           
-    Fact*   ml_flt_msg_err1             (){return &_ml_flt_msg_err1};           
-    Fact*   ml_flt_msg_err2             (){return &_ml_flt_msg_err2};            
-    Fact*   ml_flt_msg_warn1            (){return &_ml_flt_msg_warn1};              
-    Fact*   ml_flt_msg_warn2            (){return &_ml_flt_msg_warn2};             
-    Fact*   ml_mtr_curr_real            (){return &_ml_mtr_curr_real};             
-    Fact*   ml_temp                     (){return &_ml_temp};            
-    Fact*   ml_mtr_rpm_real             (){return &_ml_mtr_rpm_real};             
-    Fact*   ml_mtr_rot_real             (){return &_ml_mtr_rot_real};            
-    Fact*   br_mtr_sta                  (){return &_br_mtr_sta};              
-    Fact*   br_flt_msg                  (){return &_br_flt_msg};          
-    Fact*   br_mtr_curr_real            (){return &_br_mtr_curr_real};          
-    Fact*   br_temp                     (){return &_br_temp};          
-    Fact*   br_mtr_rpm                  (){return &_br_mtr_rpm};           
-    Fact*   br_mtr_rot_sta              (){return &_br_mtr_rot_sta};           
-    Fact*   bl_mtr_sta                  (){return &_bl_mtr_sta};           
-    Fact*   bl_flt_msg                  (){return &_bl_flt_msg};            
-    Fact*   bl_mtr_curr_real            (){return &_bl_mtr_curr_real};              
-    Fact*   bl_temp                     (){return &_bl_temp};             
-    Fact*   bl_mtr_rpm                  (){return &_bl_mtr_rpm};             
-    Fact*   bl_mtr_rot_sta              (){return &_bl_mtr_rot_sta};            
-    Fact*   sr_str_rpm                  (){return &_sr_str_rpm};             
-    Fact*   sr_str_ang                  (){return &_sr_str_ang};            
-    Fact*   sl_str_rpm                  (){return &_sl_str_rpm};              
-    Fact*   sl_str_ang                  (){return &_sl_str_ang};        
-    Fact*   batt400vdc                  (){return &_batt400vdc};             
-    Fact*   batt24vdc_1                 (){return &_batt24vdc_1};            
-    Fact*   batt24vdc_2                 (){return &_batt24vdc_2};             
+    Fact*   mr_mtr_sta                  (){return &_mr_mtr_sta;}                
+    Fact*   mr_flt_msg_err1             (){return &_mr_flt_msg_err1;}               
+    Fact*   mr_flt_msg_err2             (){return &_mr_flt_msg_err2;}           
+    Fact*   mr_flt_msg_warn1            (){return &_mr_flt_msg_warn1;}            
+    Fact*   mr_flt_msg_warn2            (){return &_mr_flt_msg_warn2;}          
+    Fact*   mr_mtr_curr_real            (){return &_mr_mtr_curr_real;}               
+    Fact*   mr_temp                     (){return &_mr_temp;}          
+    Fact*   mr_mtr_rpm_real             (){return &_mr_mtr_rpm_real;}          
+    Fact*   mr_mtr_rot_real             (){return &_mr_mtr_rot_real;}           
+    Fact*   ml_mtr_sta                  (){return &_ml_mtr_sta;}           
+    Fact*   ml_flt_msg_err1             (){return &_ml_flt_msg_err1;}           
+    Fact*   ml_flt_msg_err2             (){return &_ml_flt_msg_err2;}            
+    Fact*   ml_flt_msg_warn1            (){return &_ml_flt_msg_warn1;}              
+    Fact*   ml_flt_msg_warn2            (){return &_ml_flt_msg_warn2;}             
+    Fact*   ml_mtr_curr_real            (){return &_ml_mtr_curr_real;}             
+    Fact*   ml_temp                     (){return &_ml_temp;}            
+    Fact*   ml_mtr_rpm_real             (){return &_ml_mtr_rpm_real;}             
+    Fact*   ml_mtr_rot_real             (){return &_ml_mtr_rot_real;}            
+    Fact*   br_mtr_sta                  (){return &_br_mtr_sta;}              
+    Fact*   br_flt_msg                  (){return &_br_flt_msg;}          
+    Fact*   br_mtr_curr_real            (){return &_br_mtr_curr_real;}          
+    Fact*   br_temp                     (){return &_br_temp;}          
+    Fact*   br_mtr_rpm                  (){return &_br_mtr_rpm;}           
+    Fact*   br_mtr_rot_sta              (){return &_br_mtr_rot_sta;}           
+    Fact*   bl_mtr_sta                  (){return &_bl_mtr_sta;}           
+    Fact*   bl_flt_msg                  (){return &_bl_flt_msg;}            
+    Fact*   bl_mtr_curr_real            (){return &_bl_mtr_curr_real;}              
+    Fact*   bl_temp                     (){return &_bl_temp;}             
+    Fact*   bl_mtr_rpm                  (){return &_bl_mtr_rpm;}             
+    Fact*   bl_mtr_rot_sta              (){return &_bl_mtr_rot_sta;}            
+    Fact*   sr_str_rpm                  (){return &_sr_str_rpm;}             
+    Fact*   sr_str_ang                  (){return &_sr_str_ang;}            
+    Fact*   sl_str_rpm                  (){return &_sl_str_rpm;}              
+    Fact*   sl_str_ang                  (){return &_sl_str_ang;}        
+    Fact*   batt400vdc                  (){return &_batt400vdc;}             
+    Fact*   batt24vdc_1                 (){return &_batt24vdc_1;}            
+    Fact*   batt24vdc_2                 (){return &_batt24vdc_2;}             
 
 
 

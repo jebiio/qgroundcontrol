@@ -53,7 +53,7 @@ const char* KrisoPLCtoVCCFactGroup::_batt24vdc_2FactName = "batt24vdc_2";
 
 
 KrisoPLCtoVCCFactGroup::KrisoPLCtoVCCFactGroup(QObject* parent)
-    : FactGroup(1000, ":/json/Vehicle/KrisoPLCtoVCC.json", parent)
+    : FactGroup(1000, ":/json/Vehicle/KrisoPLCtoVCCFact.json", parent)
     , _mr_mtr_sta                   (0, _mr_mtr_staFactName, FactMetaData::valueTypeInt16)  
     , _mr_flt_msg_err1              (0, _mr_flt_msg_err1FactName, FactMetaData::valueTypeInt16)  
     , _mr_flt_msg_err2              (0, _mr_flt_msg_err2FactName, FactMetaData::valueTypeInt16)   
@@ -131,43 +131,43 @@ KrisoPLCtoVCCFactGroup::KrisoPLCtoVCCFactGroup(QObject* parent)
     _addFact(&_batt24vdc_2, _batt24vdc_2FactName);
 
 
-    _mr_mtr_sta.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _mr_flt_msg_err1.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _mr_flt_msg_err2.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _mr_flt_msg_warn1.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _mr_flt_msg_warn2.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _mr_mtr_curr_real.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _mr_temp.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _mr_mtr_rpm_real.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _mr_mtr_rot_real.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_mtr_sta.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_flt_msg_err1.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_flt_msg_err2.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_flt_msg_warn1.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_flt_msg_warn2.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_mtr_curr_real.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_temp.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_mtr_rpm_real.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _ml_mtr_rot_real.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _br_mtr_sta.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _br_flt_msg.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _br_mtr_curr_real.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _br_temp.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _br_mtr_rpm.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _br_mtr_rot_sta.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _bl_mtr_sta.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _bl_flt_msg.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _bl_mtr_curr_real.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _bl_temp.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _bl_mtr_rpm.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _bl_mtr_rot_sta.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _sr_str_rpm.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _sr_str_ang.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _sl_str_rpm.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _sl_str_ang.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _batt400vdc.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _batt24vdc_1.setRawValue(std::numeric_limits<int16>::quiet_NaN());
-    _batt24vdc_2.setRawValue(std::numeric_limits<int16>::quiet_NaN());
+    _mr_mtr_sta.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _mr_flt_msg_err1.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _mr_flt_msg_err2.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _mr_flt_msg_warn1.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _mr_flt_msg_warn2.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _mr_mtr_curr_real.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _mr_temp.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _mr_mtr_rpm_real.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _mr_mtr_rot_real.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_mtr_sta.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_flt_msg_err1.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_flt_msg_err2.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_flt_msg_warn1.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_flt_msg_warn2.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_mtr_curr_real.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_temp.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_mtr_rpm_real.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _ml_mtr_rot_real.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _br_mtr_sta.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _br_flt_msg.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _br_mtr_curr_real.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _br_temp.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _br_mtr_rpm.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _br_mtr_rot_sta.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _bl_mtr_sta.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _bl_flt_msg.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _bl_mtr_curr_real.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _bl_temp.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _bl_mtr_rpm.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _bl_mtr_rot_sta.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _sr_str_rpm.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _sr_str_ang.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _sl_str_rpm.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _sl_str_ang.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _batt400vdc.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _batt24vdc_1.setRawValue(std::numeric_limits<int>::quiet_NaN());
+    _batt24vdc_2.setRawValue(std::numeric_limits<int>::quiet_NaN());
 
 
 
@@ -177,7 +177,7 @@ void KrisoPLCtoVCCFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_messa
 {
     switch (message.msgid) {
     case MAVLINK_MSG_ID_KRISO_AIS_STATUS:
-        _handleKRISOAISStatus(message);
+        // _handleKRISOPlcToVcc(message);
         break;
     case MAVLINK_MSG_ID_HIGH_LATENCY:
         // _handleHighLatency(message);

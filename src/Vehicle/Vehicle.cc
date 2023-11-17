@@ -122,7 +122,7 @@ const char* Vehicle::_krisoAISFactGroupName =           "krisoAIS";
 const char* Vehicle::_krisoDPtoVCCFactGroupName =       "krisoDPtoVCC";
 const char* Vehicle::_krisoWTtoVCCFactGroupName =       "krisoWTtoVCC";
 const char* Vehicle::_krisoCKtoVCCFactGroupName =       "krisoCKtoVCC";
-const char* Vehicle::_krisoPLCtoVCCFactGroupName =       "KrisoPLCtoVCC";
+const char* Vehicle::_krisoPLCtoVCCFactGroupName =      "krisoPLCtoVCC";
 
 // Standard connected vehicle
 Vehicle::Vehicle(LinkInterface*             link,
