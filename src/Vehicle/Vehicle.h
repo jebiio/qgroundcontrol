@@ -57,6 +57,7 @@
 #include "KrisoDPtoVCCFactGroup.h"
 #include "KrisoWTtoVCCFactGroup.h"
 #include "KrisoCKtoVCCFactGroup.h"
+#include "KrisoPLCtoVCCFactGroup.h"
 
 
 class Actuators;
@@ -352,6 +353,8 @@ public:
     Q_PROPERTY(FactGroup*           krisoDPtoVCC        READ krisoDPtoVCCFactGroup          CONSTANT)
     Q_PROPERTY(FactGroup*           krisoWTtoVCC        READ krisoWTtoVCCFactGroup          CONSTANT)
     Q_PROPERTY(FactGroup*           krisoCKtoVCC        READ krisoCKtoVCCFactGroup          CONSTANT)
+    Q_PROPERTY(FactGroup*           krisoPLCtoVCC       READ krisoPLCtoVCCFactGroup         CONSTANT)
+
 
     Q_PROPERTY(int      firmwareMajorVersion        READ firmwareMajorVersion       NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareMinorVersion        READ firmwareMinorVersion       NOTIFY firmwareVersionChanged)
@@ -734,6 +737,7 @@ public:
     FactGroup* krisoDPtoVCCFactGroup            () { return &_krisoDPtoVCCFactGroup; }
     FactGroup* krisoWTtoVCCFactGroup            () { return &_krisoWTtoVCCFactGroup; }
     FactGroup* krisoCKtoVCCFactGroup            () { return &_krisoCKtoVCCFactGroup; }
+    FactGroup* krisoPLCtoVCCFactGroup            () { return &_krisoPLCtoVCCFactGroup; }
 
     MissionManager*                 missionManager      () { return _missionManager; }
     GeoFenceManager*                geoFenceManager     () { return _geoFenceManager; }
@@ -1440,6 +1444,7 @@ private:
     KrisoDPtoVCCFactGroup                 _krisoDPtoVCCFactGroup;
     KrisoWTtoVCCFactGroup                 _krisoWTtoVCCFactGroup;
     KrisoCKtoVCCFactGroup                 _krisoCKtoVCCFactGroup;
+    KrisoPLCtoVCCFactGroup                _krisoPLCtoVCCFactGroup;
 
     MissionManager*                 _missionManager             = nullptr;
     GeoFenceManager*                _geoFenceManager            = nullptr;
@@ -1497,6 +1502,7 @@ private:
     static const char* _krisoDPtoVCCFactGroupName;
     static const char* _krisoWTtoVCCFactGroupName;
     static const char* _krisoCKtoVCCFactGroupName;
+    static const char* _krisoPLCtoVCCFactGroupName;
 
     static const int _vehicleUIUpdateRateMSecs      = 100;
 

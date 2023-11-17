@@ -1,0 +1,229 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "mr_mtr_sta",
+    "shortDesc":        "mr_mtr_sta",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "mr_flt_msg_err1",
+    "shortDesc":        "mr_flt_msg_err1",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "mr_flt_msg_err2",
+    "shortDesc":        "mr_flt_msg_err2",
+    "type":             "float",
+    "default":              null
+},
+{
+    "name":             "mr_flt_msg_warn1",
+    "shortDesc":        "mr_flt_msg_warn1",
+    "type":             "float",
+    "default":              null
+},
+{
+    "name":             "mr_flt_msg_warn2",
+    "shortDesc":        "mr_flt_msg_warn2",
+    "type":             "float",
+    "default":              null
+},
+{
+    "name":             "mr_mtr_curr_real",
+    "shortDesc":        "mr_mtr_curr_real",
+    "type":             "float",
+    "default":              null
+},
+{
+    "name":             "mr_temp",
+    "shortDesc":        "mr_temp",
+    "type":             "uint32",
+    "default":              null
+},
+{
+    "name":             "mr_mtr_rpm_real",
+    "shortDesc":        "mr_mtr_rpm_real",
+    "type":             "uint32",
+    "default":              null
+},
+{
+    "name":             "mr_mtr_rot_real",
+    "shortDesc":        "mr_mtr_rot_real",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_mtr_sta",
+    "shortDesc":        "ml_mtr_sta",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_flt_msg_err1",
+    "shortDesc":        "ml_flt_msg_err1",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_flt_msg_err2",
+    "shortDesc":        "ml_flt_msg_err2",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_flt_msg_warn1",
+    "shortDesc":        "ml_flt_msg_warn1",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_flt_msg_warn2",
+    "shortDesc":        "ml_flt_msg_warn2",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_mtr_curr_real",
+    "shortDesc":        "ml_mtr_curr_real",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_temp",
+    "shortDesc":        "ml_temp",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_mtr_rpm_real",
+    "shortDesc":        "ml_mtr_rpm_real",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "ml_mtr_rot_real",
+    "shortDesc":        "ml_mtr_rot_real",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "br_mtr_sta",
+    "shortDesc":        "br_mtr_sta",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "br_flt_msg",
+    "shortDesc":        "br_flt_msg",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "br_mtr_curr_real",
+    "shortDesc":        "br_mtr_curr_real",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "br_temp",
+    "shortDesc":        "br_temp",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "br_mtr_rpm",
+    "shortDesc":        "br_mtr_rpm",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "br_mtr_rot_sta",
+    "shortDesc":        "br_mtr_rot_sta",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "bl_mtr_sta",
+    "shortDesc":        "bl_mtr_sta",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "bl_flt_msg",
+    "shortDesc":        "bl_flt_msg",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "bl_mtr_curr_real",
+    "shortDesc":        "bl_mtr_curr_real",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "bl_temp",
+    "shortDesc":        "bl_temp",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "bl_mtr_rpm",
+    "shortDesc":        "bl_mtr_rpm",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "bl_mtr_rot_sta",
+    "shortDesc":        "bl_mtr_rot_sta",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "sr_str_rpm",
+    "shortDesc":        "sr_str_rpm",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "sr_str_ang",
+    "shortDesc":        "sr_str_ang",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "sl_str_rpm",
+    "shortDesc":        "sl_str_rpm",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "sl_str_ang",
+    "shortDesc":        "sl_str_ang",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "batt400vdc",
+    "shortDesc":        "batt400vdc",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "batt24vdc_1",
+    "shortDesc":        "batt24vdc_1",
+    "type":             "int16",
+    "default":              null
+},
+{
+    "name":             "batt24vdc_2",
+    "shortDesc":        "batt24vdc_2",
+    "type":             "int16",
+    "default":              null
+}
+]
+}
