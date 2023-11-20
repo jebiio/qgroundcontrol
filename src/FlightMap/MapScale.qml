@@ -161,7 +161,7 @@ Item {
         anchors.top:        scaleText.bottom
         anchors.leftMargin: buttonsOnLeft && (_zoomButtonsVisible || terrainButtonVisible) ? ScreenTools.defaultFontPixelWidth / 2 : 0
         anchors.left:       buttonsOnLeft ?
-                                (_zoomButtonsVisible ? tidalDeleteButton.right : (terrainButtonVisible ? terrainButton.right : parent.left)) :
+                                (_zoomButtonsVisible ? centerButton.right : (terrainButtonVisible ? terrainButton.right : parent.left)) :
                                 parent.left
         width:              2
         height:             ScreenTools.defaultFontPixelHeight
@@ -248,7 +248,7 @@ Item {
         text:               qsTr("Tidal")
         width:              height
         opacity:            0.75
-        visible:            _zoomButtonsVisible
+        visible:            _activeVehicle && !buttonsOnLeft
         checked:            _activeVehicle.krisoTidalEnabled
 
         property string buttonText: _activeVehicle.krisoTidalEnabled ? qsTr("Tidal") : qsTr("Tidal Off")
@@ -275,7 +275,7 @@ Item {
         text:               qsTr("Delete")
         width:              height
         opacity:            0.75
-        visible:            _zoomButtonsVisible
+        visible:            _activeVehicle && !buttonsOnLeft
         onClicked:          _activeVehicle.clearKrisoTidalRange();
     }
 
