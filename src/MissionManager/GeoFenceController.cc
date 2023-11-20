@@ -490,6 +490,33 @@ void GeoFenceController::clearAllInteractive(void)
     }
 }
 
+
+void GeoFenceController::updateCircle(QGeoCoordinate topLeft, QGeoCoordinate bottomRight)
+{
+    // update circle[0] with new coordinates
+
+    QGeoCoordinate topRight(topLeft.latitude(), bottomRight.longitude());
+    QGeoCoordinate bottomLeft(bottomRight.latitude(), topLeft.longitude());
+
+    // Initial radius is inset to take 3/4s of viewport and max of 1500 meters
+    double halfWidthMeters = topLeft.distanceTo(topRight) / 2.0;
+    double halfHeightMeters = topLeft.distanceTo(bottomLeft) / 2.0;
+    double radius = qMin(qMin(halfWidthMeters, halfHeightMeters) * 0.75, 1500.0);
+
+    QGeoCoordinate centerLeftEdge = topLeft.atDistanceAndAzimuth(halfHeightMeters, 180);
+    QGeoCoordinate centerTopEdge = topLeft.atDistanceAndAzimuth(halfWidthMeters, 90);
+    QGeoCoordinate center(centerLeftEdge.latitude(), centerTopEdge.longitude());
+
+    QGCFenceCircle* circle = new QGCFenceCircle(center, radius, true /* inclusion */, this);
+    _circles.clearAndDeleteContents();
+    _circles.insert(0, circle);
+
+    clearAllInteractive();
+    circle->setInteractive(true);
+
+}
+
+
 bool GeoFenceController::supported(void) const
 {
     return (_managerVehicle->capabilityBits() & MAV_PROTOCOL_CAPABILITY_MISSION_FENCE) && (_managerVehicle->maxProtoVersion() >= 200);

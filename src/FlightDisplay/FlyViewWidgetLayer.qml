@@ -29,6 +29,7 @@ import QGroundControl.FlightMap     1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
+import QGroundControl.FactControls          1.0
 
 // This is the ui overlay layer for the widgets/tools for Fly View
 Item {
@@ -1034,6 +1035,24 @@ Item {
             }
 
             RowLayout {
+                Text {
+                    text: "허용반경"
+                    color: "black"
+                    Layout.preferredWidth: 50
+                }
+                Repeater {
+                    model: _geoFenceController.circles
+
+                    FactTextField {
+                        fact:               object.radius
+                        Layout.fillWidth:   true
+                        Layout.alignment:   Qt.AlignHCenter
+                    }
+                }
+
+            }
+
+            RowLayout {
                 
                 Button {
                     text: _activeVehicle.fixedDPCoordinateEnabled ? "좌표고정" : "좌표선택"
@@ -1049,6 +1068,7 @@ Item {
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
                         _activeVehicle.isKrisoDPClickableLayer = true;
+                        _geoFenceController.deleteCircle(0);
                     }
                 }
 

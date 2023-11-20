@@ -59,6 +59,8 @@ public:
     /// Clears the interactive bit from all fence items
     Q_INVOKABLE void clearAllInteractive(void);
 
+    Q_INVOKABLE void updateCircle(QGeoCoordinate topLeft, QGeoCoordinate bottomRight);
+
     double  paramCircularFence  (void);
     Fact*   breachReturnAltitude(void) { return &_breachReturnAltitudeFact; }
 

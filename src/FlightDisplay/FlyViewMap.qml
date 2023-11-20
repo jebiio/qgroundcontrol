@@ -496,10 +496,11 @@ FlightMap {
     }
 
     GeoFenceMapVisuals {
+        id :                    geoFenceMapVisuals
         map:                    _root
         myGeoFenceController:   _geoFenceController
-        interactive:            false
-        planView:               false
+        interactive:            _activeVehicle.fixedDPCoordinateEnabled
+        planView:               true
         homePosition:           _activeVehicle && _activeVehicle.homePosition.isValid ? _activeVehicle.homePosition :  QtPositioning.coordinate()
     }
 
@@ -737,12 +738,21 @@ FlightMap {
             clickMenu.coord = clickCoord;
 
             if (_activeVehicle && !globals.guidedControllerFlyView.guidedUIVisible) {
-
-                if(_activeVehicle.fixedDPCoordinateEnabled){
+                if (_activeVehicle.fixedDPCoordinateEnabled) {
                     gotoLocationItem.show(clickMenu.coord);
                     _activeVehicle.kriso_dpClickedLocation(clickMenu.coord);
+
+                    // 선택한 좌표를 중심으로 반지름 30m인 원을 그리기
+                    var radius = 30; // 반지름 30m
+
+                    var rect = Qt.rect(mouse.x - radius, mouse.y - radius, radius * 2, radius * 2);
+                    var topLeftCoord = _root.toCoordinate(Qt.point(rect.x, rect.y), false /* clipToViewPort */);
+                    var bottomRightCoord = _root.toCoordinate(Qt.point(rect.x + rect.width, rect.y + rect.height), false /* clipToViewPort */);
+
+    
+                    _geoFenceController.updateCircle(topLeftCoord, bottomRightCoord);
                     
-                }else if(_activeVehicle.krisoTidalEnabled){
+                } else if (_activeVehicle.krisoTidalEnabled) {
                     _activeVehicle.insertKrisoTidalRange(clickMenu.coord);
                 }
             }
