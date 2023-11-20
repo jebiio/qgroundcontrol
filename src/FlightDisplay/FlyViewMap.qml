@@ -340,6 +340,7 @@ FlightMap {
     }
 
     MapItemView {
+        id : obstacleItem
         model: _activeVehicle ? _activeVehicle.aisCoordinateList : 0 
         delegate: MapQuickItem {
             id: itemIndicator
@@ -350,7 +351,7 @@ FlightMap {
                 height: 30
                 Image {
                     id: obstacle
-                    source: "/qmlimages/sos.svg" // 사용하려는 삼각형 이미지의 경로를 지정하세요
+                    source: "/qmlimages/sos.svg" 
                     width: parent.width
                     height: parent.height
                 }
@@ -361,9 +362,30 @@ FlightMap {
                     anchors.top: obstacle.bottom
                     anchors.horizontalCenter: obstacle.horizontalCenter
                 }
+
+                Item {
+                    id: lineItem
+                    width: 5 
+                    height: obstacle.height 
+                    anchors.bottom: obstacle.top
+                    anchors.horizontalCenter: obstacle.horizontalCenter
+
+                    Rectangle {
+                        width: lineItem.width * 0.4
+                        height: lineItem.height
+                        color: "red" 
+                        transform: Rotation {
+                            origin.x: lineItem.width / 2
+                            origin.y: lineItem.height / 2
+                            angle: 0  // 회전각 (선수각) 표기 
+                        }
+                    }
+                } 
             }
         }
     }
+
+  
 
 
     // Add the vehicles to the map
