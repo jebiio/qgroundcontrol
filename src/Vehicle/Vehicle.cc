@@ -59,6 +59,14 @@
 #include "QmlObjectListModel.h"
 #include "MissionSettingsItem.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <cstring>
+#pragma pack(1) 
 
 #if defined(QGC_AIRMAP_ENABLED)
 #include "AirspaceVehicleManager.h"
@@ -69,6 +77,13 @@ QGC_LOGGING_CATEGORY(VehicleLog, "VehicleLog")
 #define UPDATE_TIMER 50
 #define DEFAULT_LAT  38.965767f
 #define DEFAULT_LON -120.083923f
+
+typedef float float32;
+typedef double float64;
+typedef unsigned char uint8;
+
+#define SERVER_PORT 5000
+#define BUFFER_SIZE sizeof(WaypointControl)
 
 const QString guided_mode_not_supported_by_vehicle = QObject::tr("Guided mode not supported by Vehicle.");
 
@@ -123,6 +138,22 @@ const char* Vehicle::_krisoDPtoVCCFactGroupName =       "krisoDPtoVCC";
 const char* Vehicle::_krisoWTtoVCCFactGroupName =       "krisoWTtoVCC";
 const char* Vehicle::_krisoCKtoVCCFactGroupName =       "krisoCKtoVCC";
 const char* Vehicle::_krisoPLCtoVCCFactGroupName =      "krisoPLCtoVCC";
+
+struct Waypoint {
+    float64 lat;
+    float64 lon;
+    float32 spd_cmd;
+    float32 acceptance_radius;
+};
+
+struct WaypointControl {
+    Waypoint global_path[100];
+    float32 nav_surge_pgain;
+    float32 nav_surge_dgain;
+    float32 nav_yaw_pgain;
+    float32 nav_yaw_dgain;
+    uint8   count;
+};
 
 // Standard connected vehicle
 Vehicle::Vehicle(LinkInterface*             link,
@@ -2240,10 +2271,10 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     _visualItems = visualItems;
 
     qDebug() <<_visualItems->count();
-    double lat[5] = {};
-    double lon[5] = {};
-    float speedValues[5] = {};
-    float acceptRadiValues[5] = {};
+    double lat[100] = {};
+    double lon[100] = {};
+    float speedValues[100] = {};
+    float acceptRadiValues[100] = {};
     float navSurgePgain = 0.0;         
     float navSurgeDgain = 0.0;     
     float navYawPgain = 0.0; 
@@ -2251,6 +2282,8 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     int missionItem_count = _visualItems->count() -1 ;
 
     //  qDebug() << "visual item count :  " << missionItem_count ; 
+
+    WaypointControl data;
 
     MissionSettingsItem* settingsItem = visualItems->value<MissionSettingsItem*>(0);
     
@@ -2274,6 +2307,12 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
             acceptRadiValues[i-1] = acceptRadi;
             lat[i-1] = item->coordinate().latitude();
             lon[i-1] = item->coordinate().longitude();
+
+            data.global_path[i-1].lat = item->coordinate().latitude();
+            data.global_path[i-1].lon = item->coordinate().longitude();
+            data.global_path[i-1].spd_cmd = speed;
+            data.global_path[i-1].acceptance_radius = acceptRadi;
+
             // navSurgePgain =item->krisoNavSurgePgain()->rawValue().toDouble();                     
             // navSurgeDgain =item->krisoNavSurgeDgain()->rawValue().toDouble();         
             // navYawPgain =  item->krisoNavYawPgain()->rawValue().toDouble(); 
@@ -2289,6 +2328,34 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
         }
    }
     // uint64_t time_usec = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+    int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sockfd < 0) {
+        perror("socket");
+        exit(1);
+    }
+    
+    struct sockaddr_in serverAddr;
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // 서버의 실제 IP 주소로 변경
+    serverAddr.sin_port = htons(SERVER_PORT);
+
+    data.nav_surge_pgain = navSurgePgain;
+    data.nav_surge_dgain = navSurgeDgain;
+    data.nav_yaw_pgain = navYawPgain;
+    data.nav_yaw_dgain = navYawDgain;
+    data.count = missionItem_count;
+
+    char buffer[BUFFER_SIZE];
+    memcpy(buffer, &data, BUFFER_SIZE);
+
+    int bytesSent = sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+    if (bytesSent < 0) {
+        perror("sendto");
+        exit(1);
+    }
+
+    close(sockfd);
 
 
     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
