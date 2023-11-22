@@ -38,6 +38,18 @@
     "type":             "float",
     "decimalPlaces":        2,
     "default":              4.0
+},
+{
+    "name":             "wt_sender_ip",
+    "shortDesc": "server ip",
+    "type":             "string",
+    "default":              "127.0.0.1"
+},
+{
+    "name":             "wt_sender_port",
+    "shortDesc": "port num",
+    "type":             "int16",
+    "default":            5000
 }
 ]
 }

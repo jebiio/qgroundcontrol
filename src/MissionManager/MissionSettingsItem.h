@@ -33,6 +33,8 @@ public:
     Q_PROPERTY(Fact*            krisoNavSurgeDgain      READ krisoNavSurgeDgain                                 CONSTANT)
     Q_PROPERTY(Fact*            krisoNavYawPgain        READ krisoNavYawPgain                                   CONSTANT)
     Q_PROPERTY(Fact*            krisoNavYawDgain        READ krisoNavYawDgain                                   CONSTANT)
+    Q_PROPERTY(Fact*            krisoWTSenderIP         READ krisoWTSenderIP                                    CONSTANT)
+    Q_PROPERTY(Fact*            krisoWTSenderPort       READ krisoWTSenderPort                                  CONSTANT)
     Q_PROPERTY(QObject* cameraSection               READ cameraSection                                          CONSTANT)
     Q_PROPERTY(QObject* speedSection                READ speedSection                                           CONSTANT)
 
@@ -40,7 +42,9 @@ public:
     Fact*           krisoNavSurgePgain  (void) {return & _krisoNavSurgePgainFact;}
     Fact*           krisoNavSurgeDgain  (void) {return & _krisoNavSurgeDgainFact;}
     Fact*           krisoNavYawPgain    (void) {return & _krisoNavYawPgainFact;}
-    Fact*           krisoNavYawDgain   (void) {return & _krisoNavYawDgainFact;}
+    Fact*           krisoNavYawDgain    (void) {return & _krisoNavYawDgainFact;}
+    Fact*           krisoWTSenderIP     (void) {return & _krisoWTSenderIPFact;}
+    Fact*           krisoWTSenderPort   (void) {return & _krisoWTSenderPortFact;}
     
     CameraSection*  cameraSection               (void) { return &_cameraSection; }
     SpeedSection*   speedSection                (void) { return &_speedSection; }
@@ -117,6 +121,9 @@ private slots:
     void _krisoNavSurgeDgainChanged             (void);
     void _krisoNavYawPgainChanged               (void);
     void _krisoNavYawDgainChanged               (void);
+    void _krisoWTSenderIPChanged                (void);
+    void _krisoWTSenderPortChanged             (void);
+
 private:
     Vehicle*        _managerVehicle =                   nullptr;
     QGeoCoordinate  _plannedHomePositionCoordinate;     // Does not include altitude
@@ -125,6 +132,8 @@ private:
     Fact            _krisoNavSurgeDgainFact;
     Fact            _krisoNavYawPgainFact;
     Fact            _krisoNavYawDgainFact;
+    Fact            _krisoWTSenderIPFact;
+    Fact            _krisoWTSenderPortFact;
     int             _sequenceNumber =                   0;
     bool            _plannedHomePositionFromVehicle =   false;
     bool            _plannedHomePositionMovedByUser =   false;
@@ -138,6 +147,8 @@ private:
     static const char* _krisoNavSurgeDgainName;
     static const char* _krisoNavYawPgainName;
     static const char* _krisoNavYawDgainName;
+    static const char* _krisoWTSenderIPName;
+    static const char* _krisoWTSenderPortName;
 
     // static FactMetaData*    _krisoNavSurgePgainMetaData;
     // static FactMetaData*    _krisoNavSurgeDgainMetaData;

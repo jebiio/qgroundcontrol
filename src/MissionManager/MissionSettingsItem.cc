@@ -26,6 +26,8 @@ const char* MissionSettingsItem::_krisoNavSurgePgainName = "nav_surge_pgain";
 const char* MissionSettingsItem::_krisoNavSurgeDgainName = "nav_surge_dgain";
 const char* MissionSettingsItem::_krisoNavYawPgainName = "nav_yaw_pgain";
 const char* MissionSettingsItem::_krisoNavYawDgainName = "nav_yaw_dgain";
+const char* MissionSettingsItem::_krisoWTSenderIPName = "wt_sender_ip";
+const char* MissionSettingsItem::_krisoWTSenderPortName = "wt_sender_port";
 
 QMap<QString, FactMetaData*> MissionSettingsItem::_metaDataMap;
 
@@ -38,6 +40,8 @@ MissionSettingsItem::MissionSettingsItem(PlanMasterController* masterController,
     , _krisoNavSurgeDgainFact           (0, _krisoNavSurgeDgainName,   FactMetaData::valueTypeFloat)
     , _krisoNavYawPgainFact             (0, _krisoNavYawPgainName,     FactMetaData::valueTypeFloat)
     , _krisoNavYawDgainFact             (0, _krisoNavYawDgainName,    FactMetaData::valueTypeFloat)
+    , _krisoWTSenderIPFact              (0, _krisoWTSenderIPName,    FactMetaData::valueTypeString)
+    , _krisoWTSenderPortFact            (0, _krisoWTSenderPortName,    FactMetaData::valueTypeInt16)
     , _cameraSection                    (masterController)
     , _speedSection                     (masterController)
 {
@@ -54,6 +58,8 @@ MissionSettingsItem::MissionSettingsItem(PlanMasterController* masterController,
     _krisoNavSurgeDgainFact.setMetaData    (_metaDataMap[_krisoNavSurgeDgainName]);
     _krisoNavYawPgainFact.setMetaData      (_metaDataMap[_krisoNavYawPgainName]);
     _krisoNavYawDgainFact.setMetaData      (_metaDataMap[_krisoNavYawDgainName]);
+    _krisoWTSenderIPFact.setMetaData       (_metaDataMap[_krisoWTSenderIPName]);
+    _krisoWTSenderPortFact.setMetaData     (_metaDataMap[_krisoWTSenderPortName]);
 
     _plannedHomePositionAltitudeFact.setRawValue    (_plannedHomePositionAltitudeFact.rawDefaultValue());
 
@@ -61,6 +67,8 @@ MissionSettingsItem::MissionSettingsItem(PlanMasterController* masterController,
     _krisoNavSurgeDgainFact.setRawValue    (_krisoNavSurgeDgainFact.rawDefaultValue());
     _krisoNavYawPgainFact.setRawValue      (_krisoNavYawPgainFact.rawDefaultValue());
     _krisoNavYawDgainFact.setRawValue      (_krisoNavYawDgainFact.rawDefaultValue());
+    _krisoWTSenderIPFact.setRawValue       (_krisoWTSenderIPFact.rawDefaultValue());
+    _krisoWTSenderPortFact.setRawValue     (_krisoWTSenderPortFact.rawDefaultValue());
 
 
     
@@ -89,6 +97,8 @@ MissionSettingsItem::MissionSettingsItem(PlanMasterController* masterController,
     connect(&_krisoNavSurgeDgainFact,           &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoNavSurgeDgainChanged);
     connect(&_krisoNavYawPgainFact,             &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoNavYawPgainChanged);
     connect(&_krisoNavYawDgainFact,             &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoNavYawDgainChanged);
+    connect(&_krisoWTSenderIPFact,              &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoWTSenderIPChanged);
+    connect(&_krisoWTSenderPortFact,            &Fact::rawValueChanged,                    this, &MissionSettingsItem::_krisoWTSenderPortChanged);
 
     connect(_managerVehicle, &Vehicle::homePositionChanged, this, &MissionSettingsItem::_updateHomePosition);
     _updateHomePosition(_managerVehicle->homePosition());
@@ -349,4 +359,16 @@ void MissionSettingsItem::_krisoNavYawDgainChanged(void)
 {
     // _missionItem._param8Fact.setRawValue(_krisoNavYawDgainFact.rawValue());
     qDebug() <<"NavYawDgain : " << _krisoNavYawDgainFact.rawValue().toFloat();
+}
+
+void MissionSettingsItem::_krisoWTSenderIPChanged(void)
+{
+    // _missionItem._param8Fact.setRawValue(_krisoNavYawDgainFact.rawValue());
+    qDebug() <<"WTSenderIP : " << _krisoWTSenderIPFact.rawValue().toString();
+}
+
+void MissionSettingsItem::_krisoWTSenderPortChanged(void)
+{
+    // _missionItem._param8Fact.setRawValue(_krisoNavYawDgainFact.rawValue());
+    qDebug() <<"WTSenderPort : " << _krisoWTSenderPortFact.rawValue().toInt();
 }

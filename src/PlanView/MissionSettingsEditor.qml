@@ -99,6 +99,24 @@ Rectangle {
         //     }
         // }
 
+
+        QGCLabel {
+            text: qsTr("WT IP")        
+        }
+
+        FactTextField {
+            fact:  missionItem.krisoWTSenderIP
+            width: parent.width 
+        }
+
+        QGCLabel {
+            text: qsTr("WT Port") 
+        }
+        FactTextField {
+            fact:  missionItem.krisoWTSenderPort
+            width: parent.width 
+        }
+
         QGCLabel {
             text: qsTr("nav_surge_pgain")
         }

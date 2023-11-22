@@ -2281,6 +2281,9 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     float navYawDgain = 0.0;   
     int missionItem_count = _visualItems->count() -1 ;
 
+    QString wt_sender_ip = "";
+    int wt_sender_port = 0;
+
     //  qDebug() << "visual item count :  " << missionItem_count ; 
 
     WaypointControl data;
@@ -2292,6 +2295,8 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
         navSurgeDgain = settingsItem->krisoNavSurgeDgain()->rawValue().toFloat(); 
         navYawPgain = settingsItem->krisoNavYawPgain()->rawValue().toFloat(); 
         navYawDgain = settingsItem->krisoNavYawDgain()->rawValue().toFloat(); 
+        wt_sender_ip = settingsItem->krisoWTSenderIP()->rawValue().toString();
+        wt_sender_port = settingsItem->krisoWTSenderPort()->rawValue().toInt();
     }
    for (int i = 1; i < _visualItems->count(); i++) {
         double speed = 0.0;
@@ -2337,8 +2342,11 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // 서버의 실제 IP 주소로 변경
-    serverAddr.sin_port = htons(SERVER_PORT);
+    serverAddr.sin_addr.s_addr = inet_addr(wt_sender_ip.toStdString().c_str());
+    serverAddr.sin_port = htons(wt_sender_port);
+
+    //  qDebug() << "ip :  " << wt_sender_ip ; 
+    //  qDebug() << "port :  " << wt_sender_port   ; 
 
     data.nav_surge_pgain = navSurgePgain;
     data.nav_surge_dgain = navSurgeDgain;
