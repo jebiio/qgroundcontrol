@@ -176,8 +176,8 @@ KrisoPLCtoVCCFactGroup::KrisoPLCtoVCCFactGroup(QObject* parent)
 void KrisoPLCtoVCCFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t& message)
 {
     switch (message.msgid) {
-    case MAVLINK_MSG_ID_KRISO_AIS_STATUS:
-        // _handleKRISOPlcToVcc(message);
+    case MAVLINK_MSG_ID_KRISO_PLC_TO_VCC:
+        _handleKRISOPlcToVcc(message);
         break;
     case MAVLINK_MSG_ID_HIGH_LATENCY:
         // _handleHighLatency(message);
@@ -192,28 +192,45 @@ void KrisoPLCtoVCCFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_messa
 
 void KrisoPLCtoVCCFactGroup::_handleKRISOPlcToVcc(mavlink_message_t& message)
 {
-    mavlink_kriso_ais_status_t krisoAISStatus;
-    mavlink_msg_kriso_ais_status_decode(&message, &krisoAISStatus);
 
-    // lon()->setRawValue           (krisoAISStatus.lon);
-    // lat()->setRawValue           (krisoAISStatus.lat);
-    // msg_type()->setRawValue      (krisoAISStatus.msg_type);
-    // repeat()->setRawValue        (krisoAISStatus.repeat);
-    // mmsi()->setRawValue          (krisoAISStatus.mmsi);
-    // reserved_1()->setRawValue    (krisoAISStatus.reserved_1);
-    // speed()->setRawValue         (krisoAISStatus.speed);
-    // course()->setRawValue        (krisoAISStatus.course);
-    // heading()->setRawValue       (krisoAISStatus.heading);
-    // second()->setRawValue        (krisoAISStatus.second);
-    // reserved_2()->setRawValue    (krisoAISStatus.reserved_2);
-    // radio()->setRawValue         (krisoAISStatus.radio);
-    // accuracy()->setRawValue      (krisoAISStatus.accuracy);
-    // cs()->setRawValue            (krisoAISStatus.cs);
-    // display()->setRawValue       (krisoAISStatus.display);
-    // dsc()->setRawValue           (krisoAISStatus.dsc);
-    // band()->setRawValue          (krisoAISStatus.band);
-    // msg22()->setRawValue         (krisoAISStatus.msg22);
-    // assigned()->setRawValue      (krisoAISStatus.assigned);
-    // raim()->setRawValue          (krisoAISStatus.raim);
-    
+    mavlink_kriso_plc_to_vcc_t krisoPLCtoVCC;
+    mavlink_msg_kriso_plc_to_vcc_decode(&message, &krisoPLCtoVCC);
+
+    mr_mtr_sta()->setRawValue(krisoPLCtoVCC.mr_mtr_sta);
+    mr_flt_msg_err1()->setRawValue(krisoPLCtoVCC.mr_flt_msg_err1);
+    mr_flt_msg_err2()->setRawValue(krisoPLCtoVCC.mr_flt_msg_err2);
+    mr_flt_msg_warn1()->setRawValue(krisoPLCtoVCC.mr_flt_msg_warn1);
+    mr_flt_msg_warn2()->setRawValue(krisoPLCtoVCC.mr_flt_msg_warn2);
+    mr_mtr_curr_real()->setRawValue(krisoPLCtoVCC.mr_mtr_curr_real);
+    mr_temp()->setRawValue(krisoPLCtoVCC.mr_temp);
+    mr_mtr_rpm_real()->setRawValue(krisoPLCtoVCC.mr_mtr_rpm_real);
+    mr_mtr_rot_real()->setRawValue(krisoPLCtoVCC.mr_mtr_rot_real);
+    ml_mtr_sta()->setRawValue(krisoPLCtoVCC.ml_mtr_sta);
+    ml_flt_msg_err1()->setRawValue(krisoPLCtoVCC.ml_flt_msg_err1);
+    ml_flt_msg_err2()->setRawValue(krisoPLCtoVCC.ml_flt_msg_err2);
+    ml_flt_msg_warn1()->setRawValue(krisoPLCtoVCC.ml_flt_msg_warn1);
+    ml_flt_msg_warn2()->setRawValue(krisoPLCtoVCC.ml_flt_msg_warn2);
+    ml_mtr_curr_real()->setRawValue(krisoPLCtoVCC.ml_mtr_curr_real);
+    ml_temp()->setRawValue(krisoPLCtoVCC.ml_temp);
+    ml_mtr_rpm_real()->setRawValue(krisoPLCtoVCC.ml_mtr_rpm_real);
+    ml_mtr_rot_real()->setRawValue(krisoPLCtoVCC.ml_mtr_rot_real);
+    br_mtr_sta()->setRawValue(krisoPLCtoVCC.br_mtr_sta);
+    br_flt_msg()->setRawValue(krisoPLCtoVCC.br_flt_msg);
+    br_mtr_curr_real()->setRawValue(krisoPLCtoVCC.br_mtr_curr_real);
+    br_temp()->setRawValue(krisoPLCtoVCC.br_temp);
+    br_mtr_rpm()->setRawValue(krisoPLCtoVCC.br_mtr_rpm);
+    br_mtr_rot_sta()->setRawValue(krisoPLCtoVCC.br_mtr_rot_sta);
+    bl_mtr_sta()->setRawValue(krisoPLCtoVCC.bl_mtr_sta);
+    bl_flt_msg()->setRawValue(krisoPLCtoVCC.bl_flt_msg);
+    bl_mtr_curr_real()->setRawValue(krisoPLCtoVCC.bl_mtr_curr_real);
+    bl_temp()->setRawValue(krisoPLCtoVCC.bl_temp);
+    bl_mtr_rpm()->setRawValue(krisoPLCtoVCC.bl_mtr_rpm);
+    bl_mtr_rot_sta()->setRawValue(krisoPLCtoVCC.bl_mtr_rot_sta);
+    sr_str_rpm()->setRawValue(krisoPLCtoVCC.sr_str_rpm);
+    sr_str_ang()->setRawValue(krisoPLCtoVCC.sr_str_ang);
+    sl_str_rpm()->setRawValue(krisoPLCtoVCC.sl_str_rpm);
+    sl_str_ang()->setRawValue(krisoPLCtoVCC.sl_str_ang);
+    batt400vdc()->setRawValue(krisoPLCtoVCC.batt400vdc);
+    batt24vdc_1()->setRawValue(krisoPLCtoVCC.batt24vdc_1);
+    batt24vdc_2()->setRawValue(krisoPLCtoVCC.batt24vdc_2);
 }
