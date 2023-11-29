@@ -238,41 +238,42 @@ Item {
         onClicked:          mapControl.center = globals.activeVehicle.coordinate
     }
 
-    QGCButton {
-        id:                 tidalAddButton
-        checkable:          true
-        anchors.top:        scaleText.top
-        anchors.bottom:     rightEnd.bottom
+    Button {
+        id: test
+        anchors.top: scaleText.top
+        anchors.bottom: rightEnd.bottom
         anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
-        anchors.left:       centerButton.right
-        text:               qsTr("Tidal")
-        width:              height
-        opacity:            0.75
+        anchors.left:  centerButton.right
         visible:            _activeVehicle && !buttonsOnLeft
-        checked:            _activeVehicle.krisoTidalEnabled
-
-        property string buttonText: _activeVehicle.krisoTidalEnabled ? qsTr("Tidal") : qsTr("Tidal Off")
+        opacity:            0.75
+        text: _activeVehicle.krisoTidalEnabled ? qsTr("완료") : qsTr("수심가능영역선택")
 
         onClicked: {
-            // Toggle the checked state and update the krisoTidalEnabled property accordingly
-            tidalAddButton.checked = !tidalAddButton.checked;
-            _activeVehicle.krisoTidalEnabled = tidalAddButton.checked;
-
-            // Update the button text based on the checked state
-            buttonText = tidalAddButton.checked ? qsTr("hello") : qsTr("Tidal Off");
+            // console.log("Button Clicked");
+            _activeVehicle.krisoTidalEnabled = !_activeVehicle.krisoTidalEnabled;
         }
 
-        onCheckedChanged:   _activeVehicle.krisoTidalEnabled = checked
+        Connections {
+            target: _activeVehicle
+            onKrisoTidalEnabledChanged: {
+                test.checked = _activeVehicle.krisoTidalEnabled;
+            }
+        }
+
+        Component.onCompleted: {
+            _activeVehicle.krisoTidalEnabled = false;
+        }
+
     }
 
 
-    QGCButton {
+    Button {
         id:                 tidalDeleteButton
         anchors.top:        scaleText.top
         anchors.bottom:     rightEnd.bottom
         anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
-        anchors.left:       tidalAddButton.right
-        text:               qsTr("Delete")
+        anchors.left:       test.right
+        text:               qsTr("삭제")
         width:              height
         opacity:            0.75
         visible:            _activeVehicle && !buttonsOnLeft

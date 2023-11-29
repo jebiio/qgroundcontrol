@@ -786,28 +786,7 @@ Item {
                             toolStrip.allAddClickBoolsOff()
                             insertLandItemAfterCurrent()
                         }
-                    },
-                    ToolStripAction {
-                        text:               qsTr("수심영역")
-                        iconSource:         "/InstrumentValueIcons/flag.svg"
-                        enabled:            true
-                        visible:            false
-                        // dropPanelComponent: centerMapDropPanel
-                        checkable:          true
-                        checked:            _activeVehicle.krisoTidalEnabled
-                        onCheckedChanged: _activeVehicle.krisoTidalEnabled = !_activeVehicle.krisoTidalEnabled
-                    },
-                    ToolStripAction {
-                        text:               qsTr("수심영역삭제")
-                        iconSource:         "/InstrumentValueIcons/flag.svg"
-                        enabled:            true
-                        visible:            false
-                        onTriggered: {
-                            // coordinateModel.clear()
-                            _activeVehicle.clearKrisoTidalRange();
-                        }
                     }
-
                 ]
             }
 
