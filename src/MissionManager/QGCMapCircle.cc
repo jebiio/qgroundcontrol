@@ -20,6 +20,13 @@ const char* QGCMapCircle::jsonCircleKey =   "circle";
 const char* QGCMapCircle::_jsonCenterKey =  "center";
 const char* QGCMapCircle::_jsonRadiusKey =  "radius";
 const char* QGCMapCircle::_radiusFactName = "Radius";
+const char* QGCMapCircle::_jsonCenterLatKey = "centerLat";
+const char* QGCMapCircle::_jsonCenterLonKey = "centerLon";
+//center latitude, longitude Fact added to the FactMetaDataMap
+
+
+const char* QGCMapCircle::_centerLatFactName = "CenterLat";
+const char* QGCMapCircle::_centerLonFactName = "CenterLon";
 
 QGCMapCircle::QGCMapCircle(QObject* parent)
     : QObject           (parent)
@@ -36,11 +43,16 @@ QGCMapCircle::QGCMapCircle(const QGeoCoordinate& center, double radius, bool sho
     , _dirty            (false)
     , _center           (center)
     , _radius           (FactSystem::defaultComponentId, _radiusFactName, FactMetaData::valueTypeDouble)
+    , _centerLat        (FactSystem::defaultComponentId, _centerLatFactName, FactMetaData::valueTypeDouble)
+    , _centerLon        (FactSystem::defaultComponentId, _centerLonFactName, FactMetaData::valueTypeDouble)
     , _interactive      (false)
     , _showRotation     (showRotation)
     , _clockwiseRotation(clockwiseRotation)
+    
 {
     _radius.setRawValue(radius);
+    _centerLat.setRawValue(center.latitude());
+    _centerLon.setRawValue(center.longitude());
     _init();
 }
 
@@ -49,11 +61,15 @@ QGCMapCircle::QGCMapCircle(const QGCMapCircle& other, QObject* parent)
     , _dirty            (false)
     , _center           (other._center)
     , _radius           (FactSystem::defaultComponentId, _radiusFactName, FactMetaData::valueTypeDouble)
+    , _centerLat        (FactSystem::defaultComponentId, _centerLatFactName, FactMetaData::valueTypeDouble)
+    , _centerLon        (FactSystem::defaultComponentId, _centerLonFactName, FactMetaData::valueTypeDouble)
     , _interactive      (false)
     , _showRotation     (other._showRotation)
     , _clockwiseRotation(other._clockwiseRotation)
 {
     _radius.setRawValue(other._radius.rawValue());
+    _centerLat.setRawValue(other._centerLat.rawValue());
+    _centerLon.setRawValue(other._centerLon.rawValue());
     _init();
 }
 
@@ -61,6 +77,8 @@ const QGCMapCircle& QGCMapCircle::operator=(const QGCMapCircle& other)
 {
     setCenter(other._center);
     _radius.setRawValue(other._radius.rawValue());
+    _centerLat.setRawValue(other._centerLat.rawValue());
+    _centerLon.setRawValue(other._centerLon.rawValue());
     setDirty(true);
 
     return *this;
@@ -70,9 +88,13 @@ void QGCMapCircle::_init(void)
 {
     _nameToMetaDataMap = FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/QGCMapCircle.Facts.json"), this);
     _radius.setMetaData(_nameToMetaDataMap[_radiusFactName]);
+    _centerLat.setMetaData(_nameToMetaDataMap[_centerLatFactName]);
+    _centerLon.setMetaData(_nameToMetaDataMap[_centerLonFactName]);
 
     connect(this,       &QGCMapCircle::centerChanged,   this, &QGCMapCircle::_setDirty);
     connect(&_radius,   &Fact::rawValueChanged,         this, &QGCMapCircle::_setDirty);
+    connect(&_centerLat, &Fact::rawValueChanged,         this, &QGCMapCircle::_setDirty);
+    connect(&_centerLon, &Fact::rawValueChanged,         this, &QGCMapCircle::_setDirty);
 }
 
 void QGCMapCircle::setDirty(bool dirty)
@@ -91,6 +113,8 @@ void QGCMapCircle::saveToJson(QJsonObject& json)
     JsonHelper::saveGeoCoordinate(_center, false /* writeAltitude*/, jsonValue);
     circleObject.insert(_jsonCenterKey, jsonValue);
     circleObject.insert(_jsonRadiusKey, _radius.rawValue().toDouble());
+    circleObject.insert(_jsonCenterLatKey, _centerLat.rawValue().toDouble());
+    circleObject.insert(_jsonCenterLonKey, _centerLon.rawValue().toDouble());
 
     json.insert(jsonCircleKey, circleObject);
 }
@@ -111,6 +135,8 @@ bool QGCMapCircle::loadFromJson(const QJsonObject& json, QString& errorString)
     QList<JsonHelper::KeyValidateInfo> circleObjectKeyInfo = {
         { _jsonCenterKey, QJsonValue::Array,    true },
         { _jsonRadiusKey, QJsonValue::Double,   true },
+        { _jsonCenterLatKey, QJsonValue::Double, true },
+        { _jsonCenterLonKey, QJsonValue::Double, true },
     };
     if (!JsonHelper::validateKeys(circleObject, circleObjectKeyInfo, errorString)) {
         return false;
@@ -122,6 +148,8 @@ bool QGCMapCircle::loadFromJson(const QJsonObject& json, QString& errorString)
     }
     setCenter(center);
     _radius.setRawValue(circleObject[_jsonRadiusKey].toDouble());
+    _centerLat.setRawValue(circleObject[_jsonCenterLatKey].toDouble());
+    _centerLon.setRawValue(circleObject[_jsonCenterLonKey].toDouble());
 
     _interactive =          false;
     _showRotation =         false;
@@ -134,6 +162,8 @@ void QGCMapCircle::setCenter(QGeoCoordinate newCenter)
 {
     if (newCenter != _center) {
         _center = newCenter;
+        _centerLat.setRawValue(newCenter.latitude());
+        _centerLon.setRawValue(newCenter.longitude());
         setDirty(true);
         emit centerChanged(newCenter);
     }

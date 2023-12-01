@@ -26,6 +26,9 @@ import QGroundControl.Vehicle       1.0
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
+import QGroundControl.FactSystem    1.0
+import QGroundControl.FactControls  1.0
+
 FlightMap {
     id:                         _root
     allowGCSLocationCenter:     true
@@ -561,6 +564,7 @@ FlightMap {
         z:              QGroundControl.zOrderMapItems
         anchorPoint.x:  sourceItem.anchorPointX
         anchorPoint.y:  sourceItem.anchorPointY
+        // coordinate:     QtPositioning.coordinate(dp_lat.value, dp_lon.value)
         sourceItem: MissionItemIndexLabel {
             checked:    true
             index:      -1

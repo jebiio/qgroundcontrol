@@ -246,7 +246,7 @@ Item {
         anchors.left:  centerButton.right
         visible:            _activeVehicle && !buttonsOnLeft
         opacity:            0.75
-        text: _activeVehicle.krisoTidalEnabled ? qsTr("완료") : qsTr("수심가능영역선택")
+        text: _activeVehicle.krisoTidalEnabled ? qsTr("선택완료") : qsTr("참조점선택")
 
         onClicked: {
             // console.log("Button Clicked");
