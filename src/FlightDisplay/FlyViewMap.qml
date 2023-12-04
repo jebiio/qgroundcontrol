@@ -326,7 +326,7 @@ FlightMap {
                 ColorOverlay {
                     anchors.fill:       obstacle
                     source:             obstacle
-                    color:              "#33ff33"
+                    // color:              "#33ff33"
                 }
                 // Text {
                 //     text: "jaeeun test"
