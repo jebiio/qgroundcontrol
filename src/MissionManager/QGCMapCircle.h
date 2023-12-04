@@ -36,6 +36,8 @@ public:
     Q_PROPERTY(bool             interactive         READ interactive        WRITE setInteractive        NOTIFY interactiveChanged)
     Q_PROPERTY(bool             showRotation        READ showRotation       WRITE setShowRotation       NOTIFY showRotationChanged)
     Q_PROPERTY(bool             clockwiseRotation   READ clockwiseRotation  WRITE setClockwiseRotation  NOTIFY clockwiseRotationChanged)
+    Q_PROPERTY(Fact*            centerLat           READ centerLat                                      CONSTANT)
+    Q_PROPERTY(Fact*            centerLon           READ centerLon                                      CONSTANT)
 
     /// Saves the polygon to the json object.
     ///     @param json Json object to save to
@@ -55,6 +57,8 @@ public:
     bool            interactive         (void) const { return _interactive; }
     bool            showRotation        (void) const { return _showRotation; }
     bool            clockwiseRotation   (void) const { return _clockwiseRotation; }
+    Fact*           centerLat           (void) { return &_centerLat; }
+    Fact*           centerLon           (void) { return &_centerLon; }
 
     void setDirty               (bool dirty);
     void setCenter              (QGeoCoordinate newCenter);
@@ -80,13 +84,21 @@ private:
     bool            _dirty;
     QGeoCoordinate  _center;
     Fact            _radius;
+    Fact            _centerLat;
+    Fact            _centerLon;
     bool            _interactive;
     bool            _showRotation;
     bool            _clockwiseRotation;
+
 
     QMap<QString, FactMetaData*> _nameToMetaDataMap;
 
     static const char* _jsonCenterKey;
     static const char* _jsonRadiusKey;
     static const char* _radiusFactName;
+    static const char* _jsonCenterLatKey;
+    static const char* _jsonCenterLonKey;
+    static const char* _centerLatFactName;
+    static const char* _centerLonFactName;
+
 };

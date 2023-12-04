@@ -18,6 +18,8 @@ import QtQuick.Window           2.2
 import QtQml.Models             2.1
 
 import QGroundControl               1.0
+import QGroundControl.FactSystem    1.0
+import QGroundControl.FactControls  1.0
 import QGroundControl.Controls      1.0
 import QGroundControl.Airspace      1.0
 import QGroundControl.Airmap        1.0
@@ -29,7 +31,7 @@ import QGroundControl.FlightMap     1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
-import QGroundControl.FactControls          1.0
+
 
 // This is the ui overlay layer for the widgets/tools for Fly View
 Item {
@@ -54,6 +56,7 @@ Item {
     property rect   _centerViewport:        Qt.rect(0, 0, width, height)
     property real   _rightPanelWidth:       ScreenTools.defaultFontPixelWidth * 45
     property var    _activeVehicleCoordinate:   _activeVehicle ? _activeVehicle.coordinate : QtPositioning.coordinate()
+    
 
     property int logging_status :  _activeVehicle.getFactGroup("krisoCmd").getFact("logging_status").value
 
@@ -1020,6 +1023,18 @@ Item {
                     id: dpLatInput
                     text : _activeVehicle.getFactGroup("krisoGain").getFact("lat").rawValue.toFixed(7)
                 }
+
+                Repeater {
+                    model: _geoFenceController.circles
+
+                    delegate: FactTextField {
+                        fact: object.centerLat
+                        // text: "hello"
+                        // text:  parseFloat(object.center.latitude).toFixed(7) + ", " + parseFloat(object.center.longitude).toFixed(7) 
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
+                    }
+                }
             }
 
             RowLayout {
@@ -1028,9 +1043,20 @@ Item {
                     color: "black"
                     Layout.preferredWidth: 50
                 }
-                QGCTextField {
+
+                 QGCTextField {
                     id: dpLonInput
                     text : _activeVehicle.getFactGroup("krisoGain").getFact("lon").rawValue.toFixed(7)
+                 }
+
+                Repeater {
+                    model: _geoFenceController.circles
+
+                    delegate: FactTextField {
+                        fact: object.centerLon
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
+                    }
                 }
             }
 
@@ -1043,10 +1069,11 @@ Item {
                 Repeater {
                     model: _geoFenceController.circles
 
-                    FactTextField {
-                        fact:               object.radius
-                        Layout.fillWidth:   true
-                        Layout.alignment:   Qt.AlignHCenter
+                    delegate: FactTextField {
+                        fact: object.radius
+                        // text:  parseFloat(object.center.latitude).toFixed(7) + ", " + parseFloat(object.center.longitude).toFixed(7) 
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
                     }
                 }
 
