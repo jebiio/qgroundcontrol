@@ -56,6 +56,7 @@ Item {
     property rect   _centerViewport:        Qt.rect(0, 0, width, height)
     property real   _rightPanelWidth:       ScreenTools.defaultFontPixelWidth * 45
     property var    _activeVehicleCoordinate:   _activeVehicle ? _activeVehicle.coordinate : QtPositioning.coordinate()
+    property var    _dpCount:               0
     
 
     property int logging_status :  _activeVehicle.getFactGroup("krisoCmd").getFact("logging_status").value
@@ -1019,22 +1020,42 @@ Item {
                     color: "black"
                     Layout.preferredWidth: 50
                 }
-                QGCTextField {
-                    id: dpLatInput
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("lat").rawValue.toFixed(7)
+                // QGCTextField {
+                //     id: dpLatInput
+                //     text : _activeVehicle.getFactGroup("krisoGain").getFact("lat").rawValue.toFixed(7)
+                // }
+
+                FactTextField {
+                    id: factLatTest
+                    // fact: _geoFenceController.circles.centerLon
                 }
 
-                Repeater {
-                    model: _geoFenceController.circles
+                Connections {
+                    target: _geoFenceController.circles
 
-                    delegate: FactTextField {
-                        fact: object.centerLat
-                        // text: "hello"
-                        // text:  parseFloat(object.center.latitude).toFixed(7) + ", " + parseFloat(object.center.longitude).toFixed(7) 
-                        Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignHCenter
+                    // Connect to a signal
+                    onCountChanged: {
+
+                        if( count === 1) {
+                            // factTest.text = _geoFenceController.circles.get(0).centerLon.toFixed(7)
+                            factLatTest.fact = _geoFenceController.circles.get(0).centerLat
+                            console.log("Count changed:", count) }
                     }
                 }
+
+
+
+                // Repeater {
+                //     model: _geoFenceController.circles
+
+                //     delegate: FactTextField {
+                //         fact: object.centerLat
+                //         // text: "hello"
+                //         // text:  parseFloat(object.center.latitude).toFixed(7) + ", " + parseFloat(object.center.longitude).toFixed(7) 
+                //         Layout.fillWidth: true
+                //         Layout.alignment: Qt.AlignHCenter
+                //     }
+                // }
             }
 
             RowLayout {
@@ -1044,21 +1065,34 @@ Item {
                     Layout.preferredWidth: 50
                 }
 
-                 QGCTextField {
-                    id: dpLonInput
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("lon").rawValue.toFixed(7)
-                 }
 
-                Repeater {
-                    model: _geoFenceController.circles
+                FactTextField {
+                    id: factTest
+                    // fact: _geoFenceController.circles.centerLon
+                }
 
-                    delegate: FactTextField {
-                        fact: object.centerLon
-                        Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignHCenter
+                Connections {
+                    target: _geoFenceController.circles
+
+                    // Connect to a signal
+                    onCountChanged: {
+
+                        if( count === 1) {
+                            // factTest.text = _geoFenceController.circles.get(0).centerLon.toFixed(7)
+                            factTest.fact = _geoFenceController.circles.get(0).centerLon
+                            console.log("Count changed:", count) }
                     }
                 }
+
+                // QGCTextField {
+                //     id: dpLonInput
+                //     text: _activeVehicle.getFactGroup("krisoGain").getFact("lon").rawValue.toFixed(7)
+                // }
+
             }
+
+
+
 
             RowLayout {
                 Text {
@@ -1104,7 +1138,8 @@ Item {
                     text: "현재선박좌표"
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
-                         _activeVehicle.kriso_dpClickedLocation(_activeVehicleCoordinate);
+                        _activeVehicle.kriso_dpClickedLocation(_activeVehicleCoordinate);
+                        _geoFenceController.addCircle(_activeVehicleCoordinate, 30); 
                     }
                 }
             }

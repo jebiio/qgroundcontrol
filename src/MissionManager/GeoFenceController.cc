@@ -506,6 +506,7 @@ void GeoFenceController::updateCircle(QGeoCoordinate topLeft, QGeoCoordinate bot
     QGeoCoordinate centerLeftEdge = topLeft.atDistanceAndAzimuth(halfHeightMeters, 180);
     QGeoCoordinate centerTopEdge = topLeft.atDistanceAndAzimuth(halfWidthMeters, 90);
     QGeoCoordinate center(centerLeftEdge.latitude(), centerTopEdge.longitude());
+    qDebug() << "center lat : " << center.latitude() << "center lon : " << center.longitude();
 
     QGCFenceCircle* circle = new QGCFenceCircle(center, radius, true /* inclusion */, this);
     _circles.clearAndDeleteContents();
@@ -513,8 +514,20 @@ void GeoFenceController::updateCircle(QGeoCoordinate topLeft, QGeoCoordinate bot
 
     clearAllInteractive();
     circle->setInteractive(true);
-
+    // qDebug() << "_circles count: " << _circles.count();
 }
+
+void GeoFenceController::addCircle(QGeoCoordinate center, double radius)
+{
+    QGCFenceCircle* circle = new QGCFenceCircle(center, radius, true /* inclusion */, this);
+    _circles.clearAndDeleteContents();
+    _circles.insert(0, circle);
+
+    clearAllInteractive();
+    circle->setInteractive(true);
+    // qDebug() << "_circles count: " << _circles.count();
+}
+
 
 
 bool GeoFenceController::supported(void) const

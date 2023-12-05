@@ -246,11 +246,7 @@ Item {
         anchors.left:  centerButton.right
         visible:            _activeVehicle && !buttonsOnLeft
         opacity:            0.75
-<<<<<<< HEAD
-        text: _activeVehicle.krisoTidalEnabled ? qsTr("완료") : qsTr("참조점선택")
-=======
         text: _activeVehicle.krisoTidalEnabled ? qsTr("선택완료") : qsTr("참조점선택")
->>>>>>> 2186242e6b825d5887f4df53812897341e058cc6
 
         onClicked: {
             // console.log("Button Clicked");

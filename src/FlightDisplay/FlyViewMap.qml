@@ -67,6 +67,12 @@ FlightMap {
     property double ais_lat :  _activeVehicle.getFactGroup("krisoAIS").getFact("lat").value
     property double ais_lon :  _activeVehicle.getFactGroup("krisoAIS").getFact("lon").value
 
+    
+    // property double dp_lat : _activeVehicle.getFactGroup("krisoGain").getFact("lat").value
+    // property double dp_lon : _activeVehicle.getFactGroup("krisoGain").getFact("lon").value
+    // property Fact dp_lat :  _geoFenceController.circles.get(0).centerLat
+    // property Fact dp_lon :  _geoFenceController.circles.get(0).centerLon
+
 
     function updateAirspace(reset) {
         if(_airspaceEnabled) {
@@ -564,7 +570,7 @@ FlightMap {
         z:              QGroundControl.zOrderMapItems
         anchorPoint.x:  sourceItem.anchorPointX
         anchorPoint.y:  sourceItem.anchorPointY
-        // coordinate:     QtPositioning.coordinate(dp_lat.value, dp_lon.value)
+        // coordinate:     QtPositioning.coordinate(dp_lat.rawValue, dp_lon.rawValue)
         sourceItem: MissionItemIndexLabel {
             checked:    true
             index:      -1
@@ -598,7 +604,7 @@ FlightMap {
             }
         }
 
-
+        
         function show(coord) {
             gotoLocationItem.coordinate = coord
             gotoLocationItem.visible = true
@@ -776,14 +782,28 @@ FlightMap {
                     var bottomRightCoord = _root.toCoordinate(Qt.point(rect.x + rect.width, rect.y + rect.height), false /* clipToViewPort */);
 
     
-                    _geoFenceController.updateCircle(topLeftCoord, bottomRightCoord);
-                    
+                    _geoFenceController.updateCircle(topLeftCoord, bottomRightCoord);                    
+
                 } else if (_activeVehicle.krisoTidalEnabled) {
                     _activeVehicle.insertKrisoTidalRange(clickMenu.coord);
                 }
             }
         }
-    }
+
+        Connections {
+            target: _geoFenceController.circles
+
+            // Connect to a signal
+            onCountChanged: {
+
+                if( count === 1) {
+                    // factTest.text = _geoFenceController.circles.get(0).centerLon.toFixed(7)
+                    var coordinate = _geoFenceController.circles.get(0).center
+                    gotoLocationItem.show(coordinate)
+                    console.log("Count changed:", count) }
+            }
+        }
+}
 
     // Airspace overlap support
     MapItemView {

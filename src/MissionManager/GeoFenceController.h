@@ -61,6 +61,8 @@ public:
 
     Q_INVOKABLE void updateCircle(QGeoCoordinate topLeft, QGeoCoordinate bottomRight);
 
+    Q_INVOKABLE void addCircle(QGeoCoordinate center, double radius);
+
     double  paramCircularFence  (void);
     Fact*   breachReturnAltitude(void) { return &_breachReturnAltitudeFact; }
 
