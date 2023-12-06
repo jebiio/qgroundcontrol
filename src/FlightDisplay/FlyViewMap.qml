@@ -32,7 +32,9 @@ import QGroundControl.FactControls  1.0
 FlightMap {
     id:                         _root
     allowGCSLocationCenter:     true
-    allowVehicleLocationCenter: !_keepVehicleCentered
+    // allowVehicleLocationCenter: !_keepVehicleCentered
+    allowVehicleLocationCenter: false
+
     planView:                   false
     zoomLevel:                  QGroundControl.flightMapZoom
     center:                     QGroundControl.flightMapPosition
