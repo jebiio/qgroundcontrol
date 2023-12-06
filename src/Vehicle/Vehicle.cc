@@ -67,6 +67,7 @@
 #include <unistd.h>
 #include <cstring>
 #pragma pack(1) 
+#include "WaypointData.h" 
 
 #if defined(QGC_AIRMAP_ENABLED)
 #include "AirspaceVehicleManager.h"
@@ -139,21 +140,6 @@ const char* Vehicle::_krisoWTtoVCCFactGroupName =       "krisoWTtoVCC";
 const char* Vehicle::_krisoCKtoVCCFactGroupName =       "krisoCKtoVCC";
 const char* Vehicle::_krisoPLCtoVCCFactGroupName =      "krisoPLCtoVCC";
 
-struct Waypoint {
-    float64 lat;
-    float64 lon;
-    float32 spd_cmd;
-    float32 acceptance_radius;
-};
-
-struct WaypointControl {
-    Waypoint global_path[100];
-    float32 nav_surge_pgain;
-    float32 nav_surge_dgain;
-    float32 nav_yaw_pgain;
-    float32 nav_yaw_dgain;
-    uint8   count;
-};
 
 // Standard connected vehicle
 Vehicle::Vehicle(LinkInterface*             link,
@@ -2267,7 +2253,14 @@ void Vehicle::kriso_sendHDGCommand(void)
 
 void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
 {
+    if (visualItems->count() == 0) {
+        qDebug() << "visualItems is empty";
+        return;
+    }
 
+
+    // Data 추출 
+    
     _visualItems = visualItems;
 
     qDebug() <<_visualItems->count();
@@ -2317,18 +2310,9 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
             data.global_path[i-1].lon = item->coordinate().longitude();
             data.global_path[i-1].spd_cmd = speed;
             data.global_path[i-1].acceptance_radius = acceptRadi;
-
-            // navSurgePgain =item->krisoNavSurgePgain()->rawValue().toDouble();                     
-            // navSurgeDgain =item->krisoNavSurgeDgain()->rawValue().toDouble();         
-            // navYawPgain =  item->krisoNavYawPgain()->rawValue().toDouble(); 
-            // navYawDgain =  item->krisoNavYawDgain()->rawValue().toDouble();       
+    
             qDebug() << "speed Fact: " << speed ;
             qDebug() << "Radius : " << acceptRadi;
-
-            // qDebug() << "krisoNavSurgePgain: " <<navSurgePgain;
-            // qDebug() << "krisoNavSurgeDgain: " <<navSurgeDgain;
-            // qDebug() << "krisoNavYawPgain: "   <<navYawPgain;
-            // qDebug() << "krisoNavYawDgain: "   <<navYawDgain;
             qDebug() << "------------------------------------------------------";
         }
    }

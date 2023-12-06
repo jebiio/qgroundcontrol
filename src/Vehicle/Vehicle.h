@@ -19,7 +19,7 @@
 #include <QTime>
 #include <QQueue>
 #include <QSharedPointer>
-
+#include "WaypointData.h" 
 #include "FactGroup.h"
 #include "QGCMAVLink.h"
 #include "QmlObjectListModel.h"
@@ -1070,6 +1070,10 @@ private slots:
 
 private:
     // void _sendEmergencyCommand          (); jaeeun
+    // void _initWaypoint(WaypointData& data, SimpleMissionItem* item, int index);
+    // void _sendUDPData(const WaypointData& data, const QString& wt_sender_ip, int wt_sender_port);
+    // void _sendMAVLinkData(const WaypointData& data, LinkInterface* link);
+    // void _initWaypointData(WaypointData& data, QmlObjectListModel* visualItems);
     void _joystickChanged               (Joystick* joystick);
     void _loadSettings                  ();
     void _saveSettings                  ();
