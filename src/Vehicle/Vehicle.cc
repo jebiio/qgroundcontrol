@@ -2251,92 +2251,61 @@ void Vehicle::kriso_sendHDGCommand(void)
 
 }
 
-void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
-{
-    if (visualItems->count() == 0) {
-        qDebug() << "visualItems is empty";
-        return;
-    }
 
-
-    // Data 추출 
-    
-    _visualItems = visualItems;
-
-    qDebug() <<_visualItems->count();
-    double lat[100] = {};
-    double lon[100] = {};
-    float speedValues[100] = {};
-    float acceptRadiValues[100] = {};
-    float navSurgePgain = 0.0;         
-    float navSurgeDgain = 0.0;     
-    float navYawPgain = 0.0; 
-    float navYawDgain = 0.0;   
-    int missionItem_count = _visualItems->count() -1 ;
-
-    QString wt_sender_ip = "";
-    int wt_sender_port = 0;
-
-    //  qDebug() << "visual item count :  " << missionItem_count ; 
+WaypointControl Vehicle::_initWTData(QmlObjectListModel* visualItems) {
 
     WaypointControl data;
 
+    float navSurgePgain = 0.0, navSurgeDgain = 0.0, navYawPgain = 0.0, navYawDgain = 0.0;
+
     MissionSettingsItem* settingsItem = visualItems->value<MissionSettingsItem*>(0);
-    
+
     if (settingsItem) {
-        navSurgePgain = settingsItem->krisoNavSurgePgain()->rawValue().toFloat(); 
-        navSurgeDgain = settingsItem->krisoNavSurgeDgain()->rawValue().toFloat(); 
-        navYawPgain = settingsItem->krisoNavYawPgain()->rawValue().toFloat(); 
-        navYawDgain = settingsItem->krisoNavYawDgain()->rawValue().toFloat(); 
-        wt_sender_ip = settingsItem->krisoWTSenderIP()->rawValue().toString();
-        wt_sender_port = settingsItem->krisoWTSenderPort()->rawValue().toInt();
+        navSurgePgain = settingsItem->krisoNavSurgePgain()->rawValue().toFloat();
+        navSurgeDgain = settingsItem->krisoNavSurgeDgain()->rawValue().toFloat();
+        navYawPgain = settingsItem->krisoNavYawPgain()->rawValue().toFloat();
+        navYawDgain = settingsItem->krisoNavYawDgain()->rawValue().toFloat();
+        _wt_sender_ip = settingsItem->krisoWTSenderIP()->rawValue().toString();
+        _wt_sender_port = settingsItem->krisoWTSenderPort()->rawValue().toInt();
     }
-   for (int i = 1; i < _visualItems->count(); i++) {
+
+    data.nav_surge_pgain = navSurgePgain;
+    data.nav_surge_dgain = navSurgeDgain;
+    data.nav_yaw_pgain = navYawPgain;
+    data.nav_yaw_dgain = navYawDgain;
+    data.count = _visualItems->count() - 1;
+
+    for (int i = 1; i < visualItems->count(); i++) {
         double speed = 0.0;
         double acceptRadi = 0.0;
 
-
-        if (visualItems->value<VisualMissionItem*>(i)->isSimpleItem()){
+        if (visualItems->value<VisualMissionItem*>(i)->isSimpleItem()) {
             SimpleMissionItem* item = visualItems->value<SimpleMissionItem*>(i);
             speed = item->krisoSpeed()->rawValue().toFloat();
             acceptRadi = item->krisoAcceptRadius()->rawValue().toDouble();
 
-            speedValues[i-1] = speed;
-            acceptRadiValues[i-1] = acceptRadi;
-            lat[i-1] = item->coordinate().latitude();
-            lon[i-1] = item->coordinate().longitude();
-
-            data.global_path[i-1].lat = item->coordinate().latitude();
-            data.global_path[i-1].lon = item->coordinate().longitude();
-            data.global_path[i-1].spd_cmd = speed;
-            data.global_path[i-1].acceptance_radius = acceptRadi;
-    
-            qDebug() << "speed Fact: " << speed ;
-            qDebug() << "Radius : " << acceptRadi;
-            qDebug() << "------------------------------------------------------";
+            data.global_path[i - 1].lat = item->coordinate().latitude();
+            data.global_path[i - 1].lon = item->coordinate().longitude();
+            data.global_path[i - 1].spd_cmd = speed;
+            data.global_path[i - 1].acceptance_radius = acceptRadi;
         }
-   }
-    // uint64_t time_usec = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    }
+
+    return data;
+}
+
+void Vehicle::_sendUDPData(const WaypointControl& data) {
 
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
         perror("socket");
         exit(1);
     }
-    
+
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_addr.s_addr = inet_addr(wt_sender_ip.toStdString().c_str());
-    serverAddr.sin_port = htons(wt_sender_port);
-
-    //  qDebug() << "ip :  " << wt_sender_ip ; 
-    //  qDebug() << "port :  " << wt_sender_port   ; 
-
-    data.nav_surge_pgain = navSurgePgain;
-    data.nav_surge_dgain = navSurgeDgain;
-    data.nav_yaw_pgain = navYawPgain;
-    data.nav_yaw_dgain = navYawDgain;
-    data.count = missionItem_count;
+    serverAddr.sin_addr.s_addr = inet_addr(_wt_sender_ip.toStdString().c_str());
+    serverAddr.sin_port = htons(_wt_sender_port);
 
     char buffer[BUFFER_SIZE];
     memcpy(buffer, &data, BUFFER_SIZE);
@@ -2348,8 +2317,25 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
     }
 
     close(sockfd);
+}
+
+void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
+{
+    if (visualItems->count() == 0) {
+        qDebug() << "visualItems is empty";
+        return;
+    }
+
+    _visualItems = visualItems;
+
+    WaypointControl data = _initWTData(visualItems);
+   _sendUDPData(data);
 
 
+}
+
+void Vehicle::_sendWTMavlink(const WaypointControl& data)
+{
     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
     QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
 
@@ -2379,7 +2365,6 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
             link->writeBytesThreadSafe((const char*)buffer, len);
         }
     }
-
 }
 
 void Vehicle::kriso_sendDPCommand(void)

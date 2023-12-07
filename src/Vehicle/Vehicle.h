@@ -1074,6 +1074,9 @@ private:
     // void _sendUDPData(const WaypointData& data, const QString& wt_sender_ip, int wt_sender_port);
     // void _sendMAVLinkData(const WaypointData& data, LinkInterface* link);
     // void _initWaypointData(WaypointData& data, QmlObjectListModel* visualItems);
+    WaypointControl _initWTData         (QmlObjectListModel* visualItems);
+    void _sendWTMavlinkData             (const WaypointControl& data);  
+    void _sendUDPData                   (const WaypointControl& data); 
     void _joystickChanged               (Joystick* joystick);
     void _loadSettings                  ();
     void _saveSettings                  ();
@@ -1138,6 +1141,8 @@ private:
     int     _defaultComponentId;
     bool    _offlineEditingVehicle = false; ///< true: This Vehicle is a "disconnected" vehicle for ui use while offline editing
 
+    QString _wt_sender_ip;
+    int     _wt_sender_port; 
     // QList<QGeoCoordinate> _aisCoordinate;
 
     QMap<int, QGeoCoordinate> _aisCoordinateMap;
