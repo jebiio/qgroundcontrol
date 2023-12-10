@@ -1075,7 +1075,7 @@ private:
     // void _sendMAVLinkData(const WaypointData& data, LinkInterface* link);
     // void _initWaypointData(WaypointData& data, QmlObjectListModel* visualItems);
     WaypointControl _initWTData         (QmlObjectListModel* visualItems);
-    void _sendWTMavlinkData             (const WaypointControl& data);  
+    // void _sendWTMavlinkData             (const WaypointControl& data);  
     void _sendUDPData                   (const WaypointControl& data); 
     void _joystickChanged               (Joystick* joystick);
     void _loadSettings                  ();

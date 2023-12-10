@@ -2334,38 +2334,38 @@ void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
 
 }
 
-void Vehicle::_sendWTMavlink(const WaypointControl& data)
-{
-    LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
-    QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
+// void Vehicle::_sendWTMavlink(const WaypointControl& data)
+// {
+//     LinkManager*                    linkManager = qgcApp()->toolbox()->linkManager();
+//     QList<SharedLinkInterfacePtr>   sharedLinks = linkManager->links();
 
-    // Send a heartbeat out on each link
-    for (int i=0; i<sharedLinks.count(); i++) {
-        LinkInterface* link = sharedLinks[i].get();
-        auto linkConfiguration = link->linkConfiguration();
-        if (link->isConnected() && linkConfiguration) {
-            mavlink_message_t message;
-            mavlink_msg_kriso_wt_command_pack_chan(_mavlink->getSystemId(),
-                                            _mavlink->getComponentId(),
-                                            link->mavlinkChannel(),
-                                            &message,
-                                            lat,        // lat , sizeof(double)*5
-                                            lon,        // lon , sizeof(double)*5
-                                            speedValues,         // spd_cmd , sizeof(double)*5
-                                            acceptRadiValues,         // acceptance_radius, sizeof(float)*5
-                                            navSurgePgain,        // nav_surge_pgain
-                                            navSurgeDgain,        // nav_surge_dgain
-                                            navYawPgain,        // nav_yaw_pgain
-                                            navYawDgain,        // nav_yaw_dgain
-                                            missionItem_count
-                                            );
+//     // Send a heartbeat out on each link
+//     for (int i=0; i<sharedLinks.count(); i++) {
+//         LinkInterface* link = sharedLinks[i].get();
+//         auto linkConfiguration = link->linkConfiguration();
+//         if (link->isConnected() && linkConfiguration) {
+//             mavlink_message_t message;
+//             mavlink_msg_kriso_wt_command_pack_chan(_mavlink->getSystemId(),
+//                                             _mavlink->getComponentId(),
+//                                             link->mavlinkChannel(),
+//                                             &message,
+//                                             lat,        // lat , sizeof(double)*5
+//                                             lon,        // lon , sizeof(double)*5
+//                                             speedValues,         // spd_cmd , sizeof(double)*5
+//                                             acceptRadiValues,         // acceptance_radius, sizeof(float)*5
+//                                             navSurgePgain,        // nav_surge_pgain
+//                                             navSurgeDgain,        // nav_surge_dgain
+//                                             navYawPgain,        // nav_yaw_pgain
+//                                             navYawDgain,        // nav_yaw_dgain
+//                                             missionItem_count
+//                                             );
             
-            uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-            int len = mavlink_msg_to_send_buffer(buffer, &message);
-            link->writeBytesThreadSafe((const char*)buffer, len);
-        }
-    }
-}
+//             uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+//             int len = mavlink_msg_to_send_buffer(buffer, &message);
+//             link->writeBytesThreadSafe((const char*)buffer, len);
+//         }
+//     }
+// }
 
 void Vehicle::kriso_sendDPCommand(void)
 {
