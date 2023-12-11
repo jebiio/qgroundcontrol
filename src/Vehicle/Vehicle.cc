@@ -59,14 +59,10 @@
 #include "QmlObjectListModel.h"
 #include "MissionSettingsItem.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <cstring>
-#pragma pack(1) 
+#include <QUdpSocket>
+#include <QHostAddress>
+
+// #pragma pack(1) 
 #include "WaypointData.h" 
 
 #if defined(QGC_AIRMAP_ENABLED)
@@ -2295,30 +2291,49 @@ WaypointControl Vehicle::_initWTData(QmlObjectListModel* visualItems) {
 }
 
 void Vehicle::_sendUDPData(const WaypointControl& data) {
+    // Create a UDP socket
+    QUdpSocket udpSocket;
 
-    int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-    if (sockfd < 0) {
-        perror("socket");
-        exit(1);
+    // Set up the server address
+    QHostAddress serverAddress(_wt_sender_ip);
+    quint16 serverPort = static_cast<quint16>(_wt_sender_port);
+
+    // Copy data into a QByteArray
+    QByteArray datagram(reinterpret_cast<const char*>(&data), BUFFER_SIZE);
+
+    // Send data using writeDatagram
+    qint64 bytesSent = udpSocket.writeDatagram(datagram, serverAddress, serverPort);
+    if (bytesSent == -1) {
+        qWarning() << "Failed to send data:" << udpSocket.errorString();
     }
-
-    struct sockaddr_in serverAddr;
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_addr.s_addr = inet_addr(_wt_sender_ip.toStdString().c_str());
-    serverAddr.sin_port = htons(_wt_sender_port);
-
-    char buffer[BUFFER_SIZE];
-    memcpy(buffer, &data, BUFFER_SIZE);
-
-    int bytesSent = sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-    if (bytesSent < 0) {
-        perror("sendto");
-        exit(1);
-    }
-
-    close(sockfd);
 }
 
+
+// Linux
+// void Vehicle::_sendUDPData(const WaypointControl& data) {
+
+//     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+//     if (sockfd < 0) {
+//         perror("socket");
+//         exit(1);
+//     }
+
+//     struct sockaddr_in serverAddr;
+//     serverAddr.sin_family = AF_INET;
+//     serverAddr.sin_addr.s_addr = inet_addr(_wt_sender_ip.toStdString().c_str());
+//     serverAddr.sin_port = htons(_wt_sender_port);
+
+//     char buffer[BUFFER_SIZE];
+//     memcpy(buffer, &data, BUFFER_SIZE);
+
+//     int bytesSent = sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+//     if (bytesSent < 0) {
+//         perror("sendto");
+//         exit(1);
+//     }
+
+//     close(sockfd);
+// }
 void Vehicle::kriso_sendWTCommand(QmlObjectListModel* visualItems)
 {
     if (visualItems->count() == 0) {
