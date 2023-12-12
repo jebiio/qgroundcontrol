@@ -1673,14 +1673,9 @@ Item {
                 }
             }
 
-            Row {
-                spacing: 10
+            RowLayout {
+                spacing: 5
                 
-                Text {
-                    text: "                             "
-                    font.pixelSize: 20
-                }
-
                 Button {
                     text: "START"
                     onClicked: {
