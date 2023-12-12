@@ -38,6 +38,9 @@ MapQuickItem {
     property var    _map:           map
     property bool   _multiVehicle:  QGroundControl.multiVehicleManager.vehicles.count > 1
 
+    property int mission_mode : _activeVehicle.getFactGroup("krisoCmd").getFact("mission_mode").value
+
+
     sourceItem: Item {
         id:         vehicleItem
         width:      vehicleIcon.width
@@ -79,12 +82,15 @@ MapQuickItem {
             id: surge_error
             text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("surge_error").value
             anchors.top : vehicleIcon.bottom
+            // mission_mode모드가 4일때만 visible true
+            visible: mission_mode == 4
         }
 
         Text {
             id: sway_error
             text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("sway_error").value
             anchors.top : surge_error.bottom
+            visible: mission_mode == 4
         }        
 
 
@@ -92,6 +98,7 @@ MapQuickItem {
             id: yaw_error
             text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("yaw_error").value
             anchors.top : sway_error.bottom
+            visible: mission_mode == 4
         }        
 
         QGCMapLabel {
