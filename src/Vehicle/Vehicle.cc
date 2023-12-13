@@ -62,7 +62,7 @@
 #include <QUdpSocket>
 #include <QHostAddress>
 
-// #pragma pack(1) 
+#pragma pack(1) 
 #include "WaypointData.h" 
 
 #if defined(QGC_AIRMAP_ENABLED)
