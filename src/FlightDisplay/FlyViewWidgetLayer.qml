@@ -588,9 +588,15 @@ Item {
                         Layout.alignment: Qt.AlignHCenter // 중앙 정렬
                         spacing: 10  // 텍스트와 토글 사이의 간격
                         QGCButton {
-                            text: "Clear"
+                            text: "이동궤적삭제"
                             visible: _activeVehicle
-                            onClicked: _activeVehicle.closeVehicle()
+                            onClicked: _activeVehicle.clearTrajectory()
+                        }
+
+                        QGCButton {
+                            text: "AIS 삭제"
+                            visible: _activeVehicle
+                            onClicked: _activeVehicle._clearAisCoordinateList()
                         }
                     }
 

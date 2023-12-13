@@ -651,6 +651,11 @@ void Vehicle::resetCounters()
     _heardFrom          = false;
 }
 
+void Vehicle::clearTrajectory()
+{
+    _trajectoryPoints->clear();
+}
+
 void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message)
 {
     // If the link is already running at Mavlink V2 set our max proto version to it.
@@ -2762,7 +2767,7 @@ void Vehicle::_clearTidalRangeList()
     _tidalRangeList.clearAndDeleteContents();
 }
 
-void Vehicle::_clearAisCoordinateList()
+void Vehicle::clearAisCoordinateList()
 {
     _aisCoordinateList.clearAndDeleteContents();
     _aisCoordinateMap.clear();

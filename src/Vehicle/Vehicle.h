@@ -372,6 +372,10 @@ public:
     /// Resets link status counters
     Q_INVOKABLE void resetCounters  ();
 
+    Q_INVOKABLE void clearTrajectory ();
+    
+    Q_INVOKABLE void clearAisCoordinateList();
+
     // Called when the message drop-down is invoked to clear current count
     Q_INVOKABLE void resetMessages();
 
@@ -1054,7 +1058,7 @@ private slots:
     void _sendMavCommandResponseTimeoutCheck();
     void _clearCameraTriggerPoints          ();
     void _clearTidalRangeList               ();
-    void _clearAisCoordinateList            ();
+    
     void _updateDistanceHeadingToHome       ();
     void _updateMissionItemIndex            ();
     void _updateHeadingToNextWP             ();
