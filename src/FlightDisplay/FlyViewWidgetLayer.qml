@@ -596,7 +596,7 @@ Item {
                         QGCButton {
                             text: "AIS 삭제"
                             visible: _activeVehicle
-                            onClicked: _activeVehicle._clearAisCoordinateList()
+                            onClicked: _activeVehicle.clearAisCoordinateList()
                         }
                     }
 
