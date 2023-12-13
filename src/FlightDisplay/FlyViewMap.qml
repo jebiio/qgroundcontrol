@@ -372,25 +372,6 @@ FlightMap {
                     font.pixelSize: 10
                     anchors.top: obstacle.bottom
                     anchors.horizontalCenter: obstacle.horizontalCenter
-                }
-
-                Item {
-                    id: lineItem
-                    width: 5 
-                    height: obstacle.height 
-                    anchors.bottom: obstacle.top
-                    anchors.horizontalCenter: obstacle.horizontalCenter
-
-                    Rectangle {
-                        width: lineItem.width * 0.4
-                        height: lineItem.height
-                        color: "red" 
-                        transform: Rotation {
-                            origin.x: lineItem.width / 2
-                            origin.y: lineItem.height / 2
-                            angle: 0  // 회전각 (선수각) 표기 
-                        }
-                    }
                 } 
             }
         }
