@@ -2252,6 +2252,8 @@ WaypointControl Vehicle::_initWTData(QmlObjectListModel* visualItems) {
 
     WaypointControl data;
 
+    memset(&data, 0, sizeof(data)); 
+
     float navSurgePgain = 0.0, navSurgeDgain = 0.0, navYawPgain = 0.0, navYawDgain = 0.0;
 
     MissionSettingsItem* settingsItem = visualItems->value<MissionSettingsItem*>(0);
