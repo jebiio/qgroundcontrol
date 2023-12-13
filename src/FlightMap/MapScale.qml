@@ -231,7 +231,8 @@ Item {
         anchors.bottom:     rightEnd.bottom
         anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
         anchors.left:       zoomDownButton.right
-        iconSource:         "/qmlimages/MapCenter.svg"
+
+        text:               qsTr("C")
         width:              height
         opacity:            0.75
         visible:            _zoomButtonsVisible

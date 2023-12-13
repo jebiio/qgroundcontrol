@@ -501,7 +501,8 @@ void GeoFenceController::updateCircle(QGeoCoordinate topLeft, QGeoCoordinate bot
     // Initial radius is inset to take 3/4s of viewport and max of 1500 meters
     double halfWidthMeters = topLeft.distanceTo(topRight) / 2.0;
     double halfHeightMeters = topLeft.distanceTo(bottomLeft) / 2.0;
-    double radius = qMin(qMin(halfWidthMeters, halfHeightMeters) * 0.75, 1500.0);
+    // double radius = qMin(qMin(halfWidthMeters, halfHeightMeters) * 0.75, 1500.0);
+    double radius = 30.0;
 
     QGeoCoordinate centerLeftEdge = topLeft.atDistanceAndAzimuth(halfHeightMeters, 180);
     QGeoCoordinate centerTopEdge = topLeft.atDistanceAndAzimuth(halfWidthMeters, 90);
