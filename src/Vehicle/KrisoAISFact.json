@@ -7,15 +7,15 @@
     "name":             "lon",
     "shortDesc":        "lon",
     "type":             "double",
-    "decimalPlaces":        7,
-    "default":              null
+    "decimalPlaces":        7
+
 },
 {
     "name":             "lat",
     "shortDesc":        "lat",
     "type":             "double",
-    "decimalPlaces":        7,
-    "default":              null
+    "decimalPlaces":        7
+
 },
 {
     "name":             "msg_type",
@@ -75,64 +75,64 @@
     "name":             "reserved_2",
     "shortDesc":        "reserved_2",
     "type":             "uint32",
-    "decimalPlaces":        7,
-    "default":              null
+    "decimalPlaces":        7
+
 },
 {
     "name":             "radio",
     "shortDesc":        "radio",
     "type":             "uint32",
-    "decimalPlaces":        7,
-    "default":              null
+    "decimalPlaces":        7
+
 },
 {
     "name":             "accuracy",
     "shortDesc":        "accuracy",
     "type":             "uint8",
-    "decimalPlaces":        2,
-    "default":              null
+    "decimalPlaces":        2
+
 },
 {
     "name":             "cs",
     "shortDesc":        "cs",
     "type":             "uint8",
-    "decimalPlaces":        2,
-    "default":              null
+    "decimalPlaces":        2
+
 },
 {
     "name":             "display",
     "shortDesc":        "display",
     "type":             "uint8",
-    "decimalPlaces":        2,
-    "default":              null
+    "decimalPlaces":        2
+
 },
 {
     "name":             "dsc",
     "shortDesc":        "dsc",
     "type":             "uint8",
-    "decimalPlaces":        2,
-    "default":              null
+    "decimalPlaces":        2
+
 },
 {
     "name":             "band",
     "shortDesc":        "band",
     "type":             "uint8",
-    "decimalPlaces":        2,
-    "default":              null
+    "decimalPlaces":        2
+
 },
 {
     "name":             "msg22",
     "shortDesc":        "msg22",
     "type":             "uint8",
-    "decimalPlaces":        2,
-    "default":              null
+    "decimalPlaces":        2
+
 },
 {
     "name":             "assigned",
     "shortDesc":        "assigned",
     "type":             "uint8",
-    "decimalPlaces":        2,
-    "default":              null
+    "decimalPlaces":        2
+
 },
 {
     "name":             "raim",

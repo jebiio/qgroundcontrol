@@ -57,9 +57,9 @@ Rectangle {
         }
 
         QGCColoredImage {
-            anchors.rightMargin:     _margins * 5
-            anchors.right:           parent.right
-            anchors.verticalCenter: parent.verticalCenter
+            // anchors.rightMargin:     _margins * 5
+            // anchors.right:           parent.right
+            // anchors.verticalCenter: parent.verticalCenter
             source:                 "/res/gear-white.svg"
             mipmap:                 true
             height:                 parent.height * 0.7

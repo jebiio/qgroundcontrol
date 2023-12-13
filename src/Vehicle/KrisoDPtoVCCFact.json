@@ -22,12 +22,6 @@
     "decimalPlaces":        2
 },
 {
-    "name":             "yaw_error",
-    "shortDesc":        "yaw_error",
-    "type":             "double",
-    "decimalPlaces":        2
-},
-{
     "name":             "dp_start_stop",
     "shortDesc":        "dp_start_stop",
     "type":             "uint32"

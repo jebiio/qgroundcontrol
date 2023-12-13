@@ -978,26 +978,26 @@ Item {
             }
         }
 
-        // TerrainStatus {
-        //     id:                 terrainStatus
-        //     anchors.margins:    _toolsMargin
-        //     anchors.leftMargin: 0
-        //     anchors.left:       mapScale.left
-        //     anchors.right:      rightPanel.left
-        //     anchors.bottom:     parent.bottom
-        //     height:             ScreenTools.defaultFontPixelHeight * 7
-        //     missionController:  _missionController
-        //     visible:            _internalVisible && _editingLayer === _layerMission && QGroundControl.corePlugin.options.showMissionStatus
+        TerrainStatus {
+            id:                 terrainStatus
+            anchors.margins:    _toolsMargin
+            anchors.leftMargin: 0
+            anchors.left:       mapScale.left
+            anchors.right:      rightPanel.left
+            anchors.bottom:     parent.bottom
+            height:             ScreenTools.defaultFontPixelHeight * 7
+            missionController:  _missionController
+            visible:            false
 
-        //     onSetCurrentSeqNum: _missionController.setCurrentPlanViewSeqNum(seqNum, true)
+            onSetCurrentSeqNum: _missionController.setCurrentPlanViewSeqNum(seqNum, true)
 
-        //     property bool _internalVisible: _planViewSettings.showMissionItemStatus.rawValue
+            property bool _internalVisible: _planViewSettings.showMissionItemStatus.rawValue
 
-        //     function toggleVisible() {
-        //         _internalVisible = !_internalVisible
-        //         _planViewSettings.showMissionItemStatus.rawValue = _internalVisible
-        //     }
-        // }
+            function toggleVisible() {
+                _internalVisible = !_internalVisible
+                _planViewSettings.showMissionItemStatus.rawValue = _internalVisible
+            }
+        }
 
         MapScale {
             id:                     mapScale

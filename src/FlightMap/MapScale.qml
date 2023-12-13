@@ -246,7 +246,7 @@ Item {
         anchors.left:  centerButton.right
         visible:            _activeVehicle && !buttonsOnLeft
         opacity:            0.75
-        text: _activeVehicle.krisoTidalEnabled ? qsTr("선택완료") : qsTr("참조점선택")
+        text: _activeVehicle ? (_activeVehicle.krisoTidalEnabled ? qsTr("선택완료") : qsTr("참조점선택")) : ""
 
         onClicked: {
             // console.log("Button Clicked");
@@ -261,7 +261,9 @@ Item {
         }
 
         Component.onCompleted: {
-            _activeVehicle.krisoTidalEnabled = false;
+            if (_activeVehicle) {
+                _activeVehicle.krisoTidalEnabled = false;
+            }
         }
 
     }
@@ -270,9 +272,9 @@ Item {
     Button {
         id:                 tidalDeleteButton
         anchors.top:        scaleText.top
-        anchors.bottom:     rightEnd.bottom
-        anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
-        anchors.left:       test.right
+    anchors.bottom:     rightEnd.bottom
+    anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 2
+    anchors.left:       test.right
         text:               qsTr("삭제")
         width:              height
         opacity:            0.75

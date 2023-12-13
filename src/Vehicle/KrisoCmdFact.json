@@ -48,20 +48,17 @@
 {
     "name":             "oper_mode",
     "shortDesc":        "Operation Mode",
-    "type":             "uint32",
-    "default":              null
+    "type":             "uint32"
 },
 {
     "name":             "mission_mode",
     "shortDesc":        "Mission Mode",
-    "type":             "uint32",
-    "default":              null
+    "type":             "uint32"
 },
 {
     "name":             "logging_status",
     "shortDesc":        "logging_status",
-    "type":             "uint8",
-    "default":              null
+    "type":             "uint8"
 }
 ]
 }

@@ -396,10 +396,10 @@ ApplicationWindow {
 
                     Text{
                         text: "KRISO GCS Version v1.0.1"
-                        //anchors.centerIn: parent
+                        // anchors.centerIn: parent
                         Layout.alignment: Qt.AlignCenter
                         font.family:     ScreenTools.normalFontFamily
-                        font.pointSize: container.width / 20
+                        font.pointSize: parent.width / 30
                         color:  	"#808080"
                     }
                 }

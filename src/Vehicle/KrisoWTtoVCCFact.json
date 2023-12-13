@@ -35,8 +35,7 @@
     "name":             "track_path_idx",
     "shortDesc":        "track_path_idx",
     "type":             "uint32",
-    "decimalPlaces":        2,
-    "default":              null
+    "decimalPlaces":        2
 }
 ]
 }

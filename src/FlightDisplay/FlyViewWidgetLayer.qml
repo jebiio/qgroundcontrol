@@ -59,8 +59,7 @@ Item {
     property var    _dpCount:               0
     
 
-    property int logging_status :  _activeVehicle.getFactGroup("krisoCmd").getFact("logging_status").value
-
+    property int logging_status: _activeVehicle ? _activeVehicle.getFactGroup("krisoCmd").getFact("logging_status").value : 0
 
     QGCToolInsets {
         id:                     _totalToolInsets
@@ -322,7 +321,7 @@ Item {
             QGCTabBar {
                 id: layerTabBar
                 width: parent.width
-                visible: (!planControlColapsed || !_airspaceEnabled) && QGroundControl.corePlugin.options.enablePlanViewSelector
+                visible:  QGroundControl.corePlugin.options.enablePlanViewSelector
                 Component.onCompleted: {
                     currentIndex = 0
                     krisoStatusBtn.clicked()
@@ -477,8 +476,8 @@ Item {
 
                 ColumnLayout{
                     
-                    anchors.left: parent.left
-                    anchors.margins: 10
+                   anchors.left: parent.left
+                   anchors.margins: 10
                     spacing: 10
 
                     Text {
@@ -1010,7 +1009,7 @@ Item {
                 }
                 QGCTextField {
                     id: dpYawInput
-                    text : _activeVehicle.getFactGroup("krisoGain").getFact("yaw").rawValue.toFixed(2)
+                    text : _activeVehicle ? _activeVehicle.getFactGroup("krisoGain").getFact("yaw").rawValue.toFixed(2) : "0"
                 }
             }
 
@@ -1116,7 +1115,7 @@ Item {
             RowLayout {
                 
                 Button {
-                    text: _activeVehicle.fixedDPCoordinateEnabled ? "좌표고정" : "좌표선택"
+                    text: _activeVehicle ? (_activeVehicle.fixedDPCoordinateEnabled ? "좌표고정" : "좌표선택") : ""
                     Layout.alignment: Qt.AlignVCenter
                     onClicked: {
                         _activeVehicle.fixedDPCoordinateEnabled = !_activeVehicle.fixedDPCoordinateEnabled;

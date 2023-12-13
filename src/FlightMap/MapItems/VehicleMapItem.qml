@@ -38,7 +38,7 @@ MapQuickItem {
     property var    _map:           map
     property bool   _multiVehicle:  QGroundControl.multiVehicleManager.vehicles.count > 1
 
-    property int mission_mode : _activeVehicle.getFactGroup("krisoCmd").getFact("mission_mode").value
+    property int mission_mode : _activeVehicle? _activeVehicle.getFactGroup("krisoCmd").getFact("mission_mode").value : 0 
 
 
     sourceItem: Item {
@@ -66,7 +66,7 @@ MapQuickItem {
         }
         Image {
             id:                 vehicleIcon
-            source:             _adsbVehicle && alert ? (alert ? "/qmlimages/AlertAircraft.svg" : "/qmlimages/adsbVehicle.svg") : vehicle.vehicleImageOpaque
+            source:             _adsbVehicle && alert ? (alert ? "/qmlimages/AlertAircraft.svg" : "/qmlimages/adsbVehicle.svg") : (vehicle ? vehicle.vehicleImageOpaque : "")
             mipmap:             true
             width:              size
             sourceSize.width:   size
@@ -80,7 +80,7 @@ MapQuickItem {
 
         Text {
             id: surge_error
-            text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("surge_error").value
+            text: _activeVehicle ? _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("surge_error").value : ""
             anchors.top : vehicleIcon.bottom
             // mission_mode모드가 4일때만 visible true
             visible: mission_mode == 4
@@ -88,7 +88,7 @@ MapQuickItem {
 
         Text {
             id: sway_error
-            text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("sway_error").value
+            text: _activeVehicle? _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("sway_error").value : ""
             anchors.top : surge_error.bottom
             visible: mission_mode == 4
         }        
@@ -96,7 +96,7 @@ MapQuickItem {
 
         Text {
             id: yaw_error
-            text: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("yaw_error").value
+            text: _activeVehicle ? _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("yaw_error").value : ""
             anchors.top : sway_error.bottom
             visible: mission_mode == 4
         }        

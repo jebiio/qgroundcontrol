@@ -66,8 +66,8 @@ FlightMap {
     property bool   _keepVehicleCentered:       pipMode ? true : false
     property bool   _saveZoomLevelSetting:      true
 
-    property double ais_lat :  _activeVehicle.getFactGroup("krisoAIS").getFact("lat").value
-    property double ais_lon :  _activeVehicle.getFactGroup("krisoAIS").getFact("lon").value
+    property double ais_lat : _activeVehicle ? _activeVehicle.getFactGroup("krisoAIS").getFact("lat").value : 0 
+    property double ais_lon : _activeVehicle ?  _activeVehicle.getFactGroup("krisoAIS").getFact("lon").value : 0 
 
     
     // property double dp_lat : _activeVehicle.getFactGroup("krisoGain").getFact("lat").value
@@ -474,8 +474,7 @@ FlightMap {
 
     // Add the items associated with each vehicles flight plan to the map
     Repeater {
-        model: _activeVehicle.planPathVisible? QGroundControl.multiVehicleManager.vehicles : null
-
+        model: _activeVehicle ? (_activeVehicle.planPathVisible ? QGroundControl.multiVehicleManager.vehicles : null) : null
         PlanMapItems {
             map:                    _root
             largeMapView:           !pipMode
@@ -513,7 +512,7 @@ FlightMap {
         id :                    geoFenceMapVisuals
         map:                    _root
         myGeoFenceController:   _geoFenceController
-        interactive:            _activeVehicle.fixedDPCoordinateEnabled
+        interactive:            _activeVehicle ? _activeVehicle.fixedDPCoordinateEnabled : false
         planView:               true
         homePosition:           _activeVehicle && _activeVehicle.homePosition.isValid ? _activeVehicle.homePosition :  QtPositioning.coordinate()
     }

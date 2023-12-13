@@ -13,7 +13,7 @@ import QGroundControl.Controllers   1.0
 
 Rectangle {
     id:     _root
-    height: pageFlickable.y + pageFlickable.height + _margins
+    height: page2.y + page2.height + _margins
     color:  "white"
     radius: ScreenTools.defaultFontPixelWidth * 0.5
     width:  ScreenTools.defaultFontPixelWidth * 45

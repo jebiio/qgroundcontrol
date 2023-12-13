@@ -106,7 +106,7 @@ void KrisoAISFactGroup::handleMessage(Vehicle* /* vehicle */, mavlink_message_t&
 {
     switch (message.msgid) {
     case MAVLINK_MSG_ID_KRISO_AIS_STATUS:
-        _handleKRISOAISStatus(message);
+        // _handleKRISOAISStatus(message);
         break;
     case MAVLINK_MSG_ID_HIGH_LATENCY:
         // _handleHighLatency(message);

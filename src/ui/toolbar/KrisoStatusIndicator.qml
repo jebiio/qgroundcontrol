@@ -28,9 +28,9 @@ RowLayout {
     property real   _margins:           ScreenTools.defaultFontPixelWidth
     property real   _spacing:           ScreenTools.defaultFontPixelWidth / 2
     
-    property int oper_mode :  _activeVehicle.getFactGroup("krisoCmd").getFact("oper_mode").value
-    property int mission_mode : _activeVehicle.getFactGroup("krisoCmd").getFact("mission_mode").value
-    property int dp_start_stop: _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("dp_start_stop").value
+    property int oper_mode : _activeVehicle ? _activeVehicle.getFactGroup("krisoCmd").getFact("oper_mode").value : 0
+    property int mission_mode : _activeVehicle ? _activeVehicle.getFactGroup("krisoCmd").getFact("mission_mode").value : 0
+    property int dp_start_stop: _activeVehicle ? _activeVehicle.getFactGroup("krisoDPtoVCC").getFact("dp_start_stop").value : 0
 
     QGCLabel {
         id: mainStatusLabel
