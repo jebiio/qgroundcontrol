@@ -2595,7 +2595,6 @@ void Vehicle::kriso_sendMTCommand(int start_stop, float t1_rpm, float t2_rpm, fl
 
 void Vehicle::insertKrisoTidalRange(QGeoCoordinate coordinate)
 {
-    // 새로운 좌표를 생성
     _tidalRangeList.append(new QGCQGeoCoordinate(coordinate, this));
 
     // qdebug print
