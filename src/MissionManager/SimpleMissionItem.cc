@@ -298,7 +298,7 @@ void SimpleMissionItem::_setupMetaData(void)
         _longitudeMetaData->setDecimalPlaces(7);
 
         _krisoSpeedMetaData = new FactMetaData(FactMetaData::valueTypeFloat);
-        _krisoSpeedMetaData->setRawUnits("m/s");
+        _krisoSpeedMetaData->setRawUnits("kn");
         _krisoSpeedMetaData->setDecimalPlaces(2);
 
         _krisoAcceptRadiusMetaData = new FactMetaData(FactMetaData::valueTypeFloat);
