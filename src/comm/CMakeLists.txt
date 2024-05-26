@@ -26,6 +26,8 @@ add_library(comm
 	MavlinkMessagesTimer.h
 	MAVLinkProtocol.cc
 	MAVLinkProtocol.h
+	ForwarderProtocol.cc
+	ForwarderProtocol.h
 	QGCMAVLink.cc
 	QGCMAVLink.h
 	QGCSerialPortInfo.cc
@@ -38,6 +40,8 @@ add_library(comm
 	UdpIODevice.h
 	UDPLink.cc
 	UDPLink.h
+	ForwarderLink.h
+	ForwarderLink.cc
 
 	${EXTRA_SRC}
 )
