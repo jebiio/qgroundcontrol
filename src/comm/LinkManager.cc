@@ -21,6 +21,7 @@
 #include "LinkManager.h"
 #include "QGCApplication.h"
 #include "UDPLink.h"
+#include "ForwarderLink.h"
 #include "TCPLink.h"
 #include "SettingsManager.h"
 #include "LogReplayLink.h"
@@ -66,6 +67,7 @@ LinkManager::LinkManager(QGCApplication* app, QGCToolbox* toolbox)
     , _mavlinkChannelsUsedBitMask(1)    // We never use channel 0 to avoid sequence numbering problems
     , _autoConnectSettings(nullptr)
     , _mavlinkProtocol(nullptr)
+    , _forwarderProtocol(nullptr)
     #ifndef __mobile__
     #ifndef NO_SERIAL_LINK
     , _nmeaPort(nullptr)
@@ -92,6 +94,7 @@ void LinkManager::setToolbox(QGCToolbox *toolbox)
 
     _autoConnectSettings = toolbox->settingsManager()->autoConnectSettings();
     _mavlinkProtocol = _toolbox->mavlinkProtocol();
+    _forwarderProtocol = _toolbox->forwarderProtocol();
 
     connect(&_portListTimer, &QTimer::timeout, this, &LinkManager::_updateAutoConnectLinks);
     _portListTimer.start(_autoconnectUpdateTimerMSecs); // timeout must be long enough to get past bootloader on second pass
@@ -139,6 +142,9 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         link = std::make_shared<MockLink>(config);
         break;
 #endif
+    case LinkConfiguration::TypeForwarder:
+        link = std::make_shared<ForwarderLink>(config);
+        break;
     case LinkConfiguration::TypeLast:
         break;
     }
@@ -153,8 +159,14 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         config->setLink(link);
 
         connect(link.get(), &LinkInterface::communicationError,  _app,                &QGCApplication::criticalMessageBoxOnMainThread);
-        connect(link.get(), &LinkInterface::bytesReceived,       _mavlinkProtocol,    &MAVLinkProtocol::receiveBytes);
-        connect(link.get(), &LinkInterface::bytesSent,           _mavlinkProtocol,    &MAVLinkProtocol::logSentBytes);
+        if (dynamic_cast<ForwarderLink*>(link.get()) != nullptr)// Code to handle when link is a ForwarderLink
+        {
+            connect(link.get(), &LinkInterface::bytesReceived,       _forwarderProtocol,    &ForwarderProtocol::receiveBytes);
+            connect(link.get(), &LinkInterface::bytesSent,           _forwarderProtocol,    &ForwarderProtocol::logSentBytes);
+        }else {
+            connect(link.get(), &LinkInterface::bytesReceived,       _mavlinkProtocol,    &MAVLinkProtocol::receiveBytes);
+            connect(link.get(), &LinkInterface::bytesSent,           _mavlinkProtocol,    &MAVLinkProtocol::logSentBytes);        
+        }
         connect(link.get(), &LinkInterface::disconnected,        this,                &LinkManager::_linkDisconnected);
 
         _mavlinkProtocol->resetMetadataForLink(link.get());
@@ -215,8 +227,14 @@ void LinkManager::_linkDisconnected(void)
     }
 
     disconnect(link, &LinkInterface::communicationError,  _app,                &QGCApplication::criticalMessageBoxOnMainThread);
-    disconnect(link, &LinkInterface::bytesReceived,       _mavlinkProtocol,    &MAVLinkProtocol::receiveBytes);
-    disconnect(link, &LinkInterface::bytesSent,           _mavlinkProtocol,    &MAVLinkProtocol::logSentBytes);
+    if (dynamic_cast<ForwarderLink*>(link) != nullptr)// Code to handle when link is a ForwarderLink
+    {
+        disconnect(link, &LinkInterface::bytesReceived,       _forwarderProtocol,    &ForwarderProtocol::receiveBytes);
+        disconnect(link, &LinkInterface::bytesSent,           _forwarderProtocol,    &ForwarderProtocol::logSentBytes);
+    } else {
+        disconnect(link, &LinkInterface::bytesReceived,       _mavlinkProtocol,    &MAVLinkProtocol::receiveBytes);
+        disconnect(link, &LinkInterface::bytesSent,           _mavlinkProtocol,    &MAVLinkProtocol::logSentBytes);
+    }
     disconnect(link, &LinkInterface::disconnected,        this,                &LinkManager::_linkDisconnected);
 
     link->_freeMavlinkChannel();
@@ -336,6 +354,9 @@ void LinkManager::loadLinkConfigurationList()
                                 link = new MockConfiguration(name);
                                 break;
 #endif
+                            case LinkConfiguration::TypeForwarder:
+                                link = new ForwarderConfiguration(name);
+                                break;
                             case LinkConfiguration::TypeLast:
                                 break;
                             }

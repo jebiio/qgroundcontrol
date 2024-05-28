@@ -89,6 +89,12 @@
     "shortDesc": "Udp port to receive NMEA streams",
     "type":             "uint32",
     "default":     14401
+},
+{
+    "name":             "forwarderListenPort",
+    "shortDesc": "Forwarder UDP port for autoconnect",
+    "type":             "uint32",
+    "default":     19000
 }
 ]
 }

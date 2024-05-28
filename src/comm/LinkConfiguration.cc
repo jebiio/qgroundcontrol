@@ -12,6 +12,7 @@
 #include "SerialLink.h"
 #endif
 #include "UDPLink.h"
+#include "ForwarderLink.h"
 #include "TCPLink.h"
 #include "LogReplayLink.h"
 #ifdef QGC_ENABLE_BLUETOOTH
@@ -93,6 +94,9 @@ LinkConfiguration* LinkConfiguration::createSettings(int type, const QString& na
             config = new MockConfiguration(name);
             break;
 #endif
+        case LinkConfiguration::TypeForwarder:
+            config = new ForwarderConfiguration(name);
+            break;
     }
     return config;
 }
@@ -129,6 +133,9 @@ LinkConfiguration* LinkConfiguration::duplicateSettings(LinkConfiguration* sourc
             dupe = new MockConfiguration(qobject_cast<MockConfiguration*>(source));
             break;
 #endif
+        case TypeForwarder:
+            dupe = new ForwarderConfiguration(qobject_cast<ForwarderConfiguration*>(source));
+            break;
         case TypeLast:
             break;
     }

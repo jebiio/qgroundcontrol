@@ -20,6 +20,8 @@
 #include "QGCLoggingCategory.h"
 #include "QGCToolbox.h"
 #include "MAVLinkProtocol.h"
+#include "ForwarderProtocol.h"
+
 #if !defined(__mobile__)
 #include "LogReplayLink.h"
 #include "UdpIODevice.h"
@@ -172,7 +174,7 @@ private:
 
     AutoConnectSettings*                _autoConnectSettings;
     MAVLinkProtocol*                    _mavlinkProtocol;
-
+    ForwarderProtocol*                  _forwarderProtocol;
     QList<SharedLinkInterfacePtr>       _rgLinks;
     QList<SharedLinkConfigurationPtr>   _rgLinkConfigs;
     QString                             _autoConnectRTKPort;

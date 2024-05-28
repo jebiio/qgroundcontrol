@@ -316,8 +316,8 @@ void ForwarderLink::_deregisterZeroconf()
 ForwarderConfiguration::ForwarderConfiguration(const QString& name) : LinkConfiguration(name)
 {
     AutoConnectSettings* settings = qgcApp()->toolbox()->settingsManager()->autoConnectSettings();
-    _localPort = settings->udpListenPort()->rawValue().toInt();
-    QString targetHostIP = settings->udpTargetHostIP()->rawValue().toString();
+    _localPort = settings->forwarderListenPort()->rawValue().toInt(); // forwarder default port is 19000
+    QString targetHostIP = ""; // QString targetHostIP = settings->udpTargetHostIP()->rawValue().toString();
     if (!targetHostIP.isEmpty()) {
         addHost(targetHostIP, settings->udpTargetHostPort()->rawValue().toUInt());
     }

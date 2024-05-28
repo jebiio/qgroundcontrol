@@ -63,7 +63,8 @@ public:
     }
     /** @brief Get the currently configured protocol version */
     unsigned getCurrentVersion() const{
-        return _current_version;
+        return 0;
+//        return _current_version;
     }
     /**
      * Reset the counters for all metadata for this link.
@@ -102,6 +103,7 @@ public slots:
 
     /// Checks for lost log files
     void checkForLostLogFiles(void);
+
 
 protected:
     // bool        m_enable_version_check;                         ///< Enable checking of version match of MAV and QGC
