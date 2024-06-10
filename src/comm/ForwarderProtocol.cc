@@ -200,6 +200,20 @@ void ForwarderProtocol::logSentBytes(LinkInterface* link, QByteArray b){
 void ForwarderProtocol::receiveBytes(LinkInterface* link, QByteArray b)
 {
     //ToDo 
+    // check link is still valid
+    // SharedLinkInterfacePtr linkPtr = _linkMgr->sharedLinkInterfacePointerForLink(link, true);
+    // if (!linkPtr) {
+    //     qCDebug(ForwarderProtocolLog) << "receiveBytes: link gone!" << b.size() << " bytes arrived too late";
+    //     return;
+    // }
+
+    // if(checkValidationPacket(b)){
+    //     forwardPacketToEngineServer(b);
+    //     logForwarderPacket(b);
+    //     parseForwarderPacket(b);
+    //     // emit vehicleHeartbeatInfo(link, _message.sysid, _message.compid, heartbeat.autopilot, heartbeat.type);
+    //     // emit messageReceived(link, _message);
+    // }
 }
 /*
 void ForwarderProtocol::receiveBytes(LinkInterface* link, QByteArray b)

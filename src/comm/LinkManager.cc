@@ -48,6 +48,7 @@ QGC_LOGGING_CATEGORY(LinkManagerLog, "LinkManagerLog")
 QGC_LOGGING_CATEGORY(LinkManagerVerboseLog, "LinkManagerVerboseLog")
 
 const char* LinkManager::_defaultUDPLinkName =                  "UDP Link (AutoConnect)";
+const char* LinkManager::_defaultForwaderUDPLinkName =                  "ForwarderUDP Link (AutoConnect)";
 const char* LinkManager::_mavlinkForwardingLinkName =           "MAVLink Forwarding Link";
 const char* LinkManager::_mavlinkForwardingSupportLinkName =    "MAVLink Support Forwarding Link";
 
@@ -104,6 +105,7 @@ void LinkManager::setToolbox(QGCToolbox *toolbox)
 // This should only be used by Qml code
 void LinkManager::createConnectedLink(LinkConfiguration* config)
 {
+    qWarning() << "---nsr --- createConnectedLink() QML Only " ;
     for(int i = 0; i < _rgLinkConfigs.count(); i++) {
         SharedLinkConfigurationPtr& sharedConfig = _rgLinkConfigs[i];
         if (sharedConfig.get() == config)
@@ -143,6 +145,7 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         break;
 #endif
     case LinkConfiguration::TypeForwarder:
+        qWarning() << "---nsr --- createConnectedLink() -> LinkConfiguration::TypeForwarder" ;    
         link = std::make_shared<ForwarderLink>(config);
         break;
     case LinkConfiguration::TypeLast:
@@ -428,6 +431,32 @@ void LinkManager::_addUDPAutoConnectLink(void)
     }
 }
 
+void LinkManager::_addForwarderUDPAutoConnectLink(void)
+{
+    qWarning() << "---nsr --- _addForwarderUDPAutoConnectLink ---------" ;
+
+    if (_autoConnectSettings->autoConnectUDP()->rawValue().toBool()) {
+        bool foundForwarderUDP = false;
+
+        for (int i = 0; i < _rgLinks.count(); i++) {
+            SharedLinkConfigurationPtr linkConfig = _rgLinks[i]->linkConfiguration();
+            if (linkConfig->type() == LinkConfiguration::TypeForwarder && linkConfig->name() == _defaultForwaderUDPLinkName) {
+                foundForwarderUDP = true;
+                break;
+            }
+        }
+    qWarning() << "---nsr --- foundForwarderUDP ? _addForwarderUDPAutoConnectLink --------- :" << foundForwarderUDP;
+
+        if (!foundForwarderUDP) {
+            //-- Default UDPConfiguration is set up for autoconnect
+            ForwarderConfiguration* forwarderConfig = new ForwarderConfiguration(_defaultForwaderUDPLinkName);
+            forwarderConfig->setDynamic(true);
+            SharedLinkConfigurationPtr config = addConfiguration(forwarderConfig);
+            createConnectedLink(config);
+            qWarning() << "---nsr --- Forwader UDP port added _addForwarderUDPAutoConnectLink ---------" << config->name();
+        }
+    }
+}
 void LinkManager::_addMAVLinkForwardingLink(void)
 {
     if (_toolbox->settingsManager()->appSettings()->forwardMavlink()->rawValue().toBool()) {
@@ -527,6 +556,7 @@ void LinkManager::_updateAutoConnectLinks(void)
     }
 
     _addUDPAutoConnectLink();
+    _addForwarderUDPAutoConnectLink();
     _addMAVLinkForwardingLink();
     _addZeroConfAutoConnectLink();
 
@@ -874,6 +904,7 @@ bool LinkManager::containsLink(LinkInterface* link)
 
 SharedLinkConfigurationPtr LinkManager::addConfiguration(LinkConfiguration* config)
 {
+    // qWarning() << "---nsr --- Enter addConfiguration()" ;
     _qmlConfigurations.append(config);
     _rgLinkConfigs.append(SharedLinkConfigurationPtr(config));
     return _rgLinkConfigs.last();

@@ -156,6 +156,7 @@ private:
     void                _updateSerialPorts          (void);
     void                _removeConfiguration        (LinkConfiguration* config);
     void                _addUDPAutoConnectLink      (void);
+    void                _addForwarderUDPAutoConnectLink (void);
     void                _addZeroConfAutoConnectLink (void);
     void                _addMAVLinkForwardingLink   (void);
     bool                _isSerialPortConnected      (void);
@@ -199,6 +200,7 @@ private:
 #endif
 
     static const char*  _defaultUDPLinkName;
+    static const char*  _defaultForwaderUDPLinkName;
     static const char*  _mavlinkForwardingLinkName;
     static const char*  _mavlinkForwardingSupportLinkName;
     static const int    _autoconnectUpdateTimerMSecs;

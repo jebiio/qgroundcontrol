@@ -76,7 +76,7 @@ ForwarderLink::ForwarderLink(SharedLinkConfigurationPtr& config)
 #endif
 {
     if (!_udpConfig) {
-        qWarning() << "Internal error";
+        qWarning() << "ForwarderLink Internal error"; 
     }
     auto allAddresses = QNetworkInterface::allAddresses();
     for (int i=0; i<allAddresses.count(); i++) {
@@ -102,6 +102,7 @@ ForwarderLink::~ForwarderLink()
 
 void ForwarderLink::run()
 {
+    qWarning() << "---nsr --- ForwarderLink::run() ";
     if (_hardwareConnect()) {
         exec();
     }
@@ -188,7 +189,8 @@ void ForwarderLink::readBytes()
         }
         databuffer.append(datagram);
         //-- Wait a bit before sending it over
-        if (databuffer.size() > 10 * 1024) {
+        if (databuffer.size() > 100) { // Check for forwader packet size
+            qWarning() << "---nsr --- *****************  ForwarderLink::readBytes()" ;
             emit bytesReceived(this, databuffer);
             databuffer.clear();
         }
@@ -244,6 +246,7 @@ bool ForwarderLink::_connect(void)
 
 bool ForwarderLink::_hardwareConnect()
 {
+    qWarning() << "---nsr --- Forwarder::_hardwareConnect() ";
     if (_socket) {
         delete _socket;
         _socket = nullptr;
@@ -252,6 +255,7 @@ bool ForwarderLink::_hardwareConnect()
     _socket = new QUdpSocket(this);
     _socket->setProxy(QNetworkProxy::NoProxy);
     _connectState = _socket->bind(host, _udpConfig->localPort(), QAbstractSocket::ReuseAddressHint | QUdpSocket::ShareAddress);
+    qWarning() << "---nsr --- Forwarder::_hardwareConnect() "<< "ip:port" << host.toString() << _udpConfig->localPort() ;
     if (_connectState) {
         _socket->joinMulticastGroup(QHostAddress("224.0.0.1"));
         //-- Make sure we have a large enough IO buffers

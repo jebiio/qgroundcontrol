@@ -71,7 +71,7 @@ public:
     const QList<ForwarderClient*> targetHosts (void)          { return _targetHosts; }
 
     /// LinkConfiguration overrides
-    LinkType    type                 (void) override                                        { return LinkConfiguration::TypeUdp; }
+    LinkType    type                 (void) override                                        { return LinkConfiguration::TypeForwarder; }
     void        copyFrom             (LinkConfiguration* source) override;
     void        loadSettings         (QSettings& settings, const QString& root) override;
     void        saveSettings         (QSettings& settings, const QString& root) override;
