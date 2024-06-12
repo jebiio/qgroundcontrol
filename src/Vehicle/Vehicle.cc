@@ -194,6 +194,8 @@ Vehicle::Vehicle(LinkInterface*             link,
     connect(_mavlink, &MAVLinkProtocol::messageReceived,        this, &Vehicle::_mavlinkMessageReceived);
     connect(_mavlink, &MAVLinkProtocol::mavlinkMessageStatus,   this, &Vehicle::_mavlinkMessageStatus);
 
+//    connect(_mavlink, &ForwarderProtocol::messageReceived,        this, &Vehicle::_forwarderMessageReceived);
+
     connect(this, &Vehicle::flightModeChanged,          this, &Vehicle::_handleFlightModeChanged);
     connect(this, &Vehicle::armedChanged,               this, &Vehicle::_announceArmedChanged);
 
@@ -594,6 +596,12 @@ void Vehicle::resetCounters()
     _messagesLost       = 0;
     _messageSeq         = 0;
     _heardFrom          = false;
+}
+
+void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
+{
+   // _vehicleLinkManager->mavlinkMessageReceived(link, message);
+
 }
 
 void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message)

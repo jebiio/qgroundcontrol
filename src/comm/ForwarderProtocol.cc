@@ -201,20 +201,55 @@ void ForwarderProtocol::receiveBytes(LinkInterface* link, QByteArray b)
 {
     //ToDo 
     // check link is still valid
-    // SharedLinkInterfacePtr linkPtr = _linkMgr->sharedLinkInterfacePointerForLink(link, true);
-    // if (!linkPtr) {
-    //     qCDebug(ForwarderProtocolLog) << "receiveBytes: link gone!" << b.size() << " bytes arrived too late";
-    //     return;
-    // }
+    SharedLinkInterfacePtr linkPtr = _linkMgr->sharedLinkInterfacePointerForLink(link, true);
+    if (!linkPtr) {
+        qCDebug(ForwarderProtocolLog) << "receiveBytes: link gone!" << b.size() << " bytes arrived too late";
+        return;
+    }
 
-    // if(checkValidationPacket(b)){
-    //     forwardPacketToEngineServer(b);
-    //     logForwarderPacket(b);
-    //     parseForwarderPacket(b);
-    //     // emit vehicleHeartbeatInfo(link, _message.sysid, _message.compid, heartbeat.autopilot, heartbeat.type);
-    //     // emit messageReceived(link, _message);
-    // }
+    if(checkValidationPacket(b)){
+        forwardPacketToEngineServer(b);
+        logForwarderPacket(b);
+        FmuStream fmu_packet  = parseForwarderPacket(b);
+        emit vehicleHeartbeatInfo(link, fmu_packet.system_id);// emit vehicleHeartbeatInfo(link, _message.sysid, _message.compid, heartbeat.autopilot, heartbeat.type);
+        emit messageReceived(link, fmu_packet); //emit messageReceived(link, _message);
+    }
 }
+/**
+ * @brief 
+ * @param packet The forwarder packet to parse
+ **/
+FmuStream ForwarderProtocol::parseForwarderPacket(const QByteArray& packet)
+{
+    // TODO: Implement the parsing logic for the forwarder packet
+    // You can access the individual bytes of the packet using packet[index]
+    // Perform the necessary actions based on the packet type
+    uint8_t bytes[sizeof(FmuStream)];
+    memcpy(bytes, packet.data(), sizeof(FmuStream));
+    return *(FmuStream*)bytes;
+}
+
+void ForwarderProtocol::logForwarderPacket(const QByteArray& packet)
+{
+    // Code to log the forwarded packet
+}
+void ForwarderProtocol::forwardPacketToEngineServer(const QByteArray& packet)
+{
+    // Code to forward the packet to the engine server
+}
+bool ForwarderProtocol::checkValidationPacket(const QByteArray& b)
+{
+    // Perform validation checks on the packet
+    // Return true if the packet is valid, false otherwise
+    // Example validation checks:
+    // - Check packet length
+    // - Check packet checksum
+    // - Check packet header
+    // ...
+
+    return true; // Replace with your validation logic
+}
+
 /*
 void ForwarderProtocol::receiveBytes(LinkInterface* link, QByteArray b)
 {

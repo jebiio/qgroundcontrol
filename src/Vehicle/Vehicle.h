@@ -51,6 +51,7 @@
 #include "StandardModes.h"
 #include "VehicleGeneratorFactGroup.h"
 #include "VehicleEFIFactGroup.h"
+#include "FMUStream.h"
 
 class Actuators;
 class EventHandler;
@@ -1030,6 +1031,7 @@ signals:
 
 private slots:
     void _mavlinkMessageReceived            (LinkInterface* link, mavlink_message_t message);
+    void _forwarderMessageReceived(LinkInterface* link, FmuStream message);
     void _sendMessageMultipleNext           ();
     void _parametersReady                   (bool parametersReady);
     void _remoteControlRSSIChanged          (uint8_t rssi);

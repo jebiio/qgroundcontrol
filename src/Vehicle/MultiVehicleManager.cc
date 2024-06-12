@@ -57,7 +57,7 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
     QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
     qmlRegisterUncreatableType<MultiVehicleManager>("QGroundControl.MultiVehicleManager", 1, 0, "MultiVehicleManager", "Reference only");
 
-    connect(_mavlinkProtocol, &MAVLinkProtocol::vehicleHeartbeatInfo, this, &MultiVehicleManager::_vehicleHeartbeatInfo);
+//    connect(_mavlinkProtocol, &MAVLinkProtocol::vehicleHeartbeatInfo, this, &MultiVehicleManager::_vehicleHeartbeatInfo);
     connect(&_gcsHeartbeatTimer, &QTimer::timeout, this, &MultiVehicleManager::_sendGCSHeartbeat);
 
     if (_gcsHeartbeatEnabled) {
@@ -66,7 +66,46 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
 
     _offlineEditingVehicle = new Vehicle(Vehicle::MAV_AUTOPILOT_TRACK, Vehicle::MAV_TYPE_TRACK, _firmwarePluginManager, this);
 }
+/*
+void MultiVehicleManager::_vehicleHeartbeatInfo(LinkInterface* link, int vehicleId)
+{
+    int default_component_id = 0;
+    
+    MAV_AUTOPILOT default_autopilot = MAV_AUTOPILOT_GENERIC;
+    MAV_TYPE default_type = MAV_TYPE_GENERIC;
 
+    // already have a vehicle with this id
+    if (_ignoreVehicleIds.contains(vehicleId) || getVehicleById(vehicleId) || vehicleId == 0) {
+        return;
+    }
+
+    Vehicle* vehicle = new Vehicle(link, vehicleId, default_component_id, default_autopilot, default_type, _firmwarePluginManager, _joystickManager);
+    connect(vehicle->vehicleLinkManager(),  &VehicleLinkManager::allLinksRemoved,       this, &MultiVehicleManager::_deleteVehiclePhase1);
+    
+    _vehicles.append(vehicle);
+
+    // Send QGC heartbeat ASAP, this allows PX4 to start accepting commands
+    _sendGCSHeartbeat();
+
+    qgcApp()->toolbox()->settingsManager()->appSettings()->defaultFirmwareType()->setRawValue(default_autopilot);
+
+    emit vehicleAdded(vehicle);
+
+    if (_vehicles.count() > 1) {
+        qgcApp()->showAppMessage(tr("Connected to Vehicle %1").arg(vehicleId));
+    } else {
+        setActiveVehicle(vehicle);
+    }
+
+#if defined (__ios__) || defined(__android__)
+    if(_vehicles.count() == 1) {
+        //-- Once a vehicle is connected, keep screen from going off
+        qCDebug(MultiVehicleManagerLog) << "QAndroidJniObject::keepScreenOn";
+        MobileScreenMgr::setKeepScreenOn(true);
+    }
+#endif
+}
+*/
 void MultiVehicleManager::_vehicleHeartbeatInfo(LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType)
 {
     // Special case PX4 Flow since depending on firmware it can have different settings. We force to the PX4 Firmware settings.

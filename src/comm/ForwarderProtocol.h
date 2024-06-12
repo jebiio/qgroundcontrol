@@ -23,6 +23,7 @@
 #include "QGC.h"
 #include "QGCTemporaryFile.h"
 #include "QGCToolbox.h"
+#include "FMUStream.h"
 
 class LinkManager;
 class MultiVehicleManager;
@@ -80,6 +81,11 @@ public:
     // Override from QGCTool
     virtual void setToolbox(QGCToolbox *toolbox);
 
+    bool checkValidationPacket(const QByteArray& b);
+    void logForwarderPacket(const QByteArray& packet);
+    void forwardPacketToEngineServer(const QByteArray& packet);
+    FmuStream parseForwarderPacket(const QByteArray& packet);
+    
 public slots:
     /** @brief Receive bytes from a communication interface */
     void receiveBytes(LinkInterface* link, QByteArray b);
@@ -124,9 +130,10 @@ protected:
 signals:
     /// Heartbeat received on link
     void vehicleHeartbeatInfo(LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType);
-
+    void vehicleHeartbeatInfo(LinkInterface* link, int vehicleId); // for fmu stream
     /** @brief Message received and directly copied via signal */
     void messageReceived(LinkInterface* link, mavlink_message_t message);
+    void messageReceived(LinkInterface* link, FmuStream message); // for fmu stream
     /** @brief Emitted if version check is enabled / disabled */
     void versionCheckChanged(bool enabled);
     /** @brief Emitted if a message from the protocol should reach the user */
