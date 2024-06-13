@@ -1031,7 +1031,7 @@ signals:
 
 private slots:
     void _mavlinkMessageReceived            (LinkInterface* link, mavlink_message_t message);
-    void _forwarderMessageReceived(LinkInterface* link, FmuStream message);
+    void _forwarderMessageReceived          (LinkInterface* link, FmuStream message);
     void _sendMessageMultipleNext           ();
     void _parametersReady                   (bool parametersReady);
     void _remoteControlRSSIChanged          (uint8_t rssi);
@@ -1137,6 +1137,7 @@ private:
     QObject*            _firmwarePluginInstanceData = nullptr;
     AutoPilotPlugin*    _autopilotPlugin = nullptr;
     MAVLinkProtocol*    _mavlink = nullptr;
+    ForwarderProtocol*  _forwarder = nullptr;
     bool                _soloFirmware = false;
     QGCToolbox*         _toolbox = nullptr;
     SettingsManager*    _settingsManager = nullptr;

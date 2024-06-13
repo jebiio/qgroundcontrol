@@ -189,12 +189,13 @@ Vehicle::Vehicle(LinkInterface*             link,
     connect(qgcApp()->toolbox()->multiVehicleManager(), &MultiVehicleManager::activeVehicleChanged, this, &Vehicle::_activeVehicleChanged);
 
     _mavlink = _toolbox->mavlinkProtocol();
+    _forwarder = _toolbox->forwarderProtocol();
     qCDebug(VehicleLog) << "Link started with Mavlink " << (_mavlink->getCurrentVersion() >= 200 ? "V2" : "V1");
 
     connect(_mavlink, &MAVLinkProtocol::messageReceived,        this, &Vehicle::_mavlinkMessageReceived);
     connect(_mavlink, &MAVLinkProtocol::mavlinkMessageStatus,   this, &Vehicle::_mavlinkMessageStatus);
 
-//    connect(_mavlink, &ForwarderProtocol::messageReceived,        this, &Vehicle::_forwarderMessageReceived);
+    connect(_forwarder, &ForwarderProtocol::messageReceived,    this, &Vehicle::_forwarderMessageReceived);
 
     connect(this, &Vehicle::flightModeChanged,          this, &Vehicle::_handleFlightModeChanged);
     connect(this, &Vehicle::armedChanged,               this, &Vehicle::_announceArmedChanged);
@@ -601,7 +602,12 @@ void Vehicle::resetCounters()
 void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
 {
    // _vehicleLinkManager->mavlinkMessageReceived(link, message);
-
+    _globalPositionIntMessageAvailable = true;
+    QGeoCoordinate newPosition(message.latitude, message.longitude, message.altref);
+    if (newPosition != _coordinate) {
+        _coordinate = newPosition;
+        emit coordinateChanged(_coordinate);
+    }
 }
 
 void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message)

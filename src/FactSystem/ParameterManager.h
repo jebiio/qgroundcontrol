@@ -22,6 +22,7 @@
 #include "AutoPilotPlugin.h"
 #include "QGCMAVLink.h"
 #include "Vehicle.h"
+#include "FMUStream.h"
 
 Q_DECLARE_LOGGING_CATEGORY(ParameterManagerVerbose1Log)
 Q_DECLARE_LOGGING_CATEGORY(ParameterManagerVerbose2Log)
@@ -55,6 +56,7 @@ public:
     static QString parameterCacheFile(int vehicleId, int componentId);
 
     void mavlinkMessageReceived(mavlink_message_t message);
+    void ForwarderMessageReceived(FmuStream message);
 
     QList<int> componentIds(void);
 

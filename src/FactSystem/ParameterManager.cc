@@ -163,6 +163,10 @@ void ParameterManager::_updateProgressBar(void)
     }
 }
 
+void ParameterManager::ForwarderMessageReceived(FmuStream message)
+{
+    
+}
 
 void ParameterManager::mavlinkMessageReceived(mavlink_message_t message)
 {
