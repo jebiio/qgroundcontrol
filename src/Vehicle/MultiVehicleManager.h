@@ -25,6 +25,7 @@ class FollowMe;
 class JoystickManager;
 class QGCApplication;
 class MAVLinkProtocol;
+class ForwarderProtocol;
 
 Q_DECLARE_LOGGING_CATEGORY(MultiVehicleManagerLog)
 
@@ -92,7 +93,7 @@ private slots:
     void _vehicleParametersReadyChanged (bool parametersReady);
     void _sendGCSHeartbeat              (void);
     void _vehicleHeartbeatInfo          (LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType);
-    // void _vehicleHeartbeatInfo          (LinkInterface* link, int vehicleId);
+    void _vehicleHeartbeatInfo2          (LinkInterface* link, int vehicleId);
     void _requestProtocolVersion        (unsigned version);
     void _coordinateChanged             (QGeoCoordinate coordinate);
 
@@ -114,6 +115,8 @@ private:
     FirmwarePluginManager*      _firmwarePluginManager;
     JoystickManager*            _joystickManager;
     MAVLinkProtocol*            _mavlinkProtocol;
+    ForwarderProtocol*          _forwarderProtocol;
+
     QGeoCoordinate              _lastKnownLocation;
 
     QTimer              _gcsHeartbeatTimer;             ///< Timer to emit heartbeats

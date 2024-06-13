@@ -129,8 +129,9 @@ protected:
 
 signals:
     /// Heartbeat received on link
-    void vehicleHeartbeatInfo(LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType);
+    // void vehicleHeartbeatInfo(LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType);
     void vehicleHeartbeatInfo(LinkInterface* link, int vehicleId); // for fmu stream
+    void vehicleHeartbeatInfo2(LinkInterface* link, int vehicleId); // for fmu stream
     /** @brief Message received and directly copied via signal */
     void messageReceived(LinkInterface* link, mavlink_message_t message);
     void messageReceived(LinkInterface* link, FmuStream message); // for fmu stream

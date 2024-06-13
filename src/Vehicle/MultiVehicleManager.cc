@@ -53,11 +53,13 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
     _firmwarePluginManager =     _toolbox->firmwarePluginManager();
     _joystickManager =           _toolbox->joystickManager();
     _mavlinkProtocol =           _toolbox->mavlinkProtocol();
+    _forwarderProtocol =         _toolbox->forwarderProtocol();
 
     QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
     qmlRegisterUncreatableType<MultiVehicleManager>("QGroundControl.MultiVehicleManager", 1, 0, "MultiVehicleManager", "Reference only");
 
-//    connect(_mavlinkProtocol, &MAVLinkProtocol::vehicleHeartbeatInfo, this, &MultiVehicleManager::_vehicleHeartbeatInfo);
+    connect(_mavlinkProtocol, &MAVLinkProtocol::vehicleHeartbeatInfo, this, &MultiVehicleManager::_vehicleHeartbeatInfo);
+    connect(_forwarderProtocol, &ForwarderProtocol::vehicleHeartbeatInfo, this, &MultiVehicleManager::_vehicleHeartbeatInfo2);
     connect(&_gcsHeartbeatTimer, &QTimer::timeout, this, &MultiVehicleManager::_sendGCSHeartbeat);
 
     if (_gcsHeartbeatEnabled) {
@@ -66,11 +68,13 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
 
     _offlineEditingVehicle = new Vehicle(Vehicle::MAV_AUTOPILOT_TRACK, Vehicle::MAV_TYPE_TRACK, _firmwarePluginManager, this);
 }
-/*
-void MultiVehicleManager::_vehicleHeartbeatInfo(LinkInterface* link, int vehicleId)
+
+void MultiVehicleManager::_vehicleHeartbeatInfo2(LinkInterface* link, int vehicleId)
 {
     int default_component_id = 0;
     
+    qWarning() << "---nsr --- MultiVehicleManager::_vehicleHeartbeatInfo2!!!! ";
+
     MAV_AUTOPILOT default_autopilot = MAV_AUTOPILOT_GENERIC;
     MAV_TYPE default_type = MAV_TYPE_GENERIC;
 
@@ -85,7 +89,7 @@ void MultiVehicleManager::_vehicleHeartbeatInfo(LinkInterface* link, int vehicle
     _vehicles.append(vehicle);
 
     // Send QGC heartbeat ASAP, this allows PX4 to start accepting commands
-    _sendGCSHeartbeat();
+    // _sendGCSHeartbeat(); QGC-> PX4로 전송
 
     qgcApp()->toolbox()->settingsManager()->appSettings()->defaultFirmwareType()->setRawValue(default_autopilot);
 
@@ -105,7 +109,7 @@ void MultiVehicleManager::_vehicleHeartbeatInfo(LinkInterface* link, int vehicle
     }
 #endif
 }
-*/
+
 void MultiVehicleManager::_vehicleHeartbeatInfo(LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType)
 {
     // Special case PX4 Flow since depending on firmware it can have different settings. We force to the PX4 Firmware settings.
