@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 
+#pragma pack(1)
 typedef struct _fmu_stream_t {
     uint32_t id;
     uint64_t count;
@@ -46,3 +47,5 @@ typedef struct _fmu_stream_t {
     uint8_t status;
     uint8_t system_id;
 } FmuStream; 
+
+#pragma pack()

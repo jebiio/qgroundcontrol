@@ -606,6 +606,8 @@ void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
     
     _vehicleLinkManager->forwarderMessageReceived(link, message);
 
+    qWarning() << "---nsr --- system id: " << message.system_id << " lat :"<< message.latitude << " lon : " << message.longitude << " alt : " << message.altref;
+    
     Eigen::Quaternionf quat(message.qw, message.qx, message.qy, message.qz);
     // Eigen::Vector3f rates(attitudeQuaternion.rollspeed, attitudeQuaternion.pitchspeed, attitudeQuaternion.yawspeed);
     // Eigen::Quaternionf repr_offset(attitudeQuaternion.repr_offset_q[0], attitudeQuaternion.repr_offset_q[1], attitudeQuaternion.repr_offset_q[2], attitudeQuaternion.repr_offset_q[3]);
