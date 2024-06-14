@@ -17,6 +17,7 @@
 
 #include "QGCMAVLink.h"
 #include "LinkInterface.h"
+#include "FMUStream.h"
 
 Q_DECLARE_LOGGING_CATEGORY(VehicleLinkManagerLog)
 
@@ -44,6 +45,7 @@ public:
 
     bool                    primaryLinkIsPX4Flow        (void) const;
     void                    mavlinkMessageReceived      (LinkInterface* link, mavlink_message_t message);
+    void                    forwarderMessageReceived    (LinkInterface* link, FmuStream message);
     bool                    containsLink                (LinkInterface* link);
     WeakLinkInterfacePtr    primaryLink                 (void) { return _primaryLink; }
     QString                 primaryLinkName             (void) const;

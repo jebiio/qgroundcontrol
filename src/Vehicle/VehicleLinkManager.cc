@@ -26,6 +26,19 @@ VehicleLinkManager::VehicleLinkManager(Vehicle* vehicle)
     _commLostCheckTimer.setSingleShot(false);
     _commLostCheckTimer.setInterval(_commLostCheckTimeoutMSecs);
 }
+void VehicleLinkManager::forwarderMessageReceived(LinkInterface* link, FmuStream message)
+{
+    int linkIndex = _containsLinkIndex(link);
+    if (linkIndex == -1) {
+        _addLink(link);
+    } else {
+        LinkInfo_t& linkInfo = _rgLinkInfo[linkIndex];
+        linkInfo.heartbeatElapsedTimer.restart();
+        if (_rgLinkInfo[linkIndex].commLost) {
+            _commRegainedOnLink(link);
+        }
+    }
+}
 
 void VehicleLinkManager::mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message)
 {

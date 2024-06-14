@@ -601,7 +601,27 @@ void Vehicle::resetCounters()
 
 void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
 {
-   // _vehicleLinkManager->mavlinkMessageReceived(link, message);
+    
+    // _vehicleLinkManager is check already link or not 
+    
+    _vehicleLinkManager->forwarderMessageReceived(link, message);
+
+    Eigen::Quaternionf quat(message.qw, message.qx, message.qy, message.qz);
+    // Eigen::Vector3f rates(attitudeQuaternion.rollspeed, attitudeQuaternion.pitchspeed, attitudeQuaternion.yawspeed);
+    // Eigen::Quaternionf repr_offset(attitudeQuaternion.repr_offset_q[0], attitudeQuaternion.repr_offset_q[1], attitudeQuaternion.repr_offset_q[2], attitudeQuaternion.repr_offset_q[3]);
+
+    // if repr_offset is valid, rotate attitude and rates
+    // if (repr_offset.norm() >= 0.5f) {
+    //     quat = quat * repr_offset;
+    //     rates = repr_offset * rates;
+    // }
+
+    float roll, pitch, yaw;
+    float q[] = { quat.w(), quat.x(), quat.y(), quat.z() };
+    mavlink_quaternion_to_euler(q, &roll, &pitch, &yaw);
+
+    _handleAttitudeWorker(roll, pitch, yaw);
+    
     _globalPositionIntMessageAvailable = true;
     QGeoCoordinate newPosition(message.latitude, message.longitude, message.altref);
     if (newPosition != _coordinate) {
