@@ -39,4 +39,5 @@ public:
     DEFINE_SETTINGFACT(udpTargetHostPort)
     DEFINE_SETTINGFACT(nmeaUdpPort)
     DEFINE_SETTINGFACT(forwarderListenPort)
+    DEFINE_SETTINGFACT(engineListenPort)
 };

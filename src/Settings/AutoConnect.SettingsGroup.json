@@ -95,6 +95,12 @@
     "shortDesc": "Forwarder UDP port for autoconnect",
     "type":             "uint32",
     "default":     19000
+},
+{
+    "name":             "engineListenPort",
+    "shortDesc": "Engine UDP port for autoconnect",
+    "type":             "uint32",
+    "default":     18000
 }
 ]
 }

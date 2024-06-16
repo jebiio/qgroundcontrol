@@ -13,6 +13,7 @@
 #endif
 #include "UDPLink.h"
 #include "ForwarderLink.h"
+#include "EngineLink.h"
 #include "TCPLink.h"
 #include "LogReplayLink.h"
 #ifdef QGC_ENABLE_BLUETOOTH
@@ -135,6 +136,9 @@ LinkConfiguration* LinkConfiguration::duplicateSettings(LinkConfiguration* sourc
 #endif
         case TypeForwarder:
             dupe = new ForwarderConfiguration(qobject_cast<ForwarderConfiguration*>(source));
+            break;
+        case TypeEngine:
+            dupe = new EngineConfiguration(qobject_cast<EngineConfiguration*>(source));
             break;
         case TypeLast:
             break;

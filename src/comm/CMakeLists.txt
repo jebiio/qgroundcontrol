@@ -42,6 +42,8 @@ add_library(comm
 	UDPLink.h
 	ForwarderLink.h
 	ForwarderLink.cc
+	EngineLink.h
+	EngineLink.cc
 
 	${EXTRA_SRC}
 )

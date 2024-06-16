@@ -759,6 +759,7 @@ HEADERS += \
     src/comm/TCPLink.h \
     src/comm/UDPLink.h \
     src/comm/ForwarderLink.h \
+    src/comm/EngineLink.h \
     src/comm/UdpIODevice.h \
     src/uas/UAS.h \
     src/uas/UASInterface.h \
@@ -1019,6 +1020,7 @@ SOURCES += \
     src/comm/TCPLink.cc \
     src/comm/UDPLink.cc \
     src/comm/ForwarderLink.cc \
+    src/comm/EngineLink.cc \
     src/comm/UdpIODevice.cc \
     src/main.cc \
     src/uas/UAS.cc \

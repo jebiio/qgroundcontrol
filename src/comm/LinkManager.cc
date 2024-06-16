@@ -22,6 +22,7 @@
 #include "QGCApplication.h"
 #include "UDPLink.h"
 #include "ForwarderLink.h"
+#include "EngineLink.h"
 #include "TCPLink.h"
 #include "SettingsManager.h"
 #include "LogReplayLink.h"
@@ -49,6 +50,7 @@ QGC_LOGGING_CATEGORY(LinkManagerVerboseLog, "LinkManagerVerboseLog")
 
 const char* LinkManager::_defaultUDPLinkName =                  "UDP Link (AutoConnect)";
 const char* LinkManager::_defaultForwaderUDPLinkName =                  "ForwarderUDP Link (AutoConnect)";
+const char* LinkManager::_defaultEngineUDPLinkName =                  "EngineUDP Link (AutoConnect)";
 const char* LinkManager::_mavlinkForwardingLinkName =           "MAVLink Forwarding Link";
 const char* LinkManager::_mavlinkForwardingSupportLinkName =    "MAVLink Support Forwarding Link";
 
@@ -147,6 +149,9 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
     case LinkConfiguration::TypeForwarder:
         qWarning() << "---nsr --- createConnectedLink() -> LinkConfiguration::TypeForwarder" ;    
         link = std::make_shared<ForwarderLink>(config);
+        break;
+    case LinkConfiguration::TypeEngine:
+        link = std::make_shared<EngineLink>(config);
         break;
     case LinkConfiguration::TypeLast:
         break;
@@ -360,6 +365,9 @@ void LinkManager::loadLinkConfigurationList()
                             case LinkConfiguration::TypeForwarder:
                                 link = new ForwarderConfiguration(name);
                                 break;
+                            case LinkConfiguration::TypeEngine:
+                                link = new EngineConfiguration(name);
+                                break;
                             case LinkConfiguration::TypeLast:
                                 break;
                             }
@@ -427,6 +435,30 @@ void LinkManager::_addUDPAutoConnectLink(void)
             udpConfig->setDynamic(true);
             SharedLinkConfigurationPtr config = addConfiguration(udpConfig);
             createConnectedLink(config);
+        }
+    }
+}
+void LinkManager::_addEngineUDPAutoConnectLink(void)
+{
+    if (_autoConnectSettings->autoConnectUDP()->rawValue().toBool()) {
+        bool foundEngineUDP = false;
+
+        for (int i = 0; i < _rgLinks.count(); i++) {
+            SharedLinkConfigurationPtr linkConfig = _rgLinks[i]->linkConfiguration();
+            if (linkConfig->type() == LinkConfiguration::TypeEngine && linkConfig->name() == _defaultEngineUDPLinkName) {
+                foundEngineUDP = true;
+                break;
+            }
+        }
+        qWarning() << "---nsr --- foundEngineUDP ? _addEngineUDPAutoConnectLink --------- :" << foundEngineUDP;
+
+        if (!foundEngineUDP) {
+            //-- Default UDPConfiguration is set up for autoconnect
+            EngineConfiguration* engineConfig = new EngineConfiguration(_defaultEngineUDPLinkName);
+            engineConfig->setDynamic(true);
+            SharedLinkConfigurationPtr config = addConfiguration(engineConfig);
+            createConnectedLink(config);
+            qWarning() << "---nsr --- Engine UDP port added _addForwarderUDPAutoConnectLink ---------" << config->name();
         }
     }
 }
@@ -557,6 +589,7 @@ void LinkManager::_updateAutoConnectLinks(void)
 
     _addUDPAutoConnectLink();
     _addForwarderUDPAutoConnectLink();
+    _addEngineUDPAutoConnectLink();
     _addMAVLinkForwardingLink();
     _addZeroConfAutoConnectLink();
 
