@@ -28,6 +28,25 @@
 QGC_LOGGING_CATEGORY(MultiVehicleManagerLog, "MultiVehicleManagerLog")
 
 const char* MultiVehicleManager::_gcsHeartbeatEnabledKey = "gcsHeartbeatEnabled";
+void MultiVehicleManager::printInfo()
+{
+    qWarning() << "activeVehicle Info: ";
+    if(_activeVehicle != nullptr){
+        _activeVehicle->printInfo();
+    }
+    
+    qWarning() << "Vehicles Info: "<< _vehicles.count();
+    if (_vehicles.count() <1){
+        qWarning() << "No vehicles";
+        return;
+
+    }
+   for (int i=0; i<_vehicles.count(); i++) {
+        Vehicle *v = qobject_cast<Vehicle*>(_vehicles[i]);
+         v->printInfo();
+        //  _vehicles[i].printInfo();
+    }    
+}
 
 MultiVehicleManager::MultiVehicleManager(QGCApplication* app, QGCToolbox* toolbox)
     : QGCTool(app, toolbox)

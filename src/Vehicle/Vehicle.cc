@@ -344,6 +344,11 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     _firmwarePlugin->initializeVehicle(this);
 }
 
+void Vehicle::printInfo(void)
+{
+    qWarning() << "ID:  " << _id <<"lat :"<< _coordinate.latitude() << " log: " << _coordinate.longitude();
+}
+
 void Vehicle::trackFirmwareVehicleTypeChanges(void)
 {
     connect(_settingsManager->appSettings()->offlineEditingFirmwareClass(), &Fact::rawValueChanged, this, &Vehicle::_offlineFirmwareTypeSettingChanged);
@@ -630,6 +635,7 @@ void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
         _coordinate = newPosition;
         emit coordinateChanged(_coordinate);
     }
+    _toolbox->multiVehicleManager()->printInfo();
 }
 
 void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message)
