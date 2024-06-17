@@ -608,6 +608,9 @@ void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
 {
     
     // _vehicleLinkManager is check already link or not 
+    if(message.system_id != _id && message.system_id != 0) {
+        return;
+    }
     
     _vehicleLinkManager->forwarderMessageReceived(link, message);
 
