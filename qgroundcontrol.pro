@@ -754,6 +754,7 @@ HEADERS += \
     src/comm/LogReplayLink.h \
     src/comm/MAVLinkProtocol.h \
     src/comm/ForwarderProtocol.h \
+    src/comm/FMULogReplayLink.h \
     src/comm/FMUStream.h \
     src/comm/QGCMAVLink.h \
     src/comm/TCPLink.h \
@@ -1016,6 +1017,7 @@ SOURCES += \
     src/comm/LogReplayLink.cc \
     src/comm/MAVLinkProtocol.cc \
     src/comm/ForwarderProtocol.cc \
+    src/comm/FMULogReplayLink.cc \
     src/comm/QGCMAVLink.cc \
     src/comm/TCPLink.cc \
     src/comm/UDPLink.cc \

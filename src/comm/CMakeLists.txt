@@ -28,6 +28,8 @@ add_library(comm
 	MAVLinkProtocol.h
 	ForwarderProtocol.cc
 	ForwarderProtocol.h
+	FMULogReplayLink.cc
+	FMULogReplayLink.h
 	QGCMAVLink.cc
 	QGCMAVLink.h
 	QGCSerialPortInfo.cc
