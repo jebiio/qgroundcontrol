@@ -691,6 +691,61 @@ bool QGCApplication::_checkTelemetrySavePath(bool /*useMessageBox*/)
     return true;
 }
 
+void QGCApplication::saveFMULogOnMainThread(QString tempLogfile)
+{
+    // The vehicle is gone now and we are shutting down so we need to use a message box for errors to hold shutdown and show the error
+    if (_checkFMUSavePath(true /* useMessageBox */)) {
+
+        QString saveDirPath = _toolbox->settingsManager()->appSettings()->telemetrySavePath();
+        QDir saveDir(saveDirPath);
+
+        QString nameFormat("%1%2.%3");
+        QString dtFormat("yyyy-MM-dd hh-mm-ss");
+
+        int tryIndex = 1;
+        QString saveFileName = nameFormat.arg(
+            QDateTime::currentDateTime().toString(dtFormat)).arg(QStringLiteral("")).arg(toolbox()->settingsManager()->appSettings()->telemetryFileExtension);
+        while (saveDir.exists(saveFileName)) {
+            saveFileName = nameFormat.arg(
+                QDateTime::currentDateTime().toString(dtFormat)).arg(QStringLiteral(".%1").arg(tryIndex++)).arg(toolbox()->settingsManager()->appSettings()->telemetryFileExtension);
+        }
+        QString saveFilePath = saveDir.absoluteFilePath(saveFileName);
+
+        QFile tempFile(tempLogfile);
+        if (!tempFile.copy(saveFilePath)) {
+            QString error = tr("Unable to save FMU log. Error copying telemetry to '%1': '%2'.").arg(saveFilePath).arg(tempFile.errorString());
+            showAppMessage(error);
+        }
+    }
+    QFile::remove(tempLogfile);
+}
+
+void QGCApplication::checkFMUSavePathOnMainThread()
+{
+    // This is called with an active vehicle so don't pop message boxes which holds ui thread
+    _checkFMUSavePath(false /* useMessageBox */);
+}
+
+bool QGCApplication::_checkFMUSavePath(bool /*useMessageBox*/)
+{
+    QString saveDirPath = _toolbox->settingsManager()->appSettings()->telemetrySavePath();
+    if (saveDirPath.isEmpty()) {
+        QString error = tr("Unable to save FMU log. Application save directory is not set.");
+        showAppMessage(error);
+        return false;
+    }
+
+    QDir saveDir(saveDirPath);
+    if (!saveDir.exists()) {
+        QString error = tr("Unable to save FMU log. Telemetry save directory \"%1\" does not exist.").arg(saveDirPath);
+        showAppMessage(error);
+        return false;
+    }
+
+    return true;
+}
+
+
 void QGCApplication::reportMissingParameter(int componentId, const QString& name)
 {
     QPair<int, QString>  missingParam(componentId, name);

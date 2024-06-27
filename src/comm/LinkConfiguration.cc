@@ -16,6 +16,8 @@
 #include "EngineLink.h"
 #include "TCPLink.h"
 #include "LogReplayLink.h"
+#include "FMULogReplayLink.h"
+
 #ifdef QGC_ENABLE_BLUETOOTH
 #include "BluetoothLink.h"
 #endif
@@ -139,6 +141,9 @@ LinkConfiguration* LinkConfiguration::duplicateSettings(LinkConfiguration* sourc
             break;
         case TypeEngine:
             dupe = new EngineConfiguration(qobject_cast<EngineConfiguration*>(source));
+            break;
+        case TypeFMULogReplay:
+            dupe = new FMULogReplayLinkConfiguration(qobject_cast<FMULogReplayLinkConfiguration*>(source));
             break;
         case TypeLast:
             break;

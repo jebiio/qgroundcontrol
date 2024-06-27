@@ -33,7 +33,7 @@ public:
     QString logFilenameShort(void);
 
     // Virtuals from LinkConfiguration
-    LinkType    type                    (void) override                                         { return LinkConfiguration::TypeLogReplay; }
+    LinkType    type                    (void) override                                         { return LinkConfiguration::TypeFMULogReplay; }
     void        copyFrom                (LinkConfiguration* source) override;
     void        loadSettings            (QSettings& settings, const QString& root) override;
     void        saveSettings            (QSettings& settings, const QString& root) override;

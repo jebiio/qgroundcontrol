@@ -26,6 +26,7 @@
 #include "TCPLink.h"
 #include "SettingsManager.h"
 #include "LogReplayLink.h"
+#include "FMULogReplayLink.h"
 #ifdef QGC_ENABLE_BLUETOOTH
 #include "BluetoothLink.h"
 #endif
@@ -152,6 +153,9 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         break;
     case LinkConfiguration::TypeEngine:
         link = std::make_shared<EngineLink>(config);
+        break;
+    case LinkConfiguration::TypeFMULogReplay:
+        link = std::make_shared<FMULogReplayLink>(config);
         break;
     case LinkConfiguration::TypeLast:
         break;
@@ -367,6 +371,9 @@ void LinkManager::loadLinkConfigurationList()
                                 break;
                             case LinkConfiguration::TypeEngine:
                                 link = new EngineConfiguration(name);
+                                break;
+                            case LinkConfiguration::TypeFMULogReplay:
+                                link = new FMULogReplayLinkConfiguration(name);
                                 break;
                             case LinkConfiguration::TypeLast:
                                 break;

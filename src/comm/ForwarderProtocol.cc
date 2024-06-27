@@ -107,8 +107,8 @@ void ForwarderProtocol::setToolbox(QGCToolbox *toolbox)
    // on a per-link basis before those links are used. @see resetMetadataForLink().
 
    connect(this, &ForwarderProtocol::protocolStatusMessage,   _app, &QGCApplication::criticalMessageBoxOnMainThread);
-   connect(this, &ForwarderProtocol::saveTelemetryLog,        _app, &QGCApplication::saveTelemetryLogOnMainThread);
-   connect(this, &ForwarderProtocol::checkTelemetrySavePath,  _app, &QGCApplication::checkTelemetrySavePathOnMainThread);
+   connect(this, &ForwarderProtocol::saveTelemetryLog,        _app, &QGCApplication::saveFMULogOnMainThread);
+   connect(this, &ForwarderProtocol::checkTelemetrySavePath,  _app, &QGCApplication::checkFMUSavePathOnMainThread);
 
    connect(_multiVehicleManager, &MultiVehicleManager::vehicleAdded, this, &ForwarderProtocol::_vehicleCountChanged);
    connect(_multiVehicleManager, &MultiVehicleManager::vehicleRemoved, this, &ForwarderProtocol::_vehicleCountChanged);

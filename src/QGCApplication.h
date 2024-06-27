@@ -126,6 +126,12 @@ public slots:
     /// Check that the telemetry save path is set correctly
     void checkTelemetrySavePathOnMainThread();
 
+    /// Save the specified telemetry Log
+    void saveFMULogOnMainThread(QString tempLogfile);
+
+    /// Check that the telemetry save path is set correctly
+    void checkFMUSavePathOnMainThread();
+
     /// Get current language
     const QLocale getCurrentLanguage() { return _locale; }
 
@@ -174,6 +180,7 @@ public:
     void _shutdown();
 
     bool _checkTelemetrySavePath(bool useMessageBox);
+    bool _checkFMUSavePath(bool useMessageBox);
 
 private slots:
     void _missingParamsDisplay                      (void);

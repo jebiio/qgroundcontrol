@@ -59,6 +59,7 @@ public:
         TypeLogReplay,
         TypeForwarder,
         TypeEngine,
+        TypeFMULogReplay,
         TypeLast        // Last type value (type >= TypeLast == invalid)
     };
     Q_ENUM(LinkType)
