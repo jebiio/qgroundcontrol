@@ -45,7 +45,7 @@ typedef struct _fmu_stream_t {
     uint8_t fs;
     uint8_t nosv;
     uint8_t status;
-    uint8_t system_id;
+    uint32_t system_id;
 } FmuStream; 
 
 #pragma pack()

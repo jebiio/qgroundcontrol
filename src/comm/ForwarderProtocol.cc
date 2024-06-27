@@ -35,8 +35,8 @@ Q_DECLARE_METATYPE(mavlink_message_t)
 
 QGC_LOGGING_CATEGORY(ForwarderProtocolLog, "ForwarderProtocolLog")
 
-const char* ForwarderProtocol::_tempLogFileTemplate   = "FlightDataXXXXXX";   ///< Template for temporary log file
-const char* ForwarderProtocol::_logFileExtension      = "mavlink";            ///< Extension for log files
+const char* ForwarderProtocol::_tempLogFileTemplate   = "FMUDataXXXXXX";   ///< Template for temporary log file
+const char* ForwarderProtocol::_logFileExtension      = "fmu";            ///< Extension for log files
 
 /**
  * The default constructor will create a new MAVLink object sending heartbeats at
@@ -215,6 +215,7 @@ void ForwarderProtocol::receiveBytes(LinkInterface* link, QByteArray b)
         emit messageReceived(link, fmu_packet); //emit messageReceived(link, _message);
     }
 }
+
 /**
  * @brief 
  * @param packet The forwarder packet to parse
@@ -231,12 +232,36 @@ FmuStream ForwarderProtocol::parseForwarderPacket(const QByteArray& packet)
 
 void ForwarderProtocol::logForwarderPacket(const QByteArray& packet)
 {
+    // 파일 open확인하기 _tempLogFile 
+    //packet에서 앞에 quint64 timestamp를 붙여서 로깅
+    quint64 timestamp =  static_cast<quint64>(QDateTime::currentMSecsSinceEpoch() * 1000);
+    QByteArray loggedPacket;
+    loggedPacket.append(reinterpret_cast<const char*>(&timestamp), sizeof(quint64));
+    loggedPacket.append(packet);
+    
     // Code to log the forwarded packet
+    int len = loggedPacket.size();
+    if (!_logSuspendError && _tempLogFile.isOpen()) {
+        
+        if (_tempLogFile.write(loggedPacket) != len) {
+            // If there's an error logging data, raise an alert and stop logging.
+            _stopLogging();
+            _logSuspendError = true;
+        }
+    }
 }
+
 void ForwarderProtocol::forwardPacketToEngineServer(const QByteArray& packet)
 {
     // Code to forward the packet to the engine server
+    // udp socket을 생성하여 engine server에게 packet을 전송한다. engine server의 ip주소는 "127.0.0.1"이고 port는 16000이다.
+    QHostAddress serverAddress("127.0.0.1");
+    quint16 serverPort = 16000;
+
+    QUdpSocket udpSocket;
+    udpSocket.writeDatagram(packet, serverAddress, serverPort);
 }
+
 bool ForwarderProtocol::checkValidationPacket(const QByteArray& b)
 {
     // Perform validation checks on the packet
