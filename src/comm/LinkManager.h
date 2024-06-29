@@ -24,6 +24,7 @@
 
 #if !defined(__mobile__)
 #include "LogReplayLink.h"
+#include "FMULogReplayLink.h"
 #include "UdpIODevice.h"
 #endif
 #include "QmlObjectListModel.h"
@@ -75,6 +76,7 @@ public:
     Q_INVOKABLE void shutdown(void);
 
     Q_INVOKABLE LogReplayLink* startLogReplay(const QString& logFile);
+    Q_INVOKABLE FMULogReplayLink* startFMULogReplay(const QString& logFile);
 
     // Property accessors
 

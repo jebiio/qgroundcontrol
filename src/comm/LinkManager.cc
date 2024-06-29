@@ -1001,6 +1001,21 @@ LogReplayLink* LinkManager::startLogReplay(const QString& logFile)
     }
 }
 
+FMULogReplayLink* LinkManager::startFMULogReplay(const QString& logFile)
+{
+    FMULogReplayLinkConfiguration* linkConfig = new FMULogReplayLinkConfiguration(tr("FMU Log Replay"));
+    linkConfig->setLogFilename(logFile);
+    linkConfig->setName(linkConfig->logFilenameShort());
+
+    SharedLinkConfigurationPtr sharedConfig = addConfiguration(linkConfig);
+    if (createConnectedLink(sharedConfig)) {
+        return qobject_cast<FMULogReplayLink*>(sharedConfig->link());
+    } else {
+        return nullptr;
+    }
+}
+
+
 bool LinkManager::_isSerialPortConnected(void)
 {
 #ifndef NO_SERIAL_LINK

@@ -704,10 +704,10 @@ void QGCApplication::saveFMULogOnMainThread(QString tempLogfile)
 
         int tryIndex = 1;
         QString saveFileName = nameFormat.arg(
-            QDateTime::currentDateTime().toString(dtFormat)).arg(QStringLiteral("")).arg(toolbox()->settingsManager()->appSettings()->telemetryFileExtension);
+            QDateTime::currentDateTime().toString(dtFormat)).arg(QStringLiteral("")).arg(toolbox()->settingsManager()->appSettings()->fmuFileExtension);
         while (saveDir.exists(saveFileName)) {
             saveFileName = nameFormat.arg(
-                QDateTime::currentDateTime().toString(dtFormat)).arg(QStringLiteral(".%1").arg(tryIndex++)).arg(toolbox()->settingsManager()->appSettings()->telemetryFileExtension);
+                QDateTime::currentDateTime().toString(dtFormat)).arg(QStringLiteral(".%1").arg(tryIndex++)).arg(toolbox()->settingsManager()->appSettings()->fmuFileExtension);
         }
         QString saveFilePath = saveDir.absoluteFilePath(saveFileName);
 

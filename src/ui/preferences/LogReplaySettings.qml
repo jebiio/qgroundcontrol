@@ -48,5 +48,7 @@ RowLayout {
         }
 
         property string _logFileExtension: QGroundControl.settingsManager.appSettings.telemetryFileExtension
+        property string _fmuLogFileExtension: QGroundControl.settingsManager.appSettings.fmuFileExtension
+        
     }
 }

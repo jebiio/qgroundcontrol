@@ -87,6 +87,7 @@ public:
     Q_PROPERTY(QString  parameterFileExtension  READ parameterFileExtension CONSTANT)
     Q_PROPERTY(QString  missionFileExtension    READ missionFileExtension   CONSTANT)
     Q_PROPERTY(QString  telemetryFileExtension  READ telemetryFileExtension CONSTANT)
+    Q_PROPERTY(QString  fmuFileExtension        READ fmuFileExtension       CONSTANT)
 
     Q_PROPERTY(QString qgcVersion       READ qgcVersion         CONSTANT)
     Q_PROPERTY(bool    skipSetupPage    READ skipSetupPage      WRITE setSkipSetupPage NOTIFY skipSetupPageChanged)
@@ -227,7 +228,7 @@ public:
     QString parameterFileExtension  (void) const  { return AppSettings::parameterFileExtension; }
     QString missionFileExtension    (void) const    { return AppSettings::missionFileExtension; }
     QString telemetryFileExtension  (void) const  { return AppSettings::telemetryFileExtension; }
-
+    QString fmuFileExtension        (void) const { return AppSettings::fmuFileExtension;}
     QString qgcVersion              (void) const;
 
     // Overrides from QGCTool
