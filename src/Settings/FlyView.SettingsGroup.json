@@ -24,6 +24,12 @@
     "default":     false
 },
 {
+    "name":             "showLogReplayFMUStatusBar",
+    "shortDesc": "Show/Hide Log Replay FMU status bar",
+    "type":             "bool",
+    "default":     false
+},
+{
     "name":             "alternateInstrumentPanel",
     "shortDesc": "Use Vertical Instrument Panel instead of the default one",
     "type":             "bool",

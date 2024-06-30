@@ -6,6 +6,7 @@ add_custom_target(UiPreferencesQml
 		HelpSettings.qml
 		LinkSettings.qml
 		LogReplaySettings.qml
+		LogReplayFMUSettings.qml
 		MavlinkSettings.qml
 		MockLink.qml
 		MockLinkSettings.qml

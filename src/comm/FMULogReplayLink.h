@@ -37,8 +37,8 @@ public:
     void        copyFrom                (LinkConfiguration* source) override;
     void        loadSettings            (QSettings& settings, const QString& root) override;
     void        saveSettings            (QSettings& settings, const QString& root) override;
-    QString     settingsURL             (void) override                                         { return "LogReplaySettings.qml"; }
-    QString     settingsTitle           (void) override                                          { return tr("Log Replay Link Settings"); }
+    QString     settingsURL             (void) override                                         { return "LogReplayFMUSettings.qml"; }
+    QString     settingsTitle           (void) override                                          { return tr("FMU Log Replay Link Settings"); }
 
 signals:
     void fileNameChanged();

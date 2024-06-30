@@ -9042,6 +9042,33 @@ Click Ok to start the auto-tuning process.
     </message>
 </context>
 <context>
+    <name>LogReplayFMUSettings</name>
+    <message>
+        <location filename="../src/ui/preferences/LogReplayFMUSettings.qml" line="26"/>
+        <source>Log File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/preferences/LogReplayFMUSettings.qml" line="35"/>
+        <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/preferences/LogReplayFMUSettings.qml" line="41"/>
+        <source>Select Telemetery Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/preferences/LogReplayFMUSettings.qml" line="42"/>
+        <source>Telemetry Logs (*.%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/preferences/LogReplayFMUSettings.qml" line="42"/>
+        <source>All Files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+<context>
     <name>LogReplayStatusBar</name>
     <message>
         <location filename="../src/QmlControls/LogReplayStatusBar.qml" line="19"/>
