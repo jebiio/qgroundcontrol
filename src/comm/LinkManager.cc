@@ -171,7 +171,7 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         config->setLink(link);
 
         connect(link.get(), &LinkInterface::communicationError,  _app,                &QGCApplication::criticalMessageBoxOnMainThread);
-        if (dynamic_cast<ForwarderLink*>(link.get()) != nullptr)// Code to handle when link is a ForwarderLink
+        if (dynamic_cast<ForwarderLink*>(link.get()) != nullptr || dynamic_cast<FMULogReplayLink*>(link.get()) != nullptr)// Code to handle when link is a ForwarderLink
         {
             connect(link.get(), &LinkInterface::bytesReceived,       _forwarderProtocol,    &ForwarderProtocol::receiveBytes);
             connect(link.get(), &LinkInterface::bytesSent,           _forwarderProtocol,    &ForwarderProtocol::logSentBytes);

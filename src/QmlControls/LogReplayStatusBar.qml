@@ -40,7 +40,7 @@ Rectangle {
         property string _fmuLogFileExtension: QGroundControl.settingsManager.appSettings.fmuFileExtension
     }
 
-    LogReplayLinkController {
+    FMULogReplayLinkController {
         id: controller
 
         onPercentCompleteChanged: slider.updatePercentComplete(percentComplete)

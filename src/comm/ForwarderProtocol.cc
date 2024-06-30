@@ -169,6 +169,7 @@ void ForwarderProtocol::logSentBytes(LinkInterface* link, QByteArray b){
     uint8_t bytes_time[sizeof(quint64)];
 
     Q_UNUSED(link);
+    return ; // ToDo
     if (!_logSuspendError && !_logSuspendReplay && _tempLogFile.isOpen()) {
 
         quint64 time = static_cast<quint64>(QDateTime::currentMSecsSinceEpoch() * 1000);
@@ -233,31 +234,48 @@ FmuStream ForwarderProtocol::parseForwarderPacket(const QByteArray& packet)
 
 void ForwarderProtocol::logForwarderPacket(QByteArray packet)
 {
-    // 파일 open확인하기 _tempLogFile 
+    
     //packet에서 앞에 quint64 timestamp를 붙여서 로깅
     uint8_t bytes_time[sizeof(quint64)];
 
-    quint64 timestamp =  static_cast<quint64>(QDateTime::currentMSecsSinceEpoch() * 1000);
+    if (!_logSuspendError && !_logSuspendReplay && _tempLogFile.isOpen()) {
+        quint64 time =  static_cast<quint64>(QDateTime::currentMSecsSinceEpoch() * 1000);
+        qToBigEndian(time,bytes_time);
+        int count_before = packet.count();
+        packet.insert(0,QByteArray((const char*)bytes_time,sizeof(bytes_time)));
+        int len = packet.count();
+        /*
+        uint8_t buf[sizeof(quint64)+sizeof(FmuStream)];
+        int count_before = packet.count();
+        quint64 time =  static_cast<quint64>(QDateTime::currentMSecsSinceEpoch() * 1000);
 
-    qToBigEndian(timestamp,bytes_time);
+        qToBigEndian(time,buf);
 
-    packet.insert(0,QByteArray((const char*)bytes_time,sizeof(bytes_time)));
+        // packet.insert(0,QByteArray((const char*)bytes_time,sizeof(bytes_time)));
+        memcpy(buf+sizeof(quint64), packet.data(), sizeof(FmuStream));
+        // int len = packet.count();
+        int len = sizeof(quint64)+sizeof(FmuStream);
+        */
+       
+    //    int len = sizeof(FmuStream);
+    //    int count_before = len;
+    //     uint8_t buf[sizeof(FmuStream)];
+    //     memcpy(buf, packet.data(), len);
+    //     QByteArray b(reinterpret_cast<const char*>(buf), len);
+        if(_tempLogFile.write(packet) != len){
+            _stopLogging();
+            _logSuspendError = true;
+            qDebug() << "*****  Error : log temp write can't writted";
+        }
 
-    int len = packet.count();
+        static int counter = 0;
+        counter++;
+        if(counter == 10){
+            _stopLogging();
+        }
+        qDebug() << "************************  log temp write counter : "<< counter <<" before :"<< count_before <<" after :" << len ;
 
-    if(_tempLogFile.write(packet) != len){
-        _stopLogging();
-        _logSuspendError = true;
-        qDebug() << "*****  Error : log temp write can't writted";
     }
-
-    static int counter = 0;
-    counter++;
-    if(counter == 15){
-        _stopLogging();
-    }
-    qDebug() << "************************  log temp write counter : " << counter;
-
 /*
     QByteArray loggedPacket;
     loggedPacket.append(reinterpret_cast<const char*>(&timestamp), sizeof(quint64));

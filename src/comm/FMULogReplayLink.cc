@@ -176,21 +176,20 @@ quint64 FMULogReplayLink::_parseTimestamp(const QByteArray& bytes)
 /// @return Unix timestamp in microseconds UTC for NEXT mavlink message or 0 if no message found
 quint64 FMULogReplayLink::_readNextFMUMessage(QByteArray& bytes)
 {
-    int size = sizeof(FmuStream) + sizeof(quint64);
-
+    int packet_size = sizeof(FmuStream) + sizeof(quint64);
+    int fmu_size = sizeof(FmuStream);
     bytes.clear();
+
     while(!_logFile.atEnd()){
-        QByteArray data = _logFile.read(size);
+        QByteArray data = _logFile.read(packet_size);
         // QByteArray data = _dataStream.readRawData(size);
-        if(data.size() != size){
+        if(data.size() != packet_size){
             return 0;
         }
-
-        QByteArray time = data.left(8);
-        // QByteArray time = 
-        
-        bytes = data.mid(8);
-        return _parseTimestamp(time);
+        // QByteArray rawTime = _logFile.read(cbTimestamp);
+        QByteArray rawTime = data.left(cbTimestamp);
+        bytes = data.right(fmu_size);
+        return _parseTimestamp(rawTime);
     }
     return 0;
 }
@@ -224,25 +223,16 @@ quint64 FMULogReplayLink::_seekToNextFMUMessage(FmuStream* nextMsg)
 
 quint64 FMULogReplayLink::_findLastTimestamp(void)
 {
-    char                nextByte;
-    mavlink_status_t    status;
     quint64             lastTimestamp = 0;
-    mavlink_message_t   msg;
 
     // We read through the entire file looking for the last good timestamp. This can be somewhat slow, but trying to work from the
     // end of the file can be way slower due to all the seeking back and forth required. So instead we take the simple reliable approach.
 
     _logFile.reset();
-    mavlink_reset_channel_status(_mavlinkChannel);
+    qint64 pack_size = sizeof(FmuStream) + sizeof(quint64);
+    _logFile.seek(_logFile.size() - pack_size);
 
-    while (_logFile.bytesAvailable() > cbTimestamp) {
-        lastTimestamp = _parseTimestamp(_logFile.read(cbTimestamp));
-
-        bool endOfMessage = false;
-        while (!endOfMessage && _logFile.getChar(&nextByte)) {
-            endOfMessage = mavlink_parse_char(_mavlinkChannel, nextByte, &msg, &status);
-        }
-    }
+    lastTimestamp = _parseTimestamp(_logFile.read(cbTimestamp));
 
     return lastTimestamp;
 }
@@ -270,6 +260,7 @@ bool FMULogReplayLink::_loadLogFile(void)
     _logFileSize = logFileInfo.size();
     _dataStream.setDevice(&_logFile);
 
+    // print : check start time and end time
     startTimeUSecs = _parseTimestamp(_logFile.read(cbTimestamp));
     endTimeUSecs = _findLastTimestamp();
 
@@ -349,7 +340,7 @@ void FMULogReplayLink::_play(void)
 {
     qgcApp()->toolbox()->linkManager()->setConnectionsSuspended(tr("Connect not allowed during Flight Data replay."));
 #ifndef __mobile__
-    qgcApp()->toolbox()->mavlinkProtocol()->suspendLogForReplay(true);
+    qgcApp()->toolbox()->forwarderProtocol()->suspendLogForReplay(true);
 #endif
     
     // Make sure we aren't at the end of the file, if we are, reset to the beginning and play from there.
@@ -368,7 +359,7 @@ void FMULogReplayLink::_pause(void)
 {
     qgcApp()->toolbox()->linkManager()->setConnectionsAllowed();
 #ifndef __mobile__
-    qgcApp()->toolbox()->mavlinkProtocol()->suspendLogForReplay(false);
+    qgcApp()->toolbox()->forwarderProtocol()->suspendLogForReplay(false);
 #endif
     
     _readTickTimer.stop();
