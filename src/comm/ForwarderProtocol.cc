@@ -211,6 +211,7 @@ void ForwarderProtocol::receiveBytes(LinkInterface* link, QByteArray b)
         forwardPacketToEngineServer(b);
         logForwarderPacket(b);
         FmuStream fmu_packet  = parseForwarderPacket(b);
+        _startLogging();
         emit vehicleHeartbeatInfo(link, fmu_packet.system_id);// emit vehicleHeartbeatInfo(link, _message.sysid, _message.compid, heartbeat.autopilot, heartbeat.type);
         emit messageReceived(link, fmu_packet); //emit messageReceived(link, _message);
     }
@@ -230,11 +231,34 @@ FmuStream ForwarderProtocol::parseForwarderPacket(const QByteArray& packet)
     return *(FmuStream*)bytes;
 }
 
-void ForwarderProtocol::logForwarderPacket(const QByteArray& packet)
+void ForwarderProtocol::logForwarderPacket(QByteArray packet)
 {
     // 파일 open확인하기 _tempLogFile 
     //packet에서 앞에 quint64 timestamp를 붙여서 로깅
+    uint8_t bytes_time[sizeof(quint64)];
+
     quint64 timestamp =  static_cast<quint64>(QDateTime::currentMSecsSinceEpoch() * 1000);
+
+    qToBigEndian(timestamp,bytes_time);
+
+    packet.insert(0,QByteArray((const char*)bytes_time,sizeof(bytes_time)));
+
+    int len = packet.count();
+
+    if(_tempLogFile.write(packet) != len){
+        _stopLogging();
+        _logSuspendError = true;
+        qDebug() << "*****  Error : log temp write can't writted";
+    }
+
+    static int counter = 0;
+    counter++;
+    if(counter == 15){
+        _stopLogging();
+    }
+    qDebug() << "************************  log temp write counter : " << counter;
+
+/*
     QByteArray loggedPacket;
     loggedPacket.append(reinterpret_cast<const char*>(&timestamp), sizeof(quint64));
     loggedPacket.append(packet);
@@ -249,6 +273,7 @@ void ForwarderProtocol::logForwarderPacket(const QByteArray& packet)
             _logSuspendError = true;
         }
     }
+*/
 }
 
 void ForwarderProtocol::forwardPacketToEngineServer(const QByteArray& packet)
@@ -545,16 +570,10 @@ void ForwarderProtocol::_stopLogging(void)
 {
     if (_tempLogFile.isOpen()) {
         if (_closeLogFile()) {
-            if ((_vehicleWasArmed || _app->toolbox()->settingsManager()->appSettings()->telemetrySaveNotArmed()->rawValue().toBool()) &&
-                _app->toolbox()->settingsManager()->appSettings()->telemetrySave()->rawValue().toBool() &&
-                !_app->toolbox()->settingsManager()->appSettings()->disableAllPersistence()->rawValue().toBool()) {
-                emit saveTelemetryLog(_tempLogFile.fileName());
-            } else {
-                QFile::remove(_tempLogFile.fileName());
-            }
+            emit saveTelemetryLog(_tempLogFile.fileName());
         }
     }
-    _vehicleWasArmed = false;
+    // _vehicleWasArmed = false;
 }
 
 /// @brief Checks the temp directory for log files which may have been left there.

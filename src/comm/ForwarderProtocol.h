@@ -82,7 +82,7 @@ public:
     virtual void setToolbox(QGCToolbox *toolbox);
 
     bool checkValidationPacket(const QByteArray& b);
-    void logForwarderPacket(const QByteArray& packet);
+    void logForwarderPacket(QByteArray packet);
     void forwardPacketToEngineServer(const QByteArray& packet);
     FmuStream parseForwarderPacket(const QByteArray& packet);
     
