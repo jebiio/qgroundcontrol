@@ -273,7 +273,7 @@ void ForwarderProtocol::logForwarderPacket(QByteArray packet)
         if(counter == 10){
             _stopLogging();
         }
-        qDebug() << "************************  log temp write counter : "<< counter <<" before :"<< count_before <<" after :" << len ;
+        qDebug() << "************************  log temp write counter : "<< counter <<"time : "<< time << "time[0] : " << bytes_time[0] <<"time[1] : "<< bytes_time[1] <<"time[2] :"<< bytes_time[2] << "time[3] :" << bytes_time[3]<< "time[4] : "<< bytes_time[4] <<"time[5] : "<< bytes_time[5] <<"time[6] : "<< bytes_time[6] <<"time[7] : "<< bytes_time[7] << "before :"<< count_before <<" after :" << len ;
 
     }
 /*
