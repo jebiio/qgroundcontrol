@@ -626,6 +626,7 @@ void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
     //     rates = repr_offset * rates;
     // }
 
+    _updatedFmuEnabled(true);
     float roll, pitch, yaw;
     float q[] = { quat.w(), quat.x(), quat.y(), quat.z() };
     mavlink_quaternion_to_euler(q, &roll, &pitch, &yaw);
@@ -1581,7 +1582,30 @@ void Vehicle::_handleHomePosition(mavlink_message_t& message)
                                     homePos.altitude / 1000.0);
     _setHomePosition(newHomePosition);
 }
-
+void Vehicle::_updatedFmuEnabled(bool enabled)
+{
+    if (_fmu_enabled != enabled) {
+        _fmu_enabled = enabled;
+        
+        if(_fmu_enabled){
+            _trajectoryPoints->start();
+            _flightTimerStart();
+            _clearCameraTriggerPoints();
+            // Reset battery warning
+            _lowestBatteryChargeStateAnnouncedMap.clear();
+        } else {
+            _trajectoryPoints->stop();
+            _flightTimerStop();
+            // Also handle Video Streaming
+            if(qgcApp()->toolbox()->videoManager()->videoReceiver()) {
+                if(_settingsManager->videoSettings()->disableWhenDisarmed()->rawValue().toBool()) {
+                    _settingsManager->videoSettings()->streamEnabled()->setRawValue(false);
+                    qgcApp()->toolbox()->videoManager()->videoReceiver()->stop();
+                }
+            }
+        }
+    }
+}
 void Vehicle::_updateArmed(bool armed)
 {
     if (_armed != armed) {

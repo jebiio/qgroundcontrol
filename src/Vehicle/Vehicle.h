@@ -1114,6 +1114,7 @@ private:
     void _setupAutoDisarmSignalling     ();
     void _setCapabilities               (uint64_t capabilityBits);
     void _updateArmed                   (bool armed);
+    void _updatedFmuEnabled             (bool enabled);
     bool _apmArmingNotRequired          ();
     void _initializeCsv                 ();
     void _writeCsvLine                  ();
@@ -1213,6 +1214,7 @@ private:
     Autotune*                       _autotune                       = nullptr;
 
     bool    _armed = false;         ///< true: vehicle is armed
+    bool    _fmu_enabled = false;   ///< true: FMU is enabled
     uint8_t _base_mode = 0;     ///< base_mode from HEARTBEAT
     uint32_t _custom_mode = 0;  ///< custom_mode from HEARTBEAT
     uint32_t _custom_mode_user_intention = 0;  ///< custom_mode_user_intention from CURRENT_MODE
