@@ -98,6 +98,7 @@ const char* Vehicle::_distanceToGCSFactName =       "distanceToGCS";
 const char* Vehicle::_hobbsFactName =               "hobbs";
 const char* Vehicle::_throttlePctFactName =         "throttlePct";
 const char* Vehicle::_imuTempFactName =             "imuTemp";
+const char* Vehicle::_engineRunningFactName =       "engineRunning";
 
 const char* Vehicle::_gpsFactGroupName =                "gps";
 const char* Vehicle::_gps2FactGroupName =               "gps2";
@@ -165,6 +166,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _hobbsFact                    (0, _hobbsFactName,             FactMetaData::valueTypeString)
     , _throttlePctFact              (0, _throttlePctFactName,       FactMetaData::valueTypeUint16)
     , _imuTempFact                  (0, _imuTempFactName,           FactMetaData::valueTypeInt16)
+    , _engineRunningFact            (0, _engineRunningFactName,     FactMetaData::valueTypeBool)
     , _gpsFactGroup                 (this)
     , _gps2FactGroup                (this)
     , _windFactGroup                (this)
@@ -319,6 +321,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _hobbsFact                        (0, _hobbsFactName,             FactMetaData::valueTypeString)
     , _throttlePctFact                  (0, _throttlePctFactName,       FactMetaData::valueTypeUint16)
     , _imuTempFact                      (0, _imuTempFactName,           FactMetaData::valueTypeInt16)
+    , _engineRunningFact                (0, _engineRunningFactName,     FactMetaData::valueTypeBool)
     , _gpsFactGroup                     (this)
     , _gps2FactGroup                    (this)
     , _windFactGroup                    (this)
@@ -460,6 +463,7 @@ void Vehicle::_commonInit()
     _addFact(&_distanceToGCSFact,       _distanceToGCSFactName);
     _addFact(&_throttlePctFact,         _throttlePctFactName);
     _addFact(&_imuTempFact,             _imuTempFactName);
+    _addFact(&_engineRunningFact,       _engineRunningFactName);
 
     _hobbsFact.setRawValue(QVariant(QString("0000:00:00")));
     _addFact(&_hobbsFact,               _hobbsFactName);
@@ -809,12 +813,17 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_FENCE_STATUS:
         _handleFenceStatus(message);
         break;
+    // add engine status
+    // case MAVLINK_MSG_ID_ENGINE_STATUS:
+    //     _handleEngineStatus(message);
+    //     break;
 
     case MAVLINK_MSG_ID_EVENT:
     case MAVLINK_MSG_ID_CURRENT_EVENT_SEQUENCE:
     case MAVLINK_MSG_ID_RESPONSE_EVENT_ERROR:
         _eventHandler(message.compid).handleEvents(message);
         break;
+
 
     case MAVLINK_MSG_ID_SERIAL_CONTROL:
     {
@@ -4441,6 +4450,18 @@ void Vehicle::_handleFenceStatus(const mavlink_message_t& message)
         lastUpdate = now;
     }
 }
+
+void Vehicle::_handleEngineStatus(const mavlink_message_t& message)
+{
+
+    _engineRunningFact.rawValue().toBool();
+    // mavlink_your_engine_status_t engineStatus;
+    // mavlink_msg_your_engine_status_decode(&message, &engineStatus);
+
+    // bool running = engineStatus.running;
+    // setEngineRunning(running);
+
+}
 void Vehicle::updateFlightDistance(double distance)
 {
     _flightDistanceFact.setRawValue(_flightDistanceFact.rawValue().toDouble() + distance);
@@ -4541,6 +4562,18 @@ void Vehicle::sendJoystickDataThreadSafe(float roll, float pitch, float yaw, flo
                 0, 0, 0, 0);
     sendMessageOnLinkThreadSafe(sharedLink.get(), message);
 }
+
+bool Vehicle::engineRunning() const {
+    return _engineRunningFact.rawValue().toBool();
+}
+
+void Vehicle::setEngineRunning(bool running) {
+    if (_engineRunningFact.rawValue().toBool() != running) {
+        _engineRunningFact.setRawValue(running);
+        emit engineRunningChanged();
+    }
+}
+
 
 void Vehicle::triggerSimpleCamera()
 {
