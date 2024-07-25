@@ -72,7 +72,8 @@ Rectangle {
 
             Item {
                 id:     outerItem
-                width:  Math.max(_root.width, settingsColumn.width)
+                width: settingsColumn.width + (_margins * 10)
+                // width:  Math.max(_root.width, settingsColumn.width)
                 height: settingsColumn.height
 
                 ColumnLayout {
@@ -80,19 +81,19 @@ Rectangle {
                     anchors.horizontalCenter:   parent.horizontalCenter
 
                     QGCLabel {
-                        id:         flyViewSectionLabel
+                        id:         trainModeLabel
                         text:       qsTr("Train Mode")
-                        visible:    QGroundControl.settingsManager.flyViewSettings.visible
+                        visible:    true
                     }
                     Rectangle {
-                        Layout.preferredHeight: flyViewCol.height + (_margins * 2)
-                        Layout.preferredWidth:  flyViewCol.width + (_margins * 2)
+                        Layout.preferredHeight: trainCol.height + (_margins * 2)
+                        Layout.preferredWidth:  trainCol.width + (_margins * 2)
                         color:                  qgcPal.windowShade
-                        visible:                flyViewSectionLabel.visible
+                        visible:                trainModeLabel.visible
                         Layout.fillWidth:       true
 
                         ColumnLayout {
-                            id:                         flyViewCol
+                            id:                         trainCol
                             anchors.margins:            _margins
                             anchors.top:                parent.top
                             anchors.horizontalCenter:   parent.horizontalCenter
@@ -102,102 +103,237 @@ Rectangle {
                                 columns: 2
 
                                 QGCLabel {
-                                    text:               qsTr("Guided Command Settings")
-                                    Layout.columnSpan:  2
-                                    Layout.alignment:   Qt.AlignHCenter
-                                }
-
-                                QGCLabel {
-                                    text:       qsTr("Minimum Altitude")
+                                    text:       qsTr("train path")
                                     visible:    guidedMinAltField.visible
                                 }
-                                FactTextField {
-                                    id:                     guidedMinAltField
-                                    Layout.preferredWidth:  _valueFieldWidth
-                                    visible:                fact.visible
-                                    fact:                   _flyViewSettings.guidedMinimumAltitude
+                                QGCLabel {
+                                    text:       qsTr("string")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("valid path")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("string")
+                                    visible:    guidedMinAltField.visible
                                 }
 
                                 QGCLabel {
-                                    text:       qsTr("Maximum Altitude")
-                                    visible:    guidedMaxAltField.visible
+                                    text:       qsTr("test path")
+                                    visible:    guidedMinAltField.visible
                                 }
-                                FactTextField {
-                                    id:                     guidedMaxAltField
-                                    Layout.preferredWidth:  _valueFieldWidth
-                                    visible:                fact.visible
-                                    fact:                   _flyViewSettings.guidedMaximumAltitude
-                                }
-
                                 QGCLabel {
-                                    text:       qsTr("Go To Location Max Distance")
-                                    visible:    maxGotoDistanceField.visible
+                                    text:       qsTr("string")
+                                    visible:    guidedMinAltField.visible
                                 }
-                                FactTextField {
-                                    id:                     maxGotoDistanceField
-                                    Layout.preferredWidth:  _valueFieldWidth
-                                    visible:                fact.visible
-                                    fact:                  _flyViewSettings.maxGoToLocationDistance
+                                QGCLabel {
+                                    text:       qsTr("result path")
+                                    visible:    guidedMinAltField.visible
                                 }
+                                QGCLabel {
+                                    text:       qsTr("string")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("seed")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                
+                                QGCLabel {
+                                    text:       qsTr("model")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("string")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("selective method")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("string")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("var_to_forecast")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("string")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("past windows size")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                
+                                QGCLabel {
+                                    text:       qsTr("future windows size")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("epoch")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("batch")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("num_workers")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("lr")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("float")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                
+                                QGCLabel {
+                                    text:       qsTr("weight_decay")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("float")
+                                    visible:    guidedMinAltField.visible
+                                }                               
                             }
-
                         }
                     }
 
-                    Item { width: 1; height: _margins; visible: planViewSectionLabel.visible }
+                    Item { width: 1; height: _margins; visible: detectionModeLabel.visible }
                     QGCLabel {
-                        id:         planViewSectionLabel
+                        id:         detectionModeLabel
                         text:       qsTr("Detection Mode")
-                        visible:    _planViewSettings.visible
+                        visible:    true
                     }
                     Rectangle {
-                        Layout.preferredHeight: planViewCol.height + (_margins * 2)
-                        Layout.preferredWidth:  planViewCol.width + (_margins * 2)
+                        Layout.preferredHeight: detectionCol.height + (_margins * 2)
+                        Layout.preferredWidth:  detectionCol.width + (_margins * 2)
                         color:                  qgcPal.windowShade
-                        visible:                planViewSectionLabel.visible
+                        visible:                detectionModeLabel.visible
                         Layout.fillWidth:       true
 
                         ColumnLayout {
-                            id:                         planViewCol
+                            id:                         detectionCol
                             anchors.margins:            _margins
                             anchors.top:                parent.top
                             anchors.horizontalCenter:   parent.horizontalCenter
                             spacing:                    _margins
-
+                            
                             GridLayout {
-                                columns:            2
-                                columnSpacing:      ScreenTools.defaultFontPixelWidth
-                                visible:            QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude.visible
+                                columns: 2
 
-                                QGCLabel { text: qsTr("Default Mission Altitude") }
-                                FactTextField {
-                                    Layout.preferredWidth:  _valueFieldWidth
-                                    fact:                   QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
+                                QGCLabel {
+                                    text:       qsTr("model path")
+                                    visible:    guidedMinAltField.visible
                                 }
-
-                                QGCLabel { text: qsTr("VTOL TransitionDistance") }
-                                FactTextField {
-                                    Layout.preferredWidth:  _valueFieldWidth
-                                    fact:                   QGroundControl.settingsManager.planViewSettings.vtolTransitionDistance
+                                QGCLabel {
+                                    text:       qsTr("string")
+                                    visible:    guidedMinAltField.visible
                                 }
-                            }
-
-                            FactCheckBox {
-                                text:   qsTr("Use MAV_CMD_CONDITION_GATE for pattern generation")
-                                fact:   QGroundControl.settingsManager.planViewSettings.useConditionGate
-                            }
-
-                            FactCheckBox {
-                                text:       qsTr("Missions Do Not Require Takeoff Item")
-                                fact:       _planViewSettings.takeoffItemNotRequired
-                                visible:    _planViewSettings.takeoffItemNotRequired.visible
+                                QGCLabel {
+                                    text:       qsTr("past windows size")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("future windows size")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("past windows size")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                
+                                QGCLabel {
+                                    text:       qsTr("epoch")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("batch")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("num_workers")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("int")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("lr")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("float")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                
+                                QGCLabel {
+                                    text:       qsTr("weight_decay")
+                                    visible:    guidedMinAltField.visible
+                                }
+                                QGCLabel {
+                                    text:       qsTr("float")
+                                    visible:    guidedMinAltField.visible
+                                }                               
                             }
                         }
                     }
 
-                    Item { width: 1; height: _margins; visible: unitsSectionLabel.visible }
+                    Item { width: 1; height: _margins; visible: forwarderIPLabel.visible }
                     QGCLabel {
-                        id:         unitsSectionLabel
+                        id:         forwarderIPLabel
                         text:       qsTr("Forward IP")
                         visible:    QGroundControl.settingsManager.unitsSettings.visible
                     }
@@ -215,276 +351,421 @@ Rectangle {
                             Layout.fillWidth:           false
                             anchors.horizontalCenter:   parent.horizontalCenter
                             flow:                       GridLayout.TopToBottom
-                            rows:                       5
+                            columns:                       2
 
-                            Repeater {
-                                model: [ qsTr("Horizontal Distance"), qsTr("Vertical Distance"), qsTr("Area"), qsTr("Speed"), qsTr("Temperature") ]
-                                QGCLabel { text: modelData }
+                            QGCLabel { text: qsTr("Server Address") }
+
+                            QGCTextField {
+                                id:                     hostField
+                                text:                   "0.0.0.0"
                             }
-                            Repeater {
-                                model:  [ QGroundControl.settingsManager.unitsSettings.horizontalDistanceUnits, QGroundControl.settingsManager.unitsSettings.verticalDistanceUnits, QGroundControl.settingsManager.unitsSettings.areaUnits, QGroundControl.settingsManager.unitsSettings.speedUnits, QGroundControl.settingsManager.unitsSettings.temperatureUnits ]
-                                FactComboBox {
-                                    Layout.preferredWidth:  _comboFieldWidth
-                                    fact:                   modelData
-                                    indexModel:             false
-                                }
+                            QGCLabel { text: qsTr("Port") }
+
+                            QGCTextField {
+                                id:                     testField
+                                text:                   "0000"
                             }
+
                         }
                     }
 
-                    Item { width: 1; height: _margins; visible: miscSectionLabel.visible }
+                    Item { width: 1; height: _margins; visible: forwarderReceivePort.visible }
                     QGCLabel {
-                        id:         miscSectionLabel
-                        text:       qsTr("Forwarder Receive Port")
-                        visible:    QGroundControl.settingsManager.appSettings.visible
+                        id:         forwarderReceivePort
+                        text:       qsTr("Forward Receive Port")
+                        visible:    true
                     }
                     Rectangle {
-                        Layout.preferredWidth:  Math.max(comboGrid.width, miscCol.width) + (_margins * 2)
-                        Layout.preferredHeight: (pathRow.visible ? pathRow.y + pathRow.height : miscColItem.y + miscColItem.height)  + (_margins * 2)
-                        Layout.fillWidth:       true
+                        Layout.preferredHeight: unitsGrid2.height + (_margins * 2)
+                        Layout.preferredWidth:  unitsGrid2.width + (_margins * 20)
                         color:                  qgcPal.windowShade
                         visible:                miscSectionLabel.visible
+                        Layout.fillWidth:       true
 
-                        Item {
-                            id:                 comboGridItem
-                            anchors.margins:    _margins
-                            anchors.top:        parent.top
-                            anchors.left:       parent.left
-                            anchors.right:      parent.right
-                            height:             comboGrid.height
+                        GridLayout {
+                            id:                         unitsGrid2
+                            anchors.topMargin:          _margins
+                            anchors.top:                parent.top
+                            Layout.fillWidth:           false
+                            anchors.horizontalCenter:   parent.horizontalCenter
+                            flow:                       GridLayout.TopToBottom
+                            columns:                       2
 
-                            GridLayout {
-                                id:                         comboGrid
-                                anchors.horizontalCenter:   parent.horizontalCenter
-                                columns:                    2
+    
+                            QGCLabel { text: qsTr("Port") }
 
-                                QGCLabel {
-                                    text:           qsTr("Language")
-                                    visible: QGroundControl.settingsManager.appSettings.qLocaleLanguage.visible
-                                }
-                                FactComboBox {
-                                    Layout.preferredWidth:  _comboFieldWidth
-                                    fact:                   QGroundControl.settingsManager.appSettings.qLocaleLanguage
-                                    indexModel:             false
-                                    visible:                QGroundControl.settingsManager.appSettings.qLocaleLanguage.visible
-                                }
-
-                                QGCLabel {
-                                    text:           qsTr("Color Scheme")
-                                    visible: QGroundControl.settingsManager.appSettings.indoorPalette.visible
-                                }
-                                FactComboBox {
-                                    Layout.preferredWidth:  _comboFieldWidth
-                                    fact:                   QGroundControl.settingsManager.appSettings.indoorPalette
-                                    indexModel:             false
-                                    visible:                QGroundControl.settingsManager.appSettings.indoorPalette.visible
-                                }
-
-                                QGCLabel {
-                                    text:       qsTr("Map Provider")
-                                    width:      _labelWidth
-                                }
-
-                                QGCComboBox {
-                                    id:             mapCombo
-                                    model:          QGroundControl.mapEngineManager.mapProviderList
-                                    Layout.preferredWidth:  _comboFieldWidth
-                                    onActivated: {
-                                        _mapProvider = textAt(index)
-                                        QGroundControl.settingsManager.flightMapSettings.mapProvider.value=textAt(index)
-                                        QGroundControl.settingsManager.flightMapSettings.mapType.value=QGroundControl.mapEngineManager.mapTypeList(textAt(index))[0]
-                                    }
-                                    Component.onCompleted: {
-                                        var index = mapCombo.find(_mapProvider)
-                                        if(index < 0) index = 0
-                                        mapCombo.currentIndex = index
-                                    }
-                                }
-                                QGCLabel {
-                                    text:       qsTr("Map Type")
-                                    width:      _labelWidth
-                                }
-                                QGCComboBox {
-                                    id:             mapTypeCombo
-                                    model:          QGroundControl.mapEngineManager.mapTypeList(_mapProvider)
-                                    Layout.preferredWidth:  _comboFieldWidth
-                                    onActivated: {
-                                        _mapType = textAt(index)
-                                        QGroundControl.settingsManager.flightMapSettings.mapType.value=textAt(index)
-                                    }
-                                    Component.onCompleted: {
-                                        var index = mapTypeCombo.find(_mapType)
-                                        if(index < 0) index = 0
-                                        mapTypeCombo.currentIndex = index
-                                    }
-                                }
-
-                                QGCLabel {
-                                    text:                   qsTr("Stream GCS Position")
-                                    visible:                _followTarget.visible
-                                }
-                                FactComboBox {
-                                    Layout.preferredWidth:  _comboFieldWidth
-                                    fact:                   _followTarget
-                                    indexModel:             false
-                                    visible:                _followTarget.visible
-                                }
-                                QGCLabel {
-                                    text:                           qsTr("UI Scaling")
-                                    visible:                        _appFontPointSize.visible
-                                    Layout.alignment:               Qt.AlignVCenter
-                                }
-                                Item {
-                                    width:                          _comboFieldWidth
-                                    height:                         baseFontEdit.height * 1.5
-                                    visible:                        _appFontPointSize.visible
-                                    Layout.alignment:               Qt.AlignVCenter
-                                    Row {
-                                        spacing:                    ScreenTools.defaultFontPixelWidth
-                                        anchors.verticalCenter:     parent.verticalCenter
-                                        QGCButton {
-                                            width:                  height
-                                            height:                 baseFontEdit.height * 1.5
-                                            text:                   "-"
-                                            anchors.verticalCenter: parent.verticalCenter
-                                            onClicked: {
-                                                if (_appFontPointSize.value > _appFontPointSize.min) {
-                                                    _appFontPointSize.value = _appFontPointSize.value - 1
-                                                }
-                                            }
-                                        }
-                                        QGCLabel {
-                                            id:                     baseFontEdit
-                                            width:                  ScreenTools.defaultFontPixelWidth * 6
-                                            text:                   (QGroundControl.settingsManager.appSettings.appFontPointSize.value / ScreenTools.platformFontPointSize * 100).toFixed(0) + "%"
-                                            horizontalAlignment:    Text.AlignHCenter
-                                            anchors.verticalCenter: parent.verticalCenter
-                                        }
-                                        Text {
-
-                                        }
-
-                                        QGCButton {
-                                            width:                  height
-                                            height:                 baseFontEdit.height * 1.5
-                                            text:                   "+"
-                                            anchors.verticalCenter: parent.verticalCenter
-                                            onClicked: {
-                                                if (_appFontPointSize.value < _appFontPointSize.max) {
-                                                    _appFontPointSize.value = _appFontPointSize.value + 1
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        Item {
-                            id:                 miscColItem
-                            anchors.margins:    _margins
-                            anchors.left:       parent.left
-                            anchors.right:      parent.right
-                            anchors.top:        comboGridItem.bottom
-                            anchors.topMargin:  ScreenTools.defaultFontPixelHeight
-                            height:             miscCol.height
-
-                            ColumnLayout {
-                                id:                         miscCol
-                                anchors.horizontalCenter:   parent.horizontalCenter
-                                spacing:                    _margins
-
-                                FactCheckBox {
-                                    text:       qsTr("Use Vehicle Pairing")
-                                    fact:       _usePairing
-                                    visible:    _usePairing.visible && QGroundControl.supportsPairing
-                                    property Fact _usePairing: QGroundControl.settingsManager.appSettings.usePairing
-                                }
-
-                                FactCheckBox {
-                                    text:       qsTr("Mute all audio output")
-                                    fact:       _audioMuted
-                                    visible:    _audioMuted.visible
-                                    property Fact _audioMuted: QGroundControl.settingsManager.appSettings.audioMuted
-                                }
-
-                                FactCheckBox {
-                                    text:       qsTr("Save application data to SD Card")
-                                    fact:       _androidSaveToSDCard
-                                    visible:    _androidSaveToSDCard.visible
-                                    property Fact _androidSaveToSDCard: QGroundControl.settingsManager.appSettings.androidSaveToSDCard
-                                }
-
-                                FactCheckBox {
-                                    text:       qsTr("Check for Internet connection")
-                                    fact:       _checkInternet
-                                    visible:    _checkInternet && _checkInternet.visible
-                                    property Fact _checkInternet: QGroundControl.settingsManager.appSettings.checkInternet
-                                }
-
-                                QGCCheckBox {
-                                    id:         clearCheck
-                                    text:       qsTr("Clear all settings on next start")
-                                    checked:    false
-                                    onClicked: {
-                                        checked ? clearDialog.visible = true : QGroundControl.clearDeleteAllSettingsNextBoot()
-                                    }
-                                    MessageDialog {
-                                        id:                 clearDialog
-                                        visible:            false
-                                        icon:               StandardIcon.Warning
-                                        standardButtons:    StandardButton.Yes | StandardButton.No
-                                        title:              qsTr("Clear Settings")
-                                        text:               qsTr("All saved settings will be reset the next time you start %1. Is this really what you want?").arg(QGroundControl.appName)
-                                        onYes: {
-                                            QGroundControl.deleteAllSettingsNextBoot()
-                                            clearDialog.visible = false
-                                        }
-                                        onNo: {
-                                            clearCheck.checked  = false
-                                            clearDialog.visible = false
-                                        }
-                                    }
-                                }
-
-                                // Check box to show/hide Remote ID submenu in App settings
-                                FactCheckBox {
-                                    text:       qsTr("Enable Remote ID")
-                                    fact:       _remoteIDEnable
-                                    visible:    _remoteIDEnable.visible
-                                    property Fact _remoteIDEnable: QGroundControl.settingsManager.remoteIDSettings.enable
-                                }
-                            }
-                        }
-
-                        RowLayout {
-                            id:                 pathRow
-                            anchors.margins:    _margins
-                            anchors.left:       parent.left
-                            anchors.right:      parent.right
-                            anchors.top:        miscColItem.bottom
-                            visible:            _savePath.visible && !ScreenTools.isMobile
-
-                            QGCLabel { text: qsTr("Application Load/Save Path") }
                             QGCTextField {
-                                Layout.fillWidth:   true
-                                readOnly:           true
-                                text:               _savePath.rawValue === "" ? qsTr("<not set>") : _savePath.value
+                                id:                     testField2
+                                text:                   "0000"
                             }
-                            QGCButton {
-                                text:       qsTr("Browse")
-                                onClicked:  savePathBrowseDialog.openForLoad()
-                                QGCFileDialog {
-                                    id:             savePathBrowseDialog
-                                    title:          qsTr("Choose the location to save/load files")
-                                    folder:         _savePath.rawValue
-                                    selectExisting: true
-                                    selectFolder:   true
-                                    onAcceptedForLoad: _savePath.rawValue = file
-                                }
-                            }
+
                         }
                     }
+
+                    Item { width: 1; height: _margins; visible: engineIpTcp.visible }
+                    QGCLabel {
+                        id:         engineIpTcp
+                        text:       qsTr("Engine IP TCP")
+                        visible:    true
+                    }
+                    Rectangle {
+                        Layout.preferredHeight: unitsGrid3.height + (_margins * 2)
+                        Layout.preferredWidth:  unitsGrid3.width + (_margins * 2)
+                        color:                  qgcPal.windowShade
+                        visible:                miscSectionLabel.visible
+                        Layout.fillWidth:       true
+
+                        GridLayout {
+                            id:                         unitsGrid3
+                            anchors.topMargin:          _margins
+                            anchors.top:                parent.top
+                            Layout.fillWidth:           false
+                            anchors.horizontalCenter:   parent.horizontalCenter
+                            flow:                       GridLayout.TopToBottom
+                            columns:                       2
+
+                            QGCLabel { text: qsTr("Server Address") }
+
+                            QGCTextField {
+                                id:                     hostField3
+                                text:                   "0.0.0.0"
+                            }
+                            QGCLabel { text: qsTr("Port") }
+
+                            QGCTextField {
+                                id:                     testField3
+                                text:                   "0000"
+                            }
+
+                        }
+                    }
+
+
+                    Item { width: 1; height: _margins; visible: engineIpUdp.visible }
+                    QGCLabel {
+                        id:         engineIpUdp
+                        text:       qsTr("Engine IP UDP")
+                        visible:    true
+                    }
+                    Rectangle {
+                        Layout.preferredHeight: unitsGrid4.height + (_margins * 2)
+                        Layout.preferredWidth:  unitsGrid4.width + (_margins * 2)
+                        color:                  qgcPal.windowShade
+                        visible:                miscSectionLabel.visible
+                        Layout.fillWidth:       true
+
+                        GridLayout {
+                            id:                         unitsGrid4
+                            anchors.topMargin:          _margins
+                            anchors.top:                parent.top
+                            Layout.fillWidth:           false
+                            anchors.horizontalCenter:   parent.horizontalCenter
+                            flow:                       GridLayout.TopToBottom
+                            columns:                       2
+
+                            QGCLabel { text: qsTr("Server Address") }
+
+                            QGCTextField {
+                                id:                     hostField4
+                                text:                   "0.0.0.0"
+                            }
+                            QGCLabel { text: qsTr("Port") }
+
+                            QGCTextField {
+                                id:                     testField4
+                                text:                   "0000"
+                            }
+
+                        }
+                    }
+
+
+                    Item { width: 1; height: _margins; visible: engineReceivePort.visible }
+                    QGCLabel {
+                        id:         miscSectionLabel
+                        text:       qsTr("EngineReceive Port")
+                        visible:    true
+                    }
+                    Rectangle {
+                        Layout.preferredHeight: unitsGrid5.height + (_margins * 2)
+                        Layout.preferredWidth:  unitsGrid5.width + (_margins * 2)
+                        color:                  qgcPal.windowShade
+                        visible:                miscSectionLabel.visible
+                        Layout.fillWidth:       true
+
+                        GridLayout {
+                            id:                         unitsGrid5
+                            anchors.topMargin:          _margins
+                            anchors.top:                parent.top
+                            Layout.fillWidth:           false
+                            anchors.horizontalCenter:   parent.horizontalCenter
+                            flow:                       GridLayout.TopToBottom
+                            columns:                       2
+
+                            QGCLabel { text: qsTr("Port") }
+
+                            QGCTextField {
+                                id:                     testField5
+                                text:                   "0000"
+                            }
+
+                        }
+                    }
+
+
+                    // Item { width: 1; height: _margins; visible: miscSectionLabel.visible }
+                    // QGCLabel {
+                    //     id:         miscSectionLabel
+                    //     text:       qsTr("Miscellaneous")
+                    //     visible:    QGroundControl.settingsManager.appSettings.visible
+                    // }
+                    // Rectangle {
+                    //     Layout.preferredWidth:  Math.max(comboGrid.width, miscCol.width) + (_margins * 2)
+                    //     Layout.preferredHeight: (pathRow.visible ? pathRow.y + pathRow.height : miscColItem.y + miscColItem.height)  + (_margins * 2)
+                    //     Layout.fillWidth:       true
+                    //     color:                  qgcPal.windowShade
+                    //     visible:                miscSectionLabel.visible
+
+                    //     Item {
+                    //         id:                 comboGridItem
+                    //         anchors.margins:    _margins
+                    //         anchors.top:        parent.top
+                    //         anchors.left:       parent.left
+                    //         anchors.right:      parent.right
+                    //         height:             comboGrid.height
+
+                    //         GridLayout {
+                    //             id:                         comboGrid
+                    //             anchors.horizontalCenter:   parent.horizontalCenter
+                    //             columns:                    2
+
+                    //             QGCLabel {
+                    //                 text:           qsTr("Language")
+                    //                 visible: QGroundControl.settingsManager.appSettings.qLocaleLanguage.visible
+                    //             }
+                    //             FactComboBox {
+                    //                 Layout.preferredWidth:  _comboFieldWidth
+                    //                 fact:                   QGroundControl.settingsManager.appSettings.qLocaleLanguage
+                    //                 indexModel:             false
+                    //                 visible:                QGroundControl.settingsManager.appSettings.qLocaleLanguage.visible
+                    //             }
+
+                    //             QGCLabel {
+                    //                 text:           qsTr("Color Scheme")
+                    //                 visible: QGroundControl.settingsManager.appSettings.indoorPalette.visible
+                    //             }
+                    //             FactComboBox {
+                    //                 Layout.preferredWidth:  _comboFieldWidth
+                    //                 fact:                   QGroundControl.settingsManager.appSettings.indoorPalette
+                    //                 indexModel:             false
+                    //                 visible:                QGroundControl.settingsManager.appSettings.indoorPalette.visible
+                    //             }
+
+                    //             QGCLabel {
+                    //                 text:       qsTr("Map Provider")
+                    //                 width:      _labelWidth
+                    //             }
+
+                    //             QGCComboBox {
+                    //                 id:             mapCombo
+                    //                 model:          QGroundControl.mapEngineManager.mapProviderList
+                    //                 Layout.preferredWidth:  _comboFieldWidth
+                    //                 onActivated: {
+                    //                     _mapProvider = textAt(index)
+                    //                     QGroundControl.settingsManager.flightMapSettings.mapProvider.value=textAt(index)
+                    //                     QGroundControl.settingsManager.flightMapSettings.mapType.value=QGroundControl.mapEngineManager.mapTypeList(textAt(index))[0]
+                    //                 }
+                    //                 Component.onCompleted: {
+                    //                     var index = mapCombo.find(_mapProvider)
+                    //                     if(index < 0) index = 0
+                    //                     mapCombo.currentIndex = index
+                    //                 }
+                    //             }
+                    //             QGCLabel {
+                    //                 text:       qsTr("Map Type")
+                    //                 width:      _labelWidth
+                    //             }
+                    //             QGCComboBox {
+                    //                 id:             mapTypeCombo
+                    //                 model:          QGroundControl.mapEngineManager.mapTypeList(_mapProvider)
+                    //                 Layout.preferredWidth:  _comboFieldWidth
+                    //                 onActivated: {
+                    //                     _mapType = textAt(index)
+                    //                     QGroundControl.settingsManager.flightMapSettings.mapType.value=textAt(index)
+                    //                 }
+                    //                 Component.onCompleted: {
+                    //                     var index = mapTypeCombo.find(_mapType)
+                    //                     if(index < 0) index = 0
+                    //                     mapTypeCombo.currentIndex = index
+                    //                 }
+                    //             }
+
+                    //             QGCLabel {
+                    //                 text:                   qsTr("Stream GCS Position")
+                    //                 visible:                _followTarget.visible
+                    //             }
+                    //             FactComboBox {
+                    //                 Layout.preferredWidth:  _comboFieldWidth
+                    //                 fact:                   _followTarget
+                    //                 indexModel:             false
+                    //                 visible:                _followTarget.visible
+                    //             }
+                    //             QGCLabel {
+                    //                 text:                           qsTr("UI Scaling")
+                    //                 visible:                        _appFontPointSize.visible
+                    //                 Layout.alignment:               Qt.AlignVCenter
+                    //             }
+                    //             Item {
+                    //                 width:                          _comboFieldWidth
+                    //                 height:                         baseFontEdit.height * 1.5
+                    //                 visible:                        _appFontPointSize.visible
+                    //                 Layout.alignment:               Qt.AlignVCenter
+                    //                 Row {
+                    //                     spacing:                    ScreenTools.defaultFontPixelWidth
+                    //                     anchors.verticalCenter:     parent.verticalCenter
+                    //                     QGCButton {
+                    //                         width:                  height
+                    //                         height:                 baseFontEdit.height * 1.5
+                    //                         text:                   "-"
+                    //                         anchors.verticalCenter: parent.verticalCenter
+                    //                         onClicked: {
+                    //                             if (_appFontPointSize.value > _appFontPointSize.min) {
+                    //                                 _appFontPointSize.value = _appFontPointSize.value - 1
+                    //                             }
+                    //                         }
+                    //                     }
+                    //                     QGCLabel {
+                    //                         id:                     baseFontEdit
+                    //                         width:                  ScreenTools.defaultFontPixelWidth * 6
+                    //                         text:                   (QGroundControl.settingsManager.appSettings.appFontPointSize.value / ScreenTools.platformFontPointSize * 100).toFixed(0) + "%"
+                    //                         horizontalAlignment:    Text.AlignHCenter
+                    //                         anchors.verticalCenter: parent.verticalCenter
+                    //                     }
+                    //                     Text {
+
+                    //                     }
+
+                    //                     QGCButton {
+                    //                         width:                  height
+                    //                         height:                 baseFontEdit.height * 1.5
+                    //                         text:                   "+"
+                    //                         anchors.verticalCenter: parent.verticalCenter
+                    //                         onClicked: {
+                    //                             if (_appFontPointSize.value < _appFontPointSize.max) {
+                    //                                 _appFontPointSize.value = _appFontPointSize.value + 1
+                    //                             }
+                    //                         }
+                    //                     }
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+
+                    //     Item {
+                    //         id:                 miscColItem
+                    //         anchors.margins:    _margins
+                    //         anchors.left:       parent.left
+                    //         anchors.right:      parent.right
+                    //         anchors.top:        comboGridItem.bottom
+                    //         anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+                    //         height:             miscCol.height
+
+                    //         ColumnLayout {
+                    //             id:                         miscCol
+                    //             anchors.horizontalCenter:   parent.horizontalCenter
+                    //             spacing:                    _margins
+
+                    //             FactCheckBox {
+                    //                 text:       qsTr("Use Vehicle Pairing")
+                    //                 fact:       _usePairing
+                    //                 visible:    _usePairing.visible && QGroundControl.supportsPairing
+                    //                 property Fact _usePairing: QGroundControl.settingsManager.appSettings.usePairing
+                    //             }
+
+                    //             FactCheckBox {
+                    //                 text:       qsTr("Mute all audio output")
+                    //                 fact:       _audioMuted
+                    //                 visible:    _audioMuted.visible
+                    //                 property Fact _audioMuted: QGroundControl.settingsManager.appSettings.audioMuted
+                    //             }
+
+                    //             FactCheckBox {
+                    //                 text:       qsTr("Save application data to SD Card")
+                    //                 fact:       _androidSaveToSDCard
+                    //                 visible:    _androidSaveToSDCard.visible
+                    //                 property Fact _androidSaveToSDCard: QGroundControl.settingsManager.appSettings.androidSaveToSDCard
+                    //             }
+
+                    //             FactCheckBox {
+                    //                 text:       qsTr("Check for Internet connection")
+                    //                 fact:       _checkInternet
+                    //                 visible:    _checkInternet && _checkInternet.visible
+                    //                 property Fact _checkInternet: QGroundControl.settingsManager.appSettings.checkInternet
+                    //             }
+
+                    //             QGCCheckBox {
+                    //                 id:         clearCheck
+                    //                 text:       qsTr("Clear all settings on next start")
+                    //                 checked:    false
+                    //                 onClicked: {
+                    //                     checked ? clearDialog.visible = true : QGroundControl.clearDeleteAllSettingsNextBoot()
+                    //                 }
+                    //                 MessageDialog {
+                    //                     id:                 clearDialog
+                    //                     visible:            false
+                    //                     icon:               StandardIcon.Warning
+                    //                     standardButtons:    StandardButton.Yes | StandardButton.No
+                    //                     title:              qsTr("Clear Settings")
+                    //                     text:               qsTr("All saved settings will be reset the next time you start %1. Is this really what you want?").arg(QGroundControl.appName)
+                    //                     onYes: {
+                    //                         QGroundControl.deleteAllSettingsNextBoot()
+                    //                         clearDialog.visible = false
+                    //                     }
+                    //                     onNo: {
+                    //                         clearCheck.checked  = false
+                    //                         clearDialog.visible = false
+                    //                     }
+                    //                 }
+                    //             }
+
+                    //             // Check box to show/hide Remote ID submenu in App settings
+                    //             FactCheckBox {
+                    //                 text:       qsTr("Enable Remote ID")
+                    //                 fact:       _remoteIDEnable
+                    //                 visible:    _remoteIDEnable.visible
+                    //                 property Fact _remoteIDEnable: QGroundControl.settingsManager.remoteIDSettings.enable
+                    //             }
+                    //         }
+                    //     }
+
+                    //     RowLayout {
+                    //         id:                 pathRow
+                    //         anchors.margins:    _margins
+                    //         anchors.left:       parent.left
+                    //         anchors.right:      parent.right
+                    //         anchors.top:        miscColItem.bottom
+                    //         visible:            _savePath.visible && !ScreenTools.isMobile
+
+                    //         QGCLabel { text: qsTr("Application Load/Save Path") }
+                    //         QGCTextField {
+                    //             Layout.fillWidth:   true
+                    //             readOnly:           true
+                    //             text:               _savePath.rawValue === "" ? qsTr("<not set>") : _savePath.value
+                    //         }
+                    //         QGCButton {
+                    //             text:       qsTr("Browse")
+                    //             onClicked:  savePathBrowseDialog.openForLoad()
+                    //             QGCFileDialog {
+                    //                 id:             savePathBrowseDialog
+                    //                 title:          qsTr("Choose the location to save/load files")
+                    //                 folder:         _savePath.rawValue
+                    //                 selectExisting: true
+                    //                 selectFolder:   true
+                    //                 onAcceptedForLoad: _savePath.rawValue = file
+                    //             }
+                    //         }
+                    //     }
+                    // }
 
                    
                 } // settingsColumn
