@@ -13,4 +13,5 @@ add_custom_target(UiPreferencesQml
 		SerialSettings.qml
 		TcpSettings.qml
 		UdpSettings.qml
+		FmuSettings.qml
 )
