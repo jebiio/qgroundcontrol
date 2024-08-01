@@ -1,0 +1,56 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":                 "forwarderServerIP",
+    "shortDesc": "Forwarder Server IP",
+    "type":                 "string",
+    "default":         "127.0.0.1",
+    "qgcRebootRequired":    true
+},
+{
+    "name":                 "forwarderServerPort",
+    "shortDesc":     "Forwarder Server port",
+    "type":                 "string",
+    "default":         30003,
+    "qgcRebootRequired":    true
+},
+{
+    "name":                 "forwarderReceivePort",
+    "shortDesc":     "Forwarder Receive port",
+    "type":                 "string",
+    "default":         30003,
+    "qgcRebootRequired":    true
+},
+{
+    "name":                 "EngineServerIP",
+    "shortDesc": "Engine Server IP",
+    "type":                 "string",
+    "default":         "127.0.0.1",
+    "qgcRebootRequired":    true
+},
+{
+    "name":                 "EngineServerTCPPort",
+    "shortDesc":     "Engine Server TCP port",
+    "type":                 "string",
+    "default":         30003,
+    "qgcRebootRequired":    true
+},
+{
+    "name":                 "EngineServerUDPPort",
+    "shortDesc":     "Engine Server UDP port",
+    "type":                 "string",
+    "default":         30003,
+    "qgcRebootRequired":    true
+},
+{
+    "name":                 "EngineReceivePort",
+    "shortDesc":     "Engine Receive port",
+    "type":                 "string",
+    "default":         30003,
+    "qgcRebootRequired":    true
+}
+]
+}
