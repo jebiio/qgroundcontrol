@@ -30,6 +30,9 @@ SettingsManager::SettingsManager(QGCApplication* app, QGCToolbox* toolbox)
     , _apmMavlinkStreamRateSettings (nullptr)
 #endif
     , _remoteIDSettings             (nullptr)
+    , _fmuSettings                  (nullptr)
+    , _detectionModeSettings        (nullptr)
+    , _trainModeSettings            (nullptr)
 {
 
 }
@@ -56,4 +59,7 @@ void SettingsManager::setToolbox(QGCToolbox *toolbox)
     _apmMavlinkStreamRateSettings = new APMMavlinkStreamRateSettings(this);
 #endif
     _remoteIDSettings =             new RemoteIDSettings            (this); 
+    _fmuSettings =                  new FMUSettings                 (this);
+    _trainModeSettings =            new TrainModeSettings           (this);
+    _detectionModeSettings =        new DetectionModeSettings       (this);
 }

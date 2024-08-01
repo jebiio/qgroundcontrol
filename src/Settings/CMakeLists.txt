@@ -32,6 +32,12 @@ add_library(Settings
 	VideoSettings.h
 	RemoteIDSettings.h
 	RemoteIDSettings.cc
+	FMUSettings.cc
+	FMUSettings.h
+	TrainModeSettings.cc
+	TrainModeSettings.h
+	DetectionModeSettings.cc
+	DetectionModeSettings.h
 )
 
 target_link_libraries(Settings
