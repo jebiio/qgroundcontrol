@@ -764,6 +764,8 @@ HEADERS += \
     src/comm/UDPLink.h \
     src/comm/ForwarderLink.h \
     src/comm/EngineLink.h \
+    src/comm/EngineTCPCom.h \
+    src/comm/EngineUDPCom.h \
     src/comm/UdpIODevice.h \
     src/uas/UAS.h \
     src/uas/UASInterface.h \
@@ -1030,6 +1032,8 @@ SOURCES += \
     src/comm/ForwarderLink.cc \
     src/comm/EngineLink.cc \
     src/comm/UdpIODevice.cc \
+    src/comm/EngineTCPCom.cc \
+    src/comm/EngineUDPCom.cc \
     src/main.cc \
     src/uas/UAS.cc \
     src/uas/UASMessageHandler.cc \

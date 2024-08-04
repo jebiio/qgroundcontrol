@@ -46,7 +46,10 @@ add_library(comm
 	ForwarderLink.cc
 	EngineLink.h
 	EngineLink.cc
-
+	EngineTCPCom.h
+	EngineTCPCom.cc
+	EngineUDPCom.h
+	EngineUDPCom.cc
 	${EXTRA_SRC}
 )
 
