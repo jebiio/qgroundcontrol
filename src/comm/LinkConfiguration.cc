@@ -17,6 +17,8 @@
 #include "TCPLink.h"
 #include "LogReplayLink.h"
 #include "FMULogReplayLink.h"
+#include "EngineTCPLink.h"
+#include "EngineUDPLink.h"
 
 #ifdef QGC_ENABLE_BLUETOOTH
 #include "BluetoothLink.h"
@@ -100,6 +102,12 @@ LinkConfiguration* LinkConfiguration::createSettings(int type, const QString& na
         case LinkConfiguration::TypeForwarder:
             config = new ForwarderConfiguration(name);
             break;
+        case LinkConfiguration::TypeEngineUDP:
+            config = new EngineUDPLinkConfiguration(name);
+            break;
+        case LinkConfiguration::TypeEngineTCP:
+            config = new EngineTCPLinkConfiguration(name);
+            break;
     }
     return config;
 }
@@ -144,6 +152,12 @@ LinkConfiguration* LinkConfiguration::duplicateSettings(LinkConfiguration* sourc
             break;
         case TypeFMULogReplay:
             dupe = new FMULogReplayLinkConfiguration(qobject_cast<FMULogReplayLinkConfiguration*>(source));
+            break;
+        case TypeEngineUDP:
+            dupe = new EngineUDPLinkConfiguration(qobject_cast<EngineUDPLinkConfiguration*>(source));
+            break;
+        case TypeEngineTCP:
+            dupe = new EngineTCPLinkConfiguration(qobject_cast<EngineTCPLinkConfiguration*>(source));
             break;
         case TypeLast:
             break;

@@ -73,7 +73,8 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
     _joystickManager =           _toolbox->joystickManager();
     _mavlinkProtocol =           _toolbox->mavlinkProtocol();
     _forwarderProtocol =         _toolbox->forwarderProtocol();
-
+    _engineProtocol =           _toolbox->engineProtocol();
+    
     QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
     qmlRegisterUncreatableType<MultiVehicleManager>("QGroundControl.MultiVehicleManager", 1, 0, "MultiVehicleManager", "Reference only");
 
@@ -81,6 +82,8 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
     connect(_forwarderProtocol, &ForwarderProtocol::vehicleHeartbeatInfo, this, &MultiVehicleManager::_vehicleHeartbeatInfo2);
     connect(&_gcsHeartbeatTimer, &QTimer::timeout, this, &MultiVehicleManager::_sendGCSHeartbeat);
 
+    // connect(_engineProtocol, &ForwarderProtocol::engineMessageReceived, this, &MultiVehicleManager::_engineMessageReceived);
+    
     if (_gcsHeartbeatEnabled) {
         _gcsHeartbeatTimer.start();
     }

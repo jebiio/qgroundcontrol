@@ -1,0 +1,71 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":    "model",
+    "shortDesc": "Model",
+    "longDesc":  "Model for Engine",
+    "type":      "string",
+    "default":     ""
+},    
+{
+    "name":             "modelPath",
+    "shortDesc": "Model file path",
+    "longDesc":  "Model file path for Engine",
+    "type":      "string",
+    "default":     ""
+},
+{
+    "name":             "pastWindowsSize",
+    "shortDesc": "Past Windows Size",
+    "longDesc":  "Past Windows Size for Engine",
+    "type":      "int32",
+    "default":    0
+},
+{
+    "name":             "futureWindowsSize",
+    "shortDesc": "Future Windows Size",
+    "longDesc":  "Future Windows Size for Engine",
+    "type":      "int32",
+    "default":    0
+},
+
+{
+    "name":             "epoch",
+    "shortDesc": "Epoch value",
+    "longDesc":  "Epoch value for Engine",
+    "type":      "int32",
+    "default":    0
+},
+{
+    "name":             "batch",
+    "shortDesc": "Batch value",
+    "longDesc":  "Batch value for Engine",
+    "type":      "int32",
+    "default":    0
+},
+{
+    "name":             "numWorkers",
+    "shortDesc": "Number of worker",
+    "longDesc":  "Number of worker for Engine",
+    "type":             "int32",
+    "default":    0
+},
+{
+    "name":             "lr",
+    "shortDesc": "Learning Rate value",
+    "longDesc":  "Learning Rate for Engine",
+    "type":             "float",
+    "default":    0
+}, 
+{
+    "name":             "weightDecay",
+    "shortDesc": "Weight Decay",
+    "longDesc":  "Weight Decay for Engine",
+    "type":             "float",
+    "default":    0
+}
+]
+}

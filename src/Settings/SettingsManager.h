@@ -30,6 +30,10 @@
 #include <QVariantList>
 #include "RemoteIDSettings.h"
 
+#include "FMUSettings.h"
+#include "DetectionModeSettings.h"
+#include "TrainModeSettings.h"
+
 /// Provides access to all app settings
 class SettingsManager : public QGCTool
 {
@@ -54,6 +58,10 @@ public:
     Q_PROPERTY(QObject* apmMavlinkStreamRateSettings    READ apmMavlinkStreamRateSettings   CONSTANT)
 #endif
     Q_PROPERTY(QObject* remoteIDSettings                READ remoteIDSettings               CONSTANT)
+    Q_PROPERTY(QObject* fmuSettings                     READ fmuSettings                    CONSTANT)
+    Q_PROPERTY(QObject* detectionModeSettings           READ detectionModeSettings          CONSTANT)
+    Q_PROPERTY(QObject* trainModeSettings               READ trainModeSettings              CONSTANT)
+    
     // Override from QGCTool
     virtual void setToolbox(QGCToolbox *toolbox);
 
@@ -73,6 +81,10 @@ public:
     APMMavlinkStreamRateSettings*   apmMavlinkStreamRateSettings(void) { return _apmMavlinkStreamRateSettings; }
 #endif
     RemoteIDSettings*               remoteIDSettings            (void) { return _remoteIDSettings; }
+    FMUSettings*                    fmuSettings                 (void) { return _fmuSettings; }
+    TrainModeSettings*              trainModeSettings           (void) { return _trainModeSettings; }
+    DetectionModeSettings*          detectionModeSettings       (void) { return _detectionModeSettings; }
+
 private:
     AppSettings*                    _appSettings;
     UnitsSettings*                  _unitsSettings;
@@ -90,6 +102,9 @@ private:
     APMMavlinkStreamRateSettings*   _apmMavlinkStreamRateSettings;
 #endif
     RemoteIDSettings*               _remoteIDSettings;
+    FMUSettings*                    _fmuSettings;
+    DetectionModeSettings*          _detectionModeSettings;
+    TrainModeSettings*              _trainModeSettings;
 };
 
 #endif

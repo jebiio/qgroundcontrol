@@ -60,6 +60,8 @@ public:
         TypeForwarder,
         TypeEngine,
         TypeFMULogReplay,
+        TypeEngineTCP,
+        TypeEngineUDP,
         TypeLast        // Last type value (type >= TypeLast == invalid)
     };
     Q_ENUM(LinkType)

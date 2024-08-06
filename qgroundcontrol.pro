@@ -693,6 +693,9 @@ HEADERS += \
     src/Settings/SettingsManager.h \
     src/Settings/UnitsSettings.h \
     src/Settings/VideoSettings.h \
+    src/Settings/FMUSettings.h \
+    src/Settings/TrainModeSettings.h \
+    src/Settings/DetectionModeSettings.h \
     src/ShapeFileHelper.h \
     src/SHPFileHelper.h \
     src/Terrain/TerrainQuery.h \
@@ -754,6 +757,7 @@ HEADERS += \
     src/comm/LogReplayLink.h \
     src/comm/MAVLinkProtocol.h \
     src/comm/ForwarderProtocol.h \
+    src/comm/EngineProtocol.h \
     src/comm/FMULogReplayLink.h \
     src/comm/FMUStream.h \
     src/comm/QGCMAVLink.h \
@@ -761,6 +765,8 @@ HEADERS += \
     src/comm/UDPLink.h \
     src/comm/ForwarderLink.h \
     src/comm/EngineLink.h \
+    src/comm/EngineTCPLink.h \
+    src/comm/EngineUDPLink.h \
     src/comm/UdpIODevice.h \
     src/uas/UAS.h \
     src/uas/UASInterface.h \
@@ -956,6 +962,9 @@ SOURCES += \
     src/Settings/SettingsManager.cc \
     src/Settings/UnitsSettings.cc \
     src/Settings/VideoSettings.cc \
+    src/Settings/FMUSettings.cc \
+    src/Settings/TrainModeSettings.cc \
+    src/Settings/DetectionModeSettings.cc \
     src/ShapeFileHelper.cc \
     src/SHPFileHelper.cc \
     src/Terrain/TerrainQuery.cc \
@@ -1017,6 +1026,7 @@ SOURCES += \
     src/comm/LogReplayLink.cc \
     src/comm/MAVLinkProtocol.cc \
     src/comm/ForwarderProtocol.cc \
+    src/comm/EngineProtocol.cc \
     src/comm/FMULogReplayLink.cc \
     src/comm/QGCMAVLink.cc \
     src/comm/TCPLink.cc \
@@ -1024,6 +1034,8 @@ SOURCES += \
     src/comm/ForwarderLink.cc \
     src/comm/EngineLink.cc \
     src/comm/UdpIODevice.cc \
+    src/comm/EngineTCPLink.cc \
+    src/comm/EngineUDPLink.cc \
     src/main.cc \
     src/uas/UAS.cc \
     src/uas/UASMessageHandler.cc \

@@ -24,6 +24,9 @@
 #include "ForwarderLink.h"
 #include "EngineLink.h"
 #include "TCPLink.h"
+#include "EngineTCPLink.h"
+#include "EngineUDPLink.h"
+
 #include "SettingsManager.h"
 #include "LogReplayLink.h"
 #include "FMULogReplayLink.h"
@@ -51,6 +54,8 @@ QGC_LOGGING_CATEGORY(LinkManagerVerboseLog, "LinkManagerVerboseLog")
 
 const char* LinkManager::_defaultUDPLinkName =                  "UDP Link (AutoConnect)";
 const char* LinkManager::_defaultForwaderUDPLinkName =                  "ForwarderUDP Link (AutoConnect)";
+const char* LinkManager::_defaultEngineUDPLinkName2 =                  "EngineUDPLink2 (AutoConnect)";
+const char* LinkManager::_defaultEngineTCPLinkName =                  "EngineTCPLink (AutoConnect)";
 const char* LinkManager::_defaultEngineUDPLinkName =                  "EngineUDP Link (AutoConnect)";
 const char* LinkManager::_mavlinkForwardingLinkName =           "MAVLink Forwarding Link";
 const char* LinkManager::_mavlinkForwardingSupportLinkName =    "MAVLink Support Forwarding Link";
@@ -99,6 +104,7 @@ void LinkManager::setToolbox(QGCToolbox *toolbox)
     _autoConnectSettings = toolbox->settingsManager()->autoConnectSettings();
     _mavlinkProtocol = _toolbox->mavlinkProtocol();
     _forwarderProtocol = _toolbox->forwarderProtocol();
+    _engineProtocol = _toolbox->engineProtocol();
 
     connect(&_portListTimer, &QTimer::timeout, this, &LinkManager::_updateAutoConnectLinks);
     _portListTimer.start(_autoconnectUpdateTimerMSecs); // timeout must be long enough to get past bootloader on second pass
@@ -118,6 +124,8 @@ void LinkManager::createConnectedLink(LinkConfiguration* config)
 
 bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool isPX4Flow)
 {
+    qWarning() << "---nsr --- createConnectedLink() with PX4Flow. type : "<< config->type() ;
+
     SharedLinkInterfacePtr link = nullptr;
 
     switch(config->type()) {
@@ -157,6 +165,14 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
     case LinkConfiguration::TypeFMULogReplay:
         link = std::make_shared<FMULogReplayLink>(config);
         break;
+    case LinkConfiguration::TypeEngineUDP:
+        qWarning() << "---nsr --- createConnectedLink() -> LinkConfiguration::TypeEngineUDP" ;    
+        link = std::make_shared<EngineUDPLink>(config);
+        break;
+    case LinkConfiguration::TypeEngineTCP:
+        qWarning() << "---nsr --- createConnectedLink() -> LinkConfiguration::TypeEngineTCP" ;    
+        link = std::make_shared<EngineTCPLink>(config);
+        break;
     case LinkConfiguration::TypeLast:
         break;
     }
@@ -175,7 +191,11 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         {
             connect(link.get(), &LinkInterface::bytesReceived,       _forwarderProtocol,    &ForwarderProtocol::receiveBytes);
             connect(link.get(), &LinkInterface::bytesSent,           _forwarderProtocol,    &ForwarderProtocol::logSentBytes);
-        }else {
+        }
+        else if(dynamic_cast<EngineUDPLink*>(link.get()) != nullptr || dynamic_cast<EngineTCPLink*>(link.get()) != nullptr) {
+            connect(link.get(), &LinkInterface::bytesReceived,       _engineProtocol,    &EngineProtocol::receiveBytes);
+        }
+        else {
             connect(link.get(), &LinkInterface::bytesReceived,       _mavlinkProtocol,    &MAVLinkProtocol::receiveBytes);
             connect(link.get(), &LinkInterface::bytesSent,           _mavlinkProtocol,    &MAVLinkProtocol::logSentBytes);        
         }
@@ -243,10 +263,15 @@ void LinkManager::_linkDisconnected(void)
     {
         disconnect(link, &LinkInterface::bytesReceived,       _forwarderProtocol,    &ForwarderProtocol::receiveBytes);
         disconnect(link, &LinkInterface::bytesSent,           _forwarderProtocol,    &ForwarderProtocol::logSentBytes);
-    } else {
+    }
+    else if(dynamic_cast<EngineUDPLink*>(link) != nullptr || dynamic_cast<EngineTCPLink*>(link) != nullptr) {
+        disconnect(link, &LinkInterface::bytesReceived,       _engineProtocol,    &EngineProtocol::receiveBytes);
+    }
+    else {
         disconnect(link, &LinkInterface::bytesReceived,       _mavlinkProtocol,    &MAVLinkProtocol::receiveBytes);
         disconnect(link, &LinkInterface::bytesSent,           _mavlinkProtocol,    &MAVLinkProtocol::logSentBytes);
     }
+
     disconnect(link, &LinkInterface::disconnected,        this,                &LinkManager::_linkDisconnected);
 
     link->_freeMavlinkChannel();
@@ -375,6 +400,12 @@ void LinkManager::loadLinkConfigurationList()
                             case LinkConfiguration::TypeFMULogReplay:
                                 link = new FMULogReplayLinkConfiguration(name);
                                 break;
+                            case LinkConfiguration::TypeEngineUDP:
+                                link = new EngineUDPLinkConfiguration(name);
+                                break;
+                            case LinkConfiguration::TypeEngineTCP:
+                                link = new EngineTCPLinkConfiguration(name);
+                                break;
                             case LinkConfiguration::TypeLast:
                                 break;
                             }
@@ -445,6 +476,7 @@ void LinkManager::_addUDPAutoConnectLink(void)
         }
     }
 }
+
 void LinkManager::_addEngineUDPAutoConnectLink(void)
 {
     if (_autoConnectSettings->autoConnectUDP()->rawValue().toBool()) {
@@ -457,7 +489,7 @@ void LinkManager::_addEngineUDPAutoConnectLink(void)
                 break;
             }
         }
-        qWarning() << "---nsr --- foundEngineUDP ? _addEngineUDPAutoConnectLink --------- :" << foundEngineUDP;
+        qWarning() << "---nsr --- foundEngineUDP ? 1 _addEngineAutoConnectLink --------- :" << foundEngineUDP;
 
         if (!foundEngineUDP) {
             //-- Default UDPConfiguration is set up for autoconnect
@@ -465,10 +497,62 @@ void LinkManager::_addEngineUDPAutoConnectLink(void)
             engineConfig->setDynamic(true);
             SharedLinkConfigurationPtr config = addConfiguration(engineConfig);
             createConnectedLink(config);
-            qWarning() << "---nsr --- Engine UDP port added _addForwarderUDPAutoConnectLink ---------" << config->name();
+            qWarning() << "---nsr --- 1 Engine UDP port added _addEngineUDPAutoConnectLink ---------" << config->name();
         }
     }
 }
+
+void LinkManager::_addEngineUDPLinkAutoConnectLink()
+{
+    if (_autoConnectSettings->autoConnectUDP()->rawValue().toBool()) {
+        bool foundEngineUDPLink = false;
+
+        for (int i = 0; i < _rgLinks.count(); i++) {
+            SharedLinkConfigurationPtr linkConfig = _rgLinks[i]->linkConfiguration();
+            if (linkConfig->type() == LinkConfiguration::TypeEngineUDP && linkConfig->name() == _defaultEngineUDPLinkName2) {
+                foundEngineUDPLink = true;
+                break;
+            }
+        }
+        qWarning() << "---nsr --- foundEngineUDPLink ? 2 _addEngineUDPLinkAutoConnectLink --------- :" << foundEngineUDPLink;
+
+        if (!foundEngineUDPLink) {
+            //-- Default UDPConfiguration is set up for autoconnect
+            EngineUDPLinkConfiguration* engineConfig = new EngineUDPLinkConfiguration(_defaultEngineUDPLinkName2);
+            engineConfig->setDynamic(true);
+            SharedLinkConfigurationPtr config = addConfiguration(engineConfig);
+            createConnectedLink(config);
+            qWarning() << "---nsr --- 2 Engine UDP port added _addEngineUDPLinkAutoConnectLink ---------" << config->name();
+        }
+    }
+}
+
+void LinkManager::_addEngineTCPLinkAutoConnectLink()
+{
+    qWarning() << "---nsr --- Engine TCP port added _addEngineTCPLinkAutoConnectLink ---------" ;
+    if(true){//if (_autoConnectSettings->autoConnectTCP()->rawValue().toBool()) {
+        bool foundEngineTCPLink = false;
+
+        for (int i = 0; i < _rgLinks.count(); i++) {
+            SharedLinkConfigurationPtr linkConfig = _rgLinks[i]->linkConfiguration();
+            if (linkConfig->type() == LinkConfiguration::TypeEngineTCP && linkConfig->name() == _defaultEngineTCPLinkName) {
+                foundEngineTCPLink = true;
+                break;
+            }
+        }
+    qWarning() << "---nsr --- foundEngineTCPLink ? _addEngineTCPLinkAutoConnectLink --------- :" << foundEngineTCPLink;
+
+        if (!foundEngineTCPLink) {
+            //-- Default UDPConfiguration is set up for autoconnect
+            EngineTCPLinkConfiguration* engineConfig = new EngineTCPLinkConfiguration(_defaultEngineTCPLinkName);
+            engineConfig->setDynamic(true);
+            SharedLinkConfigurationPtr config = addConfiguration(engineConfig);
+            createConnectedLink(config);
+            qWarning() << "---nsr --- Engine TCP port added _addEngineTCPLinkAutoConnectLink ---------" << config->name();
+        }
+    }
+}
+
 
 void LinkManager::_addForwarderUDPAutoConnectLink(void)
 {
@@ -597,6 +681,10 @@ void LinkManager::_updateAutoConnectLinks(void)
     _addUDPAutoConnectLink();
     _addForwarderUDPAutoConnectLink();
     _addEngineUDPAutoConnectLink();
+
+    _addEngineUDPLinkAutoConnectLink();
+    // _addEngineTCPLinkAutoConnectLink();
+    
     _addMAVLinkForwardingLink();
     _addZeroConfAutoConnectLink();
 

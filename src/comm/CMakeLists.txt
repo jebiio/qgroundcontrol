@@ -28,6 +28,8 @@ add_library(comm
 	MAVLinkProtocol.h
 	ForwarderProtocol.cc
 	ForwarderProtocol.h
+	EngineProtoco.cc
+	EngineProtoco.h
 	FMULogReplayLink.cc
 	FMULogReplayLink.h
 	QGCMAVLink.cc
@@ -46,7 +48,10 @@ add_library(comm
 	ForwarderLink.cc
 	EngineLink.h
 	EngineLink.cc
-
+	EngineTCPLink.h
+	EngineTCPLink.cc
+	EngineUDPLink.h
+	EngineUDPLink.cc
 	${EXTRA_SRC}
 )
 

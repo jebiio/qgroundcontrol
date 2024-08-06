@@ -21,7 +21,8 @@
 #include "QGC.h"
 #include "QGCApplication.h"
 #include "SettingsManager.h"
-#include "AutoConnectSettings.h"
+// #include "AutoConnectSettings.h"
+#include "FMUSettings.h"
 
 static const char* kZeroconfRegistration = "_qgroundcontrol._udp";
 
@@ -319,11 +320,16 @@ void ForwarderLink::_deregisterZeroconf()
 
 ForwarderConfiguration::ForwarderConfiguration(const QString& name) : LinkConfiguration(name)
 {
-    AutoConnectSettings* settings = qgcApp()->toolbox()->settingsManager()->autoConnectSettings();
-    _localPort = settings->forwarderListenPort()->rawValue().toInt(); // forwarder default port is 19000
-    QString targetHostIP = ""; // QString targetHostIP = settings->udpTargetHostIP()->rawValue().toString();
+    // AutoConnectSettings* settings = qgcApp()->toolbox()->settingsManager()->autoConnectSettings();
+    // _localPort = settings->forwarderListenPort()->rawValue().toInt(); // forwarder default port is 19000
+    // QString targetHostIP = settings->udpTargetHostIP()->rawValue().toString();
+
+    FMUSettings* fmuSettings = qgcApp()->toolbox()->settingsManager()->fmuSettings();
+    _localPort = fmuSettings->forwarderListenPort()->rawValue().toInt(); // forwarder default port is 18000
+    QString targetHostIP = fmuSettings->forwarderServerIP()->rawValue().toString();
     if (!targetHostIP.isEmpty()) {
-        addHost(targetHostIP, settings->udpTargetHostPort()->rawValue().toUInt());
+        // addHost(targetHostIP, settings->udpTargetHostPort()->rawValue().toUInt());
+        addHost(targetHostIP, fmuSettings->forwarderServerPort()->rawValue().toUInt());
     }
 }
 
