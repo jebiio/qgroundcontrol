@@ -757,6 +757,7 @@ HEADERS += \
     src/comm/LogReplayLink.h \
     src/comm/MAVLinkProtocol.h \
     src/comm/ForwarderProtocol.h \
+    src/comm/EngineProtocol.h \
     src/comm/FMULogReplayLink.h \
     src/comm/FMUStream.h \
     src/comm/QGCMAVLink.h \
@@ -764,8 +765,8 @@ HEADERS += \
     src/comm/UDPLink.h \
     src/comm/ForwarderLink.h \
     src/comm/EngineLink.h \
-    src/comm/EngineTCPCom.h \
-    src/comm/EngineUDPCom.h \
+    src/comm/EngineTCPLink.h \
+    src/comm/EngineUDPLink.h \
     src/comm/UdpIODevice.h \
     src/uas/UAS.h \
     src/uas/UASInterface.h \
@@ -1025,6 +1026,7 @@ SOURCES += \
     src/comm/LogReplayLink.cc \
     src/comm/MAVLinkProtocol.cc \
     src/comm/ForwarderProtocol.cc \
+    src/comm/EngineProtocol.cc \
     src/comm/FMULogReplayLink.cc \
     src/comm/QGCMAVLink.cc \
     src/comm/TCPLink.cc \
@@ -1032,8 +1034,8 @@ SOURCES += \
     src/comm/ForwarderLink.cc \
     src/comm/EngineLink.cc \
     src/comm/UdpIODevice.cc \
-    src/comm/EngineTCPCom.cc \
-    src/comm/EngineUDPCom.cc \
+    src/comm/EngineTCPLink.cc \
+    src/comm/EngineUDPLink.cc \
     src/main.cc \
     src/uas/UAS.cc \
     src/uas/UASMessageHandler.cc \

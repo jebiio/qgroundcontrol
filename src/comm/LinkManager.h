@@ -21,6 +21,7 @@
 #include "QGCToolbox.h"
 #include "MAVLinkProtocol.h"
 #include "ForwarderProtocol.h"
+#include "EngineProtocol.h"
 
 #if !defined(__mobile__)
 #include "LogReplayLink.h"
@@ -159,6 +160,8 @@ private:
     void                _removeConfiguration        (LinkConfiguration* config);
     void                _addUDPAutoConnectLink      (void);
     void                _addForwarderUDPAutoConnectLink (void);
+    void                _addEngineUDPLinkAutoConnectLink(void);
+    void                _addEngineTCPLinkAutoConnectLink(void);
     void                _addEngineUDPAutoConnectLink (void);
     void                _addZeroConfAutoConnectLink (void);
     void                _addMAVLinkForwardingLink   (void);
@@ -179,6 +182,7 @@ private:
     AutoConnectSettings*                _autoConnectSettings;
     MAVLinkProtocol*                    _mavlinkProtocol;
     ForwarderProtocol*                  _forwarderProtocol;
+    EngineProtocol*                     _engineProtocol;
     QList<SharedLinkInterfacePtr>       _rgLinks;
     QList<SharedLinkConfigurationPtr>   _rgLinkConfigs;
     QString                             _autoConnectRTKPort;
@@ -205,8 +209,12 @@ private:
     static const char*  _defaultUDPLinkName;
     static const char*  _defaultForwaderUDPLinkName;
     static const char*  _defaultEngineUDPLinkName;
+    static const char*  _defaultEngineUDPLinkName2;
+    static const char*  _defaultEngineTCPLinkName;
+    
     static const char*  _mavlinkForwardingLinkName;
     static const char*  _mavlinkForwardingSupportLinkName;
+    
     static const int    _autoconnectUpdateTimerMSecs;
     static const int    _autoconnectConnectDelayMSecs;
     bool                _mavlinkSupportForwardingEnabled = false;

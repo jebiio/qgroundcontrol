@@ -12,10 +12,10 @@ public:
 
     DEFINE_SETTINGFACT(forwarderServerIP)
     DEFINE_SETTINGFACT(forwarderServerPort)
-    DEFINE_SETTINGFACT(forwarderReceivePort)
-    DEFINE_SETTINGFACT(EngineServerIP)
-    DEFINE_SETTINGFACT(EngineServerTCPPort)
-    DEFINE_SETTINGFACT(EngineServerUDPPort)
-    DEFINE_SETTINGFACT(EngineReceivePort)
+    DEFINE_SETTINGFACT(forwarderListenPort)
+    DEFINE_SETTINGFACT(engineServerIP)
+    DEFINE_SETTINGFACT(engineServerTCPPort)
+    DEFINE_SETTINGFACT(engineServerUDPPort)
+    DEFINE_SETTINGFACT(engineListenUDPPort)
 
 };

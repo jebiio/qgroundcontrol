@@ -13,43 +13,43 @@
 {
     "name":                 "forwarderServerPort",
     "shortDesc":     "Forwarder Server port",
-    "type":                 "string",
-    "default":         30003,
+    "type":                 "uint32",
+    "default":         18100,
     "qgcRebootRequired":    true
 },
 {
-    "name":                 "forwarderReceivePort",
+    "name":                 "forwarderListenPort",
     "shortDesc":     "Forwarder Receive port",
-    "type":                 "string",
-    "default":         30003,
+    "type":                 "uint32",
+    "default":         18000,
     "qgcRebootRequired":    true
 },
 {
-    "name":                 "EngineServerIP",
+    "name":                 "engineServerIP",
     "shortDesc": "Engine Server IP",
     "type":                 "string",
     "default":         "127.0.0.1",
     "qgcRebootRequired":    true
 },
 {
-    "name":                 "EngineServerTCPPort",
+    "name":                 "engineServerTCPPort",
     "shortDesc":     "Engine Server TCP port",
-    "type":                 "string",
-    "default":         30003,
+    "type":                 "uint32",
+    "default":         17000,
     "qgcRebootRequired":    true
 },
 {
-    "name":                 "EngineServerUDPPort",
+    "name":                 "engineServerUDPPort",
     "shortDesc":     "Engine Server UDP port",
-    "type":                 "string",
-    "default":         30003,
+    "type":                 "uint32",
+    "default":         19000,
     "qgcRebootRequired":    true
 },
 {
-    "name":                 "EngineReceivePort",
-    "shortDesc":     "Engine Receive port",
-    "type":                 "string",
-    "default":         30003,
+    "name":                 "engineListenUDPPort",
+    "shortDesc":     "Receive port from Engine",
+    "type":                 "uint32",
+    "default":         19100,
     "qgcRebootRequired":    true
 }
 ]

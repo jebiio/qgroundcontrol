@@ -116,7 +116,8 @@ private:
     JoystickManager*            _joystickManager;
     MAVLinkProtocol*            _mavlinkProtocol;
     ForwarderProtocol*          _forwarderProtocol;
-
+    EngineProtocol*             _engineProtocol;
+    
     QGeoCoordinate              _lastKnownLocation;
 
     QTimer              _gcsHeartbeatTimer;             ///< Timer to emit heartbeats

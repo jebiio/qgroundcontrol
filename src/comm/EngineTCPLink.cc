@@ -12,31 +12,31 @@
 #include <QDebug>
 #include <QMutexLocker>
 #include <iostream>
-#include "EngineTCPCom.h"
+#include "EngineTCPLink.h"
 #include "LinkManager.h"
 #include "QGC.h"
 #include <QHostInfo>
 #include <QSignalSpy>
 
-#define QGC_TCP_PORT 5760
+#define QGC_TCP_PORT 17000
 
 
-EngineTCPCom::EngineTCPCom(SharedLinkConfigurationPtr& config)
+EngineTCPLink::EngineTCPLink(SharedLinkConfigurationPtr& config)
     : LinkInterface(config)
-    , _tcpConfig(qobject_cast<EngineTCPComConfiguration*>(config.get()))
+    , _tcpConfig(qobject_cast<EngineTCPLinkConfiguration*>(config.get()))
     , _socket(nullptr)
     , _socketIsConnected(false)
 {
     Q_ASSERT(_tcpConfig);
 }
 
-EngineTCPCom::~EngineTCPCom()
+EngineTCPLink::~EngineTCPLink()
 {
     disconnect();
 }
 
 
-void EngineTCPCom::_writeBytes(const QByteArray data)
+void EngineTCPLink::_writeBytes(const QByteArray data)
 {
     if (_socket) {
         _socket->write(data);
@@ -44,7 +44,7 @@ void EngineTCPCom::_writeBytes(const QByteArray data)
     }
 }
 
-void EngineTCPCom::_readBytes()
+void EngineTCPLink::_readBytes()
 {
     if (_socket) {
         qint64 byteCount = _socket->bytesAvailable();
@@ -58,11 +58,11 @@ void EngineTCPCom::_readBytes()
     }
 }
 
-void EngineTCPCom::disconnect(void)
+void EngineTCPLink::disconnect(void)
 {
     if (_socket) {
         // This prevents stale signal from calling the link after it has been deleted
-        QObject::disconnect(_socket, &QIODevice::readyRead, this, &EngineTCPCom::_readBytes);
+        QObject::disconnect(_socket, &QIODevice::readyRead, this, &EngineTCPLink::_readBytes);
         _socketIsConnected = false;
         _socket->disconnectFromHost(); // Disconnect tcp
         _socket->deleteLater(); // Make sure delete happens on correct thread
@@ -71,7 +71,7 @@ void EngineTCPCom::disconnect(void)
     }
 }
 
-bool EngineTCPCom::_connect(void)
+bool EngineTCPLink::_connect(void)
 {
     if (_socket) {
         qWarning() << "connect called while already connected";
@@ -81,14 +81,14 @@ bool EngineTCPCom::_connect(void)
     return _hardwareConnect();
 }
 
-bool EngineTCPCom::_hardwareConnect()
+bool EngineTCPLink::_hardwareConnect()
 {
     Q_ASSERT(_socket == nullptr);
     _socket = new QTcpSocket();
-    QObject::connect(_socket, &QIODevice::readyRead, this, &EngineTCPCom::_readBytes);
+    QObject::connect(_socket, &QIODevice::readyRead, this, &EngineTCPLink::_readBytes);
 
     QSignalSpy errorSpy(_socket, &QAbstractSocket::errorOccurred);
-    QObject::connect(_socket, &QAbstractSocket::errorOccurred, this, &EngineTCPCom::_socketError);
+    QObject::connect(_socket, &QAbstractSocket::errorOccurred, this, &EngineTCPLink::_socketError);
 
     _socket->connectToHost(_tcpConfig->host(), _tcpConfig->port());
 
@@ -109,7 +109,7 @@ bool EngineTCPCom::_hardwareConnect()
     return true;
 }
 
-void EngineTCPCom::_socketError(QAbstractSocket::SocketError socketError)
+void EngineTCPLink::_socketError(QAbstractSocket::SocketError socketError)
 {
     Q_UNUSED(socketError);
     emit communicationError(tr("Link Error"), tr("Error on link %1. Error on socket: %2.").arg(_config->name()).arg(_socket->errorString()));
@@ -120,7 +120,7 @@ void EngineTCPCom::_socketError(QAbstractSocket::SocketError socketError)
  *
  * @return True if link is connected, false otherwise.
  **/
-bool EngineTCPCom::isConnected() const
+bool EngineTCPLink::isConnected() const
 {
     return _socketIsConnected;
 }
@@ -128,38 +128,38 @@ bool EngineTCPCom::isConnected() const
 //--------------------------------------------------------------------------
 //-- TCPConfiguration
 
-EngineTCPComConfiguration::EngineTCPComConfiguration(const QString& name) : LinkConfiguration(name)
+EngineTCPLinkConfiguration::EngineTCPLinkConfiguration(const QString& name) : LinkConfiguration(name)
 {
     _port    = QGC_TCP_PORT;
     _host    = QLatin1String("0.0.0.0");
 }
 
-EngineTCPComConfiguration::EngineTCPComConfiguration(EngineTCPComConfiguration* source) : LinkConfiguration(source)
+EngineTCPLinkConfiguration::EngineTCPLinkConfiguration(EngineTCPLinkConfiguration* source) : LinkConfiguration(source)
 {
     _port    = source->port();
     _host    = source->host();
 }
 
-void EngineTCPComConfiguration::copyFrom(LinkConfiguration *source)
+void EngineTCPLinkConfiguration::copyFrom(LinkConfiguration *source)
 {
     LinkConfiguration::copyFrom(source);
-    auto* usource = qobject_cast<EngineTCPComConfiguration*>(source);
+    auto* usource = qobject_cast<EngineTCPLinkConfiguration*>(source);
     Q_ASSERT(usource != nullptr);
     _port    = usource->port();
     _host = usource->host();
 }
 
-void EngineTCPComConfiguration::setPort(quint16 port)
+void EngineTCPLinkConfiguration::setPort(quint16 port)
 {
     _port = port;
 }
 
-void EngineTCPComConfiguration::setHost(const QString host)
+void EngineTCPLinkConfiguration::setHost(const QString host)
 {
     _host = host;
 }
 
-void EngineTCPComConfiguration::saveSettings(QSettings& settings, const QString& root)
+void EngineTCPLinkConfiguration::saveSettings(QSettings& settings, const QString& root)
 {
     settings.beginGroup(root);
     settings.setValue("port", (int)_port);
@@ -167,7 +167,7 @@ void EngineTCPComConfiguration::saveSettings(QSettings& settings, const QString&
     settings.endGroup();
 }
 
-void EngineTCPComConfiguration::loadSettings(QSettings& settings, const QString& root)
+void EngineTCPLinkConfiguration::loadSettings(QSettings& settings, const QString& root)
 {
     settings.beginGroup(root);
     _port = (quint16)settings.value("port", QGC_TCP_PORT).toUInt();

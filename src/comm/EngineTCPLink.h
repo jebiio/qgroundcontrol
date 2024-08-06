@@ -28,9 +28,9 @@
 // class TCPLinkTest;
 class LinkManager;
 
-#define ENGINE_TCP_PORT 17000
+#define ENGINE_TCP_PORT 19000
 
-class EngineTCPComConfiguration : public LinkConfiguration
+class EngineTCPLinkConfiguration : public LinkConfiguration
 {
     Q_OBJECT
 
@@ -39,8 +39,8 @@ public:
     Q_PROPERTY(quint16 port READ port WRITE setPort NOTIFY portChanged)
     Q_PROPERTY(QString host READ host WRITE setHost NOTIFY hostChanged)
 
-    EngineTCPComConfiguration(const QString& name);
-    EngineTCPComConfiguration(EngineTCPComConfiguration* source);
+    EngineTCPLinkConfiguration(const QString& name);
+    EngineTCPLinkConfiguration(EngineTCPLinkConfiguration* source);
 
     quint16             port        (void) const                         { return _port; }
     QString             host        (void) const                         { return _host; }
@@ -48,7 +48,7 @@ public:
     void                setHost     (const QString host);
 
     //LinkConfiguration overrides
-    LinkType    type                (void) override                                         { return LinkConfiguration::TypeTcp; }
+    LinkType    type                (void) override                                         { return LinkConfiguration::TypeEngineTCP; }
     void        copyFrom            (LinkConfiguration* source) override;
     void        loadSettings        (QSettings& settings, const QString& root) override;
     void        saveSettings        (QSettings& settings, const QString& root) override;
@@ -64,13 +64,13 @@ private:
     quint16         _port;
 };
 
-class EngineTCPCom : public LinkInterface
+class EngineTCPLink : public LinkInterface
 {
     Q_OBJECT
 
 public:
-    EngineTCPCom(SharedLinkConfigurationPtr& config);
-    virtual ~EngineTCPCom();
+    EngineTCPLink(SharedLinkConfigurationPtr& config);
+    virtual ~EngineTCPLink();
 
     QTcpSocket* getSocket           (void) { return _socket; }
     void        signalBytesWritten  (void);
@@ -95,7 +95,7 @@ private:
     void _writeDebugBytes   (const QByteArray data);
 #endif
 
-    EngineTCPComConfiguration* _tcpConfig;
+    EngineTCPLinkConfiguration* _tcpConfig;
     QTcpSocket*       _socket;
     bool              _socketIsConnected;
 

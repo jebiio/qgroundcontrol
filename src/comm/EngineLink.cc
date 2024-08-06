@@ -246,7 +246,7 @@ bool EngineLink::_connect(void)
 
 bool EngineLink::_hardwareConnect()
 {
-    qWarning() << "---nsr --- Engine::_hardwareConnect() ";
+    qWarning() << "---nsr --- EngineLink::_hardwareConnect() ";
     if (_socket) {
         delete _socket;
         _socket = nullptr;
@@ -255,7 +255,7 @@ bool EngineLink::_hardwareConnect()
     _socket = new QUdpSocket(this);
     _socket->setProxy(QNetworkProxy::NoProxy);
     _connectState = _socket->bind(host, _udpConfig->localPort(), QAbstractSocket::ReuseAddressHint | QUdpSocket::ShareAddress);
-    qWarning() << "---nsr --- Engine::_hardwareConnect() "<< "ip:port" << host.toString() << _udpConfig->localPort() ;
+    qWarning() << "---nsr --- EngineLink::_hardwareConnect() "<< "ip:port" << host.toString() << _udpConfig->localPort() ;
     if (_connectState) {
         _socket->joinMulticastGroup(QHostAddress("224.0.0.1"));
         //-- Make sure we have a large enough IO buffers
@@ -320,7 +320,7 @@ void EngineLink::_deregisterZeroconf()
 EngineConfiguration::EngineConfiguration(const QString& name) : LinkConfiguration(name)
 {
     AutoConnectSettings* settings = qgcApp()->toolbox()->settingsManager()->autoConnectSettings();
-    _localPort = settings->engineListenPort()->rawValue().toInt(); // Engine default port is 19000
+    _localPort = 19001;// _localPort = settings->engineListenPort()->rawValue().toInt(); // Engine default port is 19000
     QString targetHostIP = ""; // QString targetHostIP = settings->udpTargetHostIP()->rawValue().toString();
     if (!targetHostIP.isEmpty()) {
         addHost(targetHostIP, settings->udpTargetHostPort()->rawValue().toUInt());
@@ -358,7 +358,7 @@ void EngineConfiguration::_copyFrom(LinkConfiguration *source)
             }
         }
     } else {
-        qWarning() << "Internal error";
+        qWarning() << "Here Internal error!!";
     }
 }
 

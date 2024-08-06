@@ -17,11 +17,12 @@
 #include <iostream>
 #include <QHostInfo>
 
-#include "EngineUDPCom.h"
+#include "EngineUDPLink.h"
 #include "QGC.h"
 #include "QGCApplication.h"
 #include "SettingsManager.h"
-#include "AutoConnectSettings.h"
+// #include "AutoConnectSettings.h"
+#include "FMUSettings.h"
 
 static const char* kZeroconfRegistration = "_qgroundcontrol._udp";
 
@@ -54,10 +55,10 @@ static QString get_ip_address(const QString& address)
     return QString();
 }
 
-static bool contains_target(const QList<EngineUDPComClient*> list, const QHostAddress& address, quint16 port)
+static bool contains_target(const QList<EngineUDPLinkClient*> list, const QHostAddress& address, quint16 port)
 {
     for (int i=0; i<list.count(); i++) {
-        EngineUDPComClient* target = list[i];
+        EngineUDPLinkClient* target = list[i];
         if (target->address == address && target->port == port) {
             return true;
         }
@@ -65,18 +66,18 @@ static bool contains_target(const QList<EngineUDPComClient*> list, const QHostAd
     return false;
 }
 
-EngineUDPCom::EngineUDPCom(SharedLinkConfigurationPtr& config)
+EngineUDPLink::EngineUDPLink(SharedLinkConfigurationPtr& config)
     : LinkInterface     (config)
     , _running          (false)
     , _socket           (nullptr)
-    , _udpConfig        (qobject_cast<EngineUDPComConfiguration*>(config.get()))
+    , _udpConfig        (qobject_cast<EngineUDPLinkConfiguration*>(config.get()))
     , _connectState     (false)
 #if defined(QGC_ZEROCONF_ENABLED)
     , _dnssServiceRef   (nullptr)
 #endif
 {
     if (!_udpConfig) {
-        qWarning() << "Internal error";
+        qWarning() << "EngineUDPLink Internal error"; 
     }
     auto allAddresses = QNetworkInterface::allAddresses();
     for (int i=0; i<allAddresses.count(); i++) {
@@ -86,7 +87,7 @@ EngineUDPCom::EngineUDPCom(SharedLinkConfigurationPtr& config)
     moveToThread(this);
 }
 
-EngineUDPCom::~EngineUDPCom()
+EngineUDPLink::~EngineUDPLink()
 {
     disconnect();
     // Tell the thread to exit
@@ -100,7 +101,7 @@ EngineUDPCom::~EngineUDPCom()
     this->deleteLater();
 }
 
-void EngineUDPCom::run()
+void EngineUDPLink::run()
 {
     if (_hardwareConnect()) {
         exec();
@@ -111,7 +112,7 @@ void EngineUDPCom::run()
     }
 }
 
-bool EngineUDPCom::_isIpLocal(const QHostAddress& add)
+bool EngineUDPLink::_isIpLocal(const QHostAddress& add)
 {
     // In simulation and testing setups the vehicle and the GCS can be
     // running on the same host. This leads to packets arriving through
@@ -137,7 +138,7 @@ bool EngineUDPCom::_isIpLocal(const QHostAddress& add)
     return false;
 }
 
-void EngineUDPCom::_writeBytes(const QByteArray data)
+void EngineUDPLink::_writeBytes(const QByteArray data)
 {
     if (!_socket) {
         return;
@@ -148,19 +149,19 @@ void EngineUDPCom::_writeBytes(const QByteArray data)
 
     // Send to all manually targeted systems
     for (int i=0; i<_udpConfig->targetHosts().count(); i++) {
-        EngineUDPComClient* target = _udpConfig->targetHosts()[i];
+        EngineUDPLinkClient* target = _udpConfig->targetHosts()[i];
         // Skip it if it's part of the session clients below
         if(!contains_target(_sessionTargets, target->address, target->port)) {
             _writeDataGram(data, target);
         }
     }
     // Send to all connected systems
-    for(EngineUDPComClient* target: _sessionTargets) {
+    for(EngineUDPLinkClient* target: _sessionTargets) {
         _writeDataGram(data, target);
     }
 }
 
-void EngineUDPCom::_writeDataGram(const QByteArray data, const EngineUDPComClient* target)
+void EngineUDPLink::_writeDataGram(const QByteArray data, const EngineUDPLinkClient* target)
 {
     //qDebug() << "UDP Out" << target->address << target->port;
     if(_socket->writeDatagram(data, target->address, target->port) < 0) {
@@ -168,7 +169,7 @@ void EngineUDPCom::_writeDataGram(const QByteArray data, const EngineUDPComClien
     }
 }
 
-void EngineUDPCom::readBytes()
+void EngineUDPLink::readBytes()
 {
     if (!_socket) {
         return;
@@ -196,6 +197,7 @@ void EngineUDPCom::readBytes()
         // added to the list and will start receiving datagrams from here. Even a port scanner
         // would trigger this.
         // Add host to broadcast list if not yet present, or update its port
+        /*
         QHostAddress asender = sender;
         if(_isIpLocal(sender)) {
             asender = QHostAddress(QString("127.0.0.1"));
@@ -203,25 +205,39 @@ void EngineUDPCom::readBytes()
         QMutexLocker locker(&_sessionTargetsMutex);
         if (!contains_target(_sessionTargets, asender, senderPort)) {
             qDebug() << "Adding target" << asender << senderPort;
-            EngineUDPComClient* target = new EngineUDPComClient(asender, senderPort);
+            EngineUDPLinkClient* target = new EngineUDPLinkClient(asender, senderPort);
             _sessionTargets.append(target);
         }
+        
         locker.unlock();
+        */
     }
     //-- Send whatever is left
     if (databuffer.size()) {
+        // parsing here!!
+        switch(_state){
+            case WAIT_FOR_DETECTION_START:
+            // Notify Detection was started!
+            break;
+            case WAIT_FOR_DETECTION_ALARM:
+            // Notify Detection Alarm msg!
+            
+            break;
+            default:
+            break;
+        }
         emit bytesReceived(this, databuffer);
     }
 }
 
-void EngineUDPCom::disconnect(void)
+void EngineUDPLink::disconnect(void)
 {
     _running = false;
     quit();
     wait();
     if (_socket) {
         // This prevents stale signal from calling the link after it has been deleted
-        QObject::disconnect(_socket, &QUdpSocket::readyRead, this, &EngineUDPCom::readBytes);
+        QObject::disconnect(_socket, &QUdpSocket::readyRead, this, &EngineUDPLink::readBytes);
         // Make sure delete happen on correct thread
         _socket->deleteLater();
         _socket = nullptr;
@@ -230,7 +246,7 @@ void EngineUDPCom::disconnect(void)
     _connectState = false;
 }
 
-bool EngineUDPCom::_connect(void)
+bool EngineUDPLink::_connect(void)
 {
     if (this->isRunning() || _running) {
         _running = false;
@@ -242,8 +258,9 @@ bool EngineUDPCom::_connect(void)
     return true;
 }
 
-bool EngineUDPCom::_hardwareConnect()
+bool EngineUDPLink::_hardwareConnect()
 {
+    qWarning() << "---nsr --- EngineUDPLink::_hardwareConnect() ";
     if (_socket) {
         delete _socket;
         _socket = nullptr;
@@ -252,6 +269,7 @@ bool EngineUDPCom::_hardwareConnect()
     _socket = new QUdpSocket(this);
     _socket->setProxy(QNetworkProxy::NoProxy);
     _connectState = _socket->bind(host, _udpConfig->localPort(), QAbstractSocket::ReuseAddressHint | QUdpSocket::ShareAddress);
+    qWarning() << "---nsr --- EngineUDPLink::_hardwareConnect() "<< "ip:port" << host.toString() << _udpConfig->localPort() ;
     if (_connectState) {
         _socket->joinMulticastGroup(QHostAddress("224.0.0.1"));
         //-- Make sure we have a large enough IO buffers
@@ -263,20 +281,20 @@ bool EngineUDPCom::_hardwareConnect()
         _socket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, 512 * 1024);
 #endif
         _registerZeroconf(_udpConfig->localPort(), kZeroconfRegistration);
-        QObject::connect(_socket, &QUdpSocket::readyRead, this, &EngineUDPCom::readBytes);
+        QObject::connect(_socket, &QUdpSocket::readyRead, this, &EngineUDPLink::readBytes);
         emit connected();
     } else {
-        emit communicationError(tr("UDP Link Error"), tr("Error binding UDP port: %1").arg(_socket->errorString()));
+        emit communicationError(tr("Engine UDP Link Error"), tr("Error binding UDP port: %1").arg(_socket->errorString()));
     }
     return _connectState;
 }
 
-bool EngineUDPCom::isConnected() const
+bool EngineUDPLink::isConnected() const
 {
     return _connectState;
 }
 
-void EngineUDPCom::_registerZeroconf(uint16_t port, const std::string &regType)
+void EngineUDPLink::_registerZeroconf(uint16_t port, const std::string &regType)
 {
 #if defined(QGC_ZEROCONF_ENABLED)
     DNSServiceErrorType result = DNSServiceRegister(&_dnssServiceRef, 0, 0, 0,
@@ -299,7 +317,7 @@ void EngineUDPCom::_registerZeroconf(uint16_t port, const std::string &regType)
 #endif
 }
 
-void EngineUDPCom::_deregisterZeroconf()
+void EngineUDPLink::_deregisterZeroconf()
 {
 #if defined(QGC_ZEROCONF_ENABLED)
     if (_dnssServiceRef)
@@ -313,52 +331,55 @@ void EngineUDPCom::_deregisterZeroconf()
 //--------------------------------------------------------------------------
 //-- UDPConfiguration
 
-EngineUDPComConfiguration::EngineUDPComConfiguration(const QString& name) : LinkConfiguration(name)
+EngineUDPLinkConfiguration::EngineUDPLinkConfiguration(const QString& name) : LinkConfiguration(name)
 {
-    AutoConnectSettings* settings = qgcApp()->toolbox()->settingsManager()->autoConnectSettings();
-    _localPort = settings->udpListenPort()->rawValue().toInt();
-    QString targetHostIP = settings->udpTargetHostIP()->rawValue().toString();
+    // AutoConnectSettings* settings = qgcApp()->toolbox()->settingsManager()->autoConnectSettings();
+    // _localPort = settings->udpListenPort()->rawValue().toInt();
+    // QString targetHostIP = settings->udpTargetHostIP()->rawValue().toString();
+    FMUSettings* fmuSettings = qgcApp()->toolbox()->settingsManager()->fmuSettings();
+    _localPort =fmuSettings->engineListenUDPPort()->rawValue().toInt(); // forwarder default port is 19100
+    QString targetHostIP = fmuSettings->engineServerIP()->rawValue().toString();
     if (!targetHostIP.isEmpty()) {
-        addHost(targetHostIP, settings->udpTargetHostPort()->rawValue().toUInt());
+        addHost(targetHostIP, fmuSettings->engineServerUDPPort()->rawValue().toUInt());
     }
 }
 
-EngineUDPComConfiguration::EngineUDPComConfiguration(EngineUDPComConfiguration* source) : LinkConfiguration(source)
+EngineUDPLinkConfiguration::EngineUDPLinkConfiguration(EngineUDPLinkConfiguration* source) : LinkConfiguration(source)
 {
     _copyFrom(source);
 }
 
-EngineUDPComConfiguration::~EngineUDPComConfiguration()
+EngineUDPLinkConfiguration::~EngineUDPLinkConfiguration()
 {
     _clearTargetHosts();
 }
 
-void EngineUDPComConfiguration::copyFrom(LinkConfiguration *source)
+void EngineUDPLinkConfiguration::copyFrom(LinkConfiguration *source)
 {
     LinkConfiguration::copyFrom(source);
     _copyFrom(source);
 }
 
-void EngineUDPComConfiguration::_copyFrom(LinkConfiguration *source)
+void EngineUDPLinkConfiguration::_copyFrom(LinkConfiguration *source)
 {
-    auto* usource = qobject_cast<EngineUDPComConfiguration*>(source);
+    auto* usource = qobject_cast<EngineUDPLinkConfiguration*>(source);
     if (usource) {
         _localPort = usource->localPort();
         _clearTargetHosts();
         for (int i=0; i<usource->targetHosts().count(); i++) {
-            EngineUDPComClient* target = usource->targetHosts()[i];
+            EngineUDPLinkClient* target = usource->targetHosts()[i];
             if(!contains_target(_targetHosts, target->address, target->port)) {
-                EngineUDPComClient* newTarget = new EngineUDPComClient(target);
+                EngineUDPLinkClient* newTarget = new EngineUDPLinkClient(target);
                 _targetHosts.append(newTarget);
                 _updateHostList();
             }
         }
     } else {
-        qWarning() << "Internal error";
+        qWarning() << "EngineUDPLinkConfiguration Internal error";
     }
 }
 
-void EngineUDPComConfiguration::_clearTargetHosts()
+void EngineUDPLinkConfiguration::_clearTargetHosts()
 {
     qDeleteAll(_targetHosts);
     _targetHosts.clear();
@@ -367,7 +388,7 @@ void EngineUDPComConfiguration::_clearTargetHosts()
 /**
  * @param host Hostname in standard formatt, e.g. localhost:14551 or 192.168.1.1:14551
  */
-void EngineUDPComConfiguration::addHost(const QString host)
+void EngineUDPLinkConfiguration::addHost(const QString host)
 {
     // Handle x.x.x.x:p
     if (host.contains(":")) {
@@ -378,7 +399,7 @@ void EngineUDPComConfiguration::addHost(const QString host)
     }
 }
 
-void EngineUDPComConfiguration::addHost(const QString& host, quint16 port)
+void EngineUDPLinkConfiguration::addHost(const QString& host, quint16 port)
 {
     QString ipAdd = get_ip_address(host);
     if (ipAdd.isEmpty()) {
@@ -386,20 +407,20 @@ void EngineUDPComConfiguration::addHost(const QString& host, quint16 port)
     } else {
         QHostAddress address(ipAdd);
         if(!contains_target(_targetHosts, address, port)) {
-            EngineUDPComClient* newTarget = new EngineUDPComClient(address, port);
+            EngineUDPLinkClient* newTarget = new EngineUDPLinkClient(address, port);
             _targetHosts.append(newTarget);
             _updateHostList();
         }
     }
 }
 
-void EngineUDPComConfiguration::removeHost(const QString host)
+void EngineUDPLinkConfiguration::removeHost(const QString host)
 {
     if (host.contains(":")) {
         QHostAddress address = QHostAddress(get_ip_address(host.split(":").first()));
         quint16 port = host.split(":").last().toUInt();
         for (int i=0; i<_targetHosts.size(); i++) {
-            EngineUDPComClient* target = _targetHosts.at(i);
+            EngineUDPLinkClient* target = _targetHosts.at(i);
             if(target->address == address && target->port == port) {
                 _targetHosts.removeAt(i);
                 delete target;
@@ -412,18 +433,18 @@ void EngineUDPComConfiguration::removeHost(const QString host)
     _updateHostList();
 }
 
-void EngineUDPComConfiguration::setLocalPort(quint16 port)
+void EngineUDPLinkConfiguration::setLocalPort(quint16 port)
 {
     _localPort = port;
 }
 
-void EngineUDPComConfiguration::saveSettings(QSettings& settings, const QString& root)
+void EngineUDPLinkConfiguration::saveSettings(QSettings& settings, const QString& root)
 {
     settings.beginGroup(root);
     settings.setValue("port", (int)_localPort);
     settings.setValue("hostCount", _targetHosts.size());
     for (int i=0; i<_targetHosts.size(); i++) {
-        EngineUDPComClient* target = _targetHosts.at(i);
+        EngineUDPLinkClient* target = _targetHosts.at(i);
         QString hkey = QString("host%1").arg(i);
         settings.setValue(hkey, target->address.toString());
         QString pkey = QString("port%1").arg(i);
@@ -432,7 +453,7 @@ void EngineUDPComConfiguration::saveSettings(QSettings& settings, const QString&
     settings.endGroup();
 }
 
-void EngineUDPComConfiguration::loadSettings(QSettings& settings, const QString& root)
+void EngineUDPLinkConfiguration::loadSettings(QSettings& settings, const QString& root)
 {
     AutoConnectSettings* acSettings = qgcApp()->toolbox()->settingsManager()->autoConnectSettings();
     _clearTargetHosts();
@@ -450,11 +471,11 @@ void EngineUDPComConfiguration::loadSettings(QSettings& settings, const QString&
     _updateHostList();
 }
 
-void EngineUDPComConfiguration::_updateHostList()
+void EngineUDPLinkConfiguration::_updateHostList()
 {
     _hostList.clear();
     for (int i=0; i<_targetHosts.size(); i++) {
-        EngineUDPComClient* target = _targetHosts.at(i);
+        EngineUDPLinkClient* target = _targetHosts.at(i);
         QString host = QString("%1").arg(target->address.toString()) + ":" + QString("%1").arg(target->port);
         _hostList << host;
     }

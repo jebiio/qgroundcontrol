@@ -28,13 +28,20 @@
 
 class LinkManager;
 
-class EngineUDPComClient {
+enum EngineQGCUDPState {
+    INIT_STATE,
+    WAIT_FOR_DETECTION_START,
+    WAIT_FOR_DETECTION_ALARM,
+    DETECTION_COMPLETE,
+    SENT_STOP
+};
+class EngineUDPLinkClient {
 public:
-    EngineUDPComClient(const QHostAddress& address_, quint16 port_)
+    EngineUDPLinkClient(const QHostAddress& address_, quint16 port_)
         : address(address_)
         , port(port_)
     {}
-    EngineUDPComClient(const EngineUDPComClient* other)
+    EngineUDPLinkClient(const EngineUDPLinkClient* other)
         : address(other->address)
         , port(other->port)
     {}
@@ -42,7 +49,7 @@ public:
     quint16         port;
 };
 
-class EngineUDPComConfiguration : public LinkConfiguration
+class EngineUDPLinkConfiguration : public LinkConfiguration
 {
     Q_OBJECT
 public:
@@ -50,9 +57,9 @@ public:
     Q_PROPERTY(quint16      localPort   READ localPort  WRITE setLocalPort  NOTIFY localPortChanged)
     Q_PROPERTY(QStringList  hostList    READ hostList                       NOTIFY  hostListChanged)
 
-    EngineUDPComConfiguration(const QString& name);
-    EngineUDPComConfiguration(EngineUDPComConfiguration* source);
-    ~EngineUDPComConfiguration();
+    EngineUDPLinkConfiguration(const QString& name);
+    EngineUDPLinkConfiguration(EngineUDPLinkConfiguration* source);
+    ~EngineUDPLinkConfiguration();
 
     quint16 localPort   () const{ return _localPort; }
 
@@ -68,10 +75,10 @@ public:
 
     void                    setLocalPort(quint16 port);
     QStringList             hostList    (void)          { return _hostList; }
-    const QList<EngineUDPComClient*> targetHosts (void)          { return _targetHosts; }
+    const QList<EngineUDPLinkClient*> targetHosts (void)          { return _targetHosts; }
 
     /// LinkConfiguration overrides
-    LinkType    type                 (void) override                                        { return LinkConfiguration::TypeUdp; }
+    LinkType    type                 (void) override                                        { return LinkConfiguration::TypeEngineUDP; }
     void        copyFrom             (LinkConfiguration* source) override;
     void        loadSettings         (QSettings& settings, const QString& root) override;
     void        saveSettings         (QSettings& settings, const QString& root) override;
@@ -87,18 +94,18 @@ private:
     void _clearTargetHosts  (void);
     void _copyFrom          (LinkConfiguration *source);
 
-    QList<EngineUDPComClient*>   _targetHosts;
+    QList<EngineUDPLinkClient*>   _targetHosts;
     QStringList         _hostList;
     quint16             _localPort;
 };
 
-class EngineUDPCom : public LinkInterface
+class EngineUDPLink : public LinkInterface
 {
     Q_OBJECT
 
 public:
-    EngineUDPCom(SharedLinkConfigurationPtr& config);
-    virtual ~EngineUDPCom();
+    EngineUDPLink(SharedLinkConfigurationPtr& config);
+    virtual ~EngineUDPLink();
 
     // LinkInterface overrides
     bool isConnected(void) const override;
@@ -123,16 +130,17 @@ private:
     bool _hardwareConnect   (void);
     void _registerZeroconf  (uint16_t port, const std::string& regType);
     void _deregisterZeroconf(void);
-    void _writeDataGram     (const QByteArray data, const EngineUDPComClient* target);
+    void _writeDataGram     (const QByteArray data, const EngineUDPLinkClient* target);
 
     bool                _running;
     QUdpSocket*         _socket;
-    EngineUDPComConfiguration*   _udpConfig;
+    EngineUDPLinkConfiguration*   _udpConfig;
     bool                _connectState;
-    QList<EngineUDPComClient*>   _sessionTargets;
+    QList<EngineUDPLinkClient*>   _sessionTargets;
     QMutex              _sessionTargetsMutex;
     QList<QHostAddress> _localAddresses;
 #if defined(QGC_ZEROCONF_ENABLED)
     DNSServiceRef       _dnssServiceRef;
 #endif
+    EngineQGCUDPState  _state = INIT_STATE;
 };

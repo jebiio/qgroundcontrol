@@ -22,6 +22,7 @@ class FollowMe;
 class LinkManager;
 class MAVLinkProtocol;
 class ForwarderProtocol;
+class EngineProtocol;
 class MissionCommandTree;
 class MultiVehicleManager;
 class QGCMapEngineManager;
@@ -57,6 +58,7 @@ public:
     LinkManager*                linkManager             () { return _linkManager; }
     MAVLinkProtocol*            mavlinkProtocol         () { return _mavlinkProtocol; }
     ForwarderProtocol*          forwarderProtocol       () { return _forwarderProtocol; }
+    EngineProtocol*             engineProtocol          () { return _engineProtocol; }
     MissionCommandTree*         missionCommandTree      () { return _missionCommandTree; }
     MultiVehicleManager*        multiVehicleManager     () { return _multiVehicleManager; }
     QGCMapEngineManager*        mapEngineManager        () { return _mapEngineManager; }
@@ -98,6 +100,7 @@ private:
     LinkManager*                _linkManager            = nullptr;
     MAVLinkProtocol*            _mavlinkProtocol        = nullptr;
     ForwarderProtocol*          _forwarderProtocol      = nullptr;
+    EngineProtocol*             _engineProtocol         = nullptr;
     MissionCommandTree*         _missionCommandTree     = nullptr;
     MultiVehicleManager*        _multiVehicleManager    = nullptr;
     QGCMapEngineManager*        _mapEngineManager       = nullptr;

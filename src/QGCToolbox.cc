@@ -62,6 +62,7 @@ QGCToolbox::QGCToolbox(QGCApplication* app)
     _linkManager            = new LinkManager               (app, this);
     _mavlinkProtocol        = new MAVLinkProtocol           (app, this);
     _forwarderProtocol      = new ForwarderProtocol         (app, this);
+    _engineProtocol         = new EngineProtocol            (app, this);
     _missionCommandTree     = new MissionCommandTree        (app, this);
     _multiVehicleManager    = new MultiVehicleManager       (app, this);
     _mapEngineManager       = new QGCMapEngineManager       (app, this);
