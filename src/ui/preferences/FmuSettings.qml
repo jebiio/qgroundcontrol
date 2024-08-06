@@ -48,6 +48,9 @@ Rectangle {
     property var    _planViewSettings:          QGroundControl.settingsManager.planViewSettings
     property var    _flyViewSettings:           QGroundControl.settingsManager.flyViewSettings
     property var    _videoSettings:             QGroundControl.settingsManager.videoSettings
+    property var    _trainModeSettings:         QGroundControl.settingsManager.trainModeSettings
+    property var    _detectionModeSettings:     QGroundControl.settingsManager.detectionModeSettings
+    property var    _fmuSettings:               QGroundControl.settingsManager.fmuSettings
     property string _videoSource:               _videoSettings.videoSource.rawValue
     property bool   _isGst:                     QGroundControl.videoManager.isGStreamer
     property bool   _isUDP264:                  _isGst && _videoSource === _videoSettings.udp264VideoSource
@@ -107,140 +110,156 @@ Rectangle {
                                     text:       qsTr("train path")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: trainPathField
-                                    text: "path/to/train"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     trainPathField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.trainPath
                                 }
+
                                 QGCLabel {
                                     text:       qsTr("valid path")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: validPathField
-                                    text: "path/to/valid"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     validPathField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.validPath
                                 }
 
                                 QGCLabel {
                                     text:       qsTr("test path")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: testPathField
-                                    text: "path/to/test"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     testPathField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.testPath
                                 }
                                 QGCLabel {
                                     text:       qsTr("result path")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: resultPathField
-                                    text: "path/to/result"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     resultPathField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.resultPath
                                 }
                                 QGCLabel {
                                     text:       qsTr("seed")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: seedField
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     seedField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.seed
                                 }
                                 QGCLabel {
                                     text:       qsTr("model")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField{
-                                    id: modelField
-                                    text: "model"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     modelField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.model
                                 }
                                 QGCLabel {
                                     text:       qsTr("selective method")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: selectiveField
-                                    text: "selective"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     selectiveField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.selectiveMethod
                                 }
                                 QGCLabel {
                                     text:       qsTr("var_to_forecast")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField{
-                                    id: varField
-                                    text: "var"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     varField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.varToForecast
                                 }
                                 QGCLabel {
                                     text:       qsTr("past windows size")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: pastField
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     pastField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.pastWindowsSize
                                 }
                                 
                                 QGCLabel {
                                     text:       qsTr("future windows size")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: futureField
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     futureField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.futureWindowsSize
                                 }
                                 QGCLabel {
                                     text:       qsTr("epoch")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: epochField
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     epochField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.epoch
                                 }
                                 QGCLabel {
                                     text:       qsTr("batch")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: batchField
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     batchField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.batch
                                 }
                                 QGCLabel {
                                     text:       qsTr("num_workers")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: numWorkersField
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     numWorkersField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.numWorkers
                                 }
                                 QGCLabel {
                                     text:       qsTr("lr")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: lrField
-                                    text: "0.0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     lrField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.lr
                                 }
                                 
                                 QGCLabel {
                                     text:       qsTr("weight_decay")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: weightDecayField
-                                    text: "0.0"
-                                    Layout.fillWidth: true
-                                }                             
+                                FactTextField {
+                                    id:                     weightDecayField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _trainModeSettings.weight
+                                }                           
                             }
                             
                             // mode별 저장 버튼 필요시 추가
@@ -285,86 +304,94 @@ Rectangle {
                                     text: qsTr("model")
                                     visible: guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: detectionModelField
-                                    text: "model"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     detectionModelField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.model
                                 }
 
                                 QGCLabel {
                                     text:       qsTr("model path")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: modelPathField
-                                    text: "path/to/model"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     detectionModelPathField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.modelPath
                                 }
                                 QGCLabel {
                                     text:       qsTr("past windows size")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: pastField2
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     detectionPastField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.pastWindowsSize
                                 }
                                 QGCLabel {
                                     text:       qsTr("future windows size")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: futureField2
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     detectionFutureField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.futureWindowsSize
                                 }
                                 
                                 QGCLabel {
                                     text:       qsTr("epoch")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: epochField2
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     detectionEpochField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.epoch
                                 }
                                 QGCLabel {
                                     text:       qsTr("batch")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: batchField2
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     detectionBatchField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.batch
                                 }
                                 QGCLabel {
                                     text:       qsTr("num_workers")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: numWorkersField2
-                                    text: "0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     detectionNumWorkersField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.numWorkers
                                 }
                                 QGCLabel {
                                     text:       qsTr("lr")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: lrField2
-                                    text: "0.0"
-                                    Layout.fillWidth: true
+                                FactTextField {
+                                    id:                     detectionLrField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.lr
                                 }
-                                
                                 QGCLabel {
                                     text:       qsTr("weight_decay")
                                     visible:    guidedMinAltField.visible
                                 }
-                                QGCTextField {
-                                    id: weightDecayField2
-                                    text: "0.0"
-                                    Layout.fillWidth: true
-                                }                        
+                                FactTextField {
+                                    id:                     detectionWeightDecayField
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    visible:                fact.visible
+                                    fact:                   _detectionModeSettings.weightDecay
+                                }                      
                             }
                             // mode별 저장 버튼 필요시 추가
                             // RowLayout{
@@ -392,6 +419,7 @@ Rectangle {
                             text: qsTr("적용")
                             anchors.centerIn: parent  
                             onClicked: {
+                                //함수 구현 
                                 console.log("Save button clicked");
                             }
                         }
@@ -421,20 +449,20 @@ Rectangle {
                                 text: qsTr("  IP:")
                                 Layout.alignment: Qt.AlignLeft
                             }
-                            QGCTextField {
+                            FactTextField {
                                 id: ipField
-                                text: "0.0.0.0"
                                 Layout.fillWidth: true
+                                fact: _fmuSettings.forwarderServerIP
                             }
 
                             QGCLabel {
                                 text: qsTr("  Port:")
                                 Layout.alignment: Qt.AlignLeft
                             }
-                            QGCTextField {
+                            FactTextField {
                                 id: portField
-                                text: "0000"
                                 Layout.fillWidth: true
+                                fact: _fmuSettings.forwarderServerPort
                             }
                         }
                     }
@@ -467,13 +495,12 @@ Rectangle {
                                 Layout.column: 0  
                                 Layout.alignment: Qt.AlignLeft
                             }
-
-                            QGCTextField {
-                                id: testField2
-                                text: "0000"
+                            FactTextField {
+                                id: portField2
                                 Layout.column: 1  
                                 Layout.fillWidth: true
-                            }                  
+                                fact: _fmuSettings.forwarderListenPort
+                            }          
                         }
                     }
 
@@ -507,12 +534,12 @@ Rectangle {
                                 anchors.leftMargin: 10
                                 // Layout.alignment: Qt.AlignLeft
                             }
-                            QGCTextField {
-                                id: hostField3
-                                text: "0.0.0.0"
+                            FactTextField {
+                                id: hostField
                                 Layout.column: 1  
                                 Layout.row: 0     
                                 Layout.fillWidth: true
+                                fact: _fmuSettings.engineServerIP
                             }
 
                             
@@ -522,25 +549,24 @@ Rectangle {
                                 Layout.row: 1     
                                 // Layout.alignment: Qt.AlignLeft
                             }
-                            QGCTextField {
+                            FactTextField {
                                 id: tcpPortField
-                                text: "0000"
                                 Layout.column: 1  
                                 Layout.row: 1     
                                 Layout.fillWidth: true
+                                fact: _fmuSettings.engineServerTCPPort
                             }
-
                             QGCLabel {
                                 text: qsTr("  UDP Port : ")
                                 Layout.column: 0  
                                 Layout.row: 2     
                             }
-                            QGCTextField {
+                            FactTextField {
                                 id: udpPortField
-                                text: "0000"
                                 Layout.column: 1  
                                 Layout.row: 2     
                                 Layout.fillWidth: true
+                                fact: _fmuSettings.engineServerUDPPort
                             }
                         }
                     }
@@ -571,12 +597,12 @@ Rectangle {
 
                             RowLayout{
                                 QGCLabel { text: qsTr("  Port : ") }
-                                QGCTextField {
-                                    // id:                     testField3
-                                    text:                   "0000"
+                                FactTextField {
+                                    id: udpPortField2
+                                    Layout.fillWidth: true
+                                    fact: _fmuSettings.engineListenUDPPort
                                 }
                             }
-
                         }
                     }
 
