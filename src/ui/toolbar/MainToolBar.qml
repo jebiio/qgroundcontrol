@@ -90,19 +90,6 @@ Rectangle {
             visible:            _activeVehicle && _communicationLost && currentToolbar === flyViewToolbar
         }
 
-        QGCButton {
-            id:             engineOnOffButton
-            text:           _activeVehicle && _activeVehicle.engineRunning ? qsTr("Engine Stop") : qsTr("Engine Start")
-            onClicked: {
-                        if (_activeVehicle && _activeVehicle.engineRunning) {
-                            _activeVehicle.stopEngine();
-                        } else {
-                            _activeVehicle.startEngine();
-                        }
-                    }
-            visible: _activeVehicle && currentToolbar === flyViewToolbar
-        }
-
     }
 
     QGCFlickable {
@@ -126,6 +113,42 @@ Rectangle {
                                     (currentToolbar == planViewToolbar ? "qrc:/qml/PlanToolBarIndicators.qml" : "")
         }
     }
+
+    RowLayout {
+        id:                     viewButtonRow2
+        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * 5
+        anchors.right:          parent.right
+        anchors.bottomMargin:   1
+        anchors.top:            parent.top
+        anchors.bottom:         parent.bottom
+        spacing:                ScreenTools.defaultFontPixelWidth / 2
+
+
+        QGCRadioButton {
+            id:             singleVehicleRadio
+            text:           qsTr("Train")
+            checked:        true
+            visible:        _activeVehicle && currentToolbar === flyViewToolbar
+        }
+
+        QGCRadioButton {
+            text:           qsTr("Detection")
+            visible:        _activeVehicle && currentToolbar === flyViewToolbar
+        }
+        QGCButton {
+            id:             engineOnOffButton
+            text:           _activeVehicle && _activeVehicle.engineRunning ? qsTr("Engine Stop") : qsTr("Engine Start")
+            onClicked: {
+                        if (_activeVehicle && _activeVehicle.engineRunning) {
+                            _activeVehicle.stopEngine();
+                        } else {
+                            _activeVehicle.startEngine();
+                        }
+                    }
+            visible: _activeVehicle && currentToolbar === flyViewToolbar
+        }    
+
+    }    
 
     //-------------------------------------------------------------------------
     //-- Branding Logo
