@@ -380,6 +380,22 @@ Rectangle {
                             // }
                         }
                     }
+                    Rectangle {
+                        height: 40
+                        Layout.preferredWidth: 200 
+                        Layout.fillWidth: true  
+                        color:    "transparent"
+
+                        QGCButton {
+                            width: 100  
+                            height: 30  
+                            text: qsTr("적용")
+                            anchors.centerIn: parent  
+                            onClicked: {
+                                console.log("Save button clicked");
+                            }
+                        }
+                    }
 
                     Item { width: 1; height: _margins; visible: forwarderIPLabel.visible }
                     QGCLabel {
@@ -580,5 +596,5 @@ Rectangle {
             onClicked: {
                 console.log("Save button clicked");
             }
-    }
+        }
 }
