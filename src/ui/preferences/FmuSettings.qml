@@ -587,14 +587,15 @@ Rectangle {
 
     }
 
-        QGCButton {
-            text: qsTr("SAVE")
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.topMargin: 20
-            anchors.rightMargin: 20
-            onClicked: {
-                console.log("Save button clicked");
-            }
-        }
+        // 전체 파라미터 저장 기능 추가시 주석 해제
+        // QGCButton {
+        //     text: qsTr("SAVE")
+        //     anchors.top: parent.top
+        //     anchors.right: parent.right
+        //     anchors.topMargin: 20
+        //     anchors.rightMargin: 20
+        //     onClicked: {
+        //         console.log("Save button clicked");
+        //     }
+        // }
 }
