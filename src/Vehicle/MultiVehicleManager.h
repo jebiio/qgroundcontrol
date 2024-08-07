@@ -19,6 +19,7 @@
 #include "QmlObjectListModel.h"
 #include "QGCToolbox.h"
 #include "QGCLoggingCategory.h"
+#include "EnginePacket.h"
 
 class FirmwarePluginManager;
 class FollowMe;
@@ -73,7 +74,11 @@ public:
     virtual void setToolbox(QGCToolbox *toolbox);
 
     QGeoCoordinate lastKnownLocation    () { return _lastKnownLocation; }
-
+    void setEngineMode(uint8_t mode);
+    
+    void handleEngineDetectionState(LinkInterface* link, EngineMsg& msg);
+    void handleEngineTrainState(LinkInterface* link, EngineMsg& msg);
+    void sentEngineCommand(uint8_t mode, uint8_t cmd);
 signals:
     void vehicleAdded                   (Vehicle* vehicle);
     void vehicleRemoved                 (Vehicle* vehicle);
@@ -94,6 +99,7 @@ private slots:
     void _sendGCSHeartbeat              (void);
     void _vehicleHeartbeatInfo          (LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType);
     void _vehicleHeartbeatInfo2          (LinkInterface* link, int vehicleId);
+    void _engineHeartbeatInfo(LinkInterface* link, int vehicleId);
     void _requestProtocolVersion        (unsigned version);
     void _coordinateChanged             (QGeoCoordinate coordinate);
 
@@ -124,6 +130,9 @@ private:
     bool                _gcsHeartbeatEnabled;           ///< Enabled/disable heartbeat emission
     static const int    _gcsHeartbeatRateMSecs = 1000;  ///< Heartbeat rate
     static const char*  _gcsHeartbeatEnabledKey;
+    uint8_t currentEngineMode = 0;
+    uint8_t currentEngineDetectionState = 0;
+    uint8_t currentEngineTrainState = 0;
 public:    
     void printInfo(void);
 };

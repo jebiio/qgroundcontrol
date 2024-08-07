@@ -81,7 +81,7 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
     connect(_mavlinkProtocol, &MAVLinkProtocol::vehicleHeartbeatInfo, this, &MultiVehicleManager::_vehicleHeartbeatInfo);
     connect(_forwarderProtocol, &ForwarderProtocol::vehicleHeartbeatInfo, this, &MultiVehicleManager::_vehicleHeartbeatInfo2);
     connect(&_gcsHeartbeatTimer, &QTimer::timeout, this, &MultiVehicleManager::_sendGCSHeartbeat);
-
+    connect(_engineProtocol, &EngineProtocol::engineHeartbeatInfo, this, &MultiVehicleManager::_engineHeartbeatInfo);
     // connect(_engineProtocol, &ForwarderProtocol::engineMessageReceived, this, &MultiVehicleManager::_engineMessageReceived);
     
     if (_gcsHeartbeatEnabled) {
@@ -90,6 +90,132 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
 
     _offlineEditingVehicle = new Vehicle(Vehicle::MAV_AUTOPILOT_TRACK, Vehicle::MAV_TYPE_TRACK, _firmwarePluginManager, this);
 }
+void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, int vehicleId)
+{
+    qWarning() << "---nsr --- MultiVehicleManager::_engineHeartbeatInfo!!!! ";
+    EngineMsg msg = EngineMsg();
+
+    switch(currentEngineMode){
+    case (int)EngineMode::TRAIN_MODE:
+            // parsing msg
+            // if state : handle_msg()
+                // UI update :
+                // response (UDP)
+            handleEngineTrainState(link, msg);
+            // qgcApp()->showAppMessage("TRAIN_MODE");
+            // link->writeBytesThreadSafe("TRAIN_MODE", 10);
+            break;
+    case (int)EngineMode::DETECTION_MODE:
+            handleEngineDetectionState(link, msg);
+            // qgcApp()->showAppMessage("DETECTION_MODE");
+            // link->writeBytesThreadSafe("DETECTION_MODE", 10);
+            break;
+        default:
+            break;
+    }
+}
+
+void MultiVehicleManager::setEngineMode(uint8_t mode)
+{
+    currentEngineMode = mode;
+}
+
+void MultiVehicleManager::handleEngineDetectionState(LinkInterface* link, EngineMsg& msg)
+{
+    EngineMsg expectedMsg = EngineMsg();
+    switch(currentEngineDetectionState)
+    {
+    case (int)DetectionState::WAIT_FOR_DETECTION_START:
+            // qgcApp()->showAppMessage("DETECTION_START");
+            // link->writeBytesThreadSafe("DETECTION_START", 10);
+            expectedMsg.useVocabulary(Vocabulary::ALARM_DETECTION_START);
+            if(msg.compare(expectedMsg))
+            {
+                currentEngineDetectionState = (uint8_t)DetectionState::WAIT_FOR_DETECTION_ALARM;
+                // ToDo : sent to UI for alarm (button text change : start -> stop)
+            }
+            break;
+        case (int)DetectionState::WAIT_FOR_DETECTION_ALARM:
+            // ToDo : sent to UI for Detection alarm
+
+            break;
+        // case (int)DetectionState::DETECTION_COMPLETE:
+        //     // ToDo : sent to UI for alarm
+        //     break;
+        case (int)DetectionState::SENT_DETECTION_STOP:
+            // not defined yet
+            break;
+    }
+}
+
+void MultiVehicleManager::handleEngineTrainState(LinkInterface* link, EngineMsg& msg)
+{
+    EngineMsg expectedMsg = EngineMsg();
+    switch(currentEngineTrainState)
+    {
+        case (int)TrainState::WAIT_FOR_TRAIN_START:
+            // if(msg == STARTCmd())
+            expectedMsg.useVocabulary(Vocabulary::ALARM_TRAIN_START);
+            if(msg.compare(expectedMsg))
+            {
+                currentEngineTrainState = (uint8_t)TrainState::WAIT_FOR_TRAIN_PROGRESS;
+                // ToDo : sent to UI for alarm (button text change : start -> stop)
+            }
+            break;
+        case (int)TrainState::WAIT_FOR_TRAIN_PROGRESS:
+            expectedMsg.useVocabulary(Vocabulary::ALARM_TRAIN_SUCCESS);
+            if(msg.compare(expectedMsg))
+            {
+                currentEngineTrainState = (uint8_t)TrainState::TRAIN_COMPLETE;
+                // ToDo : sent to UI for complete alarm
+            } else {
+                // ToDo : sent to UI for progress 
+            }
+            break;
+        case (int)TrainState::TRAIN_COMPLETE:
+            break;
+        case (int)TrainState::SENT_TRAIN_STOP:
+            break;
+        default:
+            //not defined msg received in train mode
+            break;
+    } 
+}
+
+void MultiVehicleManager::sentEngineCommand(uint8_t mode, uint8_t cmd)
+{
+    EngineMsg msg = EngineMsg();
+    if(mode == (int)EngineMode::TRAIN_MODE)
+    {
+        switch(cmd)
+        {
+            case 1 :// START:
+                msg.useVocabulary(Vocabulary::CONTROL_TRAIN_START);
+                currentEngineTrainState = (uint8_t)TrainState::WAIT_FOR_TRAIN_START;
+                break;
+            case 0 : // STOP:
+                msg.useVocabulary(Vocabulary::CONTROL_TRAIN_STOP);
+                currentEngineTrainState = (uint8_t)TrainState::SENT_TRAIN_STOP;
+                break;
+        }
+    }
+    else if(mode == (int)EngineMode::DETECTION_MODE)
+    {
+        switch(cmd)
+        {
+            case 1 :// START:
+                msg.useVocabulary(Vocabulary::CONTROL_DETECTION_START);
+                currentEngineDetectionState = (uint8_t)DetectionState::WAIT_FOR_DETECTION_START;
+                break;
+            case 0 : // STOP:
+                msg.useVocabulary(Vocabulary::CONTROL_DETECTION_STOP);
+                //link->write(msg.toBytes());
+                currentEngineDetectionState = (uint8_t)DetectionState::SENT_DETECTION_STOP;
+                break;
+        }
+    }
+}
+
 
 void MultiVehicleManager::_vehicleHeartbeatInfo2(LinkInterface* link, int vehicleId)
 {
