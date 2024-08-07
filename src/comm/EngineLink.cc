@@ -204,7 +204,7 @@ void EngineLink::readBytes()
         }
         QMutexLocker locker(&_sessionTargetsMutex);
         if (!contains_target(_sessionTargets, asender, senderPort)) {
-            qDebug() << "Adding target" << asender << senderPort;
+            qDebug() << "Adding target EngineLink" << asender << senderPort;
             EngineClient* target = new EngineClient(asender, senderPort);
             _sessionTargets.append(target);
         }

@@ -205,7 +205,7 @@ void ForwarderLink::readBytes()
         }
         QMutexLocker locker(&_sessionTargetsMutex);
         if (!contains_target(_sessionTargets, asender, senderPort)) {
-            qDebug() << "Adding target" << asender << senderPort;
+            qDebug() << "Adding target ForwarderLink" << asender << senderPort;
             ForwarderClient* target = new ForwarderClient(asender, senderPort);
             _sessionTargets.append(target);
         }

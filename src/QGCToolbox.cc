@@ -100,6 +100,7 @@ void QGCToolbox::setChildToolboxes(void)
     _linkManager->setToolbox(this);
     _mavlinkProtocol->setToolbox(this);
     _forwarderProtocol->setToolbox(this);
+    _engineProtocol->setToolbox(this);
     _missionCommandTree->setToolbox(this);
     _multiVehicleManager->setToolbox(this);
     _mapEngineManager->setToolbox(this);

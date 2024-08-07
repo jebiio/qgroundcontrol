@@ -22,7 +22,6 @@
 #include "QGCApplication.h"
 #include "SettingsManager.h"
 // #include "AutoConnectSettings.h"
-#include "FMUSettings.h"
 
 static const char* kZeroconfRegistration = "_qgroundcontrol._udp";
 
@@ -148,9 +147,11 @@ void EngineUDPLink::_writeBytes(const QByteArray data)
     QMutexLocker locker(&_sessionTargetsMutex);
 
     // Send to all manually targeted systems
+    qDebug() << "targetHosts().count() : " << _udpConfig->targetHosts().count() ;
     for (int i=0; i<_udpConfig->targetHosts().count(); i++) {
         EngineUDPLinkClient* target = _udpConfig->targetHosts()[i];
         // Skip it if it's part of the session clients below
+        qDebug() << "address:  " << target->address << " port : " << target->port ;
         if(!contains_target(_sessionTargets, target->address, target->port)) {
             _writeDataGram(data, target);
         }
@@ -208,24 +209,11 @@ void EngineUDPLink::readBytes()
             EngineUDPLinkClient* target = new EngineUDPLinkClient(asender, senderPort);
             _sessionTargets.append(target);
         }
-        
         locker.unlock();
         */
     }
     //-- Send whatever is left
     if (databuffer.size()) {
-        // parsing here!!
-        switch(_state){
-            case WAIT_FOR_DETECTION_START:
-            // Notify Detection was started!
-            break;
-            case WAIT_FOR_DETECTION_ALARM:
-            // Notify Detection Alarm msg!
-            
-            break;
-            default:
-            break;
-        }
         emit bytesReceived(this, databuffer);
     }
 }

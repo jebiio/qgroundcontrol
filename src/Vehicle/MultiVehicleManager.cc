@@ -95,6 +95,11 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
     qWarning() << "---nsr --- MultiVehicleManager::_engineHeartbeatInfo!!!! ";
     EngineMsg msg = EngineMsg();
     msg.fromBytes((const uint8_t*)b.data(), (uint8_t) b.size());
+    
+    EngineMsg expectedMsg = EngineMsg();
+    expectedMsg.useVocabulary(Vocabulary::ALARM_TRAIN_SUCCESS);
+    std::vector<uint8_t> byte_vector = expectedMsg.toBytes();
+    link->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
 
     switch(currentEngineMode){
     case (int)EngineMode::TRAIN_MODE:

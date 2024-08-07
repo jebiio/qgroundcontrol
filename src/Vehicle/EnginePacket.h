@@ -162,31 +162,36 @@ public:
         if (data_len < 8) {
             uint8_t start1 = data[0];
             uint8_t start2 = data[1];
-            std::memcpy(&length, data + 2, sizeof(uint16_t));
-            // length = (data[2] << 8) | data[3];
+            length = (data[2] << 8) | data[3];
+            // std::memcpy(&length, data + 2, sizeof(uint16_t));
             func = data[4];
             mode = data[5];
             cmd_response = data[6];
 
             if (start1 != START1 || start2 != START2 || length != 3) {
-                std::cout << "It is not valid data!" << std::endl;
+                std::cout << "It is not valid short data!" << std::endl;
                 return false;
+            }else {
+                std::cout << "It is Good short data!" << std::endl;
             }
         }
         else {
             uint8_t start1 = data[0];
             uint8_t start2 = data[1];
-            std::memcpy(&length, data + 2, sizeof(uint16_t));
+            length = (data[2] << 8) | data[3]; //std::memcpy(&length, data + 2, sizeof(uint16_t));
             func = data[4];
             mode = data[5];
             cmd_response = data[6];
             add_msg_flag = data[7];
-            std::memcpy(&add_msg_len, data + 8, sizeof(uint16_t));
+            add_msg_len = (data[8] << 8) | data[9];//std::memcpy(&add_msg_len, data + 8, sizeof(uint16_t));
             // add_msg_len = (data[8] << 8) | data[9];
 
             if (start1 != START1 || start2 != START2 || length != data_len - 4) {
-                std::cout << "It is not valid data!" << std::endl;
+                std::cout << "It is not valid long data!" << std::endl;
+                std::cout << "start1 : "<< start1 << " start2 : " << start2 << " " << length << " " << data_len << std::endl;
                 return false;
+            }else {
+                std::cout << "It is Good long data!" << std::endl;
             }
 
             if (add_msg_len > 0) {

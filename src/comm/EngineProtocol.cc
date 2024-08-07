@@ -200,8 +200,11 @@ void EngineProtocol::logSentBytes(LinkInterface* link, QByteArray b){
  **/
 void EngineProtocol::receiveBytes(LinkInterface* link, QByteArray b)
 {
+    qDebug()<< "received bytes from engine : size : "<< b.size() << " : " <<b.data();
+    // link->writeBytesThreadSafe("HelloWorld", 11);
     //ToDo 
     // check link is still valid
+
     SharedLinkInterfacePtr linkPtr = _linkMgr->sharedLinkInterfacePointerForLink(link, true);
     if (!linkPtr) {
         qCDebug(EngineProtocolLog) << "receiveBytes: link gone!" << b.size() << " bytes arrived too late";
@@ -211,16 +214,8 @@ void EngineProtocol::receiveBytes(LinkInterface* link, QByteArray b)
     // if(dynamic_cast<EngineUDPLink*>(link.get()) != nullptr || dynamic_cast<EngineTCPLink*>(link.get()) != nullptr) {
 
     if(checkValidationPacket(b)){
-        // emit engineMessageReceived(link, b);
         emit engineHeartbeatInfo(link, b);
-
-        //
-        // forwardPacketToEngineServer(b);
-        // logForwarderPacket(b);
-        // FmuStream fmu_packet  = parseForwarderPacket(b);
-        // _startLogging();
-        // emit vehicleHeartbeatInfo(link, fmu_packet.system_id);// emit vehicleHeartbeatInfo(link, _message.sysid, _message.compid, heartbeat.autopilot, heartbeat.type);
-        // emit messageReceived(link, fmu_packet); //emit messageReceived(link, _message);
+        // qDebug()<< "received bytes from engine : ", b.data();
     }
 }
 

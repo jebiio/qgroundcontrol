@@ -77,6 +77,7 @@ LinkManager::LinkManager(QGCApplication* app, QGCToolbox* toolbox)
     , _autoConnectSettings(nullptr)
     , _mavlinkProtocol(nullptr)
     , _forwarderProtocol(nullptr)
+    , _engineProtocol(nullptr)
     #ifndef __mobile__
     #ifndef NO_SERIAL_LINK
     , _nmeaPort(nullptr)
@@ -194,6 +195,7 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         }
         else if(dynamic_cast<EngineUDPLink*>(link.get()) != nullptr || dynamic_cast<EngineTCPLink*>(link.get()) != nullptr) {
             connect(link.get(), &LinkInterface::bytesReceived,       _engineProtocol,    &EngineProtocol::receiveBytes);
+            connect(link.get(), &LinkInterface::bytesSent,           _engineProtocol,    &EngineProtocol::logSentBytes);
         }
         else {
             connect(link.get(), &LinkInterface::bytesReceived,       _mavlinkProtocol,    &MAVLinkProtocol::receiveBytes);
@@ -266,6 +268,7 @@ void LinkManager::_linkDisconnected(void)
     }
     else if(dynamic_cast<EngineUDPLink*>(link) != nullptr || dynamic_cast<EngineTCPLink*>(link) != nullptr) {
         disconnect(link, &LinkInterface::bytesReceived,       _engineProtocol,    &EngineProtocol::receiveBytes);
+        disconnect(link, &LinkInterface::bytesSent,           _engineProtocol,    &EngineProtocol::logSentBytes);
     }
     else {
         disconnect(link, &LinkInterface::bytesReceived,       _mavlinkProtocol,    &MAVLinkProtocol::receiveBytes);
@@ -285,7 +288,7 @@ void LinkManager::_linkDisconnected(void)
 }
 
 SharedLinkInterfacePtr LinkManager::sharedLinkInterfacePointerForLink(LinkInterface* link, bool ignoreNull)
-{
+{    
     for (int i=0; i<_rgLinks.count(); i++) {
         if (_rgLinks[i].get() == link) {
             return _rgLinks[i];
