@@ -211,8 +211,8 @@ void EngineProtocol::receiveBytes(LinkInterface* link, QByteArray b)
     // if(dynamic_cast<EngineUDPLink*>(link.get()) != nullptr || dynamic_cast<EngineTCPLink*>(link.get()) != nullptr) {
 
     if(checkValidationPacket(b)){
-//        emit engineMessageReceived(link, b);
-
+        // emit engineMessageReceived(link, b);
+        emit engineHeartbeatInfo(link, b);
 
         //
         // forwardPacketToEngineServer(b);

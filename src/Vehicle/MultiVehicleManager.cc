@@ -90,10 +90,11 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
 
     _offlineEditingVehicle = new Vehicle(Vehicle::MAV_AUTOPILOT_TRACK, Vehicle::MAV_TYPE_TRACK, _firmwarePluginManager, this);
 }
-void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, int vehicleId)
+void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b)
 {
     qWarning() << "---nsr --- MultiVehicleManager::_engineHeartbeatInfo!!!! ";
     EngineMsg msg = EngineMsg();
+    msg.fromBytes((const uint8_t*)b.data(), (uint8_t) b.size());
 
     switch(currentEngineMode){
     case (int)EngineMode::TRAIN_MODE:

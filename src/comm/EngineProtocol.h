@@ -131,11 +131,11 @@ signals:
     /// Heartbeat received on link
     // void vehicleHeartbeatInfo(LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType);
     void vehicleHeartbeatInfo(LinkInterface* link, int vehicleId); // for fmu stream
-    void engineHeartbeatInfo(LinkInterface* link, int vehicleId); // for engine
+    void engineHeartbeatInfo(LinkInterface* link, QByteArray b); // for engine
     /** @brief Message received and directly copied via signal */
     // void messageReceived(LinkInterface* link, mavlink_message_t message);
     void messageReceived(LinkInterface* link, FmuStream message); // for fmu stream
-    void engineMessageReceived(LinkInterface* link, FmuStream message); // for fmu stream
+    void engineMessageReceived(LinkInterface* link, QByteArray b); // for fmu stream
     /** @brief Emitted if version check is enabled / disabled */
     void versionCheckChanged(bool enabled);
     /** @brief Emitted if a message from the protocol should reach the user */

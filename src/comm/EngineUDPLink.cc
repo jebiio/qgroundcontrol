@@ -189,7 +189,7 @@ void EngineUDPLink::readBytes()
         }
         databuffer.append(datagram);
         //-- Wait a bit before sending it over
-        if (databuffer.size() > 10 * 1024) {
+        if (databuffer.size() > 6) {
             emit bytesReceived(this, databuffer);
             databuffer.clear();
         }
