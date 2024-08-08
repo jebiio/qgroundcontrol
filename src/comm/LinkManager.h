@@ -22,6 +22,7 @@
 #include "MAVLinkProtocol.h"
 #include "ForwarderProtocol.h"
 #include "EngineProtocol.h"
+#include "EngineUDPLink.h"
 
 #if !defined(__mobile__)
 #include "LogReplayLink.h"
@@ -143,7 +144,7 @@ public:
     void startAutoConnectedLinks(void);
 
     static const char*  settingsGroup;
-
+    SharedLinkInterfacePtr getEngineUDPLink();
 signals:
     void commPortStringsChanged();
     void commPortsChanged();
@@ -191,6 +192,8 @@ private:
     QMap<QString, int>                  _autoconnectPortWaitList;               ///< key: QGCSerialPortInfo::systemLocation, value: wait count
     QStringList                         _commPortList;
     QStringList                         _commPortDisplayList;
+
+    SharedLinkInterfacePtr _engineUDPLink;
 
 #ifndef NO_SERIAL_LINK
     QList<SerialLink*>                  _activeLinkCheckList;                   ///< List of links we are waiting for a vehicle to show up on

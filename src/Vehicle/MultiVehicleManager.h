@@ -51,6 +51,10 @@ public:
     // Methods
 
     Q_INVOKABLE Vehicle* getVehicleById(int vehicleId);
+    Q_INVOKABLE void sentEngineCommand(int mode, int cmd);
+    
+    void sentEngineParamSetup();
+    void sentEngineParamStructure();
 
     UAS* activeUas(void) { return _activeVehicle ? _activeVehicle->uas() : nullptr; }
 
@@ -78,7 +82,7 @@ public:
     
     void handleEngineDetectionState(LinkInterface* link, EngineMsg& msg);
     void handleEngineTrainState(LinkInterface* link, EngineMsg& msg);
-    void sentEngineCommand(uint8_t mode, uint8_t cmd);
+    //void sentEngineCommand(int mode, int cmd);
 signals:
     void vehicleAdded                   (Vehicle* vehicle);
     void vehicleRemoved                 (Vehicle* vehicle);

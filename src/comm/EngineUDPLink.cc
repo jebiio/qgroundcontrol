@@ -272,7 +272,7 @@ bool EngineUDPLink::_hardwareConnect()
         QObject::connect(_socket, &QUdpSocket::readyRead, this, &EngineUDPLink::readBytes);
         emit connected();
     } else {
-        emit communicationError(tr("Engine UDP Link Error"), tr("Error binding UDP port: %1").arg(_socket->errorString()));
+        emit communicationError(tr("Engine UDP Link Error"), tr("Engine Error binding UDP port: %1").arg(_socket->errorString()));
     }
     return _connectState;
 }

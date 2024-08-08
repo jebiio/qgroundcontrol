@@ -18,6 +18,9 @@
 #include "QGCCorePlugin.h"
 #include "QGCOptions.h"
 #include "LinkManager.h"
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #if defined (__ios__) || defined(__android__)
 #include "MobileScreenMgr.h"
@@ -98,8 +101,10 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
     
     EngineMsg expectedMsg = EngineMsg();
     expectedMsg.useVocabulary(Vocabulary::ALARM_TRAIN_SUCCESS);
-    std::vector<uint8_t> byte_vector = expectedMsg.toBytes();
-    link->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+    // std::vector<uint8_t> byte_vector = expectedMsg.toBytes();
+    // link->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+
+    sentEngineParamStructure();
 
     switch(currentEngineMode){
     case (int)EngineMode::TRAIN_MODE:
@@ -160,7 +165,6 @@ void MultiVehicleManager::handleEngineTrainState(LinkInterface* link, EngineMsg&
     switch(currentEngineTrainState)
     {
         case (int)TrainState::WAIT_FOR_TRAIN_START:
-            // if(msg == STARTCmd())
             expectedMsg.useVocabulary(Vocabulary::ALARM_TRAIN_START);
             if(msg.compare(expectedMsg))
             {
@@ -187,21 +191,131 @@ void MultiVehicleManager::handleEngineTrainState(LinkInterface* link, EngineMsg&
             break;
     } 
 }
-
-void MultiVehicleManager::sentEngineCommand(uint8_t mode, uint8_t cmd)
+void MultiVehicleManager::sentEngineParamSetup()
 {
     EngineMsg msg = EngineMsg();
+    // SharedLinkInterfacePtr link = qgcApp()->toolbox()->linkManager()->getEngineUDP();
+    std::vector<uint8_t> byte_vector;
+
+    msg.useVocabulary(Vocabulary::PARAMETER_SETUP);
+    byte_vector = msg.toBytes();
+    if(qgcApp()->toolbox()->linkManager()->getEngineUDPLink() != nullptr)
+    {
+        qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+    }
+}
+
+void MultiVehicleManager::sentEngineParamStructure()
+{
+    EngineMsg msg = EngineMsg();
+    // LinkInterface* link = qgcApp()->toolbox()->linkManager()->links().at(0).get();
+    std::vector<uint8_t> byte_vector;
+
+    TrainModeSettings* trainModeSettings = qgcApp()->toolbox()->settingsManager()->trainModeSettings();
+    DetectionModeSettings* detectionModeSettings = qgcApp()->toolbox()->settingsManager()->detectionModeSettings();
+
+    QJsonObject json;
+    // train mode 객체 생성
+    QJsonObject trainMode;
+    trainMode.insert("trainPath", trainModeSettings->trainPath()->rawValue().toString());
+    trainMode.insert("validPath", trainModeSettings->validPath()->rawValue().toString());
+    trainMode.insert("testPath", trainModeSettings->testPath()->rawValue().toString());
+    trainMode.insert("resultPath", trainModeSettings->resultPath()->rawValue().toString());
+    trainMode.insert("seed", trainModeSettings->seed()->rawValue().toInt());
+    trainMode.insert("model", trainModeSettings->model()->rawValue().toString());
+    trainMode.insert("selectiveMethod", trainModeSettings->selectiveMethod()->rawValue().toString());
+    trainMode.insert("varToForecast", trainModeSettings->varToForecast()->rawValue().toString());
+    trainMode.insert("pastWindowsSize", trainModeSettings->pastWindowsSize()->rawValue().toInt());
+    trainMode.insert("futureWindowsSize", trainModeSettings->futureWindowsSize()->rawValue().toInt());
+    trainMode.insert("epoch", trainModeSettings->epoch()->rawValue().toInt());
+    trainMode.insert("batch", trainModeSettings->batch()->rawValue().toInt());
+    trainMode.insert("numWorkers", trainModeSettings->numWorkers()->rawValue().toInt());
+    trainMode.insert("lr", trainModeSettings->lr()->rawValue().toFloat());
+    trainMode.insert("weight", trainModeSettings->weight()->rawValue().toFloat());
+
+    QJsonObject detectionMode;
+    detectionMode.insert("model", detectionModeSettings->model()->rawValue().toString());
+    detectionMode.insert("modelPath", detectionModeSettings->modelPath()->rawValue().toString());
+    detectionMode.insert("pastWindowsSize", detectionModeSettings->pastWindowsSize()->rawValue().toInt());
+    detectionMode.insert("futureWindowsSize", detectionModeSettings->futureWindowsSize()->rawValue().toInt());
+    detectionMode.insert("epoch", detectionModeSettings->epoch()->rawValue().toInt());
+    detectionMode.insert("batch", detectionModeSettings->batch()->rawValue().toInt());
+    detectionMode.insert("numWorkers", detectionModeSettings->numWorkers()->rawValue().toInt());
+    detectionMode.insert("lr", detectionModeSettings->lr()->rawValue().toFloat());
+    detectionMode.insert("weightDecay", detectionModeSettings->weightDecay()->rawValue().toFloat());
+    
+    json.insert("train mode", trainMode);
+    json.insert("detection mode", detectionMode);
+
+    QJsonDocument doc(json);
+    QString strJson(doc.toJson(QJsonDocument::Compact));
+    qDebug() << strJson;
+    QByteArray byte_array = strJson.toUtf8();
+    /*
+    TrainModeSettings* trainModeSettings = qgcApp()->toolbox()->settingsManager()->trainModeSettings();
+    DetectionModeSettings* detectionModeSettings = qgcApp()->toolbox()->settingsManager()->detectionModeSettings();
+    
+    trainModeSettings->trainPath()->rawValue().toString();
+    trainModeSettings->validPath()->rawValue().toString();
+    trainModeSettings->testPath()->rawValue().toString();
+    trainModeSettings->resultPath()->rawValue().toString();
+    trainModeSettings->seed()->rawValue().toInt();
+    trainModeSettings->model()->rawValue().toString();
+    trainModeSettings->selectiveMethod()->rawValue().toString();
+    trainModeSettings->varToForecast()->rawValue().toString();
+    trainModeSettings->pastWindowsSize()->rawValue().toInt();
+    trainModeSettings->futureWindowsSize()->rawValue().toInt();
+    trainModeSettings->epoch()->rawValue().toInt();
+    trainModeSettings->batch()->rawValue().toInt();
+    trainModeSettings->numWorkers()->rawValue().toInt();
+    trainModeSettings->lr()->rawValue().toFloat();
+    trainModeSettings->weight()->rawValue().toFloat();
+
+    detectionModeSettings->model()->rawValue().toString();
+    detectionModeSettings->modelPath()->rawValue().toString();
+    detectionModeSettings->pastWindowsSize()->rawValue().toInt();
+    detectionModeSettings->futureWindowsSize()->rawValue().toInt();
+    detectionModeSettings->epoch()->rawValue().toInt();
+    detectionModeSettings->batch()->rawValue().toInt();
+    detectionModeSettings->numWorkers()->rawValue().toInt();
+    detectionModeSettings->lr()->rawValue().toFloat();
+    detectionModeSettings->weightDecay()->rawValue().toFloat();
+    
+    */
+
+    msg.useVocabulary(Vocabulary::PARAMETER_STRUCTURE, reinterpret_cast<uint8_t*>(byte_array.data()), byte_array.size());
+    byte_vector = msg.toBytes();
+    if(qgcApp()->toolbox()->linkManager()->getEngineUDPLink() != nullptr)
+    {
+        qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+    }
+    // qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+    // link->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+}
+
+void MultiVehicleManager::sentEngineCommand(int mode, int cmd)
+{
+    EngineMsg msg = EngineMsg();
+    LinkInterface* link = qgcApp()->toolbox()->linkManager()->links().at(0).get();
+    std::vector<uint8_t> byte_vector;
+
     if(mode == (int)EngineMode::TRAIN_MODE)
     {
         switch(cmd)
         {
-            case 1 :// START:
+            case 1:// START:
                 msg.useVocabulary(Vocabulary::CONTROL_TRAIN_START);
+                byte_vector = msg.toBytes();
                 currentEngineTrainState = (uint8_t)TrainState::WAIT_FOR_TRAIN_START;
+                link->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
                 break;
-            case 0 : // STOP:
+            case 0: // STOP:
                 msg.useVocabulary(Vocabulary::CONTROL_TRAIN_STOP);
+                byte_vector = msg.toBytes();
                 currentEngineTrainState = (uint8_t)TrainState::SENT_TRAIN_STOP;
+                link->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+                break;
+            default:
                 break;
         }
     }
@@ -209,14 +323,19 @@ void MultiVehicleManager::sentEngineCommand(uint8_t mode, uint8_t cmd)
     {
         switch(cmd)
         {
-            case 1 :// START:
+            case 1:// START:
                 msg.useVocabulary(Vocabulary::CONTROL_DETECTION_START);
+                byte_vector = msg.toBytes();
                 currentEngineDetectionState = (uint8_t)DetectionState::WAIT_FOR_DETECTION_START;
+                link->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
                 break;
-            case 0 : // STOP:
+            case 0: // STOP:
                 msg.useVocabulary(Vocabulary::CONTROL_DETECTION_STOP);
-                //link->write(msg.toBytes());
+                byte_vector = msg.toBytes();
                 currentEngineDetectionState = (uint8_t)DetectionState::SENT_DETECTION_STOP;
+                link->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+                break;
+            default:
                 break;
         }
     }
@@ -538,6 +657,7 @@ QString MultiVehicleManager::loadSetting(const QString &name, const QString& def
     QSettings settings;
     return settings.value(name, defaultValue).toString();
 }
+
 
 Vehicle* MultiVehicleManager::getVehicleById(int vehicleId)
 {

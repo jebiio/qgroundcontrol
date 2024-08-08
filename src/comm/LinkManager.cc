@@ -78,6 +78,7 @@ LinkManager::LinkManager(QGCApplication* app, QGCToolbox* toolbox)
     , _mavlinkProtocol(nullptr)
     , _forwarderProtocol(nullptr)
     , _engineProtocol(nullptr)
+    , _engineUDPLink(nullptr)
     #ifndef __mobile__
     #ifndef NO_SERIAL_LINK
     , _nmeaPort(nullptr)
@@ -91,6 +92,7 @@ LinkManager::LinkManager(QGCApplication* app, QGCToolbox* toolbox)
 
 LinkManager::~LinkManager()
 {
+    _engineUDPLink = nullptr;
 #ifndef __mobile__
 #ifndef NO_SERIAL_LINK
     delete _nmeaPort;
@@ -168,7 +170,7 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         break;
     case LinkConfiguration::TypeEngineUDP:
         qWarning() << "---nsr --- createConnectedLink() -> LinkConfiguration::TypeEngineUDP" ;    
-        link = std::make_shared<EngineUDPLink>(config);
+        _engineUDPLink = link = std::make_shared<EngineUDPLink>(config);
         break;
     case LinkConfiguration::TypeEngineTCP:
         qWarning() << "---nsr --- createConnectedLink() -> LinkConfiguration::TypeEngineTCP" ;    
@@ -1130,4 +1132,9 @@ void LinkManager::_createDynamicForwardLink(const char* linkName, QString hostNa
     createConnectedLink(config);
 
     qCDebug(LinkManagerLog) << "New dynamic MAVLink forwarding port added: " << linkName << " hostname: " << hostName;
+}
+
+SharedLinkInterfacePtr LinkManager::getEngineUDPLink()
+{
+    return _engineUDPLink;
 }
