@@ -128,12 +128,12 @@ Rectangle {
             id:             singleVehicleRadio
             text:           qsTr("Train")
             checked:        true
-            visible:        _activeVehicle && currentToolbar === flyViewToolbar
+            visible:        true //_activeVehicle && currentToolbar === flyViewToolbar
         }
 
         QGCRadioButton {
             text:           qsTr("Detection")
-            visible:        _activeVehicle && currentToolbar === flyViewToolbar
+            visible:        true //_activeVehicle && currentToolbar === flyViewToolbar
         }
         QGCButton {
             id:             engineOnOffButton
@@ -145,7 +145,7 @@ Rectangle {
                             _activeVehicle.startEngine();
                         }
                     }
-            visible: _activeVehicle && currentToolbar === flyViewToolbar
+            visible: true //_activeVehicle && currentToolbar === flyViewToolbar
         }    
 
     }    
