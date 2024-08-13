@@ -205,6 +205,78 @@ void MultiVehicleManager::sentEngineParamSetup()
     }
 }
 
+void MultiVehicleManager::sendEngineDetectionParamStructure() 
+{
+    EngineMsg msg = EngineMsg();
+    // LinkInterface* link = qgcApp()->toolbox()->linkManager()->links().at(0).get();
+    std::vector<uint8_t> byte_vector;
+
+    DetectionModeSettings* detectionModeSettings = qgcApp()->toolbox()->settingsManager()->detectionModeSettings();
+
+    QJsonObject detectionModeJson;
+    detectionModeJson.insert("model", detectionModeSettings->model()->rawValue().toString());
+    detectionModeJson.insert("modelPath", detectionModeSettings->modelPath()->rawValue().toString());
+    detectionModeJson.insert("pastWindowsSize", detectionModeSettings->pastWindowsSize()->rawValue().toInt());
+    detectionModeJson.insert("futureWindowsSize", detectionModeSettings->futureWindowsSize()->rawValue().toInt());
+    detectionModeJson.insert("epoch", detectionModeSettings->epoch()->rawValue().toInt());
+    detectionModeJson.insert("batch", detectionModeSettings->batch()->rawValue().toInt());
+    detectionModeJson.insert("numWorkers", detectionModeSettings->numWorkers()->rawValue().toInt());
+    detectionModeJson.insert("lr", detectionModeSettings->lr()->rawValue().toFloat());
+    detectionModeJson.insert("weightDecay", detectionModeSettings->weightDecay()->rawValue().toFloat());
+    
+    QJsonDocument doc(detectionModeJson);
+    QString strJson(doc.toJson(QJsonDocument::Compact));
+    qDebug() << strJson;
+    QByteArray byte_array = strJson.toUtf8();
+    
+    msg.useVocabulary(Vocabulary::PARAMETER_STRUCTURE, reinterpret_cast<uint8_t*>(byte_array.data()), byte_array.size());
+    byte_vector = msg.toBytes();
+    if(qgcApp()->toolbox()->linkManager()->getEngineUDPLink() != nullptr)
+    {
+        qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+    }
+}
+
+void MultiVehicleManager::sendEngineTrainParamStructure()
+{
+    EngineMsg msg = EngineMsg();
+    // LinkInterface* link = qgcApp()->toolbox()->linkManager()->links().at(0).get();
+    std::vector<uint8_t> byte_vector;
+
+    TrainModeSettings* trainModeSettings = qgcApp()->toolbox()->settingsManager()->trainModeSettings();
+
+    // train mode 객체 생성
+    QJsonObject trainModeJson;
+    trainModeJson.insert("trainPath", trainModeSettings->trainPath()->rawValue().toString());
+    trainModeJson.insert("validPath", trainModeSettings->validPath()->rawValue().toString());
+    trainModeJson.insert("testPath", trainModeSettings->testPath()->rawValue().toString());
+    trainModeJson.insert("resultPath", trainModeSettings->resultPath()->rawValue().toString());
+    trainModeJson.insert("seed", trainModeSettings->seed()->rawValue().toInt());
+    trainModeJson.insert("model", trainModeSettings->model()->rawValue().toString());
+    trainModeJson.insert("selectiveMethod", trainModeSettings->selectiveMethod()->rawValue().toString());
+    trainModeJson.insert("varToForecast", trainModeSettings->varToForecast()->rawValue().toString());
+    trainModeJson.insert("pastWindowsSize", trainModeSettings->pastWindowsSize()->rawValue().toInt());
+    trainModeJson.insert("futureWindowsSize", trainModeSettings->futureWindowsSize()->rawValue().toInt());
+    trainModeJson.insert("epoch", trainModeSettings->epoch()->rawValue().toInt());
+    trainModeJson.insert("batch", trainModeSettings->batch()->rawValue().toInt());
+    trainModeJson.insert("numWorkers", trainModeSettings->numWorkers()->rawValue().toInt());
+    trainModeJson.insert("lr", trainModeSettings->lr()->rawValue().toFloat());
+    trainModeJson.insert("weight", trainModeSettings->weight()->rawValue().toFloat());
+
+    QJsonDocument doc(trainModeJson);
+    QString strJson(doc.toJson(QJsonDocument::Compact));
+    qDebug() << strJson;
+    QByteArray byte_array = strJson.toUtf8();
+    
+    msg.useVocabulary(Vocabulary::PARAMETER_STRUCTURE, reinterpret_cast<uint8_t*>(byte_array.data()), byte_array.size());
+    byte_vector = msg.toBytes();
+    if(qgcApp()->toolbox()->linkManager()->getEngineUDPLink() != nullptr)
+    {
+        qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+    }
+
+}
+
 void MultiVehicleManager::sentEngineParamStructure()
 {
     EngineMsg msg = EngineMsg();

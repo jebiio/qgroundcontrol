@@ -55,7 +55,8 @@ public:
     
     void sentEngineParamSetup();
     void sentEngineParamStructure();
-
+    void sendEngineDetectionParamStructure();
+    void sendEngineTrainParamStructure();
     UAS* activeUas(void) { return _activeVehicle ? _activeVehicle->uas() : nullptr; }
 
     // Property accessors
