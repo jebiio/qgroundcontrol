@@ -54,15 +54,17 @@ public:
     Q_INVOKABLE void sentEngineCommand(int mode, int cmd);
     
     // FMU Q_INVOKABLE 
-    Q_INVOKABLE void sendEngineDetectionParameterStart();
-    Q_INVOKABLE void sendEngineTrainParameterStart();
+    Q_INVOKABLE void sendEngineModeParameterStart(int mode);
+    // Q_INVOKABLE void sendEngineDetectionParameterStart();
+    // Q_INVOKABLE void sendEngineTrainParameterStart();
     
-    Q_INVOKABLE void sendEngineDetectionStart();
-    Q_INVOKABLE void sendEngineDetectionStop();
-    Q_INVOKABLE void sendEngineTrainStart();
-    Q_INVOKABLE void sendEngineTrainStop();
+    Q_INVOKABLE void sendEngineModeStartStop(int mode, int cmd);
+    // Q_INVOKABLE void sendEngineDetectionStart();
+    // Q_INVOKABLE void sendEngineDetectionStop();
+    // Q_INVOKABLE void sendEngineTrainStart();
+    // Q_INVOKABLE void sendEngineTrainStop();
 
-    void sendEngineData(int vocalubary);
+    // void sendEngineData(int vocalubary);
 
 //    void sendEngineDetectionParameterStart();
     void sentEngineParamSetup();
@@ -92,8 +94,8 @@ public:
 
     QGeoCoordinate lastKnownLocation    () { return _lastKnownLocation; }
     
-    void handleEngineDetectionState(LinkInterface* link, EngineMsg& msg);
-    void handleEngineTrainState(LinkInterface* link, EngineMsg& msg);
+    // void handleEngineDetectionState(LinkInterface* link, EngineMsg& msg);
+    // void handleEngineTrainState(LinkInterface* link, EngineMsg& msg);
     void sendEngineParameter(EngineMsgID msgID);
     //void sentEngineCommand(int mode, int cmd);
 signals:

@@ -190,6 +190,68 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
     */
 }
 
+
+void MultiVehicleManager::sendEngineModeParameterStart(int mode)
+{
+    // mode : 0 -> Detection, 1 -> Train
+    if (mode == 0)
+    {
+        engineSendMessage.useVocabulary(EngineMsgID::DETECTION_PARAMETER_SETUP_START);
+    } else if (mode == 1)
+    {
+        engineSendMessage.useVocabulary(EngineMsgID::TRAIN_PARAMETER_SETUP_START);
+    } else {
+        return;
+    }
+    std::vector<uint8_t> byte_vector = engineSendMessage.toBytes();
+    if(qgcApp()->toolbox()->linkManager()->getEngineUDPLink() != nullptr)
+    {
+        qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+        paramSetupState = ParamSetupStates::START;
+    }
+}
+
+void MultiVehicleManager::sendEngineModeStartStop(int mode, int cmd)
+{
+    // mode : 0 -> Detection, 1 -> Train
+    // cmd : 0 -> Start, 1 -> Stop
+
+    if (mode == 0)
+    {
+        if (cmd == 0)
+        {
+             engineSendMessage.useVocabulary(EngineMsgID::DETECTION_CONTROL_START);
+             detectionState = DetectionStates::START;
+        } else if (cmd == 1)
+        {
+            engineSendMessage.useVocabulary(EngineMsgID::DETECTION_CONTROL_STOP);
+            detectionState = DetectionStates::END;
+        } else {
+            return;
+        }
+    } else if (mode == 1)
+    {
+        if (cmd == 0)
+        {
+            engineSendMessage.useVocabulary(EngineMsgID::TRAIN_CONTROL_START);
+            trainState = TrainStates::START;
+        } else if (cmd == 1)
+        {
+             engineSendMessage.useVocabulary(EngineMsgID::TRAIN_CONTROL_STOP);
+             trainState = TrainStates::END;
+        } else {
+            return;
+        }
+    } else {
+        return;
+    }
+    std::vector<uint8_t> byte_vector = engineSendMessage.toBytes();
+    if(qgcApp()->toolbox()->linkManager()->getEngineUDPLink() != nullptr)
+    {
+        qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+    }
+}
+/*
 void MultiVehicleManager::sendEngineDetectionParameterStart()
 {
     engineSendMessage.useVocabulary(EngineMsgID::DETECTION_PARAMETER_SETUP_START);
@@ -257,7 +319,7 @@ void MultiVehicleManager::sendEngineTrainStop()
 void MultiVehicleManager::handleEngineDetectionState(LinkInterface* link, EngineMsg& msg)
 {
     EngineMsg expectedMsg = EngineMsg();
-    /*
+    
     switch(currentEngineDetectionState)
     {
     case (int)DetectionState::WAIT_FOR_DETECTION_START:
@@ -281,13 +343,13 @@ void MultiVehicleManager::handleEngineDetectionState(LinkInterface* link, Engine
             // not defined yet
             break;
     }
-    */
+    
 }
 
 void MultiVehicleManager::handleEngineTrainState(LinkInterface* link, EngineMsg& msg)
 {
     EngineMsg expectedMsg = EngineMsg();
-    /*
+    
     switch(currentEngineTrainState)
     {
         case (int)TrainState::WAIT_FOR_TRAIN_START:
@@ -316,12 +378,14 @@ void MultiVehicleManager::handleEngineTrainState(LinkInterface* link, EngineMsg&
             //not defined msg received in train mode
             break;
     } 
-    */
+    
 }
+
+
 void MultiVehicleManager::sendEngineData(int vocalubary)
 {
     EngineMsg msg = EngineMsg();
-    /*
+
     switch(vocalubary)
     {
 //        case DETECTION_PARAMETER_START:
@@ -345,13 +409,14 @@ void MultiVehicleManager::sendEngineData(int vocalubary)
         default:
            return;
     }
-    */
+    
     std::vector<uint8_t> byte_vector = msg.toBytes();
     if(qgcApp()->toolbox()->linkManager()->getEngineUDPLink() != nullptr)
     {
         qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
     }
 }
+*/
 
 void MultiVehicleManager::sentEngineParamSetup()
 {
