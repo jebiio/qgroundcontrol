@@ -93,6 +93,7 @@ void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
 
     _offlineEditingVehicle = new Vehicle(Vehicle::MAV_AUTOPILOT_TRACK, Vehicle::MAV_TYPE_TRACK, _firmwarePluginManager, this);
 }
+
 void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b)
 {
     qWarning() << "---nsr --- MultiVehicleManager::_engineHeartbeatInfo!!!! ";
@@ -125,6 +126,33 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
             break;
     }
 }
+
+void MultiVehicleManager::sendEngineDetectionParameterStart()
+{
+    // Engine msg = EngineMsg();
+    // // msg.useVocabulary(Vocabulary::PARAMETER_SETUP);
+    // msg.toBytes();
+}
+
+void MultiVehicleManager::sendEngineTrainParameterStart()
+{
+
+}
+
+void MultiVehicleManager::sendEngineDetectionStart()
+{
+
+}
+void MultiVehicleManager::sendEngineDetectionStop()
+{
+
+}
+void MultiVehicleManager::sendEngineTrainStart()
+{
+}
+void MultiVehicleManager::sendEngineTrainStop()
+{
+}   
 
 void MultiVehicleManager::setEngineMode(uint8_t mode)
 {
@@ -191,6 +219,39 @@ void MultiVehicleManager::handleEngineTrainState(LinkInterface* link, EngineMsg&
             break;
     } 
 }
+void MultiVehicleManager::sendEngineData(int vocalubary)
+{
+    EngineMsg msg = EngineMsg();
+    switch(vocalubary)
+    {
+//        case DETECTION_PARAMETER_START:
+//            msg.useVocabulary(Vocabulary::PARAMETER_SETUP);
+//            break;
+//        case TRAIN_PARAMETER_START:
+//            msg.useVocabulary(Vocabulary::PARAMETER_SETUP);
+//            break;
+//        case DETECTION_START:
+//            msg.useVocabulary(Vocabulary::CONTROL_DETECTION_START);
+//            break;
+//        case DETECTION_STOP:
+//            msg.useVocabulary(Vocabulary::CONTROL_DETECTION_STOP);
+//            break;
+//        case TRAIN_START:
+//            msg.useVocabulary(Vocabulary::CONTROL_TRAIN_START);
+//            break;
+//        case TRAIN_STOP:
+//            msg.useVocabulary(Vocabulary::CONTROL_TRAIN_STOP);
+//            break;
+        default:
+           return;
+    }
+    std::vector<uint8_t> byte_vector = msg.toBytes();
+    if(qgcApp()->toolbox()->linkManager()->getEngineUDPLink() != nullptr)
+    {
+        qgcApp()->toolbox()->linkManager()->getEngineUDPLink()->writeBytesThreadSafe((const char *) byte_vector.data(), byte_vector.size());
+    }
+}
+
 void MultiVehicleManager::sentEngineParamSetup()
 {
     EngineMsg msg = EngineMsg();

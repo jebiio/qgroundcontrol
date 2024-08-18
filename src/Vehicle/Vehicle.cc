@@ -2000,6 +2000,36 @@ bool Vehicle::sendMessageOnLinkThreadSafe(LinkInterface* link, mavlink_message_t
     return true;
 }
 
+bool Vehicle::sendMessageOnLinkThreadSafeForFMU(LinkInterface* link, int event)
+{
+    // link will be forwarderlink  
+    if (!link->isConnected()) {
+        qCDebug(VehicleLog) << "sendMessageOnLinkThreadSafeForFMU" << link << "not connected!";
+        return false;
+    }
+    uint8_t data[] = {0x4d, 0x5c, 0x00, 0x02};
+    
+    QByteArray buffer;
+    uint8_t vehicle_id = (uint8_t) this->id();
+    switch(event) {
+        case 1 :
+            buffer.append((const char*)data, 4);
+            buffer.push_back(vehicle_id);
+            break;
+        case 2:
+            break;
+        default:
+            return false;
+            break;
+    }
+
+    if(buffer.size() > 0){
+        link->writeBytesThreadSafe((const char*)buffer.data(), buffer.size());
+    }
+    
+    return true;
+}
+
 int Vehicle::motorCount()
 {
     switch (_vehicleType) {
@@ -2227,6 +2257,10 @@ void Vehicle::saveJoystickSettings()
         qCDebug(JoystickLog) << "Vehicle " << this->id() << " Saving setting joystickenabled: " << _joystickEnabled;
         settings.setValue(_joystickEnabledSettingsKey, _joystickEnabled);
     }
+}
+void Vehicle::disconnectFMU()
+{
+//    sendMessageOnLinkThreadSafeForFMU(vehicleLinkManager()->primaryLink().lock().get(), 1);
 }
 
 bool Vehicle::joystickEnabled() const

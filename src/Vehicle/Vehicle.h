@@ -473,6 +473,9 @@ public:
     /// Save the joystick enable setting to the settings group
     Q_INVOKABLE void saveJoystickSettings(void);
 
+    /// Disconnect FMU Vehicle
+    Q_INVOKABLE void disconnectFMU(void);
+
     bool    isInitialConnectComplete() const;
     bool    guidedModeSupported     () const;
     bool    pauseVehicleSupported   () const;
@@ -509,7 +512,11 @@ public:
     /// Sends a message to the specified link
     /// @return true: message sent, false: Link no longer connected
     bool sendMessageOnLinkThreadSafe(LinkInterface* link, mavlink_message_t message);
-
+    
+    /// Sends a message to the specified link
+    /// @return true: message sent, false: Link no longer connected
+    bool sendMessageOnLinkThreadSafeForFMU(LinkInterface* link, int event);
+    
     /// Sends the specified messages multiple times to the vehicle in order to attempt to
     /// guarantee that it makes it to the vehicle.
     void sendMessageMultiple(mavlink_message_t message);

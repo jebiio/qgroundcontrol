@@ -53,6 +53,16 @@ public:
     Q_INVOKABLE Vehicle* getVehicleById(int vehicleId);
     Q_INVOKABLE void sentEngineCommand(int mode, int cmd);
     
+    Q_INVOKABLE void sendEngineDetectionParameterStart();
+    Q_INVOKABLE void sendEngineTrainParameterStart();
+    
+    Q_INVOKABLE void sendEngineDetectionStart();
+    Q_INVOKABLE void sendEngineDetectionStop();
+    Q_INVOKABLE void sendEngineTrainStart();
+    Q_INVOKABLE void sendEngineTrainStop();
+
+    void sendEngineData(int vocalubary);
+//    void sendEngineDetectionParameterStart();
     void sentEngineParamSetup();
     void sentEngineParamStructure();
     void sendEngineDetectionParamStructure();
