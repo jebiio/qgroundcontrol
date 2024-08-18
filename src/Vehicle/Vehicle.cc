@@ -2007,7 +2007,7 @@ bool Vehicle::sendMessageOnLinkThreadSafeForFMU(LinkInterface* link, int event)
         qCDebug(VehicleLog) << "sendMessageOnLinkThreadSafeForFMU" << link << "not connected!";
         return false;
     }
-    uint8_t data[] = {0x4d, 0x5c, 0x00, 0x02};
+    uint8_t data[] = {0x4d, 0x5c, 0x00, 0x02}; // disconnect + vehicle id 
     
     QByteArray buffer;
     uint8_t vehicle_id = (uint8_t) this->id();

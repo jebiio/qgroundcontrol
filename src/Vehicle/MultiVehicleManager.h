@@ -53,6 +53,7 @@ public:
     Q_INVOKABLE Vehicle* getVehicleById(int vehicleId);
     Q_INVOKABLE void sentEngineCommand(int mode, int cmd);
     
+    // FMU Q_INVOKABLE 
     Q_INVOKABLE void sendEngineDetectionParameterStart();
     Q_INVOKABLE void sendEngineTrainParameterStart();
     
@@ -62,6 +63,7 @@ public:
     Q_INVOKABLE void sendEngineTrainStop();
 
     void sendEngineData(int vocalubary);
+
 //    void sendEngineDetectionParameterStart();
     void sentEngineParamSetup();
     void sentEngineParamStructure();
@@ -89,10 +91,10 @@ public:
     virtual void setToolbox(QGCToolbox *toolbox);
 
     QGeoCoordinate lastKnownLocation    () { return _lastKnownLocation; }
-    void setEngineMode(uint8_t mode);
     
     void handleEngineDetectionState(LinkInterface* link, EngineMsg& msg);
     void handleEngineTrainState(LinkInterface* link, EngineMsg& msg);
+    void sendEngineParameter(EngineMsgID msgID);
     //void sentEngineCommand(int mode, int cmd);
 signals:
     void vehicleAdded                   (Vehicle* vehicle);
@@ -148,6 +150,11 @@ private:
     uint8_t currentEngineMode = 0;
     uint8_t currentEngineDetectionState = 0;
     uint8_t currentEngineTrainState = 0;
+    EngineMsg engineReceivedMessage = EngineMsg();
+    EngineMsg engineSendMessage = EngineMsg();
+    ParamSetupStates paramSetupState;
+    DetectionStates detectionState;
+    TrainStates trainState;
 public:    
     void printInfo(void);
 };

@@ -1,23 +1,51 @@
+// Mac OS build : clang++ -std=c++11 -stdlib=libc++ -Weverything main.cpp
+
 #include <stdio.h>
 #include <cstdint>
 #include <cstring>
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
-enum class DetectionState: uint8_t {
-    NONE_STATE = 0x00,
-    WAIT_FOR_DETECTION_START = 0x01,
-    WAIT_FOR_DETECTION_ALARM = 0x02,
-    DETECTION_COMPLETE = 0x03,
-    SENT_DETECTION_STOP = 0x04
+
+// enum class DetectionState: uint8_t {
+//     NONE_STATE = 0x00,
+//     WAIT_FOR_DETECTION_START = 0x01,
+//     WAIT_FOR_DETECTION_ALARM = 0x02,
+//     DETECTION_COMPLETE = 0x03,
+//     SENT_DETECTION_STOP = 0x04
+// };
+
+// enum class TrainState: uint8_t {
+//     NONE_STATE = 0x00,
+//     WAIT_FOR_TRAIN_START = 0x01,
+//     WAIT_FOR_TRAIN_PROGRESS = 0x02,
+//     TRAIN_COMPLETE = 0x03,
+//     SENT_TRAIN_STOP = 0x04
+// };
+enum class ParamSetupStates {
+    NONE,
+    START,
+    START_OK,
+    DATA,
+    DATA_OK,
+    END
 };
 
-enum class TrainState: uint8_t {
-    NONE_STATE = 0x00,
-    WAIT_FOR_TRAIN_START = 0x01,
-    WAIT_FOR_TRAIN_PROGRESS = 0x02,
-    TRAIN_COMPLETE = 0x03,
-    SENT_TRAIN_STOP = 0x04
+enum class DetectionStates {
+    NONE,
+    START,
+    START_OK,
+    DATA,
+    END
+};
+
+enum class TrainStates {
+    NONE,
+    START,
+    START_OK,
+    DATA,
+    END
 };
 
 enum class EngineMode: uint8_t {
@@ -70,6 +98,28 @@ enum class Vocabulary {
     CONTROL_TRAIN_STOP
 };
 
+enum class EngineMsgID {
+    DETECTION_PARAMETER_SETUP_START, // QGC -> Engine
+    DETECTION_PARAMETER_DATA_OK, // Engine -> QGC
+    DETECTION_PARAMETER_SETUP_START_OK = DETECTION_PARAMETER_DATA_OK, // Engine -> QGC
+    DETECTION_PARAMETER_DATA, // QGC -> Engine
+    DETECTION_CONTROL_START, // QGC -> Engine
+    DETECTION_ALARM_START, // Engine -> QGC
+    DETECTION_ALARM_DATA, // Engine -> QGC
+    DETECTION_CONTROL_STOP, // QGC -> Engine
+    TRAIN_PARAMETER_SETUP_START, // QGC -> Engine
+    TRAIN_PARAMETER_DATA_OK, // Engine -> QGC
+    TRAIN_PARAMETER_SETUP_START_OK = TRAIN_PARAMETER_DATA_OK, // Engine -> QGC
+    TRAIN_PARAMETER_DATA, // QGC -> Engine
+    TRAIN_CONTROL_START, // QGC -> Engine
+    TRAIN_ALARM_START, // Engine -> QGC
+    TRAIN_ALARM_PROGRESS, // Engine -> QGC
+    TRAIN_ALARM_DONE, // Engine -> QGC
+    TRAIN_CONTROL_STOP, // QGC -> Engine
+    UNKNOWN // Default value
+};
+
+
 class EngineMsg {
 private:
     static const uint8_t START1 = 0x47;
@@ -107,9 +157,20 @@ public:
         this->add_msg_flag = static_cast<uint8_t>(add_msg_flag);
         this->add_msg_len = add_msg_len;
 
+        if (this->add_msg != nullptr) {
+            delete[] this->add_msg;
+            this->add_msg = nullptr;
+        }
+
         if (add_msg != nullptr && add_msg_len > 0) {
-            this->add_msg = new uint8_t[add_msg_len];
-            std::memcpy(this->add_msg, add_msg, add_msg_len);
+            if (add_msg_len == 1) {
+                this->add_msg = new uint8_t(add_msg[0]);
+                this->add_msg[0] = add_msg[0];
+            }
+            else {
+                this->add_msg = new uint8_t[add_msg_len];
+                std::memcpy(this->add_msg, add_msg, add_msg_len);
+            }
         }
     }
 
@@ -159,6 +220,9 @@ public:
     }
 
     bool fromBytes(const uint8_t* data, uint16_t data_len) {
+        add_msg_flag = static_cast<uint8_t>(AddMsgFlag::NONE);
+        add_msg_len = 0;
+    
         if (data_len < 8) {
             uint8_t start1 = data[0];
             uint8_t start2 = data[1];
@@ -228,6 +292,65 @@ public:
         std::memcpy(add_msg, json_data, add_msg_len);
     }
 
+    void useVocabulary(EngineMsgID messageId, uint8_t* msg = nullptr, uint16_t msg_len = 0) {
+                switch (messageId) {
+            case EngineMsgID::DETECTION_PARAMETER_SETUP_START:
+                setMsgFields(Func::SETUP, Mode::DETECTION, CmdResponse::NONE, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK:
+                setMsgFields(Func::SETUP, Mode::DETECTION, CmdResponse::SUCCESS, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::DETECTION_PARAMETER_DATA:
+                setMsgFields(Func::SETUP, Mode::DETECTION, CmdResponse::NONE, AddMsgFlag::EXIST, msg_len, msg);
+                break;
+            // case EngineMsgID::DETECTION_PARAMETER_DATA_OK:
+            //     setMsgFields(Func::SETUP, Mode::DETECTION, CmdResponse::SUCCESS, AddMsgFlag::NONE, 0x00, nullptr);
+            //     break;
+            case EngineMsgID::DETECTION_CONTROL_START:
+                setMsgFields(Func::CONTROL, Mode::DETECTION, CmdResponse::START, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::DETECTION_ALARM_START:
+                setMsgFields(Func::ALARM, Mode::DETECTION, CmdResponse::START, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::DETECTION_ALARM_DATA:
+                setMsgFields(Func::ALARM, Mode::DETECTION, CmdResponse::NONE, AddMsgFlag::EXIST, msg_len, msg);
+                break;
+            case EngineMsgID::DETECTION_CONTROL_STOP:
+                setMsgFields(Func::CONTROL, Mode::DETECTION, CmdResponse::STOP, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::TRAIN_PARAMETER_SETUP_START:
+                setMsgFields(Func::SETUP, Mode::TRAIN, CmdResponse::NONE, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK:
+                setMsgFields(Func::SETUP, Mode::TRAIN, CmdResponse::SUCCESS, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::TRAIN_PARAMETER_DATA:
+                setMsgFields(Func::SETUP, Mode::TRAIN, CmdResponse::NONE, AddMsgFlag::EXIST, msg_len, msg);
+                break;
+            // case EngineMsgID::TRAIN_PARAMETER_DATA_OK:
+            //     setMsgFields(Func::SETUP, Mode::TRAIN, CmdResponse::SUCCESS, AddMsgFlag::NONE, 0x00, nullptr);
+            //     break;
+            case EngineMsgID::TRAIN_CONTROL_START:
+                setMsgFields(Func::CONTROL, Mode::TRAIN, CmdResponse::START, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::TRAIN_ALARM_START:
+                setMsgFields(Func::ALARM, Mode::TRAIN, CmdResponse::START, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::TRAIN_ALARM_PROGRESS:
+                setMsgFields(Func::ALARM, Mode::TRAIN, CmdResponse::NONE, AddMsgFlag::EXIST, 1, msg);
+                break;
+            case EngineMsgID::TRAIN_ALARM_DONE:
+                setMsgFields(Func::ALARM, Mode::TRAIN, CmdResponse::SUCCESS, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            case EngineMsgID::TRAIN_CONTROL_STOP:
+                setMsgFields(Func::CONTROL, Mode::TRAIN, CmdResponse::STOP, AddMsgFlag::NONE, 0x00, nullptr);
+                break;
+            default:
+                std::cout << "Invalid Vocabulary Message ID" << std::endl;
+                break;
+        }
+    }
+    
     void useVocabulary(Vocabulary vocabulary, uint8_t* msg = nullptr, uint16_t msg_len = 0) {
         switch (vocabulary) {
             case Vocabulary::ALARM_TRAIN_START:
@@ -276,4 +399,228 @@ public:
                 throw std::invalid_argument("Invalid Vocabulary");
         }
     }
+    EngineMsgID getMessageID(){
+        switch(mode){
+            case static_cast<uint8_t>(Mode::DETECTION):
+                switch(func) {
+                    case static_cast<uint8_t>(Func::SETUP):
+                        if(cmd_response == static_cast<uint8_t>(CmdResponse::NONE)){
+                            return EngineMsgID::DETECTION_PARAMETER_SETUP_START;
+                        }else if(cmd_response == static_cast<uint8_t>(CmdResponse::SUCCESS)){
+                            return EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK;
+                        }
+                        break;
+                    case static_cast<uint8_t>(Func::CONTROL):
+                        if(cmd_response == static_cast<uint8_t>(CmdResponse::START)){
+                            return EngineMsgID::DETECTION_CONTROL_START;
+                        }else if(cmd_response == static_cast<uint8_t>(CmdResponse::STOP)){
+                            return EngineMsgID::DETECTION_CONTROL_STOP;
+                        }
+                        break;
+                    case static_cast<uint8_t>(Func::ALARM):
+                        if(cmd_response == static_cast<uint8_t>(CmdResponse::START)){
+                            return EngineMsgID::DETECTION_ALARM_START;
+                        }else if(cmd_response == static_cast<uint8_t>(CmdResponse::NONE)){
+                            return EngineMsgID::DETECTION_ALARM_DATA;
+                        }
+                        break;
+                    default:
+                        return EngineMsgID::UNKNOWN;
+                }
+                break;
+            case static_cast<uint8_t>(Mode::TRAIN): 
+                switch(func) {
+                    case static_cast<uint8_t>(Func::SETUP):
+                        if(cmd_response == static_cast<uint8_t>(CmdResponse::NONE)){
+                            return EngineMsgID::TRAIN_PARAMETER_SETUP_START;
+                        }else if(cmd_response == static_cast<uint8_t>(CmdResponse::SUCCESS)){
+                            return EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK;
+                        }
+                        break;
+                    case static_cast<uint8_t>(Func::CONTROL):
+                        if(cmd_response == static_cast<uint8_t>(CmdResponse::START)){
+                            return EngineMsgID::TRAIN_CONTROL_START;
+                        }else if(cmd_response == static_cast<uint8_t>(CmdResponse::STOP)){
+                            return EngineMsgID::TRAIN_CONTROL_STOP;
+                        }
+                        break;
+                    case static_cast<uint8_t>(Func::ALARM):
+                        if(cmd_response == static_cast<uint8_t>(CmdResponse::START)){
+                            return EngineMsgID::TRAIN_ALARM_START;
+                        }else if(cmd_response == static_cast<uint8_t>(CmdResponse::NONE)){
+                            return EngineMsgID::TRAIN_ALARM_PROGRESS;
+                        }else if(cmd_response == static_cast<uint8_t>(CmdResponse::SUCCESS)){
+                            return EngineMsgID::TRAIN_ALARM_DONE;
+                        }
+                        break;
+                    default:
+                        return EngineMsgID::UNKNOWN;
+                }
+                break;
+            default:
+                return EngineMsgID::UNKNOWN;
+        }
+        return EngineMsgID::UNKNOWN;
+    }
+
+    std::vector<uint8_t> getAddMsg() {
+        return std::vector<uint8_t>(add_msg, add_msg + add_msg_len);
+    }
+
+    uint16_t getAddMsgLen() {
+        return add_msg_len;
+    }
+
+};
+class MessageHandler{
+    private:
+        EngineMsg* received_msg;
+        ParamSetupStates param_setup_state;
+        DetectionStates detection_state;
+        TrainStates train_state;
+        EngineMsg send_msg;
+    public:
+        MessageHandler() : received_msg(nullptr), param_setup_state(ParamSetupStates::NONE), detection_state(DetectionStates::NONE), train_state(TrainStates::NONE) {
+        }
+
+        void setReceivedMsg(EngineMsg& msg){
+            received_msg = &msg;
+        }
+        void print_vector(std::vector<uint8_t> vec){
+            for (uint8_t byte : vec){
+                std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(byte) << " ";
+           }
+        }
+
+        void handleQGCMessage() {
+            if( received_msg == nullptr){
+                std::cout << "No Message Received" << std::endl;
+                return;
+            }
+            switch(received_msg->getMessageID()){
+                case EngineMsgID::TRAIN_PARAMETER_SETUP_START:
+                    send_msg.useVocabulary(EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK);
+                    std::cout << "send message";
+                    print_vector(send_msg.toBytes());
+                    
+                    param_setup_state = ParamSetupStates::START_OK;
+                    break;
+                case EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK:
+                    break;
+                case EngineMsgID::TRAIN_PARAMETER_DATA:
+                    send_msg.useVocabulary(EngineMsgID::TRAIN_PARAMETER_DATA_OK);
+                    std::cout << "send message";
+                    print_vector(send_msg.toBytes());
+                    param_setup_state = ParamSetupStates::END;
+                    break;
+                // case EngineMsgID::TRAIN_PARAMETER_DATA_OK:
+                //     break;
+                case EngineMsgID::TRAIN_CONTROL_START:
+                    send_msg.useVocabulary(EngineMsgID::TRAIN_ALARM_START);
+                    std::cout << "send message";
+                    print_vector(send_msg.toBytes());
+                    train_state = TrainStates::DATA;
+                    break;
+                case EngineMsgID::TRAIN_CONTROL_STOP:
+                    std::cout << "Train Control Stop Received" << std::endl;
+                    train_state = TrainStates::END;
+                    break;
+                case EngineMsgID::TRAIN_ALARM_START:
+                    break;
+                case EngineMsgID::TRAIN_ALARM_PROGRESS:
+                    break;
+                case EngineMsgID::TRAIN_ALARM_DONE:
+                    break;
+                case EngineMsgID::DETECTION_PARAMETER_SETUP_START:
+                    send_msg.useVocabulary(EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK);
+                    std::cout << "send message";
+                    print_vector(send_msg.toBytes());
+                    detection_state = DetectionStates::START_OK;
+                    break;
+                case EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK:
+                    break;
+                case EngineMsgID::DETECTION_PARAMETER_DATA:
+                    send_msg.useVocabulary(EngineMsgID::DETECTION_PARAMETER_DATA_OK);
+                    std::cout << "send message";
+                    print_vector(send_msg.toBytes());
+                    param_setup_state = ParamSetupStates::END;
+                    break;  
+                case EngineMsgID::DETECTION_CONTROL_START:
+                    send_msg.useVocabulary(EngineMsgID::DETECTION_ALARM_START);
+                    std::cout << "send message";
+                    print_vector(send_msg.toBytes());
+                    detection_state = DetectionStates::DATA;
+                    break;  
+                case EngineMsgID::DETECTION_CONTROL_STOP:
+                    std::cout << "Detection Control Stop Received" << std::endl;
+                    detection_state = DetectionStates::END;
+                    break;
+                case EngineMsgID::DETECTION_ALARM_START:
+                    break;
+                case EngineMsgID::DETECTION_ALARM_DATA:
+                    break;
+                default:   
+                    std::cout << "Invalid Train Message ID" << std::endl;
+                    break;
+            }
+        }
+
+        void handleEngineMessage() {
+            switch(received_msg->getMessageID()){
+                case EngineMsgID::TRAIN_PARAMETER_SETUP_START:
+                    break;
+                case EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK:
+                    std::cout << "TRAIN_PARAMETER_SETUP_START_OK : Train Parameter Setup Start OK" << std::endl;
+                    param_setup_state = ParamSetupStates::START_OK;
+                    break;
+                case EngineMsgID::TRAIN_PARAMETER_DATA:
+                    break;
+                // case EngineMsgID::TRAIN_PARAMETER_DATA_OK:
+                //     std::cout << "TRAIN_PARAMETER_DATA_OK : Train Parameter Data OK" << std::endl;
+                //     param_setup_state = ParamSetupStates::END;
+                //     break;
+                case EngineMsgID::TRAIN_CONTROL_START:
+                    break;
+                case EngineMsgID::TRAIN_CONTROL_STOP:
+                    break;
+                case EngineMsgID::TRAIN_ALARM_START:
+                    std::cout << "TRAIN_ALARM_START : Train Alarm Start" << std::endl;
+                    train_state = TrainStates::DATA;
+                    break;
+                case EngineMsgID::TRAIN_ALARM_PROGRESS:
+                    std::cout << "TRAIN_ALARM_PROGRESS : Progress : ";
+                    print_vector(received_msg->getAddMsg());
+                    train_state = TrainStates::DATA;
+                    break;
+                case EngineMsgID::TRAIN_ALARM_DONE:
+                    std::cout << "TRAIN_ALARM_DONE : Train Alarm Done" << std::endl;
+                    train_state = TrainStates::END;
+                    break;
+                case EngineMsgID::DETECTION_PARAMETER_SETUP_START:
+                    break;
+                case EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK:
+                    std::cout << "DETECTION_PARAMETER_SETUP_START_OK : " << std::endl;
+                    detection_state = DetectionStates::START_OK;
+                    break;
+                case EngineMsgID::DETECTION_PARAMETER_DATA:
+                    break;
+                case EngineMsgID::DETECTION_CONTROL_START:
+                    break;
+                case EngineMsgID::DETECTION_CONTROL_STOP:
+                    break;
+                case EngineMsgID::DETECTION_ALARM_START:
+                    std::cout << "DETECTION_ALARM_START : " << std::endl;
+                    detection_state = DetectionStates::DATA;
+                    break;
+                case EngineMsgID::DETECTION_ALARM_DATA:
+                    std::cout << "DETECTION_ALARM_DATA : data : ";
+                    print_vector(received_msg->getAddMsg());
+                    detection_state = DetectionStates::DATA;
+                    break;
+                default:   
+                    std::cout << "Invalid Train Message ID" << std::endl;
+                    break;
+            }
+        }
+
 };
