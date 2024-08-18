@@ -345,6 +345,8 @@ public:
     Q_PROPERTY(QString  gitHash                     READ gitHash                    NOTIFY gitHashChanged)
     Q_PROPERTY(quint64  vehicleUID                  READ vehicleUID                 NOTIFY vehicleUIDChanged)
     Q_PROPERTY(QString  vehicleUIDStr               READ vehicleUIDStr              NOTIFY vehicleUIDChanged)
+    Q_PROPERTY(bool     fmuConnected                READ fmuConnected               NOTIFY fmuConnectedChanged)
+    Q_PROPERTY(bool     fmued                       READ fmued             CONSTANT)
 
     /// Resets link status counters
     Q_INVOKABLE void resetCounters  ();
@@ -506,6 +508,10 @@ public:
     QGCMAVLink::VehicleClass_t vehicleClass(void) const { return QGCMAVLink::vehicleClass(_vehicleType); }
     Q_INVOKABLE QString vehicleTypeName() const;
 
+    bool fmuConnected() const { return _fmuConnected; }
+    void setFMUConnected(bool connected){ _fmuConnected = connected; emit fmuConnectedChanged(); }
+    bool fmued() const { return _fmued; }
+    void setFMUED(bool exist){ _fmued = exist; }
     bool engineRunning() const;
     void setEngineRunning(bool running);
 
@@ -1001,7 +1007,7 @@ signals:
     void gitHashChanged                 (QString hash);
     void vehicleUIDChanged              ();
     void loadProgressChanged            (float value);
-
+    void fmuConnectedChanged            ();
     /// New RC channel values coming from RC_CHANNELS message
     ///     @param channelCount Number of available channels, cMaxRcChannels max
     ///     @param pwmValues -1 signals channel not available
@@ -1148,6 +1154,8 @@ private:
     int     _id;                    ///< Mavlink system id
     int     _defaultComponentId;
     bool    _offlineEditingVehicle = false; ///< true: This Vehicle is a "disconnected" vehicle for ui use while offline editing
+    bool    _fmuConnected = false;
+    bool    _fmued = false;
 
     MAV_AUTOPILOT       _firmwareType;
     MAV_TYPE            _vehicleType;

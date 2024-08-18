@@ -648,7 +648,8 @@ void MultiVehicleManager::_vehicleHeartbeatInfo2(LinkInterface* link, int vehicl
 
     Vehicle* vehicle = new Vehicle(link, vehicleId, default_component_id, default_autopilot, default_type, _firmwarePluginManager, _joystickManager);
     connect(vehicle->vehicleLinkManager(),  &VehicleLinkManager::allLinksRemoved,       this, &MultiVehicleManager::_deleteVehiclePhase1);
-    
+    vehicle->setFMUConnected(true);
+    vehicle->setFMUED(true);
     _vehicles.append(vehicle);
 
     // Send QGC heartbeat ASAP, this allows PX4 to start accepting commands
