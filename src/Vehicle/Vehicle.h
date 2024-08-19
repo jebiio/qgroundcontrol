@@ -347,6 +347,7 @@ public:
     Q_PROPERTY(QString  vehicleUIDStr               READ vehicleUIDStr              NOTIFY vehicleUIDChanged)
     Q_PROPERTY(bool     fmuConnected                READ fmuConnected               NOTIFY fmuConnectedChanged)
     Q_PROPERTY(bool     fmued                       READ fmued             CONSTANT)
+    Q_PROPERTY(bool     fmuLogged                   READ fmuLogged             CONSTANT)
 
     /// Resets link status counters
     Q_INVOKABLE void resetCounters  ();
@@ -512,6 +513,8 @@ public:
     void setFMUConnected(bool connected){ _fmuConnected = connected; emit fmuConnectedChanged(); }
     bool fmued() const { return _fmued; }
     void setFMUED(bool exist){ _fmued = exist; }
+    bool fmuLogged() const { return _fmuLogged; }
+    void setFMULogged(bool logged){ _fmuLogged = logged; }
     bool engineRunning() const;
     void setEngineRunning(bool running);
 
@@ -1156,6 +1159,7 @@ private:
     bool    _offlineEditingVehicle = false; ///< true: This Vehicle is a "disconnected" vehicle for ui use while offline editing
     bool    _fmuConnected = false;
     bool    _fmued = false;
+    bool    _fmuLogged = false;
 
     MAV_AUTOPILOT       _firmwareType;
     MAV_TYPE            _vehicleType;

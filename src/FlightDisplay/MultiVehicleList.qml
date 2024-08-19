@@ -146,34 +146,40 @@ Item {
 
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth
+                    // FMU stop button 
+                    QGCButton {
+                        text:       "Stop"
+                        visible:    _vehicle && _vehicle.fmued
+                        onClicked:  _vehicle.disconnectFMU()
+                    }
 
                     QGCButton {
                         text:       qsTr("Arm")
-                        visible:    _vehicle && !_vehicle.armed
+                        visible:    _vehicle && !_vehicle.armed && !_vehicle.fmued
                         onClicked:  _vehicle.armed = true
                     }
 
                     QGCButton {
                         text:       qsTr("Start Mission")
-                        visible:    _vehicle && _vehicle.armed && _vehicle.flightMode !== _vehicle.missionFlightMode
+                        visible:    _vehicle && _vehicle.armed && _vehicle.flightMode !== _vehicle.missionFlightMode && !_vehicle.fmued
                         onClicked:  _vehicle.startMission()
                     }
 
                     QGCButton {
                         text:       qsTr("Pause")
-                        visible:    _vehicle && _vehicle.armed && _vehicle.pauseVehicleSupported
+                        visible:    _vehicle && _vehicle.armed && _vehicle.pauseVehicleSupported && !_vehicle.fmued
                         onClicked:  _vehicle.pauseVehicle()
                     }
 
                     QGCButton {
                         text:       qsTr("RTL")
-                        visible:    _vehicle && _vehicle.armed && _vehicle.flightMode !== _vehicle.rtlFlightMode
+                        visible:    _vehicle && _vehicle.armed && _vehicle.flightMode !== _vehicle.rtlFlightMode && !_vehicle.fmued
                         onClicked:  _vehicle.flightMode = _vehicle.rtlFlightMode
                     }
 
                     QGCButton {
                         text:       qsTr("Take control")
-                        visible:    _vehicle && _vehicle.armed && _vehicle.flightMode !== _vehicle.takeControlFlightMode
+                        visible:    _vehicle && _vehicle.armed && _vehicle.flightMode !== _vehicle.takeControlFlightMode && !_vehicle.fmued
                         onClicked:  _vehicle.flightMode = _vehicle.takeControlFlightMode
                     }
                 } // Row

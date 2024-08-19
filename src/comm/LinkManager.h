@@ -145,6 +145,8 @@ public:
 
     static const char*  settingsGroup;
     SharedLinkInterfacePtr getEngineUDPLink();
+    SharedLinkInterfacePtr getForwarderUDPLink();
+    
 signals:
     void commPortStringsChanged();
     void commPortsChanged();
@@ -194,6 +196,7 @@ private:
     QStringList                         _commPortDisplayList;
 
     SharedLinkInterfacePtr _engineUDPLink;
+    SharedLinkInterfacePtr _forwarderUDPLink;
 
 #ifndef NO_SERIAL_LINK
     QList<SerialLink*>                  _activeLinkCheckList;                   ///< List of links we are waiting for a vehicle to show up on

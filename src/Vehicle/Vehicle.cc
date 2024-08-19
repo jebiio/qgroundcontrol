@@ -2003,10 +2003,10 @@ bool Vehicle::sendMessageOnLinkThreadSafe(LinkInterface* link, mavlink_message_t
 bool Vehicle::sendMessageOnLinkThreadSafeForFMU(LinkInterface* link, int event)
 {
     // link will be forwarderlink  
-    if (!link->isConnected()) {
-        qCDebug(VehicleLog) << "sendMessageOnLinkThreadSafeForFMU" << link << "not connected!";
-        return false;
-    }
+    // if (!link->isConnected()) {
+    //     qCDebug(VehicleLog) << "sendMessageOnLinkThreadSafeForFMU" << link << "not connected!";
+    //     return false;
+    // }
     uint8_t data[] = {0x4d, 0x5c, 0x00, 0x02}; // disconnect + vehicle id 
     
     QByteArray buffer;
@@ -2024,7 +2024,10 @@ bool Vehicle::sendMessageOnLinkThreadSafeForFMU(LinkInterface* link, int event)
     }
 
     if(buffer.size() > 0){
-        link->writeBytesThreadSafe((const char*)buffer.data(), buffer.size());
+        if(qgcApp()->toolbox()->linkManager()->getForwarderUDPLink() != nullptr)
+        {
+            qgcApp()->toolbox()->linkManager()->getForwarderUDPLink()->writeBytesThreadSafe((const char*)buffer.data(), buffer.size());
+        }
     }
     
     return true;

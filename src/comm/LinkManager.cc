@@ -79,6 +79,7 @@ LinkManager::LinkManager(QGCApplication* app, QGCToolbox* toolbox)
     , _forwarderProtocol(nullptr)
     , _engineProtocol(nullptr)
     , _engineUDPLink(nullptr)
+    , _forwarderUDPLink(nullptr)
     #ifndef __mobile__
     #ifndef NO_SERIAL_LINK
     , _nmeaPort(nullptr)
@@ -93,6 +94,7 @@ LinkManager::LinkManager(QGCApplication* app, QGCToolbox* toolbox)
 LinkManager::~LinkManager()
 {
     _engineUDPLink = nullptr;
+    _forwarderUDPLink = nullptr;
 #ifndef __mobile__
 #ifndef NO_SERIAL_LINK
     delete _nmeaPort;
@@ -160,7 +162,7 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
 #endif
     case LinkConfiguration::TypeForwarder:
         qWarning() << "---nsr --- createConnectedLink() -> LinkConfiguration::TypeForwarder" ;    
-        link = std::make_shared<ForwarderLink>(config);
+        _forwarderUDPLink = link = std::make_shared<ForwarderLink>(config);
         break;
     case LinkConfiguration::TypeEngine:
         link = std::make_shared<EngineLink>(config);
@@ -1137,4 +1139,9 @@ void LinkManager::_createDynamicForwardLink(const char* linkName, QString hostNa
 SharedLinkInterfacePtr LinkManager::getEngineUDPLink()
 {
     return _engineUDPLink;
+}
+
+SharedLinkInterfacePtr LinkManager::getForwarderUDPLink()
+{
+    return _forwarderUDPLink;
 }
