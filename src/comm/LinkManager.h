@@ -64,6 +64,7 @@ public:
     Q_PROPERTY(QStringList          serialPortStrings               READ serialPortStrings               NOTIFY commPortStringsChanged)
     Q_PROPERTY(QStringList          serialPorts                     READ serialPorts                     NOTIFY commPortsChanged)
     Q_PROPERTY(bool                 mavlinkSupportForwardingEnabled READ mavlinkSupportForwardingEnabled NOTIFY mavlinkSupportForwardingEnabledChanged)
+    Q_PROPERTY(bool                fmuLogReplayActive              READ fmuLogReplayActive     CONSTANT)
 
     /// Create/Edit Link Configuration
     Q_INVOKABLE LinkConfiguration*  createConfiguration                (int type, const QString& name);
@@ -90,6 +91,7 @@ public:
     QStringList                     serialPortStrings               (void);
     QStringList                     serialPorts                     (void);
     bool                            mavlinkSupportForwardingEnabled (void) { return _mavlinkSupportForwardingEnabled; }
+    bool                            fmuLogReplayActive              (void) { return _fmuLogReplayActive; }
 
     void loadLinkConfigurationList();
     void saveLinkConfigurationList();
@@ -197,7 +199,7 @@ private:
 
     SharedLinkInterfacePtr _engineUDPLink;
     SharedLinkInterfacePtr _forwarderUDPLink;
-
+    bool _fmuLogReplayActive = false; //fmuLogReplayActive for preventing trajectory drawing 
 #ifndef NO_SERIAL_LINK
     QList<SerialLink*>                  _activeLinkCheckList;                   ///< List of links we are waiting for a vehicle to show up on
 #endif

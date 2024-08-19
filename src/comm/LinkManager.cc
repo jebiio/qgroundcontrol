@@ -1102,6 +1102,7 @@ FMULogReplayLink* LinkManager::startFMULogReplay(const QString& logFile)
     linkConfig->setLogFilename(logFile);
     linkConfig->setName(linkConfig->logFilenameShort());
 
+    _fmuLogReplayActive = true;
     SharedLinkConfigurationPtr sharedConfig = addConfiguration(linkConfig);
     if (createConnectedLink(sharedConfig)) {
         return qobject_cast<FMULogReplayLink*>(sharedConfig->link());
