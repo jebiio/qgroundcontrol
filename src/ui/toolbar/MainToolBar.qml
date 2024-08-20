@@ -32,6 +32,7 @@ Rectangle {
     property var    _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
     property bool   _communicationLost: _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
     property color  _mainStatusBGColor: qgcPal.brandingPurple
+    property var    _multiVehicleManager: QGroundControl.multiVehicleManager
 
     function dropMessageIndicatorTool() {
         if (currentToolbar === flyViewToolbar) {
@@ -123,30 +124,46 @@ Rectangle {
         anchors.bottom:         parent.bottom
         spacing:                ScreenTools.defaultFontPixelWidth / 2
 
+        ButtonGroup { id: radioGroup }
 
         QGCRadioButton {
-            id:             singleVehicleRadio
+            id:             trainSelectedRadio
             text:           qsTr("Train")
+            ButtonGroup.group:  radioGroup
             checked:        true
             visible:        true //_activeVehicle && currentToolbar === flyViewToolbar
         }
 
         QGCRadioButton {
+            id:             detectionSelectedRadio
             text:           qsTr("Detection")
+            ButtonGroup.group:  radioGroup
             visible:        true //_activeVehicle && currentToolbar === flyViewToolbar
         }
         QGCButton {
-            id:             engineOnOffButton
-            text:           _activeVehicle && _activeVehicle.engineRunning ? qsTr("Engine Stop") : qsTr("Engine Start")
+            id:             engineStartButton
+            text:           "Start"
             onClicked: {
-                        if (_activeVehicle && _activeVehicle.engineRunning) {
-                            _activeVehicle.stopEngine();
-                        } else {
-                            _activeVehicle.startEngine();
-                        }
-                    }
+                            if(trainSelectedRadio.checked){
+                                _multiVehicleManager.sendEngineModeStartStop(1, 0)
+                            }else{
+                                _multiVehicleManager.sendEngineModeStartStop(0,0)
+                            }
+                        }   
             visible: true //_activeVehicle && currentToolbar === flyViewToolbar
         }    
+        QGCButton {
+            id:             engineStopButton
+            text:           qsTr("Stop")
+            onClicked: {
+                            if(trainSelectedRadio.checked){
+                                _multiVehicleManager.sendEngineModeStartStop(1, 1)
+                            }else{
+                                _multiVehicleManager.sendEngineModeStartStop(0, 1)
+                            }                    
+                    }
+            visible: true //_activeVehicle && currentToolbar === flyViewToolbar
+        }
 
     }    
 

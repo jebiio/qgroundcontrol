@@ -134,12 +134,14 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
             trainState = TrainStates::DATA;
             break;
         case EngineMsgID::TRAIN_ALARM_PROGRESS:
-            std::cout << "TRAIN_ALARM_PROGRESS : Progress : ";
             // print_vector(engineReceivedMessage.getAddMsg());
+            qgcApp()->showAppMessage(QString("Train Alarm Progress : %1 %").arg((int)engineReceivedMessage.getAddMsg()[0]));
+            
             trainState = TrainStates::DATA;
             break;
         case EngineMsgID::TRAIN_ALARM_DONE:
             std::cout << "TRAIN_ALARM_DONE : Train Alarm Done" << std::endl;
+            qgcApp()->showAppMessage("Train Alarm Done!");
             trainState = TrainStates::END;
             break;
         case EngineMsgID::DETECTION_PARAMETER_SETUP_START:
@@ -222,10 +224,12 @@ void MultiVehicleManager::sendEngineModeStartStop(int mode, int cmd)
         {
              engineSendMessage.useVocabulary(EngineMsgID::DETECTION_CONTROL_START);
              detectionState = DetectionStates::START;
+             qgcApp()->showAppMessage("Detection Start!");            
         } else if (cmd == 1)
         {
             engineSendMessage.useVocabulary(EngineMsgID::DETECTION_CONTROL_STOP);
             detectionState = DetectionStates::END;
+            qgcApp()->showAppMessage("Detection Stop!");
         } else {
             return;
         }
@@ -235,10 +239,13 @@ void MultiVehicleManager::sendEngineModeStartStop(int mode, int cmd)
         {
             engineSendMessage.useVocabulary(EngineMsgID::TRAIN_CONTROL_START);
             trainState = TrainStates::START;
+            qgcApp()->showAppMessage("Train Start!");
         } else if (cmd == 1)
         {
              engineSendMessage.useVocabulary(EngineMsgID::TRAIN_CONTROL_STOP);
              trainState = TrainStates::END;
+             qgcApp()->showAppMessage("Train Stop!");
+
         } else {
             return;
         }
