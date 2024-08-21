@@ -113,11 +113,18 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
     switch(engineReceivedMessage.getMessageID()){
         case EngineMsgID::TRAIN_PARAMETER_SETUP_START:
             break;
-        case EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK:
-            std::cout << "TRAIN_PARAMETER_SETUP_START_OK : Train Parameter Setup Start OK" << std::endl;
-            sendEngineParameter(EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK);
-            // engineSendMessage.useVocabulary(EngineMsgID::TRAIN_PARAMETER_DATA, Vocabulary::PARAMETER_SETUP);
-            paramSetupState = ParamSetupStates::START_OK;
+        case EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK: //or EngineMsgID::TRAIN_PARAMETER_DATA_OK 
+            if(paramSetupState < ParamSetupStates::DATA)
+            {
+                std::cout << "TRAIN_PARAMETER_SETUP_START_OK : Train Parameter Setup Start OK" << std::endl;
+                sendEngineParameter(EngineMsgID::TRAIN_PARAMETER_SETUP_START_OK);
+                // engineSendMessage.useVocabulary(EngineMsgID::TRAIN_PARAMETER_DATA, Vocabulary::PARAMETER_SETUP);
+                paramSetupState = ParamSetupStates::DATA;
+            } else {
+                paramSetupState = ParamSetupStates::END;
+                qgcApp()->showAppMessage(QString("Train Parameter Data OK"));       
+                std::cout << "TRAIN_PARAMETER_DATA_OK : Train Parameter Data OK" << std::endl;
+            }
             break;
         case EngineMsgID::TRAIN_PARAMETER_DATA:
             break;
@@ -136,7 +143,7 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
         case EngineMsgID::TRAIN_ALARM_PROGRESS:
             // print_vector(engineReceivedMessage.getAddMsg());
             qgcApp()->showAppMessage(QString("Train Alarm Progress : %1 %").arg((int)engineReceivedMessage.getAddMsg()[0]));
-            
+            std::cout << "TRAIN_ALARM_PROGRESS : " << (int)engineReceivedMessage.getAddMsg()[0] << std::endl;
             trainState = TrainStates::DATA;
             break;
         case EngineMsgID::TRAIN_ALARM_DONE:
@@ -147,9 +154,17 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
         case EngineMsgID::DETECTION_PARAMETER_SETUP_START:
             break;
         case EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK:
-            std::cout << "DETECTION_PARAMETER_SETUP_START_OK : " << std::endl;
-            sendEngineParameter(EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK);
-            detectionState = DetectionStates::START_OK;
+            if(paramSetupState < ParamSetupStates::DATA)
+            {
+                std::cout << "DETECTION_PARAMETER_SETUP_START_OK : Detection Parameter Setup Start OK" << std::endl;
+                sendEngineParameter(EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK);
+                // engineSendMessage.useVocabulary(EngineMsgID::DETECTION_PARAMETER_DATA, Vocabulary::PARAMETER_SETUP);
+                paramSetupState = ParamSetupStates::DATA;
+            } else {
+                paramSetupState = ParamSetupStates::END;
+                qgcApp()->showAppMessage(QString("Detection Parameter Data OK"));       
+                std::cout << "DETECTION_PARAMETER_DATA_OK : Detection Parameter Data OK" << std::endl;
+            }
             break;
         case EngineMsgID::DETECTION_PARAMETER_DATA:
             break;
@@ -158,38 +173,25 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
         case EngineMsgID::DETECTION_CONTROL_STOP:
             break;
         case EngineMsgID::DETECTION_ALARM_START:
+            qgcApp()->showAppMessage("Detection Start!");            
             std::cout << "DETECTION_ALARM_START : " << std::endl;
             detectionState = DetectionStates::DATA;
             break;
         case EngineMsgID::DETECTION_ALARM_DATA:
+        {
+            std::vector<uint8_t> data = engineReceivedMessage.getAddMsg();
+            QString strData = QString::fromStdString(std::string(data.begin(), data.end()));
+            QString str = "Detection Alarm data : " + strData;
+            qgcApp()->showAppMessage(str); // qgcApp()->showAppMessage("Detection Data :"+engineReceivedMessage.getAddMsg());            
             std::cout << "DETECTION_ALARM_DATA : data : ";
             // print_vector(engineReceivedMessage.getAddMsg());
             detectionState = DetectionStates::DATA;
             break;
+        }
         default:   
             std::cout << "Invalid Train Message ID" << std::endl;
             break;
     }
-    /*
-    switch(currentEngineMode){
-    case (int)EngineMode::TRAIN_MODE:
-            // parsing msg
-            // if state : handle_msg()
-                // UI update :
-                // response (UDP)
-            handleEngineTrainState(link, msg);
-            // qgcApp()->showAppMessage("TRAIN_MODE");
-            // link->writeBytesThreadSafe("TRAIN_MODE", 10);
-            break;
-    case (int)EngineMode::DETECTION_MODE:
-            handleEngineDetectionState(link, msg);
-            // qgcApp()->showAppMessage("DETECTION_MODE");
-            // link->writeBytesThreadSafe("DETECTION_MODE", 10);
-            break;
-        default:
-            break;
-    }
-    */
 }
 
 
