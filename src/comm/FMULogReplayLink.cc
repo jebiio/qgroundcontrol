@@ -401,8 +401,12 @@ void FMULogReplayLink::movePlayhead(qreal percentComplete)
     
     // But if we have a timestamped MAVLink log, then actually aim to hit that percentage in terms of
     // time through the file.
-    qint64 newFilePos = (qint64)(percentCompleteMult * (qreal)_logFile.size());
+    qint64 Pack_Size = sizeof(FmuStream) + sizeof(quint64);
 
+    qint64 packetsNumOfFile = (qint64)(_logFile.size() / Pack_Size); 
+    qint64 newFilePos = qint64(packetsNumOfFile * percentCompleteMult) * Pack_Size;
+//    qint64 newFilePos = (qint64)(percentCompleteMult * (qreal)_logFile.size());
+    
     // Now seek to the appropriate position, failing gracefully if we can't.
     if (!_logFile.seek(newFilePos)) {
         _replayError(tr("Unable to seek to new position"));
