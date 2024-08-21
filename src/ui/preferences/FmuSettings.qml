@@ -61,6 +61,7 @@ Rectangle {
     property bool   _videoAutoStreamConfig:     QGroundControl.videoManager.autoStreamConfigured
     property bool   _showSaveVideoSettings:     _isGst || _videoAutoStreamConfig
     property bool   _disableAllDataPersistence: QGroundControl.settingsManager.appSettings.disableAllPersistence.rawValue
+    property var    _multiVehicleManager: QGroundControl.multiVehicleManager
 
     property string gpsDisabled: "Disabled"
     property string gpsUdpPort:  "UDP Port"
@@ -276,6 +277,22 @@ Rectangle {
                             // }
                         }
                     }
+                    Rectangle {
+                        height: 40
+                        Layout.preferredWidth: 200 
+                        Layout.fillWidth: true  
+                        color:    "transparent"
+
+                        QGCButton {
+                            width: 200  
+                            height: 30  
+                            text: qsTr("Send Train Param")
+                            anchors.centerIn: parent  
+                            onClicked: {
+                                _multiVehicleManager.sendEngineModeParameterStart(1)
+                            }
+                        }
+                    }
 
                     Item { width: 1; height: _margins; visible: detectionModeLabel.visible }
                     QGCLabel {
@@ -414,13 +431,13 @@ Rectangle {
                         color:    "transparent"
 
                         QGCButton {
-                            width: 100  
+                            width: 200  
                             height: 30  
-                            text: qsTr("적용")
+                            text: qsTr("Send Detection Param")
                             anchors.centerIn: parent  
                             onClicked: {
-                                //함수 구현 
-                                console.log("Save button clicked");
+                                _multiVehicleManager.sendEngineModeParameterStart(0)
+                                // console.log("Save button clicked");
                             }
                         }
                     }
