@@ -199,6 +199,8 @@ void ForwarderLink::readBytes()
         // added to the list and will start receiving datagrams from here. Even a port scanner
         // would trigger this.
         // Add host to broadcast list if not yet present, or update its port
+        
+        /* block for sender ip and port saving
         QHostAddress asender = sender;
         if(_isIpLocal(sender)) {
             asender = QHostAddress(QString("127.0.0.1"));
@@ -210,6 +212,7 @@ void ForwarderLink::readBytes()
             _sessionTargets.append(target);
         }
         locker.unlock();
+        */
     }
     //-- Send whatever is left
     if (databuffer.size()) {
