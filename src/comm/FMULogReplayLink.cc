@@ -89,7 +89,7 @@ FMULogReplayLink::FMULogReplayLink(SharedLinkConfigurationPtr& config)
     QObject::connect(this, &FMULogReplayLink::_playOnThread,               this, &FMULogReplayLink::_play);
     QObject::connect(this, &FMULogReplayLink::_pauseOnThread,              this, &FMULogReplayLink::_pause);
     QObject::connect(this, &FMULogReplayLink::_setPlaybackSpeedOnThread,   this, &FMULogReplayLink::_setPlaybackSpeed);
-    
+    setFMULink(true);
     moveToThread(this);
 }
 

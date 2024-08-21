@@ -83,6 +83,7 @@ EngineUDPLink::EngineUDPLink(SharedLinkConfigurationPtr& config)
         QHostAddress &address = allAddresses[i];
         _localAddresses.append(QHostAddress(address));
     }
+    setFMULink(true);
     moveToThread(this);
 }
 
@@ -164,7 +165,7 @@ void EngineUDPLink::_writeBytes(const QByteArray data)
 
 void EngineUDPLink::_writeDataGram(const QByteArray data, const EngineUDPLinkClient* target)
 {
-    //qDebug() << "UDP Out" << target->address << target->port;
+    qDebug() << "+++++ EngineUDPLink UDP Out" << target->address << target->port;
     if(_socket->writeDatagram(data, target->address, target->port) < 0) {
         qWarning() << "Error writing to" << target->address << target->port;
     }

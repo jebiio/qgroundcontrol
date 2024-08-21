@@ -63,13 +63,13 @@ public:
 
     uint8_t mavlinkChannel              (void) const;
     bool    mavlinkChannelIsSet         (void) const;
-
     bool    decodedFirstMavlinkPacket   (void) const { return _decodedFirstMavlinkPacket; }
     bool    setDecodedFirstMavlinkPacket(bool decodedFirstMavlinkPacket) { return _decodedFirstMavlinkPacket = decodedFirstMavlinkPacket; }
     void    writeBytesThreadSafe        (const char *bytes, int length);
     void    addVehicleReference         (void);
     void    removeVehicleReference      (void);
-
+    bool    isFMULink(void) { return _isFMULink; }
+    void    setFMULink(bool isFMULink) { _isFMULink = isFMULink; }
 signals:
     void bytesReceived      (LinkInterface* link, QByteArray data);
     void bytesSent          (LinkInterface* link, QByteArray data);
@@ -108,8 +108,9 @@ private:
     bool    _decodedFirstMavlinkPacket  = false;
     bool    _isPX4Flow                  = false;
     int     _vehicleReferenceCount      = 0;
-
     QMap<int /* vehicle id */, MavlinkMessagesTimer*> _mavlinkMessagesTimers;
+public: 
+    bool    _isFMULink = false;
 };
 
 typedef std::shared_ptr<LinkInterface>  SharedLinkInterfacePtr;

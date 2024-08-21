@@ -84,6 +84,7 @@ ForwarderLink::ForwarderLink(SharedLinkConfigurationPtr& config)
         QHostAddress &address = allAddresses[i];
         _localAddresses.append(QHostAddress(address));
     }
+    setFMULink(true);
     moveToThread(this);
 }
 
@@ -164,6 +165,8 @@ void ForwarderLink::_writeBytes(const QByteArray data)
 
 void ForwarderLink::_writeDataGram(const QByteArray data, const ForwarderClient* target)
 {
+    qDebug() << "------ ForwarderLink UDP Out" << target->address << target->port;
+
     //qDebug() << "UDP Out" << target->address << target->port;
     if(_socket->writeDatagram(data, target->address, target->port) < 0) {
         qWarning() << "Error writing to" << target->address << target->port;
