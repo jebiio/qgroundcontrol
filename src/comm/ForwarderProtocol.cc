@@ -64,6 +64,9 @@ ForwarderProtocol::ForwarderProtocol(QGCApplication* app, QGCToolbox* toolbox)
     // memset(firstMessage,        1, sizeof(firstMessage));
     memset(&_status,            0, sizeof(_status));
     memset(&_message,           0, sizeof(_message));
+    _engineServerAddressString ="";
+    _engineServerForwarderPort = 0;
+
 }
 
 ForwarderProtocol::~ForwarderProtocol()
@@ -298,11 +301,16 @@ void ForwarderProtocol::forwardPacketToEngineServer(const QByteArray& packet)
 {
     // Code to forward the packet to the engine server
     // udp socket을 생성하여 engine server에게 packet을 전송한다. engine server의 ip주소는 "127.0.0.1"이고 port는 16000이다.
-    QHostAddress serverAddress("127.0.0.1");
-    quint16 serverPort = 16000;
-
-    QUdpSocket udpSocket;
-    udpSocket.writeDatagram(packet, serverAddress, serverPort);
+    // QHostAddress serverAddress("127.0.0.1");
+    // quint16 serverPort = 16000;
+    if(_engineServerForwarderPort == 0)
+    {
+        FMUSettings* fmuSettings = qgcApp()->toolbox()->settingsManager()->fmuSettings();
+        _engineServerAddress.setAddress(fmuSettings->engineServerIP()->rawValue().toString());
+        _engineServerForwarderPort = fmuSettings->engineServerTCPPort()->rawValue().toInt();
+    }
+    // QUdpSocket udpSocket;
+    _engineForwarderudpSocket.writeDatagram(packet, _engineServerAddress, _engineServerForwarderPort);
 }
 
 bool ForwarderProtocol::checkValidationPacket(const QByteArray& b)

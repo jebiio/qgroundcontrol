@@ -561,7 +561,7 @@ Rectangle {
 
                             
                             QGCLabel {
-                                text: qsTr("  TCP Port : ")
+                                text: qsTr("Forwarder Back Port : ")
                                 Layout.column: 0  
                                 Layout.row: 1     
                                 // Layout.alignment: Qt.AlignLeft

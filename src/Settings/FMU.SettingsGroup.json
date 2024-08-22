@@ -33,16 +33,16 @@
 },
 {
     "name":                 "engineServerTCPPort",
-    "shortDesc":     "Engine Server TCP port",
+    "shortDesc":     "Forwarder Back port",
     "type":                 "uint32",
-    "default":         17000,
+    "default":         19000,
     "qgcRebootRequired":    true
 },
 {
     "name":                 "engineServerUDPPort",
     "shortDesc":     "Engine Server UDP port",
     "type":                 "uint32",
-    "default":         19000,
+    "default":         17000,
     "qgcRebootRequired":    true
 },
 {

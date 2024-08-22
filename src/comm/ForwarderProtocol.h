@@ -24,7 +24,8 @@
 #include "QGCTemporaryFile.h"
 #include "QGCToolbox.h"
 #include "FMUStream.h"
-
+#include <QHostAddress>
+#include <QUdpSocket>
 class LinkManager;
 class MultiVehicleManager;
 class QGCApplication;
@@ -182,5 +183,10 @@ private:
 
     LinkManager*            _linkMgr;
     MultiVehicleManager*    _multiVehicleManager;
+    QHostAddress            _engineServerAddress;
+    QString                 _engineServerAddressString;
+    quint16                 _engineServerForwarderPort;
+    QUdpSocket              _engineForwarderudpSocket;
+
 };
 
