@@ -125,20 +125,20 @@ Rectangle {
                             }
 
                             FactCheckBox {
-                                text:       qsTr("Show Telemetry Log Replay Status Bar")
+                                text:       qsTr("Show FMU Log Replay Status Bar")
                                 fact:       _showLogReplayStatusBar
                                 visible:    _showLogReplayStatusBar.visible
 
                                 property Fact _showLogReplayStatusBar: QGroundControl.settingsManager.flyViewSettings.showLogReplayStatusBar
                             }
 
-                            FactCheckBox {
-                                text:       qsTr("Show FMU Log Replay Status Bar")
-                                fact:       _showLogReplayFMUStatusBar
-                                visible:    _showLogReplayFMUStatusBar.visible
+                            // FactCheckBox {
+                            //     text:       qsTr("Show FMU Log Replay Status Bar")
+                            //     fact:       _showLogReplayFMUStatusBar
+                            //     visible:    _showLogReplayFMUStatusBar.visible
 
-                                property Fact _showLogReplayFMUStatusBar: QGroundControl.settingsManager.flyViewSettings.showLogReplayFMUStatusBar
-                            }
+                            //     property Fact _showLogReplayFMUStatusBar: QGroundControl.settingsManager.flyViewSettings.showLogReplayFMUStatusBar
+                            // }
 
                             RowLayout {
                                 spacing: ScreenTools.defaultFontPixelWidth

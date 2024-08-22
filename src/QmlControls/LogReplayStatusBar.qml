@@ -103,7 +103,7 @@ Rectangle {
         QGCLabel { text: controller.totalTime }
 
         QGCButton {
-            text:       qsTr("Load Telemetry Log")
+            text:       qsTr("Load FMU Log")
             onClicked:  pickLogFile()
             visible:    !controller.link
         }
