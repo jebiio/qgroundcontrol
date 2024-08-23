@@ -617,7 +617,8 @@ void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
     }
     
     _vehicleLinkManager->forwarderMessageReceived(link, message);
-
+    message.latitude = message.latitude / 100;
+    message.longitude = message.longitude / 100;
     qWarning() << "---nsr --- system id: " << message.system_id << " lat :"<< message.latitude << " lon : " << message.longitude << " alt : " << message.altref;
     
     Eigen::Quaternionf quat(message.qw, message.qx, message.qy, message.qz);
