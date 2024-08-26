@@ -617,18 +617,28 @@ void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
     }
     
     _vehicleLinkManager->forwarderMessageReceived(link, message);
-    // message.latitude = message.latitude / 100;
-    int uppper_part = message.latitude/100; 
-    double fractional_part = fmod(message.latitude, 100);
-    message.latitude = uppper_part + fractional_part/60;
+    
+    if (message.latitude > 10) {
+        if (!std::isinf(message.latitude)) {
+            message.latitude = std::trunc(message.latitude / 100.0) + std::fmod(message.latitude, 100.0) / 60.0;
+        } else {
+            message.latitude = 0;
+        }
+    }
 
+    if (message.longitude > 10) {
+        double tmp = message.longitude;
+        if (std::isinf(tmp)) {
+            tmp = 0;
+        }
+        while (tmp > 1) { // Make it up to 0.
+            tmp /= 10;
+        }
+        message.longitude = tmp * 100000;
+        message.longitude = std::trunc(message.longitude / 100.0) + std::fmod(message.longitude,100.0) / 60.0;
+    }
 
-    // message.longitude = message.longitude / 100;
-    uppper_part = message.longitude/100;
-    fractional_part = fmod(message.longitude, 100);
-    message.longitude = uppper_part + fractional_part/60;
-
-    qWarning() << "---nsr --- system id: " << message.system_id << " lat :"<< message.latitude << " lon : " << message.longitude << " alt : " << message.altref;
+    qWarning() << "---new nsr --- system id: " << message.system_id << " lat :"<< message.latitude << " lon : " << message.longitude << " alt : " << message.altref;
     
     Eigen::Quaternionf quat(message.qw, message.qx, message.qy, message.qz);
     // Eigen::Vector3f rates(attitudeQuaternion.rollspeed, attitudeQuaternion.pitchspeed, attitudeQuaternion.yawspeed);
