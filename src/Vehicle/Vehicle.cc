@@ -247,7 +247,10 @@ Vehicle::Vehicle(LinkInterface*             link,
     // MAV_TYPE_GENERIC is used by unit test for creating a vehicle which doesn't do the connect sequence. This
     // way we can test the methods that are used within the connect sequence.
     if (!qgcApp()->runningUnitTests() || _vehicleType != MAV_TYPE_GENERIC) {
-        _initialConnectStateMachine->start();
+            if(_vehicleType == MAV_TYPE_ENUM_END){
+                qWarning() << "ID:  " << _id <<"lat :"<< _coordinate.latitude() << " log: " << _coordinate.longitude();
+                _initialConnectStateMachine->start();
+            }
     }
 
     _firmwarePlugin->initializeVehicle(this);
@@ -2547,6 +2550,9 @@ void Vehicle::_updateFlightTime()
 
 void Vehicle::_gotProgressUpdate(float progressValue)
 {
+    if(fmued()){
+        return;
+    }
     if (sender() != _initialConnectStateMachine && _initialConnectStateMachine->active()) {
         return;
     }

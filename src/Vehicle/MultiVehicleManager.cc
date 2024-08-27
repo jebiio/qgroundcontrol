@@ -718,7 +718,7 @@ void MultiVehicleManager::_vehicleHeartbeatInfo2(LinkInterface* link, int vehicl
     qWarning() << "---nsr --- MultiVehicleManager::_vehicleHeartbeatInfo2!!!! ";
 
     MAV_AUTOPILOT default_autopilot = MAV_AUTOPILOT_GENERIC;
-    MAV_TYPE default_type = MAV_TYPE_GENERIC;
+    MAV_TYPE default_type = MAV_TYPE_ENUM_END; // MAV_TYPE default_type = MAV_TYPE_GENERIC;
 
     // already have a vehicle with this id
     if (_ignoreVehicleIds.contains(vehicleId) || getVehicleById(vehicleId) || vehicleId == 0) {
