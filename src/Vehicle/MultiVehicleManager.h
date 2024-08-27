@@ -97,6 +97,7 @@ public:
     // void handleEngineDetectionState(LinkInterface* link, EngineMsg& msg);
     // void handleEngineTrainState(LinkInterface* link, EngineMsg& msg);
     void sendEngineParameter(EngineMsgID msgID);
+    bool isEngineRunning(void) { return _isEngineRunning; }
     //void sentEngineCommand(int mode, int cmd);
 signals:
     void vehicleAdded                   (Vehicle* vehicle);
@@ -157,6 +158,7 @@ private:
     ParamSetupStates paramSetupState;
     DetectionStates detectionState;
     TrainStates trainState;
+    bool _isEngineRunning = false;
 public:    
     void printInfo(void);
 };

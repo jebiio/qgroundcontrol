@@ -226,11 +226,13 @@ void MultiVehicleManager::sendEngineModeStartStop(int mode, int cmd)
         {
              engineSendMessage.useVocabulary(EngineMsgID::DETECTION_CONTROL_START);
              detectionState = DetectionStates::START;
-             qgcApp()->showAppMessage("Detection Start!");            
+             qgcApp()->showAppMessage("Detection Start!");    
+            _isEngineRunning = true;
         } else if (cmd == 1)
         {
             engineSendMessage.useVocabulary(EngineMsgID::DETECTION_CONTROL_STOP);
             detectionState = DetectionStates::END;
+            _isEngineRunning = false;
             qgcApp()->showAppMessage("Detection Stop!");
         } else {
             return;
@@ -241,11 +243,14 @@ void MultiVehicleManager::sendEngineModeStartStop(int mode, int cmd)
         {
             engineSendMessage.useVocabulary(EngineMsgID::TRAIN_CONTROL_START);
             trainState = TrainStates::START;
+            _isEngineRunning = true;
             qgcApp()->showAppMessage("Train Start!");
         } else if (cmd == 1)
         {
              engineSendMessage.useVocabulary(EngineMsgID::TRAIN_CONTROL_STOP);
              trainState = TrainStates::END;
+            _isEngineRunning = false;
+
              qgcApp()->showAppMessage("Train Stop!");
 
         } else {

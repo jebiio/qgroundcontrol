@@ -212,7 +212,9 @@ void ForwarderProtocol::receiveBytes(LinkInterface* link, QByteArray b)
     }
 
     if(checkValidationPacket(b)){
-        forwardPacketToEngineServer(b);
+        if(_multiVehicleManager->isEngineRunning()){
+            forwardPacketToEngineServer(b);
+        }
         logForwarderPacket(b);
         FmuStream fmu_packet  = parseForwarderPacket(b);
         _startLogging();
