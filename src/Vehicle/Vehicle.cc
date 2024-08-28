@@ -98,7 +98,7 @@ const char* Vehicle::_distanceToGCSFactName =       "distanceToGCS";
 const char* Vehicle::_hobbsFactName =               "hobbs";
 const char* Vehicle::_throttlePctFactName =         "throttlePct";
 const char* Vehicle::_imuTempFactName =             "imuTemp";
-const char* Vehicle::_engineRunningFactName =       "engineRunning";
+// const char* Vehicle::_engineRunningFactName =       "engineRunning";
 
 const char* Vehicle::_gpsFactGroupName =                "gps";
 const char* Vehicle::_gps2FactGroupName =               "gps2";
@@ -166,7 +166,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _hobbsFact                    (0, _hobbsFactName,             FactMetaData::valueTypeString)
     , _throttlePctFact              (0, _throttlePctFactName,       FactMetaData::valueTypeUint16)
     , _imuTempFact                  (0, _imuTempFactName,           FactMetaData::valueTypeInt16)
-    , _engineRunningFact            (0, _engineRunningFactName,     FactMetaData::valueTypeBool)
+    // , _engineRunningFact            (0, _engineRunningFactName,     FactMetaData::valueTypeBool)
     , _gpsFactGroup                 (this)
     , _gps2FactGroup                (this)
     , _windFactGroup                (this)
@@ -248,7 +248,8 @@ Vehicle::Vehicle(LinkInterface*             link,
     // way we can test the methods that are used within the connect sequence.
     if (!qgcApp()->runningUnitTests() || _vehicleType != MAV_TYPE_GENERIC) {
             if(_vehicleType == MAV_TYPE_ENUM_END){
-                qWarning() << "ID:  " << _id <<"lat :"<< _coordinate.latitude() << " log: " << _coordinate.longitude();
+            
+            } else {
                 _initialConnectStateMachine->start();
             }
     }
@@ -324,7 +325,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _hobbsFact                        (0, _hobbsFactName,             FactMetaData::valueTypeString)
     , _throttlePctFact                  (0, _throttlePctFactName,       FactMetaData::valueTypeUint16)
     , _imuTempFact                      (0, _imuTempFactName,           FactMetaData::valueTypeInt16)
-    , _engineRunningFact                (0, _engineRunningFactName,     FactMetaData::valueTypeBool)
+    // , _engineRunningFact                (0, _engineRunningFactName,     FactMetaData::valueTypeBool)
     , _gpsFactGroup                     (this)
     , _gps2FactGroup                    (this)
     , _windFactGroup                    (this)
@@ -466,7 +467,7 @@ void Vehicle::_commonInit()
     _addFact(&_distanceToGCSFact,       _distanceToGCSFactName);
     _addFact(&_throttlePctFact,         _throttlePctFactName);
     _addFact(&_imuTempFact,             _imuTempFactName);
-    _addFact(&_engineRunningFact,       _engineRunningFactName);
+    // _addFact(&_engineRunningFact,       _engineRunningFactName);
 
     _hobbsFact.setRawValue(QVariant(QString("0000:00:00")));
     _addFact(&_hobbsFact,               _hobbsFactName);
@@ -659,7 +660,7 @@ void Vehicle::_forwarderMessageReceived(LinkInterface* link, FmuStream message)
     mavlink_quaternion_to_euler(q, &roll, &pitch, &yaw);
 
     _handleAttitudeWorker(roll, pitch, yaw);
-    
+    _altitudeRelativeFact.setRawValue(message.altref);
     _globalPositionIntMessageAvailable = true;
     QGeoCoordinate newPosition(message.latitude, message.longitude, message.altref);
     if (newPosition != _coordinate) {
@@ -4513,7 +4514,7 @@ void Vehicle::_handleFenceStatus(const mavlink_message_t& message)
         lastUpdate = now;
     }
 }
-
+/*
 void Vehicle::_handleEngineStatus(const mavlink_message_t& message)
 {
 
@@ -4525,6 +4526,7 @@ void Vehicle::_handleEngineStatus(const mavlink_message_t& message)
     // setEngineRunning(running);
 
 }
+*/
 void Vehicle::updateFlightDistance(double distance)
 {
     _flightDistanceFact.setRawValue(_flightDistanceFact.rawValue().toDouble() + distance);
@@ -4625,7 +4627,7 @@ void Vehicle::sendJoystickDataThreadSafe(float roll, float pitch, float yaw, flo
                 0, 0, 0, 0);
     sendMessageOnLinkThreadSafe(sharedLink.get(), message);
 }
-
+/*
 bool Vehicle::engineRunning() const {
     return _engineRunningFact.rawValue().toBool();
 }
@@ -4636,7 +4638,7 @@ void Vehicle::setEngineRunning(bool running) {
         emit engineRunningChanged();
     }
 }
-
+*/
 
 void Vehicle::triggerSimpleCamera()
 {

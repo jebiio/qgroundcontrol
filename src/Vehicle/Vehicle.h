@@ -258,7 +258,7 @@ public:
     Q_PROPERTY(bool                 requiresGpsFix              READ requiresGpsFix                                                 NOTIFY requiresGpsFixChanged)
     Q_PROPERTY(double               loadProgress                READ loadProgress                                                   NOTIFY loadProgressChanged)
     Q_PROPERTY(bool                 initialConnectComplete      READ isInitialConnectComplete                                       NOTIFY initialConnectComplete)
-    Q_PROPERTY(bool                 engineRunning               READ engineRunning              WRITE setEngineRunning              NOTIFY engineRunningChanged)
+    // Q_PROPERTY(bool                 engineRunning               READ engineRunning              WRITE setEngineRunning              NOTIFY engineRunningChanged)
 
     // The following properties relate to Orbit status
     Q_PROPERTY(bool             orbitActive     READ orbitActive        NOTIFY orbitActiveChanged)
@@ -312,7 +312,7 @@ public:
     Q_PROPERTY(Fact* hobbs              READ hobbs              CONSTANT)
     Q_PROPERTY(Fact* throttlePct        READ throttlePct        CONSTANT)
     Q_PROPERTY(Fact* imuTemp            READ imuTemp            CONSTANT)
-    Q_PROPERTY(Fact* engineRunning      READ engineRunning      CONSTANT)
+    // Q_PROPERTY(Fact* engineRunning      READ engineRunning      CONSTANT)
 
     Q_PROPERTY(FactGroup*           gps             READ gpsFactGroup               CONSTANT)
     Q_PROPERTY(FactGroup*           gps2            READ gps2FactGroup              CONSTANT)
@@ -515,8 +515,8 @@ public:
     void setFMUED(bool exist){ _fmued = exist; }
     bool fmuLogged() const { return _fmuLogged; }
     void setFMULogged(bool logged){ _fmuLogged = logged; }
-    bool engineRunning() const;
-    void setEngineRunning(bool running);
+    // bool engineRunning() const;
+    // void setEngineRunning(bool running);
 
     /// Sends a message to the specified link
     /// @return true: message sent, false: Link no longer connected
@@ -726,7 +726,7 @@ public:
     Fact* hobbs                             () { return &_hobbsFact; }
     Fact* throttlePct                       () { return &_throttlePctFact; }
     Fact* imuTemp                           () { return &_imuTempFact; }
-    Fact* engineRunning                     () { return &_engineRunningFact; }
+    // Fact* engineRunning                     () { return &_engineRunningFact; }
 
     FactGroup* gpsFactGroup                 () { return &_gpsFactGroup; }
     FactGroup* gps2FactGroup                () { return &_gps2FactGroup; }
@@ -1051,7 +1051,7 @@ signals:
 
     void sensorsParametersResetAck      (bool success);
 
-    void engineRunningChanged();
+    // void engineRunningChanged();
 
 
 private slots:
@@ -1119,7 +1119,7 @@ private:
     void _handleObstacleDistance        (const mavlink_message_t& message);
     void _handleFenceStatus             (const mavlink_message_t& message);
     void _handleEvent(uint8_t comp_id, std::unique_ptr<events::parser::ParsedEvent> event);
-    void _handleEngineStatus            (const mavlink_message_t& message);
+    // void _handleEngineStatus            (const mavlink_message_t& message);
     // ArduPilot dialect messages
 #if !defined(NO_ARDUPILOT_DIALECT)
     void _handleCameraFeedback          (const mavlink_message_t& message);
@@ -1446,7 +1446,7 @@ private:
     Fact _hobbsFact;
     Fact _throttlePctFact;
     Fact _imuTempFact;
-    Fact _engineRunningFact; 
+    // Fact _engineRunningFact; 
 
     VehicleGPSFactGroup             _gpsFactGroup;
     VehicleGPS2FactGroup            _gps2FactGroup;
@@ -1507,7 +1507,7 @@ private:
     static const char* _hobbsFactName;
     static const char* _throttlePctFactName;
     static const char* _imuTempFactName;
-    static const char* _engineRunningFactName;
+    // static const char* _engineRunningFactName;
 
     static const char* _gpsFactGroupName;
     static const char* _gps2FactGroupName;
