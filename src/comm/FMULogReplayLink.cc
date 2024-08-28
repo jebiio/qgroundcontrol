@@ -217,7 +217,7 @@ quint64 FMULogReplayLink::_seekToNextFMUMessage(FmuStream* nextMsg)
         return _parseTimestamp(time);
 
     }
-    
+
     return 0;
 }
 
@@ -421,17 +421,21 @@ void FMULogReplayLink::movePlayhead(qreal percentComplete)
     qreal newRelativeTimeUSecs = (qreal)(_logCurrentTimeUSecs - _logStartTimeUSecs);
 
     // Calculate the effective baud rate of the file in bytes/s.
+    /*
     qreal baudRate = _logFile.size() / (qreal)_logDurationUSecs / 1e6;
 
     // And the desired time is:
     qreal desiredTimeUSecs = percentCompleteMult * _logDurationUSecs;
 
     // And now jump the necessary number of bytes in the proper direction
+    
     qint64 offset = (newRelativeTimeUSecs - desiredTimeUSecs) * baudRate;
+    
     if (!_logFile.seek(_logFile.pos() + offset)) {
         _replayError(tr("Unable to seek to new position"));
         return;
     }
+    */
 
     // And scan until we reach the start of a MAVLink message. We make sure to record this timestamp for
     // smooth jumping around the file.
