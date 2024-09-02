@@ -246,7 +246,7 @@ void ForwarderProtocol::logForwarderPacket(QByteArray packet)
     if (!_logSuspendError && !_logSuspendReplay && _tempLogFile.isOpen()) {
         quint64 time =  static_cast<quint64>(QDateTime::currentMSecsSinceEpoch() * 1000);
         qToBigEndian(time,bytes_time);
-        int count_before = packet.count();
+        // int count_before = packet.count();
         packet.insert(0,QByteArray((const char*)bytes_time,sizeof(bytes_time)));
         int len = packet.count();
         /*
@@ -273,12 +273,12 @@ void ForwarderProtocol::logForwarderPacket(QByteArray packet)
             qDebug() << "*****  Error : log temp write can't writted";
         }
 
-        static int counter = 0;
-        counter++;
-        if(counter == 10){
-            _stopLogging();
-        }
-        qDebug() << "************************  log temp write counter : "<< counter <<"time : "<< time << "time[0] : " << bytes_time[0] <<"time[1] : "<< bytes_time[1] <<"time[2] :"<< bytes_time[2] << "time[3] :" << bytes_time[3]<< "time[4] : "<< bytes_time[4] <<"time[5] : "<< bytes_time[5] <<"time[6] : "<< bytes_time[6] <<"time[7] : "<< bytes_time[7] << "before :"<< count_before <<" after :" << len ;
+        // static int counter = 0;
+        // counter++;
+        // if(counter == 10){
+        //     _stopLogging();
+        // }
+        // qDebug() << "************************  log temp write counter : "<< counter <<"time : "<< time << "time[0] : " << bytes_time[0] <<"time[1] : "<< bytes_time[1] <<"time[2] :"<< bytes_time[2] << "time[3] :" << bytes_time[3]<< "time[4] : "<< bytes_time[4] <<"time[5] : "<< bytes_time[5] <<"time[6] : "<< bytes_time[6] <<"time[7] : "<< bytes_time[7] << "before :"<< count_before <<" after :" << len ;
 
     }
 /*

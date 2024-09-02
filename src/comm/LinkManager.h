@@ -80,6 +80,7 @@ public:
 
     Q_INVOKABLE LogReplayLink* startLogReplay(const QString& logFile);
     Q_INVOKABLE FMULogReplayLink* startFMULogReplay(const QString& logFile);
+    Q_INVOKABLE void closeFMULogReplay(void);
 
     // Property accessors
 
@@ -199,6 +200,7 @@ private:
 
     SharedLinkInterfacePtr _engineUDPLink;
     SharedLinkInterfacePtr _forwarderUDPLink;
+    SharedLinkInterfacePtr _fmulogReplayLink;
     bool _fmuLogReplayActive = false; //fmuLogReplayActive for preventing trajectory drawing 
 #ifndef NO_SERIAL_LINK
     QList<SerialLink*>                  _activeLinkCheckList;                   ///< List of links we are waiting for a vehicle to show up on

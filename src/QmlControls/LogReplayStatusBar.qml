@@ -111,10 +111,11 @@ Rectangle {
         QGCButton {
             text:       qsTr("Close")
             onClicked: {
-                var activeVehicle = QGroundControl.multiVehicleManager.activeVehicle
-                if (activeVehicle) {
-                    activeVehicle.closeVehicle()
-                }
+                QGroundControl.linkManager.closeFMULogReplay()
+                // var activeVehicle = QGroundControl.multiVehicleManager.activeVehicle
+                // if (activeVehicle) {
+                //     activeVehicle.closeVehicle()
+                // }
                 QGroundControl.settingsManager.flyViewSettings.showLogReplayStatusBar.rawValue = false
             }
         }

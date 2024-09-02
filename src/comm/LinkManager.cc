@@ -80,6 +80,7 @@ LinkManager::LinkManager(QGCApplication* app, QGCToolbox* toolbox)
     , _engineProtocol(nullptr)
     , _engineUDPLink(nullptr)
     , _forwarderUDPLink(nullptr)
+    , _fmulogReplayLink(nullptr)
     #ifndef __mobile__
     #ifndef NO_SERIAL_LINK
     , _nmeaPort(nullptr)
@@ -95,6 +96,7 @@ LinkManager::~LinkManager()
 {
     _engineUDPLink = nullptr;
     _forwarderUDPLink = nullptr;
+    _fmulogReplayLink = nullptr;
 #ifndef __mobile__
 #ifndef NO_SERIAL_LINK
     delete _nmeaPort;
@@ -168,7 +170,7 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
         link = std::make_shared<EngineLink>(config);
         break;
     case LinkConfiguration::TypeFMULogReplay:
-        link = std::make_shared<FMULogReplayLink>(config);
+        _fmulogReplayLink = link = std::make_shared<FMULogReplayLink>(config);
         break;
     case LinkConfiguration::TypeEngineUDP:
         qWarning() << "---nsr --- createConnectedLink() -> LinkConfiguration::TypeEngineUDP" ;    
@@ -265,7 +267,7 @@ void LinkManager::_linkDisconnected(void)
     }
 
     disconnect(link, &LinkInterface::communicationError,  _app,                &QGCApplication::criticalMessageBoxOnMainThread);
-    if (dynamic_cast<ForwarderLink*>(link) != nullptr)// Code to handle when link is a ForwarderLink
+    if (dynamic_cast<ForwarderLink*>(link) != nullptr ||dynamic_cast<FMULogReplayLink*>(link) != nullptr)// Code to handle when link is a ForwarderLink
     {
         disconnect(link, &LinkInterface::bytesReceived,       _forwarderProtocol,    &ForwarderProtocol::receiveBytes);
         disconnect(link, &LinkInterface::bytesSent,           _forwarderProtocol,    &ForwarderProtocol::logSentBytes);
@@ -1111,6 +1113,44 @@ FMULogReplayLink* LinkManager::startFMULogReplay(const QString& logFile)
     }
 }
 
+void LinkManager::closeFMULogReplay(void)
+{
+    qDebug() << "--------- Enter ---------- LinkManager::closeFMULogReplay";
+
+    //remove vehicle
+     _toolbox->multiVehicleManager()->setActiveVehicle(nullptr);
+    auto current_vehicles = _toolbox->multiVehicleManager()->vehicles();
+    for(int i=0; i<current_vehicles->count(); i++)
+    {
+        (*current_vehicles)[i]->disconnect();
+        (*current_vehicles).removeAt(i);
+//        (*_toolbox->multiVehicleManager()->vehicles())[i]->disconnect();
+//        _toolbox->multiVehicleManager()->vehicles()->removeAt(i);
+    }
+
+    //remove configuration
+    for(int i=0; i<_rgLinkConfigs.count(); i++) 
+    {
+        if (_rgLinkConfigs[i]->type() == LinkConfiguration::TypeFMULogReplay) 
+        {
+            _removeConfiguration(_rgLinkConfigs[i].get());
+            saveLinkConfigurationList();
+            break;
+        }
+    }
+
+    //remove link
+    for(int i=0; i<_rgLinks.count(); i++) 
+    {
+        if (_rgLinks[i]->linkConfiguration()->type() == LinkConfiguration::TypeFMULogReplay) 
+        {
+            _rgLinks[i]->disconnect();
+            _rgLinks.removeAt(i);
+            break;
+        }
+    }
+
+}
 
 bool LinkManager::_isSerialPortConnected(void)
 {
