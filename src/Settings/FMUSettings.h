@@ -17,5 +17,7 @@ public:
     DEFINE_SETTINGFACT(engineServerTCPPort)
     DEFINE_SETTINGFACT(engineServerUDPPort)
     DEFINE_SETTINGFACT(engineListenUDPPort)
-
+    DEFINE_SETTINGFACT(fmuRollRotaion)
+    DEFINE_SETTINGFACT(fmuPitchRotaion)
+    DEFINE_SETTINGFACT(fmuYawRotaion)
 };

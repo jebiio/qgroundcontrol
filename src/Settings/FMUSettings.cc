@@ -16,3 +16,7 @@ DECLARE_SETTINGSFACT(FMUSettings, engineServerIP)
 DECLARE_SETTINGSFACT(FMUSettings, engineServerTCPPort)
 DECLARE_SETTINGSFACT(FMUSettings, engineServerUDPPort)
 DECLARE_SETTINGSFACT(FMUSettings, engineListenUDPPort)
+DECLARE_SETTINGSFACT(FMUSettings, fmuRollRotaion)
+DECLARE_SETTINGSFACT(FMUSettings, fmuPitchRotaion)
+DECLARE_SETTINGSFACT(FMUSettings, fmuYawRotaion)
+
