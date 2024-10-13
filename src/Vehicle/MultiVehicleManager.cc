@@ -69,6 +69,7 @@ MultiVehicleManager::MultiVehicleManager(QGCApplication* app, QGCToolbox* toolbo
     paramSetupState = ParamSetupStates::NONE;
     detectionState = DetectionStates::NONE;
     trainState = TrainStates::NONE;
+    _engineStatus = "";
 }
 
 void MultiVehicleManager::setToolbox(QGCToolbox *toolbox)
@@ -122,7 +123,7 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
                 paramSetupState = ParamSetupStates::DATA;
             } else {
                 paramSetupState = ParamSetupStates::END;
-                qgcApp()->showAppMessage(QString("Train Parameter Data OK"));       
+                qgcApp()->showAppMessage(QString("Train Parameter Data OK"));      
                 std::cout << "TRAIN_PARAMETER_DATA_OK : Train Parameter Data OK" << std::endl;
             }
             break;
@@ -142,13 +143,13 @@ void MultiVehicleManager::_engineHeartbeatInfo(LinkInterface* link, QByteArray b
             break;
         case EngineMsgID::TRAIN_ALARM_PROGRESS:
             // print_vector(engineReceivedMessage.getAddMsg());
-            qgcApp()->showAppMessage(QString("Train Alarm Progress : %1 %").arg((int)engineReceivedMessage.getAddMsg()[0]));
+            setEngineStatus(QString("%1 %").arg((int)engineReceivedMessage.getAddMsg()[0]));// emit engineStatusChanged(QString("Train Alarm Progress : %1 %").arg((int)engineReceivedMessage.getAddMsg()[0])); // qgcApp()->showAppMessage(QString("Train Alarm Progress : %1 %").arg((int)engineReceivedMessage.getAddMsg()[0]));
             std::cout << "TRAIN_ALARM_PROGRESS : " << (int)engineReceivedMessage.getAddMsg()[0] << std::endl;
             trainState = TrainStates::DATA;
             break;
         case EngineMsgID::TRAIN_ALARM_DONE:
             std::cout << "TRAIN_ALARM_DONE : Train Alarm Done" << std::endl;
-            qgcApp()->showAppMessage("Train Alarm Done!");
+            setEngineStatus("Done"); // emit engineStatusChanged("Alarm Done"); // qgcApp()->showAppMessage("Train Alarm Done!");
             trainState = TrainStates::END;
             break;
         case EngineMsgID::DETECTION_PARAMETER_SETUP_START:
@@ -738,8 +739,9 @@ void MultiVehicleManager::_vehicleHeartbeatInfo2(LinkInterface* link, int vehicl
 
     emit vehicleAdded(vehicle);
 
+    qgcApp()->showAppMessage(tr("Connected to Vehicle %1").arg(vehicleId)); //항상 새로 연결되면 연결 메시지 출력
     if (_vehicles.count() > 1) {
-        qgcApp()->showAppMessage(tr("Connected to Vehicle %1").arg(vehicleId));
+        // qgcApp()->showAppMessage(tr("Connected to Vehicle %1").arg(vehicleId));
     } else {
         setActiveVehicle(vehicle);
     }
@@ -1014,6 +1016,10 @@ void MultiVehicleManager::_vehicleParametersReadyChanged(bool parametersReady)
         _parameterReadyVehicleAvailable = parametersReady;
         emit parameterReadyVehicleAvailableChanged(parametersReady);
     }
+}
+
+QString MultiVehicleManager::getEngineStatus(){
+    return _engineStatus;
 }
 
 void MultiVehicleManager::saveSetting(const QString &name, const QString& value)

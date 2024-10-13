@@ -34,6 +34,14 @@ Rectangle {
     property color  _mainStatusBGColor: qgcPal.brandingPurple
     property var    _multiVehicleManager: QGroundControl.multiVehicleManager
 
+    Connections {
+        target: QGroundControl.multiVehicleManager
+        onEngineStatusChanged: {
+            console.log("onEngineStatusChanged: -------------  " + QGroundControl.multiVehicleManager.getEngineStatus())
+            engineStatusLabel.text = _multiVehicleManager.getEngineStatus()//_multiVehicleManager.engineStatus // engineStatus = _multiVehicleManager.engineStatus
+        }
+    }
+
     function dropMessageIndicatorTool() {
         if (currentToolbar === flyViewToolbar) {
             indicatorLoader.item.dropMessageIndicatorTool();
@@ -163,6 +171,13 @@ Rectangle {
                             }                    
                     }
             visible: true //_activeVehicle && currentToolbar === flyViewToolbar
+        }
+
+        QGCLabel {
+            id:             engineStatusLabel
+            text:           engineStatus //"--"
+            color:          "red"
+            visible:        true
         }
 
     }    

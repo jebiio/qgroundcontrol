@@ -1147,14 +1147,43 @@ void Vehicle::_handleNavControllerOutput(mavlink_message_t& message)
 void Vehicle::_handleAttitudeWorker(double rollRadians, double pitchRadians, double yawRadians)
 {
     double roll, pitch, yaw;
+    if (fmued()){
+        FMUSettings* fmuSettings = qgcApp()->toolbox()->settingsManager()->fmuSettings();
+        double fmu_rotation_roll = fmuSettings->fmuRollRotaion()->rawValue().toInt();
+        double fmu_rotation_pitch = fmuSettings->fmuPitchRotaion()->rawValue().toInt();
+        double fmu_rotation_yaw = fmuSettings->fmuYawRotaion()->rawValue().toInt();
 
-    roll = QGC::limitAngleToPMPIf(rollRadians);
-    pitch = QGC::limitAngleToPMPIf(pitchRadians);
-    yaw = QGC::limitAngleToPMPIf(yawRadians);
+        roll = QGC::limitAngleToPMPIf(rollRadians);
+        pitch = QGC::limitAngleToPMPIf(pitchRadians);
+        yaw = QGC::limitAngleToPMPIf(yawRadians);
 
-    roll = qRadiansToDegrees(roll);
-    pitch = qRadiansToDegrees(pitch);
-    yaw = qRadiansToDegrees(yaw);
+        roll = qRadiansToDegrees(roll) - fmu_rotation_roll;
+        pitch = qRadiansToDegrees(pitch) - fmu_rotation_pitch;
+        yaw = qRadiansToDegrees(yaw) - fmu_rotation_yaw;
+
+        if (roll < -180.0) {
+            roll += 360.0;
+        }  else {
+            if (roll > 180.0) {
+                roll -= 360.0;
+            }
+        }
+        if (pitch < -180.0) {
+            pitch += 360.0;
+        } else {
+            if (pitch > 180.0) {
+                pitch -= 360.0;
+            }
+        }
+    } else {
+        roll = QGC::limitAngleToPMPIf(rollRadians);
+        pitch = QGC::limitAngleToPMPIf(pitchRadians);
+        yaw = QGC::limitAngleToPMPIf(yawRadians);
+
+        roll = qRadiansToDegrees(roll);
+        pitch = qRadiansToDegrees(pitch);
+        yaw = qRadiansToDegrees(yaw);
+    }
 
     if (yaw < 0.0) {
         yaw += 360.0;
@@ -2380,7 +2409,11 @@ QString Vehicle::flightMode() const
     if (_standardModes->supported()) {
         return _standardModes->flightMode(_custom_mode);
     }
-    return _firmwarePlugin->flightMode(_base_mode, _custom_mode);
+    if (fmued() == true){
+        return _firmwarePlugin->flightMode(100, _custom_mode); //PreFlight 대신 FMU Mode로 변경
+    } else{
+        return _firmwarePlugin->flightMode(_base_mode, _custom_mode);
+    }
 }
 
 bool Vehicle::setFlightModeCustom(const QString& flightMode, uint8_t* base_mode, uint32_t* custom_mode)

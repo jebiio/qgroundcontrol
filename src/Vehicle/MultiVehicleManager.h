@@ -37,6 +37,7 @@ class MultiVehicleManager : public QGCTool
 public:
     MultiVehicleManager(QGCApplication* app, QGCToolbox* toolbox);
 
+    Q_INVOKABLE QString getEngineStatus(void);
     Q_INVOKABLE void        saveSetting (const QString &key, const QString& value);
     Q_INVOKABLE QString     loadSetting (const QString &key, const QString& defaultValue);
 
@@ -47,6 +48,7 @@ public:
     Q_PROPERTY(bool                 gcsHeartBeatEnabled             READ gcsHeartbeatEnabled            WRITE setGcsHeartbeatEnabled    NOTIFY gcsHeartBeatEnabledChanged)
     Q_PROPERTY(Vehicle*             offlineEditingVehicle           READ offlineEditingVehicle                                          CONSTANT)
     Q_PROPERTY(QGeoCoordinate       lastKnownLocation               READ lastKnownLocation                                              NOTIFY lastKnownLocationChanged) //< Current vehicles last know location
+    Q_PROPERTY(QString              engineStatus                    READ engineStatus                WRITE setEngineStatus           NOTIFY engineStatusChanged)
 
     // Methods
 
@@ -75,6 +77,8 @@ public:
 
     // Property accessors
 
+    QString engineStatus(void) { return _engineStatus; }
+
     bool activeVehicleAvailable(void) const{ return _activeVehicleAvailable; }
 
     bool parameterReadyVehicleAvailable(void) const{ return _parameterReadyVehicleAvailable; }
@@ -99,6 +103,12 @@ public:
     void sendEngineParameter(EngineMsgID msgID);
     bool isEngineRunning(void) { return _isEngineRunning; }
     //void sentEngineCommand(int mode, int cmd);
+
+    void setEngineStatus(QString status) {
+        _engineStatus = status;
+        emit engineStatusChanged(status);
+    }
+
 signals:
     void vehicleAdded                   (Vehicle* vehicle);
     void vehicleRemoved                 (Vehicle* vehicle);
@@ -107,6 +117,7 @@ signals:
     void activeVehicleChanged           (Vehicle* activeVehicle);
     void gcsHeartBeatEnabledChanged     (bool gcsHeartBeatEnabled);
     void lastKnownLocationChanged       ();
+    void engineStatusChanged            (QString status);
 #ifndef DOXYGEN_SKIP
     void _deleteVehiclePhase2Signal     (void);
 #endif
@@ -126,6 +137,7 @@ private slots:
 private:
     bool _vehicleExists(int vehicleId);
 
+    QString     _engineStatus;
     bool        _activeVehicleAvailable;            ///< true: An active vehicle is available
     bool        _parameterReadyVehicleAvailable;    ///< true: An active vehicle with ready parameters is available
     Vehicle*    _activeVehicle;                     ///< Currently active vehicle from a ui perspective

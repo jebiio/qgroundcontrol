@@ -623,8 +623,102 @@ Rectangle {
                         }
                     }
 
+                    Item { width: 1; height: _margins; visible: fmuRotation.visible }
+                    QGCLabel {
+                        id:         fmuRotation
+                        text:       qsTr("FMU Rotation(Unit : deg)")
+                        visible:    true
+                    }
+                    Rectangle {
+                        Layout.preferredHeight: unitsGrid5.height + (_margins * 2)
+                        Layout.preferredWidth: unitsGrid5.width + (_margins * 2)
+                        color: qgcPal.windowShade
+                        visible: miscSectionLabel.visible
+                        Layout.fillWidth: true
 
-                   
+                        GridLayout {
+                            id: unitsGrid5
+                            anchors.topMargin: _margins
+                            anchors.top: parent.top
+                            Layout.fillWidth: true
+                            // anchors.horizontalCenter: parent.horizontalCenter
+                            flow:                       GridLayout.TopToBottom
+
+                            rows: 3  
+                            columns: 2  
+
+                            
+                            QGCLabel {
+                                text: qsTr("Roll Direction : ")
+                                Layout.column: 0  
+                                Layout.row: 0   
+                                anchors.leftMargin: 10
+                                // Layout.alignment: Qt.AlignLeft
+                            }
+                            FactTextField {
+                                id: rollField
+                                Layout.column: 1  
+                                Layout.row: 0     
+                                Layout.fillWidth: true
+                                fact: _fmuSettings.fmuRollRotaion
+                            }
+
+                            QGCLabel {
+                                text: qsTr("Pitch Direction : ")
+                                Layout.column: 0  
+                                Layout.row: 1   
+                                anchors.leftMargin: 10
+                                // Layout.alignment: Qt.AlignLeft
+                            }
+                            FactTextField {
+                                id: pitchField
+                                Layout.column: 1  
+                                Layout.row: 1     
+                                Layout.fillWidth: true
+                                fact: _fmuSettings.fmuPitchRotaion
+                            }
+
+                            QGCLabel {
+                                text: qsTr("Yaw Direction : ")
+                                Layout.column: 0  
+                                Layout.row: 2   
+                                anchors.leftMargin: 10
+                                // Layout.alignment: Qt.AlignLeft
+                            }
+                            FactTextField {
+                                id: yawField
+                                Layout.column: 1  
+                                Layout.row: 2     
+                                Layout.fillWidth: true
+                                fact: _fmuSettings.fmuYawRotaion
+                            }
+                            // QGCLabel {
+                            //     text: qsTr("Forwarder Back Port : ")
+                            //     Layout.column: 0  
+                            //     Layout.row: 1     
+                            //     // Layout.alignment: Qt.AlignLeft
+                            // }
+                            // FactTextField {
+                            //     id: tcpPortField
+                            //     Layout.column: 1  
+                            //     Layout.row: 1     
+                            //     Layout.fillWidth: true
+                            //     fact: _fmuSettings.engineServerTCPPort
+                            // }
+                            // QGCLabel {
+                            //     text: qsTr("  UDP Port : ")
+                            //     Layout.column: 0  
+                            //     Layout.row: 2     
+                            // }
+                            // FactTextField {
+                            //     id: udpPortField
+                            //     Layout.column: 1  
+                            //     Layout.row: 2     
+                            //     Layout.fillWidth: true
+                            //     fact: _fmuSettings.engineServerUDPPort
+                            // }
+                        }
+                    }
                 } // settingsColumn
             }
 
