@@ -55,21 +55,21 @@
 {
     "name":                 "fmuRollRotaion",
     "shortDesc":     "FMU Board Roll Direction Rotation",
-    "type":                 "uint32",
+    "type":                 "int32",
     "default":         0,
     "qgcRebootRequired":    true
 },
 {
     "name":                 "fmuPitchRotaion",
     "shortDesc":     "FMU Board Pitch Direction Rotation",
-    "type":                 "uint32",
+    "type":                 "int32",
     "default":         0,
     "qgcRebootRequired":    true
 },
 {
     "name":                 "fmuYawRotaion",
     "shortDesc":     "FMU Board Yaw Direction Rotation",
-    "type":                 "uint32",
+    "type":                 "int32",
     "default":         0,
     "qgcRebootRequired":    true
 }
