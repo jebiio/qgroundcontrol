@@ -57,8 +57,8 @@
     "name":             "lr",
     "shortDesc": "Learning Rate value",
     "longDesc":  "Learning Rate for Engine",
-    "type":             "float",
-    "default":    0
+    "type":             "string",
+    "default":    "0.0"
 }, 
 {
     "name":             "weightDecay",

@@ -463,7 +463,19 @@ void MultiVehicleManager::sendEngineDetectionParamStructure()
     detectionModeJson.insert("epoch", detectionModeSettings->epoch()->rawValue().toInt());
     detectionModeJson.insert("batch", detectionModeSettings->batch()->rawValue().toInt());
     detectionModeJson.insert("numWorkers", detectionModeSettings->numWorkers()->rawValue().toInt());
-    detectionModeJson.insert("lr", detectionModeSettings->lr()->rawValue().toFloat());
+    // detectionModeJson.insert("lr", detectionModeSettings->lr()->rawValue().toFloat());
+    QString lr_str = detectionModeSettings->lr()->rawValue().toString();
+    bool ok;
+    float lr_float = lr_str.toFloat(&ok);
+    if (ok)
+    {
+        detectionModeJson.insert("lr",lr_float);
+        qCDebug(MultiVehicleManagerLog()) << "Detection lr : " << lr_float;
+    } else {
+        detectionModeJson.insert("lr", 0.0);
+        qCDebug(MultiVehicleManagerLog()) << "Detection lr (invalid) : " << lr_float;
+    }
+    
     detectionModeJson.insert("weightDecay", detectionModeSettings->weightDecay()->rawValue().toFloat());
     
     QJsonDocument doc(detectionModeJson);
@@ -502,7 +514,19 @@ void MultiVehicleManager::sendEngineTrainParamStructure()
     trainModeJson.insert("epoch", trainModeSettings->epoch()->rawValue().toInt());
     trainModeJson.insert("batch", trainModeSettings->batch()->rawValue().toInt());
     trainModeJson.insert("numWorkers", trainModeSettings->numWorkers()->rawValue().toInt());
-    trainModeJson.insert("lr", trainModeSettings->lr()->rawValue().toFloat());
+    // trainModeJson.insert("lr", trainModeSettings->lr()->rawValue().toFloat());
+    QString lr_str = trainModeSettings->lr()->rawValue().toString();
+    bool ok;
+    float lr_float = lr_str.toFloat(&ok);
+    if (ok)
+    {
+        trainModeJson.insert("lr",lr_float); 
+        qWarning() << "Detection lr : " << lr_float;
+        
+    } else {
+        trainModeJson.insert("lr", 0.0);
+        qWarning() << "Detection lr (invalid) : " << lr_float;
+    }
     trainModeJson.insert("weight", trainModeSettings->weight()->rawValue().toFloat());
 
     QJsonDocument doc(trainModeJson);
@@ -524,6 +548,9 @@ void MultiVehicleManager::sendEngineParameter(EngineMsgID msgID)
     TrainModeSettings* trainModeSettings = qgcApp()->toolbox()->settingsManager()->trainModeSettings();
     DetectionModeSettings* detectionModeSettings = qgcApp()->toolbox()->settingsManager()->detectionModeSettings();
     EngineMsgID vocabluaryID;
+    QString lr_str;
+    bool ok;
+    float lr_float;
     switch(msgID){
         case EngineMsgID::DETECTION_PARAMETER_SETUP_START_OK:
             json.insert("model", detectionModeSettings->model()->rawValue().toString());
@@ -533,7 +560,19 @@ void MultiVehicleManager::sendEngineParameter(EngineMsgID msgID)
             json.insert("epoch", detectionModeSettings->epoch()->rawValue().toInt());
             json.insert("batch", detectionModeSettings->batch()->rawValue().toInt());
             json.insert("numWorkers", detectionModeSettings->numWorkers()->rawValue().toInt());
-            json.insert("lr", detectionModeSettings->lr()->rawValue().toFloat());
+
+            // json.insert("lr", detectionModeSettings->lr()->rawValue().toFloat());
+            lr_str = detectionModeSettings->lr()->rawValue().toString();
+            lr_float = lr_str.toFloat(&ok);
+            if (ok)
+            {
+                json.insert("lr",lr_float);
+                qCDebug(MultiVehicleManagerLog()) << "Detection lr : " << lr_float;
+            } else {
+                json.insert("lr", 0.0);
+                qCDebug(MultiVehicleManagerLog()) << "Detection lr (invalid) : " << lr_float;
+            }
+            
             json.insert("weightDecay", detectionModeSettings->weightDecay()->rawValue().toFloat());
             vocabluaryID = EngineMsgID::DETECTION_PARAMETER_DATA;
             break;
@@ -551,7 +590,18 @@ void MultiVehicleManager::sendEngineParameter(EngineMsgID msgID)
             json.insert("epoch", trainModeSettings->epoch()->rawValue().toInt());
             json.insert("batch", trainModeSettings->batch()->rawValue().toInt());
             json.insert("numWorkers", trainModeSettings->numWorkers()->rawValue().toInt());
-            json.insert("lr", trainModeSettings->lr()->rawValue().toFloat());
+            // json.insert("lr", trainModeSettings->lr()->rawValue().toFloat());
+            lr_str = trainModeSettings->lr()->rawValue().toString();
+            lr_float = lr_str.toFloat(&ok);
+            if (ok)
+            {
+                json.insert("lr",lr_float);
+                qWarning() << "train lr : " << lr_float;
+            } else {
+                json.insert("lr", 0.0);
+                qWarning() << "train lr (invalid) : " << lr_float;
+            }
+            
             json.insert("weight", trainModeSettings->weight()->rawValue().toFloat());
             vocabluaryID = EngineMsgID::TRAIN_PARAMETER_DATA;
             break;
